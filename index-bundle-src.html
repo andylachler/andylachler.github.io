@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreas Lächler</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon-lockup.svg">
+<template id="__bundler_thumbnail" data-bg-color="#F2EFE6">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nav bar -->
+    <rect x="0" y="0" width="1200" height="56" fill="#2A3D34"/>
+    <rect x="40" y="22" width="120" height="12" rx="2" fill="#F2EFE6" opacity="0.8"/>
+    <rect x="1060" y="24" width="40" height="8" rx="2" fill="#F2EFE6" opacity="0.4"/>
+    <rect x="1110" y="24" width="50" height="8" rx="2" fill="#F2EFE6" opacity="0.4"/>
+    <rect x="1168" y="24" width="32" height="8" rx="2" fill="#F2EFE6" opacity="0.4"/>
+    <!-- Hero text -->
+    <rect x="40" y="100" width="60" height="8" rx="2" fill="#14211C" opacity="0.3"/>
+    <rect x="40" y="130" width="480" height="32" rx="3" fill="#14211C" opacity="0.85"/>
+    <rect x="40" y="172" width="380" height="24" rx="3" fill="#14211C" opacity="0.6"/>
+    <rect x="40" y="220" width="240" height="14" rx="2" fill="#14211C" opacity="0.35"/>
+    <rect x="40" y="254" width="100" height="10" rx="2" fill="#14211C" opacity="0.5"/>
+    <!-- Project grid row 1 -->
+    <rect x="40" y="330" width="740" height="200" rx="3" fill="#3D5448"/>
+    <rect x="790" y="330" width="370" height="200" rx="3" fill="#14211C"/>
+    <!-- Project grid row 2 -->
+    <rect x="40" y="540" width="370" height="180" rx="3" fill="#D45A1B"/>
+    <rect x="420" y="540" width="740" height="180" rx="3" fill="#E8E4D5"/>
+    <!-- Footer -->
+    <rect x="40" y="760" width="80" height="8" rx="2" fill="#14211C" opacity="0.25"/>
+    <rect x="1060" y="760" width="100" height="8" rx="2" fill="#14211C" opacity="0.4"/>
+  </svg>
+</template>
+<style>
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-family: 'Inter', system-ui, sans-serif; background: #F2EFE6; color: #14211C; -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+button, a { font-family: inherit; }
+.page-enter { animation: fadeIn 220ms ease-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="ProjectTile.jsx"></script>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="ProjectGrid.jsx"></script>
+<script type="text/babel" src="ProjectPage.jsx"></script>
+<script type="text/babel" src="ArchivePage.jsx"></script>
+<script type="text/babel" src="AboutPage.jsx"></script>
+
+<script type="text/babel">
+// ── Tweaks defaults ────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "navStyle": "sticky",
+  "heroLayout": "default",
+  "gridLayout": "asymmetric",
+  "accentColor": "#D45A1B",
+  "motionLevel": "standard"
+}/*EDITMODE-END*/;
+
+// ── WorkPage ──────────────────────────────────────────────────────────────
+const WorkPage = ({ onNavigate }) => {
+  const sections = [
+    {
+      org: 'Algoma', period: '2024–present',
+      projects: ['feasibility', 'site-search', 'zoning-chat', 'comps'],
+    },
+    {
+      org: 'Arquitectonica', period: '2022–2024',
+      projects: ['the-ella', 'brickell'],
+    },
+  ];
+
+  return (
+    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '5rem 2.5rem' }}>
+      <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '3.5rem' }}>Work</p>
+      {sections.map((sec, si) => {
+        const projects = sec.projects.map(id => window.PROJECT_DATA[id]).filter(Boolean);
+        return (
+          <div key={si} style={{ marginBottom: '4rem' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '0.5px solid rgba(20,33,28,0.1)' }}>
+              <span style={{ fontSize: '15px', fontWeight: 500, color: '#14211C' }}>{sec.org}</span>
+              <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.4)' }}>{sec.period}</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '0.625rem' }}>
+              {projects.map(p => (
+                <ProjectTile key={p.id} {...p} bg={p.tileBg} onNavigate={(page, id) => onNavigate(page, id || p.id)} />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </main>
+  );
+};
+
+// ── Footer ────────────────────────────────────────────────────────────────
+const Footer = ({ tweaks = {} }) => (
+  <footer style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', padding: '2rem 2.5rem', maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <span style={{ fontSize: '13px', color: 'rgba(20,33,28,0.4)' }}>New York</span>
+    <a href="mailto:a@lachler.com"
+      style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', textDecoration: 'none', borderBottom: '1px solid rgba(20,33,28,0.15)', paddingBottom: '1px' }}
+      onMouseEnter={e => e.target.style.color = tweaks.accentColor || '#D45A1B'}
+      onMouseLeave={e => e.target.style.color = '#14211C'}
+    >
+      a@lachler.com
+    </a>
+  </footer>
+);
+
+// ── Tweaks Panel ──────────────────────────────────────────────────────────
+const TweaksPanel = ({ tweaks, setTweaks, visible }) => {
+  if (!visible) return null;
+
+  const set = (key, val) => {
+    const next = { ...tweaks, [key]: val };
+    setTweaks(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
+    try { localStorage.setItem('lachler_tweaks', JSON.stringify(next)); } catch {}
+  };
+
+  const Row = ({ label, children }) => (
+    <div style={{ marginBottom: '1.25rem' }}>
+      <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.45)', marginBottom: '0.5rem' }}>{label}</p>
+      {children}
+    </div>
+  );
+
+  const Btn = ({ val, current, onClick, label }) => (
+    <button onClick={() => onClick(val)} style={{
+      background: current === val ? '#14211C' : 'transparent',
+      color: current === val ? '#F2EFE6' : '#14211C',
+      border: '0.5px solid rgba(20,33,28,0.2)',
+      borderRadius: '3px', padding: '4px 10px',
+      fontSize: '12px', fontFamily: "'Inter', system-ui, sans-serif",
+      cursor: 'pointer', marginRight: '6px', marginBottom: '6px',
+      transition: 'background 120ms, color 120ms',
+    }}>{label || val}</button>
+  );
+
+  const swatches = ['#D45A1B', '#3D5448', '#14211C'];
+
+  return (
+    <div style={{
+      position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999,
+      background: '#F2EFE6', border: '0.5px solid rgba(20,33,28,0.18)',
+      borderRadius: '4px', padding: '1.5rem',
+      width: '240px', boxShadow: '0 4px 24px rgba(20,33,28,0.12)',
+    }}>
+      <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.5)', marginBottom: '1.5rem' }}>Tweaks</p>
+
+      <Row label="Nav style">
+        {['sticky','floating','minimal'].map(v => <Btn key={v} val={v} current={tweaks.navStyle} onClick={v => set('navStyle', v)} />)}
+      </Row>
+
+      <Row label="Hero layout">
+        {[['default','Default'],['split','Split'],['large','Large']].map(([v,l]) => <Btn key={v} val={v} current={tweaks.heroLayout} onClick={v => set('heroLayout', v)} label={l} />)}
+      </Row>
+
+      <Row label="Project grid">
+        {[['asymmetric','2/3 + 1/3'],['uniform','2-col'],['three-col','3-col']].map(([v,l]) => <Btn key={v} val={v} current={tweaks.gridLayout} onClick={v => set('gridLayout', v)} label={l} />)}
+      </Row>
+
+      <Row label="Accent color">
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {swatches.map(c => (
+            <button key={c} onClick={() => set('accentColor', c)} style={{
+              width: '24px', height: '24px', borderRadius: '50%',
+              background: c, border: tweaks.accentColor === c ? '2px solid #14211C' : '2px solid transparent',
+              outline: tweaks.accentColor === c ? '2px solid #F2EFE6' : 'none',
+              cursor: 'pointer', transition: 'outline 120ms',
+            }} />
+          ))}
+        </div>
+      </Row>
+
+      <Row label="Motion">
+        {[['standard','Standard'],['reduced','Reduced'],['none','None']].map(([v,l]) => <Btn key={v} val={v} current={tweaks.motionLevel} onClick={v => set('motionLevel', v)} label={l} />)}
+      </Row>
+    </div>
+  );
+};
+
+// ── App ───────────────────────────────────────────────────────────────────
+const App = () => {
+  const loadPage = () => { try { return localStorage.getItem('lachler_page') || 'home'; } catch { return 'home'; } };
+  const loadProject = () => { try { return localStorage.getItem('lachler_project') || 'feasibility'; } catch { return 'feasibility'; } };
+  const loadTweaks = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('lachler_tweaks') || '{}');
+      return { ...TWEAK_DEFAULTS, ...saved };
+    } catch { return TWEAK_DEFAULTS; }
+  };
+
+  const [page, setPage] = React.useState(loadPage);
+  const [projectId, setProjectId] = React.useState(loadProject);
+  const [pageKey, setPageKey] = React.useState(0);
+  const [tweaks, setTweaks] = React.useState(loadTweaks);
+  const [tweaksVisible, setTweaksVisible] = React.useState(false);
+
+  // Apply accent color to CSS custom property
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--accent', tweaks.accentColor);
+  }, [tweaks.accentColor]);
+
+  // Tweaks panel toggle via postMessage
+  React.useEffect(() => {
+    const handler = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksVisible(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const navigate = (p, id) => {
+    if (p === 'project' && id) {
+      setProjectId(id);
+      try { localStorage.setItem('lachler_project', id); } catch {}
+    }
+    setPage(p);
+    setPageKey(k => k + 1);
+    try { localStorage.setItem('lachler_page', p); } catch {}
+    window.scrollTo({ top: 0, behavior: tweaks.motionLevel === 'none' ? 'auto' : 'smooth' });
+  };
+
+  // Reduced motion override
+  const motionStyle = tweaks.motionLevel === 'none'
+    ? <style>{`*, *::before, *::after { transition: none !important; animation: none !important; }`}</style>
+    : tweaks.motionLevel === 'reduced'
+    ? <style>{`*, *::before, *::after { transition-duration: 80ms !important; animation-duration: 80ms !important; }`}</style>
+    : null;
+
+  const pagesMap = {
+    home: <><Hero onNavigate={navigate} tweaks={tweaks} /><ProjectGrid onNavigate={navigate} tweaks={tweaks} /><Footer tweaks={tweaks} /></>,
+    work: <><WorkPage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    project: <><ProjectPage projectId={projectId} onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    archive: <><ArchivePage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    about: <><AboutPage /><Footer tweaks={tweaks} /></>,
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {motionStyle}
+      <Nav page={page} onNavigate={navigate} tweaks={tweaks} />
+      <div key={pageKey} className="page-enter" style={{ flex: 1 }}>
+        {pagesMap[page] || pagesMap.home}
+      </div>
+      <TweaksPanel tweaks={tweaks} setTweaks={setTweaks} visible={tweaksVisible} />
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

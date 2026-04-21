@@ -1,0 +1,247 @@
+// ProjectPage.jsx — Full case study template
+const PROJECT_DATA = {
+  'feasibility': {
+    title: 'Feasibility platform',
+    org: 'Algoma', year: '2024', role: 'Product Design',
+    bg: '#3D5448',
+    lede: 'Algoma evaluates what a development site can become. I design the surfaces where that question gets answered.',
+    body: 'The product is an AI platform that helps developers understand what a site can actually become, running zoning, program, and economics in parallel. My role covers the full product surface — from the initial site search through zoning analysis, capacity modeling, and comparable sales.',
+    process: [
+      'Designed from first principles — no inherited design system, no legacy patterns. Started with the question: what does a developer actually need to decide?',
+      'Architecture training covers the same problem in a different medium: take something with too many moving parts and give it a shape a person can move through.',
+    ],
+    outcome: 'In active development. Details anonymized per client agreement.',
+    credits: 'Algoma. Product design: Andreas Lächler.',
+    details: [{ label: 'Scope', value: 'Full product surface' }, { label: 'Type', value: 'AI platform' }, { label: 'Status', value: 'Active' }],
+    tileBg: '#3D5448', imageIndex: 0,
+    next: 'site-search',
+  },
+  'site-search': {
+    title: 'Site search',
+    org: 'Algoma', year: '2024', role: 'Product Design',
+    bg: '#14211C',
+    lede: 'How do you search for a development site when you don\'t yet know what you\'re looking for?',
+    body: 'The site search surface combines map-based exploration with filter logic tuned for real estate feasibility — lot size, zoning, ownership structure, recent sales. The challenge is designing a system that surfaces signal without requiring the user to already know what the signal is.',
+    process: [
+      'Started by mapping the decision space developers actually navigate before a site gets shortlisted. Filters are a consequence of that, not a starting point.',
+      'The interface needed to work both as an active search tool and as a passive discovery surface for exploratory sessions.',
+    ],
+    outcome: 'Shipped as part of the Algoma platform. Details anonymized.',
+    credits: 'Algoma. Product design: Andreas Lächler.',
+    details: [{ label: 'Scope', value: 'Search + map interface' }, { label: 'Type', value: 'Data-dense UI' }, { label: 'Status', value: 'Shipped' }],
+    tileBg: '#14211C', imageIndex: 1,
+    next: 'the-ella',
+  },
+  'the-ella': {
+    title: 'The Ella',
+    org: 'Arquitectonica', year: '2023', role: 'Architecture',
+    bg: '#D45A1B',
+    lede: 'Residential tower in Miami. The work lives in the facade — how a building resolves at the corner, what it does with light.',
+    body: 'Led facade design and consultant coordination from schematic design through design development. The tower is a residential building in Miami — the problem is making something that stands in a skyline but still has a human scale when you\'re standing in front of it.',
+    process: [
+      'Facade geometry was the central design problem. The building uses a setback profile that\'s structural in origin but ends up doing most of the visual work.',
+      'Coordination with facade consultants, structural engineers, and the client team across multiple design iterations.',
+    ],
+    outcome: 'Design development complete. In permitting.',
+    credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
+    details: [{ label: 'Program', value: 'Residential tower' }, { label: 'Location', value: 'Miami, FL' }, { label: 'Status', value: 'In permitting' }],
+    tileBg: '#D45A1B', imageIndex: 2,
+    next: 'zoning-chat',
+  },
+  'zoning-chat': {
+    title: 'Zoning chat',
+    org: 'Algoma', year: '2024', role: 'Product Design',
+    bg: '#E8E4D5',
+    lede: 'Zoning is effectively a legal document. The question was whether a conversational interface could make it navigable.',
+    body: 'Designed the conversational UI for Algoma\'s zoning analysis surface — a chat interface that lets developers ask plain-language questions about what a site allows, and get structured, citable answers drawn from the underlying zoning code.',
+    process: [
+      'The hardest part isn\'t the conversation — it\'s the response format. Developers need to trust what they\'re reading. Designed a structured citation pattern that keeps the AI answer grounded in the actual code text.',
+      'Worked closely with the engineering team on the interaction model: what happens on ambiguity, how the system surfaces uncertainty, when to push back.',
+    ],
+    outcome: 'Shipped. In active use.',
+    credits: 'Algoma. Product design: Andreas Lächler.',
+    details: [{ label: 'Scope', value: 'Conversational UI' }, { label: 'Type', value: 'AI interface' }, { label: 'Status', value: 'Shipped' }],
+    tileBg: '#E8E4D5', imageIndex: 3,
+    next: 'brickell',
+  },
+  'brickell': {
+    title: 'Brickell residential',
+    org: 'Arquitectonica', year: '2023', role: 'Architecture',
+    bg: '#14211C',
+    lede: '32-unit multifamily in Brickell. Mass timber structure, constrained lot, ground-floor retail.',
+    body: 'Led schematic design and consultant coordination for a 32-unit residential building on a constrained infill lot in Miami\'s Brickell neighborhood. Mass timber structure was the client\'s requirement — the design problem was making it work within a tight lot footprint and local zoning.',
+    process: [
+      'The structural system drove everything. Mass timber spans are long, which gave us open floor plates but constrained the facade module. Most of the design work was resolving that constraint.',
+      'Ground-floor retail required coordination with a separate tenant buildout team. Designed the base as a neutral frame.',
+    ],
+    outcome: 'Schematic design complete. Handed off to design development team.',
+    credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
+    details: [{ label: 'Program', value: '32-unit residential' }, { label: 'Location', value: 'Brickell, Miami' }, { label: 'Structure', value: 'Mass timber' }],
+    tileBg: '#14211C', imageIndex: 4,
+    next: 'comps',
+  },
+  'comps': {
+    title: 'Comps analysis',
+    org: 'Algoma', year: '2024', role: 'Product Design',
+    bg: '#3D5448',
+    lede: 'Real estate comps are tables of numbers. The design question was what to do with them.',
+    body: 'Designed the comparable sales analysis surface for Algoma — the part of the platform where developers understand what similar sites have sold for and what that means for their underwriting.',
+    process: [
+      'Started with the underwriter\'s actual workflow. Comps analysis is a judgment call, not a calculation — the interface needed to support that judgment rather than pretend to automate it.',
+      'Explored multiple approaches to data density. Ended up with a table-first layout with a secondary map view, rather than trying to make the map primary.',
+    ],
+    outcome: 'Shipped as part of the Algoma platform.',
+    credits: 'Algoma. Product design: Andreas Lächler.',
+    details: [{ label: 'Scope', value: 'Data visualization' }, { label: 'Type', value: 'Analytics surface' }, { label: 'Status', value: 'Shipped' }],
+    tileBg: '#3D5448', imageIndex: 5,
+    next: 'feasibility',
+  },
+};
+window.PROJECT_DATA = PROJECT_DATA;
+
+const DetailBlock = ({ imageIndex, bg, hovered }) => (
+  <div style={{ background: bg, borderRadius: '3px', overflow: 'hidden', position: 'relative', height: '100%', minHeight: '180px', border: (bg === '#E8E4D5' || bg === '#F2EFE6') ? '0.5px solid rgba(20,33,28,0.1)' : 'none' }}>
+    <TilePlaceholder bg={bg} index={imageIndex} hovered={hovered} />
+  </div>
+);
+
+const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
+  const project = PROJECT_DATA[projectId] || PROJECT_DATA['feasibility'];
+  const nextProject = project.next ? PROJECT_DATA[project.next] : null;
+  const [heroHov, setHeroHov] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { requestAnimationFrame(() => setMounted(true)); setHeroHov(false); }, [projectId]);
+
+  const fade = (delay) => ({
+    opacity: mounted ? 1 : 0,
+    transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+    transition: `opacity 450ms ease-out ${delay}ms, transform 450ms ease-out ${delay}ms`,
+  });
+
+  const light = project.tileBg === '#F2EFE6' || project.tileBg === '#E8E4D5';
+  const heroText = light ? '#14211C' : '#F2EFE6';
+  const heroMuted = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
+
+  return (
+    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2.5rem 6rem' }}>
+
+      {/* Hero tile */}
+      <div style={{ ...fade(0), marginBottom: '4rem' }}>
+        <div
+          style={{
+            background: project.tileBg, borderRadius: '24px',
+            height: 'clamp(280px, 32vw, 420px)',
+            position: 'relative', overflow: 'hidden', cursor: 'default',
+            transition: 'transform 0ms',
+          }}
+          onMouseEnter={() => setHeroHov(true)}
+          onMouseLeave={() => setHeroHov(false)}
+        >
+          <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} />
+          <div style={{ position: 'absolute', inset: 0, padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+            <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
+              {project.org} · {project.year} · {project.role}
+            </p>
+            <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: heroText, margin: 0 }}>
+              {project.title}
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content + sidebar */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '5rem', maxWidth: '1000px' }}>
+        {/* Left: text content */}
+        <div>
+          <p style={{ ...fade(80), fontSize: '20px', fontWeight: 400, lineHeight: 1.6, color: '#14211C', marginBottom: '2rem' }}>
+            {project.lede}
+          </p>
+          <p style={{ ...fade(140), fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.7)', marginBottom: '3rem' }}>
+            {project.body}
+          </p>
+
+          {/* Detail images */}
+          <div style={{ ...fade(180), display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '0.625rem', marginBottom: '3rem' }}>
+            <DetailBlock imageIndex={project.imageIndex} bg={project.tileBg} hovered={false} />
+            <DetailBlock imageIndex={(project.imageIndex + 2) % 6} bg={['#3D5448','#14211C','#E8E4D5','#D45A1B','#3D5448','#14211C'][project.imageIndex]} hovered={false} />
+          </div>
+
+          <div style={fade(220)}>
+            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Process</p>
+            {project.process.map((para, i) => (
+              <p key={i} style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.7)', marginBottom: '1.25rem' }}>{para}</p>
+            ))}
+          </div>
+
+          <div style={{ ...fade(260), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginTop: '2.5rem' }}>
+            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Current state</p>
+            <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(20,33,28,0.65)' }}>{project.outcome}</p>
+          </div>
+
+          <div style={{ ...fade(300), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '1.5rem', marginTop: '2.5rem' }}>
+            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>Credits</p>
+            <p style={{ fontSize: '13px', color: 'rgba(20,33,28,0.55)', lineHeight: 1.6 }}>{project.credits}</p>
+          </div>
+        </div>
+
+        {/* Right: sidebar details */}
+        <div style={fade(100)}>
+          <div style={{ position: 'sticky', top: '80px' }}>
+            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Details</p>
+            {project.details.map(d => (
+              <div key={d.label} style={{ marginBottom: '1rem' }}>
+                <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', margin: '0 0 3px' }}>{d.label}</p>
+                <p style={{ fontSize: '14px', fontWeight: 400, color: '#14211C', margin: 0 }}>{d.value}</p>
+              </div>
+            ))}
+
+            <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+              <ArrowLink onClick={() => onNavigate('work')} style={{ fontSize: '13px', color: 'rgba(20,33,28,0.55)' }}>Back to work</ArrowLink>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Next project */}
+      {nextProject && (
+        <div style={{ ...fade(340), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '3rem', marginTop: '4rem', maxWidth: '1000px' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', marginBottom: '1.5rem' }}>Next</p>
+          <NextProjectCard project={nextProject} onNavigate={onNavigate} />
+        </div>
+      )}
+    </main>
+  );
+};
+
+const NextProjectCard = ({ project, onNavigate }) => {
+  const [hov, setHov] = React.useState(false);
+  const light = project.tileBg === '#F2EFE6' || project.tileBg === '#E8E4D5';
+  const textC = light ? '#14211C' : '#F2EFE6';
+  const mutedC = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
+
+  return (
+    <div
+      onClick={() => onNavigate('project', project.next || project.id)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        background: project.tileBg, borderRadius: '24px',
+        padding: '2rem 2.5rem', cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        position: 'relative', overflow: 'hidden',
+        transform: hov ? 'translateY(-2px)' : 'none',
+        transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1)',
+        border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
+      }}
+    >
+      <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={hov} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedC, margin: '0 0 5px' }}>{project.org} · {project.year}</p>
+        <p style={{ fontSize: '18px', fontWeight: 500, color: textC, margin: 0 }}>{project.title}</p>
+      </div>
+      <span style={{ position: 'relative', zIndex: 1, fontSize: '18px', color: textC, transition: 'transform 180ms', transform: hov ? 'translateX(5px)' : 'none' }}>→</span>
+    </div>
+  );
+};
+
+Object.assign(window, { PROJECT_DATA, ProjectPage, NextProjectCard, DetailBlock });

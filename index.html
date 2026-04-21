@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreas Lächler</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon-lockup.svg">
+<style>
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-family: 'Inter', system-ui, sans-serif; background: #F2EFE6; color: #14211C; -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+button, a { font-family: inherit; }
+
+/* Page transitions */
+.page-enter { animation: pageIn 300ms cubic-bezier(0.22,1,0.36,1) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 600ms cubic-bezier(0.22,1,0.36,1), transform 600ms cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="ProjectTile.jsx"></script>
+<script type="text/babel" src="ProjectGrid.jsx"></script>
+<script type="text/babel" src="ScrollWork.jsx"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="HeroBg.jsx"></script>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="ProjectPage.jsx"></script>
+<script type="text/babel" src="ArchivePage.jsx"></script>
+<script type="text/babel" src="AboutPage.jsx"></script>
+
+<script type="text/babel">
+// ── Tweak defaults ────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "navStyle": "floating",
+  "heroLayout": "default",
+  "accentColor": "#D45A1B",
+  "motionLevel": "standard",
+  "workDisplay": "scroll"
+}/*EDITMODE-END*/;
+
+// ── Scroll reveal hook ────────────────────────────────────────────────────
+const useReveal = () => {
+  React.useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } }),
+      { threshold: 0.12 }
+    );
+    els.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  });
+};
+
+// ── WorkPage ──────────────────────────────────────────────────────────────
+const WorkPage = ({ onNavigate }) => {
+  useReveal();
+  const sections = [
+    { org: 'Algoma', period: '2024–present', projects: ['feasibility','site-search','zoning-chat','comps'] },
+    { org: 'Arquitectonica', period: '2022–2024', projects: ['the-ella','brickell'] },
+  ];
+  return (
+    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '5rem 2.5rem' }}>
+      <p className="reveal" style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '3.5rem' }}>Work</p>
+      {sections.map((sec, si) => {
+        const projects = sec.projects.map(id => window.PROJECT_DATA?.[id]).filter(Boolean);
+        return (
+          <div key={si} className="reveal" style={{ marginBottom: '4rem' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '0.5px solid rgba(20,33,28,0.1)' }}>
+              <span style={{ fontSize: '15px', fontWeight: 500 }}>{sec.org}</span>
+              <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.4)' }}>{sec.period}</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px,1fr))', gap: '0.625rem' }}>
+              {projects.map(p => (
+                <ProjectTile key={p.id} {...p} bg={p.tileBg} onNavigate={(pg, id) => onNavigate(pg, id || p.id)} />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </main>
+  );
+};
+
+// ── Footer ────────────────────────────────────────────────────────────────
+const Footer = ({ tweaks = {} }) => {
+  const accent = tweaks.accentColor || '#D45A1B';
+  return (
+    <footer style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', padding: '2rem 2.5rem', maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <span style={{ fontSize: '13px', color: 'rgba(20,33,28,0.4)' }}>New York</span>
+      <a href="mailto:a@lachler.com"
+        style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', textDecoration: 'none', borderBottom: '1px solid rgba(20,33,28,0.15)', paddingBottom: '1px' }}
+        onMouseEnter={e => e.target.style.color = accent}
+        onMouseLeave={e => e.target.style.color = '#14211C'}
+      >a@lachler.com</a>
+    </footer>
+  );
+};
+
+// ── Archive section teaser (home) ─────────────────────────────────────────
+const ArchiveTeaser = ({ onNavigate, tweaks = {} }) => {
+  const accent = tweaks.accentColor || '#D45A1B';
+  return (
+    <section className="reveal" style={{ background: '#2A3D34', padding: '5rem 2.5rem' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem' }}>
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.4)', marginBottom: '1.25rem' }}>Archive</p>
+          <p style={{ fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 500, letterSpacing: '-0.015em', color: '#F2EFE6', lineHeight: 1.2, maxWidth: '480px' }}>
+            Earlier work from Lehigh and Pratt, 2014–2022.
+          </p>
+        </div>
+        <button onClick={() => onNavigate('archive')} style={{
+          background: 'none', border: '0.5px solid rgba(242,239,230,0.25)', cursor: 'pointer',
+          padding: '12px 24px', borderRadius: '2px',
+          fontSize: '13px', fontWeight: 500, color: '#F2EFE6',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          display: 'flex', alignItems: 'center', gap: '0.5rem',
+          flexShrink: 0,
+          transition: 'border-color 150ms, color 150ms',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = accent; e.currentTarget.style.color = accent; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(242,239,230,0.25)'; e.currentTarget.style.color = '#F2EFE6'; }}
+        >Browse archive →</button>
+      </div>
+    </section>
+  );
+};
+
+// ── HomePage ──────────────────────────────────────────────────────────────
+const HomePage = ({ onNavigate, tweaks }) => {
+  useReveal();
+  const showScroll = tweaks.workDisplay !== 'grid';
+  return (
+    <>
+      <Hero onNavigate={onNavigate} tweaks={tweaks} />
+      {showScroll
+        ? <ScrollWork onNavigate={onNavigate} tweaks={tweaks} />
+        : <ProjectGrid onNavigate={onNavigate} tweaks={tweaks} />
+      }
+      <ArchiveTeaser onNavigate={onNavigate} tweaks={tweaks} />
+      <Footer tweaks={tweaks} />
+    </>
+  );
+};
+
+// ── Tweaks panel ──────────────────────────────────────────────────────────
+const TweaksPanel = ({ tweaks, setTweaks, visible }) => {
+  if (!visible) return null;
+  const set = (key, val) => {
+    const next = { ...tweaks, [key]: val };
+    setTweaks(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
+    try { localStorage.setItem('lachler_tweaks', JSON.stringify(next)); } catch {}
+  };
+  const Chip = ({ val, cur, onSet, label }) => {
+    const active = cur === val;
+    return (
+      <button onClick={() => onSet(val)} style={{
+        background: active ? '#14211C' : 'transparent',
+        color: active ? '#F2EFE6' : '#14211C',
+        border: '0.5px solid rgba(20,33,28,0.2)', borderRadius: '3px',
+        padding: '4px 10px', fontSize: '12px', cursor: 'pointer',
+        fontFamily: "'Inter', system-ui, sans-serif",
+        marginRight: '6px', marginBottom: '6px',
+        transition: 'background 120ms, color 120ms',
+      }}>{label || val}</button>
+    );
+  };
+  const Row = ({ label, children }) => (
+    <div style={{ marginBottom: '1.25rem' }}>
+      <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.5rem' }}>{label}</p>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>{children}</div>
+    </div>
+  );
+  return (
+    <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999, background: '#F2EFE6', border: '0.5px solid rgba(20,33,28,0.18)', borderRadius: '4px', padding: '1.5rem', width: '240px', boxShadow: '0 4px 24px rgba(20,33,28,0.12)' }}>
+      <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Tweaks</p>
+      <Row label="Nav style">
+        {[['sticky','Sticky'],['floating','Float'],['minimal','Minimal']].map(([v,l]) => <Chip key={v} val={v} cur={tweaks.navStyle} onSet={v => set('navStyle',v)} label={l} />)}
+      </Row>
+      <Row label="Hero layout">
+        {[['default','Default'],['split','Split'],['large','Large']].map(([v,l]) => <Chip key={v} val={v} cur={tweaks.heroLayout} onSet={v => set('heroLayout',v)} label={l} />)}
+      </Row>
+      <Row label="Work display">
+        {[['scroll','Scroll'],['grid','Grid']].map(([v,l]) => <Chip key={v} val={v} cur={tweaks.workDisplay} onSet={v => set('workDisplay',v)} label={l} />)}
+      </Row>
+      <Row label="Accent color">
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          {['#D45A1B','#3D5448','#14211C'].map(c => (
+            <button key={c} onClick={() => set('accentColor', c)} style={{
+              width: '24px', height: '24px', borderRadius: '50%', background: c, border: 'none',
+              outline: tweaks.accentColor === c ? `3px solid ${c}` : 'none',
+              outlineOffset: '2px', cursor: 'pointer', transition: 'outline 120ms',
+            }} />
+          ))}
+        </div>
+      </Row>
+      <Row label="Motion">
+        {[['standard','Standard'],['reduced','Reduced'],['none','None']].map(([v,l]) => <Chip key={v} val={v} cur={tweaks.motionLevel} onSet={v => set('motionLevel',v)} label={l} />)}
+      </Row>
+    </div>
+  );
+};
+
+// ── App ───────────────────────────────────────────────────────────────────
+const App = () => {
+  const loadPage = () => { try { return localStorage.getItem('lachler_page') || 'home'; } catch { return 'home'; } };
+  const loadProject = () => { try { return localStorage.getItem('lachler_project') || 'feasibility'; } catch { return 'feasibility'; } };
+  const loadTweaks = () => {
+    try { return { ...TWEAK_DEFAULTS, ...JSON.parse(localStorage.getItem('lachler_tweaks') || '{}') }; }
+    catch { return TWEAK_DEFAULTS; }
+  };
+
+  const [page, setPage] = React.useState(loadPage);
+  const [projectId, setProjectId] = React.useState(loadProject);
+  const [pageKey, setPageKey] = React.useState(0);
+  const [tweaks, setTweaks] = React.useState(loadTweaks);
+  const [tweaksVisible, setTweaksVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const handler = e => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksVisible(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const navigate = (p, id) => {
+    if (p === 'project' && id) {
+      setProjectId(id);
+      try { localStorage.setItem('lachler_project', id); } catch {}
+    }
+    setPage(p);
+    setPageKey(k => k + 1);
+    try { localStorage.setItem('lachler_page', p); } catch {}
+    window.scrollTo({ top: 0, behavior: tweaks.motionLevel === 'none' ? 'auto' : 'smooth' });
+  };
+
+  const motionStyle = tweaks.motionLevel === 'none'
+    ? <style>{`*, *::before, *::after { transition: none !important; animation: none !important; }`}</style>
+    : tweaks.motionLevel === 'reduced'
+    ? <style>{`*, *::before, *::after { transition-duration: 80ms !important; animation-duration: 80ms !important; }`}</style>
+    : null;
+
+  // Home has dark hero — nav overlays it (fixed), so hero needs to fill behind nav
+  const isHomeDark = page === 'home';
+  const navTweaks = { ...tweaks, _darkBg: isHomeDark };
+
+  const pagesMap = {
+    home:    <HomePage onNavigate={navigate} tweaks={tweaks} />,
+    work:    <><WorkPage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    project: <><ProjectPage projectId={projectId} onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    archive: <><ArchivePage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    about:   <><AboutPage /><Footer tweaks={tweaks} /></>,
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {motionStyle}
+      <Nav page={page} onNavigate={navigate} tweaks={navTweaks} />
+      <div key={pageKey} className="page-enter" style={{ flex: 1 }}>
+        {pagesMap[page] || pagesMap.home}
+      </div>
+      <TweaksPanel tweaks={tweaks} setTweaks={setTweaks} visible={tweaksVisible} />
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
