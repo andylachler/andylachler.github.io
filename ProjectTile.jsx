@@ -26,6 +26,7 @@ const ArrowLink = ({ children, onClick, style = {} }) => {
 const tileBoxShadow = (bg, hovered) => {
   if (!hovered) return 'none';
   if (bg === '#14211C') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.10), 0px 8px 24px 0px rgba(20,33,28,0.25)';
+  if (bg === '#1A2520') return 'inset 0px 1px 0px 0px rgba(245,200,140,0.14), 0px 8px 28px 0px rgba(26,37,32,0.35)';
   if (bg === '#3D5448') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.15), 0px 8px 24px 0px rgba(61,84,72,0.25)';
   if (bg === '#D45A1B') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.20), 0px 4px 16px 0px rgba(212,90,27,0.31)';
   if (bg === '#2A3D34') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.10), 0px 8px 24px 0px rgba(20,33,28,0.25)';
@@ -36,6 +37,7 @@ const tileBoxShadow = (bg, hovered) => {
 // Inset highlight (always on dark tiles, subtle)
 const tileInset = (bg) => {
   if (bg === '#14211C') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.06)';
+  if (bg === '#1A2520') return 'inset 0px 1px 0px 0px rgba(245,200,140,0.10)';
   if (bg === '#3D5448') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.10)';
   if (bg === '#D45A1B') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.14)';
   if (bg === '#2A3D34') return 'inset 0px 1px 0px 0px rgba(255,255,255,0.06)';
@@ -96,6 +98,44 @@ const TilePlaceholder = ({ bg, index, hovered }) => {
         <rect key={i} x={100 - i * 4} y={20 + i * 24} width={200 + i * 8} height="18" fill="none" stroke="#F2EFE6" strokeWidth={i === 0 ? 1 : 0.6} opacity={1 - i * 0.07} />
       ))}
     </svg>,
+    // 6: Car silhouette + data-viz motif — AutoEase
+    <svg key={6} viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: hovered ? 0.32 : 0.22, transition: 'opacity 350ms ease-out' }}>
+      {/* Sparkline behind */}
+      <path d="M 10 190 Q 60 160 100 170 T 190 140 T 280 150 T 390 110" fill="none" stroke="#F5C88C" strokeWidth="1" opacity="0.55" />
+      <path d="M 10 220 Q 60 200 100 210 T 190 180 T 280 190 T 390 160" fill="none" stroke="#F5C88C" strokeWidth="0.5" opacity="0.28" />
+      {/* Horizon line */}
+      <line x1="0" y1="225" x2="400" y2="225" stroke="#F2EFE6" strokeWidth="0.5" opacity="0.4" />
+      {/* Gauge arc top-right */}
+      <g transform="translate(320, 60)">
+        <circle cx="0" cy="0" r="34" fill="none" stroke="#F2EFE6" strokeWidth="1.2" strokeDasharray="213.6" strokeDashoffset="53.4" strokeLinecap="round" transform="rotate(-90)" opacity="0.8" />
+        <circle cx="0" cy="0" r="34" fill="none" stroke="#F2EFE6" strokeWidth="0.5" opacity="0.18" />
+      </g>
+      {/* Data point dots */}
+      {[100, 190, 280, 390].map((x, i) => {
+        const ys = [170, 140, 150, 110];
+        return <circle key={i} cx={x} cy={ys[i]} r={i === 1 ? 2.5 : 1.5} fill="#F5C88C" opacity={i === 1 ? 1 : 0.5} />;
+      })}
+      {/* Car silhouette — SUV profile, centered on horizon */}
+      <g transform="translate(110, 145)" opacity="0.92">
+        {/* body */}
+        <path d="M 0 50 L 6 28 Q 10 22 18 20 L 40 14 Q 60 8 90 8 Q 120 8 140 14 L 162 20 Q 170 22 174 28 L 180 50 Z" fill="#F2EFE6" opacity="0.08" stroke="#F2EFE6" strokeWidth="1.1" />
+        {/* greenhouse / windows */}
+        <path d="M 30 22 L 45 12 Q 60 8 90 8 Q 120 8 135 12 L 150 22 Z" fill="none" stroke="#F2EFE6" strokeWidth="0.6" opacity="0.55" />
+        <line x1="90" y1="8" x2="90" y2="22" stroke="#F2EFE6" strokeWidth="0.4" opacity="0.4" />
+        {/* belt line */}
+        <line x1="6" y1="28" x2="174" y2="28" stroke="#F2EFE6" strokeWidth="0.4" opacity="0.35" />
+        {/* wheels */}
+        <circle cx="36" cy="50" r="10" fill="none" stroke="#F2EFE6" strokeWidth="1" />
+        <circle cx="36" cy="50" r="4" fill="#F2EFE6" opacity="0.35" />
+        <circle cx="144" cy="50" r="10" fill="none" stroke="#F2EFE6" strokeWidth="1" />
+        <circle cx="144" cy="50" r="4" fill="#F2EFE6" opacity="0.35" />
+      </g>
+      {/* Small marker above car */}
+      <g transform="translate(200, 118)" opacity="0.85">
+        <circle cx="0" cy="0" r="3" fill="#F5C88C" />
+        <circle cx="0" cy="0" r="7" fill="none" stroke="#F5C88C" strokeWidth="0.5" opacity="0.5" />
+      </g>
+    </svg>,
   ];
   return patterns[index % patterns.length] || patterns[0];
 };
@@ -118,7 +158,7 @@ const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featu
       onMouseLeave={() => setHovered(false)}
       style={{
         background: bg,
-        borderRadius: '24px',
+        borderRadius: '10px',
         padding: '1.5rem',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
         cursor: 'pointer', height: '100%', minHeight: featured ? '300px' : '220px',
@@ -137,7 +177,9 @@ const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featu
           ? 'linear-gradient(rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.06) 50%, rgba(0,0,0,0) 100%)'
           : 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%)',
       }} />
-        position: 'absolute', inset: 0,
+      {/* Hover tint overlay */}
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none',
         transition: 'background 250ms',
         background: hovered ? (light ? 'rgba(20,33,28,0.03)' : 'rgba(0,0,0,0.05)') : 'transparent',
       }} />

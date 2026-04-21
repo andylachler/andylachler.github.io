@@ -1,5 +1,44 @@
 // ProjectPage.jsx — Full case study template
 const PROJECT_DATA = {
+  'autoease': {
+    title: 'AutoEase',
+    org: 'Independent', year: '2026', role: 'Product Design',
+    bg: '#1A2520',
+    lede: 'Buying a used car is one of the largest consumer purchases people make, and one of the most distrusted interfaces they touch. AutoEase is a prototype that treats it like a financial decision, not a sales funnel.',
+    body: 'AutoEase is a self-directed research and design prototype exploring what a consumer car-buying tool looks like when it\u2019s shaped around transparency rather than lead capture. Built as a Next.js application with a full question flow, vehicle detail pages, Sell and Price Check side-flows, and a data-viz system that keeps the math visible at every step.',
+    process: [
+      'Started with interviews \u2014 seven participants who had bought, sold, or shopped for used cars in the last eighteen months. The pattern that kept surfacing wasn\u2019t confusion about cars, it was confusion about the interface layer between them and a car. Dealer sites obscure cost. Marketplaces hide trade-in value. Nothing showed the user where their money was actually going.',
+      'Translated that into a product architecture with four entry points \u2014 Browse, Answers (guided Q&A), Sell, and Price Check \u2014 each resolving a distinct user intent without forcing the others on them. The home page became a hub rather than a funnel.',
+      'Designed the core ranking surface around a Fit gauge, a stacked-bar cost visualization, and a reliability sparkline. Every number the product shows has its inputs one click away.',
+    ],
+    insights: [
+      { label: 'Trust is a UI problem', body: 'Dealer distrust wasn\u2019t ideological \u2014 it was interface. Every participant described moments where a dealer website felt like a trap door. The design response was to make math visible and reversible.' },
+      { label: 'Decisions outrun data', body: 'Buyers don\u2019t read spec sheets. They scan for a shape they recognize. That pushed the design toward a single primary metric per screen \u2014 Fit, Offer, Deal Score \u2014 with inputs available but not center-stage.' },
+      { label: 'Selling is shopping', body: 'People who sell a car are usually buying a different one. Keeping the Sell flow inside the same visual language as Browse wasn\u2019t cosmetic \u2014 it made the next step legible.' },
+    ],
+    designSystem: [
+      { label: 'Forest-deep palette', body: 'A single surface color anchors the dark pages. Amber is reserved for primary actions and live values. Sage carries secondary meaning. Three levels, not fifteen.' },
+      { label: 'Glass utility layer', body: 'glass-light, glass-dark, glass-warm \u2014 three treatments for cards that need to float over colored surfaces. Each uses backdrop-filter blur and a 1px inner highlight, tuned per background.' },
+      { label: 'Numeric type scale', body: 'Prices, offers, scores, and deltas all render in a dedicated numeric-xl class \u2014 tabular-nums, tight tracking, 56px at hero scale. Money should read as money.' },
+      { label: 'Data-viz primitives', body: 'Three components carry the viz load \u2014 Gauge (SVG stroke-dasharray ring), StackedBar (segmented horizontal with legend), Sparkline (quadratic-midpoint smooth curves). Shared color tokens so a deduction bar on the Offer page matches a cost segment on the Result page.' },
+    ],
+    influences: [
+      { label: 'Robinhood', body: 'For the numeric-first visual grammar. Big numbers, small chrome, deltas colored but not shouted. The way Robinhood treats a stock price is the way AutoEase treats a car price.' },
+      { label: 'Consumer Reports', body: 'For the reliability voice. Understated, evidence-linked, willing to tell the user a car is a bad idea.' },
+      { label: 'Editorial magazines', body: 'For the news surface \u2014 structured kind labels, restrained typography, and the courage to have whitespace.' },
+    ],
+    outcome: 'Prototype complete. Browse flow, guided Q&A with Fit ranking, Sell flow with instant offer and transparent deductions, Price Check flow with verdict scoring \u2014 all in a single Next.js build. Used as a portfolio-facing exploration of consumer-finance UI patterns applied to a non-finance domain.',
+    credits: 'Independent project. Research, product design, interaction design, and prototype build: Andreas L\u00e4chler.',
+    details: [
+      { label: 'Scope', value: 'Consumer app prototype' },
+      { label: 'Stack', value: 'Next.js 14 \u00b7 TS \u00b7 Tailwind' },
+      { label: 'Surfaces', value: 'Browse \u00b7 Answers \u00b7 Sell \u00b7 Price Check' },
+      { label: 'Status', value: 'Portfolio prototype' },
+    ],
+    tileBg: '#1A2520', imageIndex: 6,
+    interactiveUrl: '/autoease/',
+    next: 'feasibility',
+  },
   'feasibility': {
     title: 'Feasibility platform',
     org: 'Algoma', year: '2024', role: 'Product Design',
@@ -94,7 +133,7 @@ const PROJECT_DATA = {
     credits: 'Algoma. Product design: Andreas Lächler.',
     details: [{ label: 'Scope', value: 'Data visualization' }, { label: 'Type', value: 'Analytics surface' }, { label: 'Status', value: 'Shipped' }],
     tileBg: '#3D5448', imageIndex: 5,
-    next: 'feasibility',
+    next: 'autoease',
   },
 };
 window.PROJECT_DATA = PROJECT_DATA;
@@ -129,7 +168,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       <div style={{ ...fade(0), marginBottom: '4rem' }}>
         <div
           style={{
-            background: project.tileBg, borderRadius: '24px',
+            background: project.tileBg, borderRadius: '10px',
             height: 'clamp(280px, 32vw, 420px)',
             position: 'relative', overflow: 'hidden', cursor: 'default',
             transition: 'transform 0ms',
@@ -160,11 +199,34 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
             {project.body}
           </p>
 
-          {/* Detail images */}
-          <div style={{ ...fade(180), display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '0.625rem', marginBottom: '3rem' }}>
-            <DetailBlock imageIndex={project.imageIndex} bg={project.tileBg} hovered={false} />
-            <DetailBlock imageIndex={(project.imageIndex + 2) % 6} bg={['#3D5448','#14211C','#E8E4D5','#D45A1B','#3D5448','#14211C'][project.imageIndex]} hovered={false} />
-          </div>
+          {/* Detail visual — either an interactive iPhone-framed live embed
+              or the default tile-pair for static projects. */}
+          {project.interactiveUrl ? (
+            <div style={{ ...fade(180), marginBottom: '3rem', padding: '0.5rem 0', borderTop: '0.5px solid rgba(20,33,28,0.1)', borderBottom: '0.5px solid rgba(20,33,28,0.1)' }}>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginTop: '1.5rem', marginBottom: '0.5rem' }}>Try it out</p>
+              <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '0.5rem' }}>
+                The full prototype is embedded below. Tap the screen to launch — all four flows (Browse, Answers, Sell, Price Check) are wired up.
+              </p>
+              <TryItOut src={project.interactiveUrl} label={project.title} />
+            </div>
+          ) : (
+            <div style={{ ...fade(180), display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '0.625rem', marginBottom: '3rem' }}>
+              <DetailBlock imageIndex={project.imageIndex} bg={project.tileBg} hovered={false} />
+              <DetailBlock imageIndex={(project.imageIndex + 2) % 7} bg={['#3D5448','#14211C','#E8E4D5','#D45A1B','#3D5448','#14211C','#3D5448'][project.imageIndex]} hovered={false} />
+            </div>
+          )}
+
+          {project.insights && project.insights.length > 0 && (
+            <div style={{ ...fade(200), marginBottom: '2.5rem' }}>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Insights from research</p>
+              {project.insights.map((item, i) => (
+                <div key={i} style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: i < project.insights.length - 1 ? '0.5px solid rgba(20,33,28,0.08)' : 'none' }}>
+                  <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.01em' }}>{item.label}</p>
+                  <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(20,33,28,0.7)', margin: 0 }}>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div style={fade(220)}>
             <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Process</p>
@@ -172,6 +234,32 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
               <p key={i} style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.7)', marginBottom: '1.25rem' }}>{para}</p>
             ))}
           </div>
+
+          {project.designSystem && project.designSystem.length > 0 && (
+            <div style={{ ...fade(240), marginTop: '2.5rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Design system</p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
+                {project.designSystem.map((item, i) => (
+                  <div key={i} style={{ padding: '1.25rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)' }}>
+                    <p style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.005em' }}>{item.label}</p>
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {project.influences && project.influences.length > 0 && (
+            <div style={{ ...fade(250), marginTop: '2.5rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Influences</p>
+              {project.influences.map((item, i) => (
+                <div key={i} style={{ marginBottom: '1rem', display: 'grid', gridTemplateColumns: '140px 1fr', gap: '1.25rem', alignItems: 'baseline' }}>
+                  <p style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '0.01em' }}>{item.label}</p>
+                  <p style={{ fontSize: '14px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div style={{ ...fade(260), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginTop: '2.5rem' }}>
             <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Current state</p>
@@ -225,7 +313,7 @@ const NextProjectCard = ({ project, onNavigate }) => {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: project.tileBg, borderRadius: '24px',
+        background: project.tileBg, borderRadius: '10px',
         padding: '2rem 2.5rem', cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'relative', overflow: 'hidden',

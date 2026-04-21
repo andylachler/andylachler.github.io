@@ -1,0 +1,79 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <title>AutoEase — home hero</title>
+
+  <!-- Sky: soft bone-to-khaki gradient -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EDE7D8"/>
+      <stop offset="55%" stop-color="#E0D7C2"/>
+      <stop offset="100%" stop-color="#C4B393"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.72" cy="0.65" r="0.28">
+      <stop offset="0%" stop-color="#D9A441" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#D9A441" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#D9A441" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7A8471"/>
+      <stop offset="100%" stop-color="#2B3A2F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky field -->
+  <rect width="800" height="600" fill="url(#sky)"/>
+
+  <!-- Warm horizon glow (low sun) -->
+  <rect width="800" height="600" fill="url(#sun)"/>
+
+  <!-- Distant mountain layer (pale forest) -->
+  <path d="M0,380 L90,340 L160,360 L240,320 L320,345 L400,310 L480,335 L560,305 L640,330 L720,315 L800,330 L800,420 L0,420 Z"
+        fill="#7A8471" opacity="0.55"/>
+
+  <!-- Closer treeline -->
+  <path d="M0,420 L40,400 L80,415 L120,395 L160,410 L200,395 L250,405 L290,390 L340,405 L390,395 L440,408 L490,395 L540,410 L590,398 L640,412 L690,400 L740,415 L800,402 L800,470 L0,470 Z"
+        fill="#2B3A2F" opacity="0.85"/>
+
+  <!-- Road / foreground ground -->
+  <rect x="0" y="470" width="800" height="130" fill="url(#ground)"/>
+
+  <!-- Road strip — subtle perspective -->
+  <path d="M360,470 L440,470 L520,600 L280,600 Z" fill="#1A2520" opacity="0.55"/>
+  <path d="M398,500 L402,500 L404,540 L396,540 Z" fill="#D9A441" opacity="0.75"/>
+  <path d="M398,560 L402,560 L405,600 L395,600 Z" fill="#D9A441" opacity="0.75"/>
+
+  <!-- Crossover silhouette, facing away, centered on the road -->
+  <g transform="translate(345,420)" fill="#1A2520">
+    <!-- roof + body -->
+    <path d="M10,38
+             Q14,20 28,18
+             L82,18
+             Q96,20 100,38
+             L100,54
+             Q96,60 88,60
+             L82,60
+             Q80,55 72,55
+             L38,55
+             Q30,55 28,60
+             L22,60
+             Q14,60 10,54 Z"/>
+    <!-- greenhouse (windows) -->
+    <path d="M22,38
+             Q26,24 36,22
+             L74,22
+             Q84,24 88,38
+             L88,40
+             L22,40 Z"
+          fill="#EDE7D8" opacity="0.35"/>
+    <!-- tail lights -->
+    <rect x="14" y="46" width="6" height="3" rx="1" fill="#D9A441" opacity="0.9"/>
+    <rect x="90" y="46" width="6" height="3" rx="1" fill="#D9A441" opacity="0.9"/>
+    <!-- wheels -->
+    <circle cx="28" cy="60" r="6" fill="#1A2520"/>
+    <circle cx="82" cy="60" r="6" fill="#1A2520"/>
+    <circle cx="28" cy="60" r="3" fill="#7A8471" opacity="0.6"/>
+    <circle cx="82" cy="60" r="3" fill="#7A8471" opacity="0.6"/>
+  </g>
+
+  <!-- Subtle grain overlay, bottom vignette -->
+  <rect x="0" y="520" width="800" height="80" fill="#1A2520" opacity="0.25"/>
+</svg>

@@ -37,7 +37,7 @@ const ScrollWork = ({ onNavigate, tweaks = {} }) => {
 
         {/* Section label */}
         <div style={{ padding: '3rem 2.5rem 0', maxWidth: '1400px', margin: '0 auto', width: '100%', display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: accentColor }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>
             Selected Work
           </p>
           <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.35)' }}>
@@ -114,7 +114,7 @@ const ProjectInfoPanel = ({ project, active, onNavigate, accentColor }) => {
           position: 'relative', overflow: 'hidden',
           background: accentColor,
           border: '1px solid rgba(255,255,255,0.20)', cursor: 'pointer',
-          padding: '12px 24px', borderRadius: '14px',
+          padding: '12px 24px', borderRadius: '10px',
           fontSize: '14px', fontWeight: 500,
           color: '#F2EFE6',
           fontFamily: "'Inter', system-ui, sans-serif",
@@ -149,7 +149,7 @@ const ScrollTileVisual = ({ project, active, onNavigate }) => {
       style={{
         position: 'absolute', inset: 0,
         background: project.tileBg,
-        borderRadius: '24px',
+        borderRadius: '10px',
         cursor: 'pointer',
         opacity: active ? 1 : 0,
         transform: active ? 'scale(1) translateY(0)' : 'scale(0.97) translateY(16px)',

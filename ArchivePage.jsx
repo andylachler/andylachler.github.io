@@ -1,13 +1,16 @@
 // ArchivePage.jsx
+const ARCHIVE_ITEMS = [
+  { title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Thesis', desc: 'Structural and spatial investigation into mesa-top habitation. Studio thesis, Pratt School of Architecture.', bg: '#3D5448', imageIndex: 0 },
+  { title: 'Fluxing', year: '2020', org: 'Pratt Institute', type: 'Studio project', desc: 'Abstract paper architecture exploring form and movement without gravitational constraint.', bg: '#14211C', imageIndex: 1 },
+  { title: 'Mass Studies', year: '2019', org: 'Pratt Institute', type: 'Studio project', desc: 'Volumetric composition studies. Material: chipboard and basswood.', bg: '#E8E4D5', imageIndex: 2 },
+  { title: 'Urban Threshold', year: '2018', org: 'Lehigh University', type: 'Studio project', desc: 'Adaptive reuse examining threshold conditions in urban context.', bg: '#3D5448', imageIndex: 3 },
+  { title: 'Lehigh Paper Architecture', year: '2017', org: 'Lehigh University', type: 'Studio work', desc: 'Form and composition work from undergraduate studio. No program, no gravity.', bg: '#14211C', imageIndex: 4 },
+  { title: 'Surface Studies', year: '2016', org: 'Lehigh University', type: 'Studio work', desc: 'Material and surface explorations. Hand-built models.', bg: '#E8E4D5', imageIndex: 5 },
+];
+window.ARCHIVE_ITEMS = ARCHIVE_ITEMS;
+
 const ArchivePage = ({ onNavigate }) => {
-  const items = [
-    { title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Thesis', desc: 'Structural and spatial investigation into mesa-top habitation. Studio thesis, Pratt School of Architecture.', bg: '#3D5448' },
-    { title: 'Fluxing', year: '2020', org: 'Pratt Institute', type: 'Studio project', desc: 'Abstract paper architecture exploring form and movement without gravitational constraint.', bg: '#14211C' },
-    { title: 'Mass Studies', year: '2019', org: 'Pratt Institute', type: 'Studio project', desc: 'Volumetric composition studies. Material: chipboard and basswood.', bg: '#E8E4D5' },
-    { title: 'Urban Threshold', year: '2018', org: 'Lehigh University', type: 'Studio project', desc: 'Adaptive reuse examining threshold conditions in urban context.', bg: '#3D5448' },
-    { title: 'Lehigh Paper Architecture', year: '2017', org: 'Lehigh University', type: 'Studio work', desc: 'Form and composition work from undergraduate studio. No program, no gravity.', bg: '#14211C' },
-    { title: 'Surface Studies', year: '2016', org: 'Lehigh University', type: 'Studio work', desc: 'Material and surface explorations. Hand-built models.', bg: '#E8E4D5' },
-  ];
+  const items = ARCHIVE_ITEMS;
 
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '5rem 2.5rem' }}>
@@ -41,7 +44,7 @@ const ArchiveTile = ({ item }) => {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: item.bg, borderRadius: '3px', padding: '1.5rem',
+        background: item.bg, borderRadius: '10px', padding: '1.5rem',
         minHeight: '180px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
         border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
         cursor: 'default',
