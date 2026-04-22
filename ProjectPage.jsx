@@ -36,7 +36,7 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'Portfolio prototype' },
     ],
     tileBg: '#1A2520', imageIndex: 6,
-    interactiveUrl: '/autoease/',
+    interactiveUrl: 'https://autoease-prototype.vercel.app/',
     next: 'feasibility',
   },
   'feasibility': {
