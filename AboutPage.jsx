@@ -1,6 +1,6 @@
 // AboutPage.jsx
 const AboutPage = () => (
-  <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '5rem 2.5rem' }}>
+  <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '8.5rem 2.5rem 5rem' }}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', maxWidth: '960px' }}>
       {/* Bio */}
       <div>

@@ -1,12 +1,11 @@
 // ProjectGrid.jsx
+// Four canonical projects — Site search, Zoning chat, and Comps analysis are folded
+// into the Feasibility platform case study rather than standing as separate entries.
 const PROJECTS = [
   { id: 'autoease', title: 'AutoEase', org: 'Independent', year: '2026', role: 'Product Design — consumer car-buying prototype', bg: '#1A2520', featured: true, imageIndex: 6 },
-  { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Design — full product surface', bg: '#3D5448', featured: true, imageIndex: 0 },
-  { id: 'site-search', title: 'Site search', org: 'Algoma', year: '2024', role: 'Product Design — search + map interface', bg: '#14211C', featured: false, imageIndex: 1 },
-  { id: 'zoning-chat', title: 'Zoning chat', org: 'Algoma', year: '2024', role: 'Product Design — conversational UI', bg: '#E8E4D5', featured: true, imageIndex: 3 },
-  { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: false, imageIndex: 2 },
-  { id: 'brickell', title: 'Brickell residential', org: 'Arquitectonica', year: '2023', role: 'Architecture — 32-unit multifamily', bg: '#14211C', featured: false, imageIndex: 4 },
-  { id: 'comps', title: 'Comps analysis', org: 'Algoma', year: '2024', role: 'Product Design — data visualization', bg: '#3D5448', featured: false, imageIndex: 5 },
+  { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Design — AI platform for real estate feasibility', bg: '#3D5448', featured: true, imageIndex: 0 },
+  { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: true, imageIndex: 2 },
+  { id: 'brickell', title: 'Brickell residential', org: 'Arquitectonica', year: '2023', role: 'Architecture — 32-unit multifamily', bg: '#14211C', featured: true, imageIndex: 4 },
 ];
 
 // expose so other pages can reference
@@ -48,14 +47,10 @@ const ProjectGrid = ({ onNavigate, tweaks = {} }) => {
   );
 
   const renderThree = () => (
-    <>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.625rem', marginBottom: '0.625rem' }}>
-        {PROJECTS.slice(0, 3).map(p => <ProjectTile key={p.id} {...p} onNavigate={onNavigate} featured={false} />)}
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.625rem' }}>
-        {PROJECTS.slice(3, 6).map(p => <ProjectTile key={p.id} {...p} onNavigate={onNavigate} featured={false} />)}
-      </div>
-    </>
+    // 4 tiles over 2 rows of 2 on narrow screens, 4-up on wide
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.625rem' }}>
+      {PROJECTS.map(p => <ProjectTile key={p.id} {...p} onNavigate={onNavigate} featured={false} />)}
+    </div>
   );
 
   return (

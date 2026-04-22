@@ -53,7 +53,7 @@ const PROJECT_DATA = {
     credits: 'Algoma. Product design: Andreas Lächler.',
     details: [{ label: 'Scope', value: 'Full product surface' }, { label: 'Type', value: 'AI platform' }, { label: 'Status', value: 'Active' }],
     tileBg: '#3D5448', imageIndex: 0,
-    next: 'site-search',
+    next: 'ella',
   },
   'site-search': {
     title: 'Site search',
@@ -94,7 +94,7 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'CD 90% \u00b7 Complete 2026' },
     ],
     tileBg: '#D45A1B', imageIndex: 2,
-    next: 'zoning-chat',
+    next: 'brickell',
   },
   'zoning-chat': {
     title: 'Zoning chat',
@@ -126,7 +126,7 @@ const PROJECT_DATA = {
     credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
     details: [{ label: 'Program', value: '32-unit residential' }, { label: 'Location', value: 'Brickell, Miami' }, { label: 'Structure', value: 'Mass timber' }],
     tileBg: '#14211C', imageIndex: 4,
-    next: 'comps',
+    next: 'autoease',
   },
   'comps': {
     title: 'Comps analysis',
@@ -171,7 +171,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
   const heroMuted = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
 
   return (
-    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2.5rem 6rem' }}>
+    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '8.5rem 2.5rem 6rem' }}>
 
       {/* Hero tile */}
       <div style={{ ...fade(0), marginBottom: '4rem' }}>

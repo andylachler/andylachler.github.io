@@ -1,27 +1,25 @@
-// ScrollWork.jsx — hybrid: first N projects get pinned/cinematic treatment,
-// the rest render as a compact grid below. Cuts total scroll travel and
-// keeps the section reading as a single chapter.
+// ScrollWork.jsx — v2: single unified section. All projects get the pinned cinematic
+// treatment on desktop; on mobile, we ditch pinning (which felt jarring at touch-scroll
+// speeds) and render the same projects as clean stacked cards.
 const ScrollWork = ({ onNavigate, tweaks = {} }) => {
   const { accentColor = '#D45A1B' } = tweaks;
   const projects = window.PROJECTS || [];
-
-  // Hybrid split: first 2 are hero treatment, rest are grid
-  const FEATURED_COUNT = Math.min(2, projects.length);
-  const featured = projects.slice(0, FEATURED_COUNT);
-  const rest = projects.slice(FEATURED_COUNT);
+  const isMobile = window.useIsMobile ? useIsMobile(768) : false;
 
   return (
     <section style={{ background: '#F2EFE6', position: 'relative' }}>
-      {/* Chapter header — announces the section as a landmark */}
+      {/* Chapter header */}
       <div style={{
-        maxWidth: '1400px', margin: '0 auto', padding: '6rem 2.5rem 2.5rem',
+        maxWidth: '1400px', margin: '0 auto',
+        padding: isMobile ? '4.5rem 1.5rem 2rem' : '6rem 2.5rem 2.5rem',
         display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '2rem',
+        flexWrap: 'wrap',
       }}>
         <div>
           <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>
             Selected Work
           </p>
-          <h2 style={{ fontSize: 'clamp(30px, 3.5vw, 44px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: '#14211C', margin: 0, maxWidth: '720px' }}>
+          <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: '#14211C', margin: 0, maxWidth: '720px' }}>
             Product design, research,<br />and architecture.
           </h2>
         </div>
@@ -36,34 +34,16 @@ const ScrollWork = ({ onNavigate, tweaks = {} }) => {
         </button>
       </div>
 
-      {/* Featured (pinned cinematic) */}
-      <FeaturedPinned projects={featured} onNavigate={onNavigate} accentColor={accentColor} />
-
-      {/* Remaining grid */}
-      {rest.length > 0 && (
-        <div style={{
-          maxWidth: '1400px', margin: '0 auto',
-          padding: '4rem 2.5rem 6rem',
-        }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>
-            More work
-          </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-            gap: '0.75rem',
-          }}>
-            {rest.map(p => (
-              <CompactProjectCard key={p.id} project={p} onNavigate={onNavigate} accentColor={accentColor} />
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Desktop: pinned cinematic scroll. Mobile: stacked cards. */}
+      {isMobile
+        ? <StackedProjects projects={projects} onNavigate={onNavigate} accentColor={accentColor} />
+        : <FeaturedPinned projects={projects} onNavigate={onNavigate} accentColor={accentColor} />
+      }
     </section>
   );
 };
 
-// ── Pinned featured ───────────────────────────────────────────────────────
+// ── Pinned cinematic (desktop) ───────────────────────────────────────────────
 const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const containerRef = React.useRef(null);
@@ -79,8 +59,6 @@ const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
           const scrollable = Math.max(1, containerH - window.innerHeight);
           const scrolled = Math.max(0, -rect.top);
           const progress = Math.min(1, scrolled / scrollable);
-          // Smooth index selection with a small overshoot so the second panel
-          // takes over a hair before the user hits the end
           const idx = Math.min(
             projects.length - 1,
             Math.floor(progress * projects.length * 0.999)
@@ -96,14 +74,15 @@ const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [projects.length]);
 
-  // Reduced travel: 100vh per panel (was 100vh per panel × 6 = 600vh total)
-  const totalHeight = `${projects.length * 100}vh`;
+  // 80vh per panel rather than 100vh — keeps 4 projects from sprawling into 400vh
+  // of dead scroll, and the end-of-pin handoff lands inside the next panel cleanly.
+  const panelVh = 80;
+  const totalHeight = `${projects.length * panelVh}vh`;
 
   return (
     <section ref={containerRef} style={{ position: 'relative', height: totalHeight, background: '#F2EFE6' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
 
-        {/* Index counter */}
         <div style={{ padding: '2rem 2.5rem 0', maxWidth: '1400px', margin: '0 auto', width: '100%', display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>
             Featured
@@ -113,7 +92,6 @@ const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
           </span>
         </div>
 
-        {/* Two-column content */}
         <div style={{
           flex: 1, display: 'grid',
           gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
@@ -144,7 +122,6 @@ const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
           </div>
         </div>
 
-        {/* Progress bar */}
         <div style={{ height: '2px', background: 'rgba(20,33,28,0.08)', position: 'relative' }}>
           <div style={{
             position: 'absolute', left: 0, top: 0, bottom: 0,
@@ -158,7 +135,72 @@ const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
   );
 };
 
-// ── Info panel ────────────────────────────────────────────────────────────
+// ── Mobile: stacked projects ─────────────────────────────────────────────────
+// On mobile, pinned scroll + cross-fade reads as jarring — the panel flips at a
+// single scroll-depth threshold and there's no tile to anchor the eye. Plain
+// stacked cards are more legible, match the tile language from the rest of the
+// site, and still let the user scroll through all four quickly.
+const StackedProjects = ({ projects, onNavigate, accentColor }) => (
+  <div style={{
+    maxWidth: '600px', margin: '0 auto',
+    padding: '1rem 1.5rem 4rem',
+    display: 'flex', flexDirection: 'column', gap: '1rem',
+  }}>
+    {projects.map(p => (
+      <MobileProjectCard key={p.id} project={p} onNavigate={onNavigate} accentColor={accentColor} />
+    ))}
+  </div>
+);
+
+const MobileProjectCard = ({ project, onNavigate, accentColor }) => {
+  const tileBg = project.bg || project.tileBg;
+  const light = tileBg === '#E8E4D5' || tileBg === '#F2EFE6';
+  const tc = light ? '#14211C' : '#F2EFE6';
+  const mc = light ? 'rgba(20,33,28,0.55)' : 'rgba(242,239,230,0.55)';
+
+  return (
+    <button
+      onClick={() => onNavigate('project', project.id)}
+      style={{
+        textAlign: 'left', cursor: 'pointer',
+        background: tileBg,
+        borderRadius: '10px', padding: 0,
+        border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
+        overflow: 'hidden', position: 'relative',
+        fontFamily: "'Inter', system-ui, sans-serif",
+      }}
+    >
+      {/* Visual */}
+      <div style={{ position: 'relative', aspectRatio: '16 / 10', overflow: 'hidden' }}>
+        {window.TilePlaceholder && <TilePlaceholder bg={tileBg} index={project.imageIndex} hovered={false} />}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: light
+            ? 'linear-gradient(rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 60%, transparent 100%)'
+            : 'linear-gradient(rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 60%, transparent 100%)',
+          pointerEvents: 'none',
+        }} />
+      </div>
+      {/* Meta */}
+      <div style={{ padding: '1rem 1.25rem 1.25rem' }}>
+        <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mc, margin: '0 0 0.35rem' }}>
+          {project.org} · {project.year}
+        </p>
+        <p style={{ fontSize: '17px', fontWeight: 500, color: tc, margin: '0 0 0.35rem', lineHeight: 1.25 }}>
+          {project.title}
+        </p>
+        <p style={{ fontSize: '13px', color: mc, margin: 0, lineHeight: 1.5 }}>
+          {project.role}
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.9rem', color: tc, fontSize: '13px', fontWeight: 500 }}>
+          View project <span>→</span>
+        </div>
+      </div>
+    </button>
+  );
+};
+
+// ── Info panel (desktop pinned) ─────────────────────────────────────────────
 const ProjectInfoPanel = ({ project, active, onNavigate, accentColor }) => {
   const [hov, setHov] = React.useState(false);
   return (
@@ -209,7 +251,7 @@ const ProjectInfoPanel = ({ project, active, onNavigate, accentColor }) => {
   );
 };
 
-// ── Tile visual ───────────────────────────────────────────────────────────
+// ── Tile visual (desktop pinned) ────────────────────────────────────────────
 const ScrollTileVisual = ({ project, active, onNavigate }) => {
   const [hov, setHov] = React.useState(false);
   const tileBg = project.bg || project.tileBg;
@@ -254,60 +296,4 @@ const ScrollTileVisual = ({ project, active, onNavigate }) => {
   );
 };
 
-// ── Compact grid card (for non-featured projects) ─────────────────────────
-const CompactProjectCard = ({ project, onNavigate, accentColor }) => {
-  const [hov, setHov] = React.useState(false);
-  const tileBg = project.bg || project.tileBg;
-  const light = tileBg === '#E8E4D5' || tileBg === '#F2EFE6';
-
-  return (
-    <button
-      onClick={() => onNavigate('project', project.id)}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-        textAlign: 'left', fontFamily: "'Inter', system-ui, sans-serif",
-        display: 'flex', flexDirection: 'column', gap: '0.75rem',
-      }}
-    >
-      <div style={{
-        position: 'relative',
-        aspectRatio: '4 / 3',
-        background: tileBg,
-        borderRadius: '10px',
-        overflow: 'hidden',
-        border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
-        transform: hov ? 'translateY(-2px)' : 'translateY(0)',
-        transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1)',
-      }}>
-        {window.TilePlaceholder && <TilePlaceholder bg={tileBg} index={project.imageIndex} hovered={hov} />}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: hov ? 'rgba(0,0,0,0.05)' : 'rgba(0,0,0,0)',
-          transition: 'background 250ms',
-        }} />
-        <div style={{
-          position: 'absolute', top: '1rem', right: '1rem',
-          opacity: hov ? 1 : 0,
-          transform: hov ? 'translate(0,0)' : 'translate(-4px, 4px)',
-          transition: 'opacity 180ms, transform 180ms',
-          fontSize: '16px',
-          color: light ? '#14211C' : '#F2EFE6',
-        }}>→</div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem' }}>
-        <div>
-          <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', marginBottom: '0.15rem', letterSpacing: '-0.005em' }}>
-            {project.title}
-          </p>
-          <p style={{ fontSize: '12px', color: 'rgba(20,33,28,0.45)' }}>
-            {project.org} · {project.year}
-          </p>
-        </div>
-      </div>
-    </button>
-  );
-};
-
-Object.assign(window, { ScrollWork, FeaturedPinned, ProjectInfoPanel, ScrollTileVisual, CompactProjectCard });
+Object.assign(window, { ScrollWork, FeaturedPinned, StackedProjects, MobileProjectCard, ProjectInfoPanel, ScrollTileVisual });
