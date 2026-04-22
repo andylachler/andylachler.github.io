@@ -13,7 +13,7 @@ const ARCHIVE_ITEMS = [
   // ── Featured ───────────────────────────────────────────────────────────
   { id: 'fluxing', title: 'Fluxing', year: '2022', org: 'Pratt Institute', type: 'Graduate thesis', desc: 'A field station on Newtown Creek that diverts a combined sewer outflow through the building \u2014 making the city\u2019s waste visible and softening the boundary between urban and natural.', bg: '#14211C', imageIndex: 0, featured: true },
   { id: 'pastoral-urbanity', title: 'Pastoral Urbanity', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A speculative expansion of Farragut Houses in Brooklyn, framed as commons-based housing. Derived from a Grasshopper aggregation script tuned to stack outdoor commons below and private residence above.', bg: '#3D5448', imageIndex: 1, featured: true },
-  { id: 'mesa-verde', title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Graduate CAP studio', desc: 'A Waste-to-Energy plant and nightclub on the Anable Basin in Long Island City. Concrete paraboloid "mesas" cluster out of an existing warehouse and organize the program where their bases intersect.', bg: '#D45A1B', imageIndex: 2, featured: true },
+  { id: 'mesa-verde', title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Graduate CAP studio', desc: 'A Waste-to-Energy plant and nightclub on the Anable Basin in Long Island City. Concrete paraboloid "mesas" cluster out of an existing warehouse and organize the program where their bases intersect.', bg: '#D45A1B', imageIndex: 2, silhouette: 'mesa-verde', featured: true },
   { id: 'elevate-ravenswood', title: 'Elevate Ravenswood', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A mixed-use sports, education, and community-health building for the Ravenswood Community Land Trust. Mass timber, Vierendeel trusses, and a sunken basketball arena programmed to stay visible from the street.', bg: '#3D5448', imageIndex: 3, featured: true },
   { id: 'unit-multiplication', title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Independent study', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4, featured: true },
 
@@ -75,7 +75,7 @@ const ARCHIVE_DATA = {
   'mesa-verde': {
     title: 'Mesa Verde',
     org: 'Pratt Institute', year: '2021', role: 'Graduate CAP studio',
-    bg: '#D45A1B', tileBg: '#D45A1B', imageIndex: 2,
+    bg: '#D45A1B', tileBg: '#D45A1B', imageIndex: 2, silhouette: 'mesa-verde',
     lede: 'A Waste-to-Energy plant and nightclub on the Anable Basin in Long Island City. Concrete paraboloid "mesas" cluster out of an existing warehouse and organize program where their bases intersect.',
     body: 'Mesa Verde was our spring 2021 Pratt CAP studio project (Prof. Gisela Bauermann, partner John D\u2019Onofrio). The brief combined a working Waste-to-Energy plant with a nightclub on the same parcel \u2014 infrastructure and nightlife in dialogue. The proposal organizes that combination as a cluster of concrete paraboloid forms rising out of an existing warehouse, each one tuned structurally and materially to the program it carries.',
     process: [
@@ -300,8 +300,10 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
         boxShadow: shadow,
       }}
     >
-      {/* Background SVG pattern — matches the homepage tile language */}
-      {window.TilePlaceholder && <TilePlaceholder bg={bg} index={item.imageIndex} hovered={hov} />}
+      {/* Background SVG pattern — matches the homepage tile language. If the
+          archive entry tags a `silhouette`, TilePlaceholder will render the
+          project-specific outline instead of the generic pattern. */}
+      {window.TilePlaceholder && <TilePlaceholder bg={bg} index={item.imageIndex} hovered={hov} silhouette={item.silhouette} />}
 
       {/* Top-down shimmer */}
       <div style={{
@@ -390,7 +392,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
             border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
           }}
         >
-          {window.TilePlaceholder && <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} />}
+          {window.TilePlaceholder && <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} />}
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
             background: light

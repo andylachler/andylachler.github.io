@@ -44,8 +44,57 @@ const tileInset = (bg) => {
   return 'none';
 };
 
+// Project-specific silhouettes — used for archive tiles where we want the
+// pattern to *read as* the project, not as generic architecture. Each entry
+// is a viewBox="0 0 400 260" SVG drawn against a ground line at y=230 so it
+// composes with the existing tile grammar. Forms are filled (not stroked)
+// because the source reference is a black silhouette, and we use a single
+// tone so the shapes read cleanly on any brand-color tile.
+const SILHOUETTES = {
+  // Mesa Verde — cluster of concrete paraboloid "mesas" emerging from a
+  // warehouse. Left→right: curled base, tall bottle, squat block, tallest
+  // pointed paraboloid, stepped block, stepped+cap, flat block, two
+  // swooping sails. Proportions match the attached reference outline.
+  'mesa-verde': (stroke, hovered) => (
+    <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%',
+        opacity: hovered ? 0.32 : 0.22, transition: 'opacity 350ms ease-out' }}>
+      <g fill={stroke}>
+        {/* 1 — curled boot base */}
+        <path d="M 10 230 L 10 118 Q 12 108 22 108 L 48 108 Q 58 108 58 120 L 58 188 Q 58 206 50 216 Q 42 224 32 228 L 32 230 Z" />
+        {/* 2 — tall narrow bottle */}
+        <path d="M 72 230 L 72 92 Q 72 80 78 76 L 78 62 L 92 62 L 92 76 Q 98 80 98 92 L 98 230 Z" />
+        {/* 3 — small squat block */}
+        <path d="M 103 230 L 103 164 L 119 164 L 119 230 Z" />
+        {/* 4 — tallest paraboloid (centerpiece) */}
+        <path d="M 124 230 Q 124 182 136 142 Q 148 94 158 14 Q 168 94 180 142 Q 192 182 192 230 Z" />
+        {/* 5 — stepped block, flat top */}
+        <path d="M 200 230 L 200 128 L 222 128 L 222 230 Z" />
+        {/* 6 — wider stepped block with cap */}
+        <path d="M 228 230 L 228 150 L 232 150 L 232 134 L 250 134 L 250 150 L 258 150 L 258 230 Z" />
+        {/* 7 — flat medium block */}
+        <path d="M 264 230 L 264 148 L 302 148 L 302 230 Z" />
+        {/* 8 — left swooping sail */}
+        <path d="M 308 230 Q 308 192 316 158 Q 326 112 340 70 Q 350 94 354 126 Q 358 158 358 200 L 358 230 Z" />
+        {/* 9 — right swooping sail (shorter) */}
+        <path d="M 362 230 Q 362 198 370 172 Q 378 146 384 138 Q 390 158 392 188 L 392 230 Z" />
+      </g>
+      {/* Ground line so forms sit on something */}
+      <line x1="0" y1="230" x2="400" y2="230" stroke={stroke} strokeWidth="0.6" opacity="0.55" />
+    </svg>
+  ),
+};
+
 // SVG architectural placeholder patterns
-const TilePlaceholder = ({ bg, index, hovered }) => {
+const TilePlaceholder = ({ bg, index, hovered, silhouette }) => {
+  // If a named silhouette is supplied, it wins — used for archive tiles
+  // where the pattern should read as the specific project.
+  if (silhouette && SILHOUETTES[silhouette]) {
+    // Stroke/fill color: cream on dark tiles, ink on light tiles.
+    const light = bg === '#F2EFE6' || bg === '#E8E4D5';
+    const tone = light ? '#14211C' : '#F2EFE6';
+    return SILHOUETTES[silhouette](tone, hovered);
+  }
   const patterns = [
     // 0: Dot grid — Feasibility platform
     <svg key={0} viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: hovered ? 0.22 : 0.14, transition: 'opacity 350ms ease-out' }}>
@@ -140,7 +189,7 @@ const TilePlaceholder = ({ bg, index, hovered }) => {
   return patterns[index % patterns.length] || patterns[0];
 };
 
-const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featured = false, imageIndex = 0, projectId, id }) => {
+const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featured = false, imageIndex = 0, silhouette, projectId, id }) => {
   const [hovered, setHovered] = React.useState(false);
   const light = bg === '#F2EFE6' || bg === '#E8E4D5';
   const textColor = light ? '#14211C' : '#F2EFE6';
@@ -169,7 +218,7 @@ const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featu
         position: 'relative', overflow: 'hidden',
       }}
     >
-      <TilePlaceholder bg={bg} index={imageIndex} hovered={hovered} />
+      <TilePlaceholder bg={bg} index={imageIndex} hovered={hovered} silhouette={silhouette} />
       {/* White shimmer overlay — top-to-bottom per Figma */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
