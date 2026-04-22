@@ -26,10 +26,10 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
       {/* Canvas parallax background */}
       <HeroBg />
 
-      {/* Gradient fade bottom → text legible */}
+      {/* Gradient fade bottom → text legible. Lower + shallower so the canvas breathes. */}
       <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, height: '65%',
-        background: 'linear-gradient(to bottom, transparent, #14211C 55%)',
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: '48%',
+        background: 'linear-gradient(to bottom, transparent, rgba(20,33,28,0.85) 60%, #14211C 100%)',
         pointerEvents: 'none',
       }} />
 
@@ -40,12 +40,12 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
         </p>
 
         {heroLayout === 'large' ? (
-          <h1 style={{ ...fade(350), fontSize: 'clamp(52px, 7vw, 88px)', fontWeight: 500, letterSpacing: '-0.025em', lineHeight: 1.04, color: '#F2EFE6', maxWidth: '900px', marginBottom: '3rem' }}>
+          <h1 style={{ ...fade(350), fontSize: 'clamp(60px, 8vw, 104px)', fontWeight: 500, letterSpacing: '-0.028em', lineHeight: 1.02, color: '#F2EFE6', maxWidth: '1100px', marginBottom: '3rem' }}>
             A product designer<br />trained as an architect.
           </h1>
         ) : heroLayout === 'split' ? (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'end', maxWidth: '1000px' }}>
-            <h1 style={{ ...fade(350), fontSize: 'clamp(36px, 4.5vw, 58px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.06, color: '#F2EFE6', margin: 0 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'end', maxWidth: '1100px' }}>
+            <h1 style={{ ...fade(350), fontSize: 'clamp(42px, 5.2vw, 68px)', fontWeight: 500, letterSpacing: '-0.022em', lineHeight: 1.04, color: '#F2EFE6', margin: 0 }}>
               A product designer<br />trained as an architect.
             </h1>
             <div style={fade(480)}>
@@ -57,7 +57,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
           </div>
         ) : (
           <>
-            <h1 style={{ ...fade(350), fontSize: 'clamp(44px, 5.5vw, 68px)', fontWeight: 500, letterSpacing: '-0.022em', lineHeight: 1.06, color: '#F2EFE6', maxWidth: '820px', marginBottom: '2.5rem' }}>
+            <h1 style={{ ...fade(350), fontSize: 'clamp(52px, 6.5vw, 84px)', fontWeight: 500, letterSpacing: '-0.024em', lineHeight: 1.04, color: '#F2EFE6', maxWidth: '960px', marginBottom: '2.5rem' }}>
               A product designer<br />trained as an architect.
             </h1>
             <p style={{ ...fade(500), fontSize: '18px', fontWeight: 400, lineHeight: 1.65, color: 'rgba(242,239,230,0.6)', maxWidth: '540px', marginBottom: '3rem' }}>
@@ -77,12 +77,18 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
             </div>
           </>
         )}
+      </div>
 
-        {/* Scroll indicator */}
-        <div style={{ ...fade(900), marginTop: '4rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
-          <span style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.3)' }}>Scroll</span>
-        </div>
+      {/* Scroll indicator — anchored to viewport bottom */}
+      <div style={{
+        ...fade(900),
+        position: 'absolute', bottom: '2rem', left: '50%', transform: mounted ? 'translate(-50%, 0)' : 'translate(-50%, 18px)',
+        zIndex: 10,
+        display: 'flex', alignItems: 'center', gap: '0.75rem',
+      }}>
+        <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
+        <span style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.35)' }}>Scroll</span>
+        <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
       </div>
     </section>
   );

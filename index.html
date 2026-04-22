@@ -110,14 +110,71 @@ const WorkPage = ({ onNavigate }) => {
 // ── Footer ────────────────────────────────────────────────────────────────
 const Footer = ({ tweaks = {} }) => {
   const accent = tweaks.accentColor || '#D45A1B';
+  const linkStyle = {
+    fontSize: '13px', color: 'rgba(20,33,28,0.6)', textDecoration: 'none',
+    fontFamily: "'Inter', system-ui, sans-serif",
+    transition: 'color 150ms',
+  };
+  const onEnter = e => e.target.style.color = accent;
+  const onLeave = e => e.target.style.color = 'rgba(20,33,28,0.6)';
   return (
-    <footer style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', padding: '2rem 2.5rem', maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <span style={{ fontSize: '13px', color: 'rgba(20,33,28,0.4)' }}>New York</span>
-      <a href="mailto:andy@lachler.com"
-        style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', textDecoration: 'none', borderBottom: '1px solid rgba(20,33,28,0.15)', paddingBottom: '1px' }}
-        onMouseEnter={e => e.target.style.color = accent}
-        onMouseLeave={e => e.target.style.color = '#14211C'}
-      >andy@lachler.com</a>
+    <footer style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', marginTop: '0' }}>
+      <div style={{
+        maxWidth: '1400px', margin: '0 auto',
+        padding: '3.5rem 2.5rem 2.5rem',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gap: '2.5rem',
+        alignItems: 'start',
+      }}>
+        {/* Primary — name + location */}
+        <div>
+          <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', marginBottom: '0.4rem', letterSpacing: '-0.005em' }}>
+            Andreas Lächler
+          </p>
+          <p style={{ fontSize: '13px', color: 'rgba(20,33,28,0.5)', lineHeight: 1.5 }}>
+            Product designer, New York.<br />
+            Open to conversations about design and real estate tech.
+          </p>
+        </div>
+
+        {/* Contact */}
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.9rem' }}>
+            Contact
+          </p>
+          <a href="mailto:andy@lachler.com" style={linkStyle} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+            andy@lachler.com
+          </a>
+        </div>
+
+        {/* Elsewhere */}
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.9rem' }}>
+            Elsewhere
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <a href="https://www.linkedin.com/in/andreaslachler/" target="_blank" rel="noopener noreferrer" style={linkStyle} onMouseEnter={onEnter} onMouseLeave={onLeave}>LinkedIn</a>
+            <a href="https://github.com/andylachler" target="_blank" rel="noopener noreferrer" style={linkStyle} onMouseEnter={onEnter} onMouseLeave={onLeave}>GitHub</a>
+            <a href="https://read.cv/andylachler" target="_blank" rel="noopener noreferrer" style={linkStyle} onMouseEnter={onEnter} onMouseLeave={onLeave}>Read.cv</a>
+          </div>
+        </div>
+      </div>
+
+      <div style={{
+        maxWidth: '1400px', margin: '0 auto',
+        padding: '1.25rem 2.5rem 1.75rem',
+        borderTop: '0.5px solid rgba(20,33,28,0.08)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        flexWrap: 'wrap', gap: '0.75rem',
+      }}>
+        <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.35)' }}>
+          © {new Date().getFullYear()} Andreas Lächler
+        </span>
+        <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.35)' }}>
+          Designed & built in New York
+        </span>
+      </div>
     </footer>
   );
 };
@@ -125,27 +182,33 @@ const Footer = ({ tweaks = {} }) => {
 // ── Archive section teaser (home) ─────────────────────────────────────────
 const ArchiveTeaser = ({ onNavigate, tweaks = {} }) => {
   const accent = tweaks.accentColor || '#D45A1B';
+  const [hov, setHov] = React.useState(false);
   return (
-    <section className="reveal" style={{ background: '#2A3D34', padding: '5rem 2.5rem' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem' }}>
+    <section className="reveal" style={{ background: '#F2EFE6', padding: '4rem 2.5rem 5rem', borderTop: '0.5px solid rgba(20,33,28,0.08)' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.4)', marginBottom: '1.25rem' }}>Archive</p>
-          <p style={{ fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 500, letterSpacing: '-0.015em', color: '#F2EFE6', lineHeight: 1.2, maxWidth: '480px' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Archive</p>
+          <h2 style={{ fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 500, letterSpacing: '-0.018em', color: '#14211C', lineHeight: 1.2, maxWidth: '520px', margin: 0 }}>
             Earlier work from Lehigh and Pratt, 2014–2022.
-          </p>
+          </h2>
         </div>
-        <button onClick={() => onNavigate('archive')} style={{
-          background: 'none', border: '0.5px solid rgba(242,239,230,0.25)', cursor: 'pointer',
-          padding: '12px 24px', borderRadius: '10px',
-          fontSize: '13px', fontWeight: 500, color: '#F2EFE6',
-          fontFamily: "'Inter', system-ui, sans-serif",
-          display: 'flex', alignItems: 'center', gap: '0.5rem',
-          flexShrink: 0,
-          transition: 'border-color 150ms, color 150ms',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = accent; e.currentTarget.style.color = accent; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(242,239,230,0.25)'; e.currentTarget.style.color = '#F2EFE6'; }}
-        >Browse archive →</button>
+        <button
+          onClick={() => onNavigate('archive')}
+          onMouseEnter={() => setHov(true)}
+          onMouseLeave={() => setHov(false)}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+            fontSize: '15px', fontWeight: 500,
+            color: hov ? accent : '#14211C',
+            fontFamily: "'Inter', system-ui, sans-serif",
+            transition: 'color 150ms',
+            flexShrink: 0,
+          }}
+        >
+          Browse archive
+          <span style={{ display: 'inline-block', transition: 'transform 150ms', transform: hov ? 'translateX(4px)' : 'none' }}>→</span>
+        </button>
       </div>
     </section>
   );
