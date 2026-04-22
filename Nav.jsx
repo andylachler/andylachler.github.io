@@ -62,7 +62,8 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
   const dropdownMuted = 'rgba(20,33,28,0.45)';
 
   const projects = (window.PROJECTS || []).slice(0, 6);
-  const archiveItems = window.ARCHIVE_ITEMS || [];
+  // Mirror the archive page: only the five `featured` projects surface in the nav.
+  const archiveItems = (window.ARCHIVE_ITEMS || []).filter(it => it.featured);
 
   return (
     <div style={{ position: 'fixed', top: 0, zIndex: 200, width: '100%', fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -200,14 +201,8 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
             )}
             {openMenu === 'archive' && (
               <DropdownCarousel
-                items={archiveItems.map((it, i) => ({
-                  id: 'archive-' + i,
-                  title: it.title,
-                  org: it.org,
-                  bg: it.bg,
-                  imageIndex: it.imageIndex,
-                }))}
-                onItemClick={() => { closeNow(); onNavigate('archive'); }}
+                items={archiveItems}
+                onItemClick={(id) => { closeNow(); onNavigate('archive-project', id); }}
                 ctaLabel="View all archive →"
                 onCta={() => { closeNow(); onNavigate('archive'); }}
                 accentColor={accentColor}
