@@ -1,4 +1,4 @@
-// Nav.jsx — v1.3: unified glass — dropdowns are natural downward expansion of the nav container
+// Nav.jsx — v1.4: centered links, split shell (square nav / rounded dropdown), mobile layout
 const AL_MARK = ({ color = '#14211C', size = 20 }) => (
   <svg viewBox="0 0 841.95 1113.38" width={size} height={size} style={{ display: 'block', flexShrink: 0 }}>
     <path d="M269.66 913.36H.38l458.74-688.12a73.75 73.75 0 0 1 61.35-32.83H645.7l-436.42 671.4H317.5" fill={color}/>
@@ -6,12 +6,27 @@ const AL_MARK = ({ color = '#14211C', size = 20 }) => (
   </svg>
 );
 
+// Viewport-width hook — true below breakpoint. Used to swap desktop pills for a hamburger.
+const useIsMobile = (bp = 768) => {
+  const [isMobile, setIsMobile] = React.useState(
+    typeof window !== 'undefined' ? window.innerWidth < bp : false
+  );
+  React.useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < bp);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [bp]);
+  return isMobile;
+};
+
 const Nav = ({ page, onNavigate, tweaks = {} }) => {
   const { navStyle = 'floating', accentColor = '#D45A1B' } = tweaks;
   const [scrolled, setScrolled] = React.useState(false);
   const [openMenu, setOpenMenu] = React.useState(null); // 'work' | 'archive' | 'about' | null
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const closeTimer = React.useRef(null);
   const isDarkHero = tweaks._darkBg;
+  const isMobile = useIsMobile(768);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -19,126 +34,155 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const open       = (m) => { clearTimeout(closeTimer.current); setOpenMenu(m); };
+  // Close the mobile sheet and any hover dropdown when we cross the breakpoint,
+  // otherwise state from one mode lingers into the other.
+  React.useEffect(() => {
+    if (isMobile) setOpenMenu(null);
+    else setMobileOpen(false);
+  }, [isMobile]);
+
+  const open          = (m) => { clearTimeout(closeTimer.current); setOpenMenu(m); };
   const scheduleClose = () => { closeTimer.current = setTimeout(() => setOpenMenu(null), 120); };
   const cancelClose   = () => { clearTimeout(closeTimer.current); };
-  const closeNow      = () => { clearTimeout(closeTimer.current); setOpenMenu(null); };
+  const closeNow      = () => { clearTimeout(closeTimer.current); setOpenMenu(null); setMobileOpen(false); };
 
   const menuOpen = openMenu !== null;
-  // When a menu is open, the nav engages its frosted state even over the dark hero —
-  // this keeps the expansion readable and feels like the nav "waking up".
-  const overDark = isDarkHero && !scrolled && !menuOpen;
+  // The nav "wakes up" to frosted state whenever any panel is open (dropdown or mobile sheet),
+  // so the surfaces read as a single continuous glass body over dark heroes.
+  const overDark = isDarkHero && !scrolled && !menuOpen && !mobileOpen;
 
   const navBg        = overDark ? 'transparent' : 'rgba(242,239,230,0.584)';
   const navBorder    = overDark ? '1px solid transparent' : '1px solid rgba(20,33,28,0.082)';
+  const panelBg      = 'rgba(242,239,230,0.584)'; // dropdown always frosted when visible
+  const panelBorder  = '1px solid rgba(20,33,28,0.082)';
   const textColor    = overDark ? '#F2EFE6' : '#14211C';
   const mutedColor   = overDark ? 'rgba(242,239,230,0.6)' : 'rgba(20,33,28,0.55)';
   const subColor     = overDark ? 'rgba(242,239,230,0.5)' : 'rgba(20,33,28,0.5)';
   const onDark       = overDark;
-  const dividerColor = 'rgba(20,33,28,0.082)';
   const dropdownMuted = 'rgba(20,33,28,0.45)';
 
   const projects = (window.PROJECTS || []).slice(0, 6);
   const archiveItems = window.ARCHIVE_ITEMS || [];
 
   return (
-    <div style={{ position: 'fixed', top: 0, zIndex: 200, width: '100%' }}>
+    <div style={{ position: 'fixed', top: 0, zIndex: 200, width: '100%', fontFamily: "'Inter', system-ui, sans-serif" }}>
       <style>{`.nav-carousel::-webkit-scrollbar{display:none}`}</style>
 
-      {/* Unified glass shell — nav + any open dropdown share this background, blur, and border.
-          Bottom corners carry a generous radius; top corners stay square against the viewport —
-          when the dropdown opens, the whole shape grows downward keeping the same rounded tail. */}
+      {/* Nav row — square corners on top and bottom. The dropdown panel below carries
+          the rounded tail so the nav itself stays as a clean rectangular strip. */}
       <div
-        onMouseLeave={scheduleClose}
+        onMouseLeave={!isMobile ? scheduleClose : undefined}
         style={{
           background: navBg,
           backdropFilter: overDark ? 'none' : 'blur(12px)',
           WebkitBackdropFilter: overDark ? 'none' : 'blur(12px)',
-          borderBottom: navBorder,
+          borderBottom: menuOpen ? 'none' : navBorder, // seam hidden when dropdown extends it
           borderLeft: overDark ? '1px solid transparent' : '1px solid rgba(20,33,28,0.082)',
           borderRight: overDark ? '1px solid transparent' : '1px solid rgba(20,33,28,0.082)',
-          borderRadius: '0 0 24px 24px',
-          overflow: 'hidden',
           transition: 'background 350ms cubic-bezier(0.22,1,0.36,1), border-color 350ms cubic-bezier(0.22,1,0.36,1)',
-          fontFamily: "'Inter', system-ui, sans-serif",
         }}
       >
-        {/* Nav row */}
         <nav style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 2.5rem', height: '80px',
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr auto' : '1fr auto 1fr',
+          alignItems: 'center',
+          padding: isMobile ? '0 1.25rem' : '0 2.5rem',
+          height: '80px',
+          gap: '1rem',
         }}>
-          {/* Wordmark + DESIGNER subline */}
+          {/* Wordmark + DESIGNER subline (left column) */}
           <button
-            onMouseEnter={() => setOpenMenu(null)}
+            onMouseEnter={() => !isMobile && setOpenMenu(null)}
             onClick={() => { closeNow(); onNavigate('home'); }}
             style={{
               background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-              display: 'flex', alignItems: 'center', gap: '10px', textAlign: 'left',
+              display: 'flex', alignItems: 'center', gap: '12px', textAlign: 'left',
+              justifySelf: 'start',
             }}
           >
-            <AL_MARK color={overDark ? '#D45A1B' : '#3D5448'} size={30} />
+            <AL_MARK color={overDark ? '#D45A1B' : '#3D5448'} size={38} />
             <div>
-              <div style={{ fontSize: '20px', fontWeight: 500, color: textColor, lineHeight: 1.2, letterSpacing: '0.004em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms' }}>
+              <div style={{ fontSize: isMobile ? '17px' : '20px', fontWeight: 500, color: textColor, lineHeight: 1.2, letterSpacing: '0.004em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms' }}>
                 Andreas Lächler
               </div>
-              <div style={{ fontSize: '12px', fontWeight: 400, color: subColor, letterSpacing: '0.06em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: isMobile ? '11px' : '12px', fontWeight: 400, color: subColor, letterSpacing: '0.06em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms', textTransform: 'uppercase' }}>
                 Designer
               </div>
             </div>
           </button>
 
-          {/* Nav links */}
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <div onMouseEnter={() => open('work')}>
-              <NavPill
-                active={page === 'work' || page === 'project'}
-                onClick={() => { closeNow(); onNavigate('work'); }}
-                accentColor={accentColor}
-                onDark={onDark}
-                textColor={textColor}
-                mutedColor={mutedColor}
-              >Work</NavPill>
-            </div>
+          {/* Center column — nav pills, only on desktop */}
+          {!isMobile && (
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifySelf: 'center' }}>
+              <div onMouseEnter={() => open('work')}>
+                <NavPill
+                  active={page === 'work' || page === 'project'}
+                  onClick={() => { closeNow(); onNavigate('work'); }}
+                  accentColor={accentColor}
+                  onDark={onDark}
+                  textColor={textColor}
+                  mutedColor={mutedColor}
+                >Work</NavPill>
+              </div>
 
-            <div onMouseEnter={() => open('archive')}>
-              <NavPill
-                active={page === 'archive'}
-                onClick={() => { closeNow(); onNavigate('archive'); }}
-                accentColor={accentColor}
-                onDark={onDark}
-                textColor={textColor}
-                mutedColor={mutedColor}
-              >Archive</NavPill>
-            </div>
+              <div onMouseEnter={() => open('archive')}>
+                <NavPill
+                  active={page === 'archive'}
+                  onClick={() => { closeNow(); onNavigate('archive'); }}
+                  accentColor={accentColor}
+                  onDark={onDark}
+                  textColor={textColor}
+                  mutedColor={mutedColor}
+                >Archive</NavPill>
+              </div>
 
-            <div onMouseEnter={() => open('about')}>
-              <NavPill
-                active={page === 'about'}
-                onClick={() => { closeNow(); onNavigate('about'); }}
-                accentColor={accentColor}
-                onDark={onDark}
-                textColor={textColor}
-                mutedColor={mutedColor}
-              >About</NavPill>
+              <div onMouseEnter={() => open('about')}>
+                <NavPill
+                  active={page === 'about'}
+                  onClick={() => { closeNow(); onNavigate('about'); }}
+                  accentColor={accentColor}
+                  onDark={onDark}
+                  textColor={textColor}
+                  mutedColor={mutedColor}
+                >About</NavPill>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Right column — empty spacer on desktop (keeps center column actually centered),
+              hamburger button on mobile */}
+          {isMobile ? (
+            <HamburgerButton
+              open={mobileOpen}
+              onClick={() => setMobileOpen(v => !v)}
+              color={textColor}
+            />
+          ) : (
+            <div style={{ justifySelf: 'end' }} />
+          )}
         </nav>
+      </div>
 
-        {/* Expansion panel — lives inside the glass shell so it inherits bg + blur */}
+      {/* Desktop dropdown panel — separate frosted container with rounded bottom corners.
+          Sits flush under the nav row so they read as one continuous glass surface. */}
+      {!isMobile && (
         <div
           onMouseEnter={cancelClose}
+          onMouseLeave={scheduleClose}
           style={{
-            maxHeight: menuOpen ? '260px' : '0px',
+            maxHeight: menuOpen ? '320px' : '0px',
             overflow: 'hidden',
             transition: 'max-height 350ms cubic-bezier(0.22,1,0.36,1)',
           }}
         >
           <div style={{
-            borderTop: `0.5px solid ${dividerColor}`,
-            // Subtle tonal wash so the menu area reads as a distinct surface
-            // from the nav's structural row, without breaking the shared glass.
-            background: 'rgba(20,33,28,0.025)',
+            background: panelBg,
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            borderBottom: panelBorder,
+            borderLeft: panelBorder,
+            borderRight: panelBorder,
+            borderRadius: '0 0 24px 24px',
             padding: '1.25rem 2.5rem 1.5rem',
             opacity: menuOpen ? 1 : 0,
             transform: menuOpen ? 'translateY(0)' : 'translateY(-6px)',
@@ -179,7 +223,53 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
             )}
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Mobile menu sheet — replaces hover dropdowns under the breakpoint. Rounded bottom
+          corners match the desktop dropdown so the visual language stays consistent. */}
+      {isMobile && (
+        <div
+          style={{
+            maxHeight: mobileOpen ? '360px' : '0px',
+            overflow: 'hidden',
+            transition: 'max-height 350ms cubic-bezier(0.22,1,0.36,1)',
+          }}
+        >
+          <div style={{
+            background: panelBg,
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            borderBottom: panelBorder,
+            borderLeft: panelBorder,
+            borderRight: panelBorder,
+            borderRadius: '0 0 24px 24px',
+            padding: '0.75rem 1.25rem 1.25rem',
+            opacity: mobileOpen ? 1 : 0,
+            transform: mobileOpen ? 'translateY(0)' : 'translateY(-6px)',
+            transition: 'opacity 240ms cubic-bezier(0.22,1,0.36,1) 60ms, transform 240ms cubic-bezier(0.22,1,0.36,1) 60ms',
+            display: 'flex', flexDirection: 'column', gap: '0.25rem',
+          }}>
+            <MobileLink
+              label="Work"
+              active={page === 'work' || page === 'project'}
+              accentColor={accentColor}
+              onClick={() => { closeNow(); onNavigate('work'); }}
+            />
+            <MobileLink
+              label="Archive"
+              active={page === 'archive'}
+              accentColor={accentColor}
+              onClick={() => { closeNow(); onNavigate('archive'); }}
+            />
+            <MobileLink
+              label="About"
+              active={page === 'about'}
+              accentColor={accentColor}
+              onClick={() => { closeNow(); onNavigate('about'); }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -316,14 +406,16 @@ const DropdownTile = ({ project, onNavigate, accentColor }) => {
 };
 
 // About dropdown — centered headshot + short bio + Read bio CTA.
-// Uses the AL mark in a tinted circle as a placeholder headshot; swap `src` with
-// a real photo by replacing the Avatar component's inner content with an <img />.
+// Uses the AL mark in a tinted circle as a placeholder headshot; swap with a real <img /> later.
+// minHeight matches the carousel's content block (tile 160px + margin + CTA row ≈ 194px)
+// so Work/Archive/About all open to the same visual height.
 const AboutDropdown = ({ onReadMore, accentColor, mutedColor }) => (
   <div style={{
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    gap: '1.75rem', padding: '0.5rem 0 1rem',
+    gap: '1.75rem',
+    minHeight: '194px',
   }}>
-    <Avatar size={96} accentColor={accentColor} />
+    <Avatar size={128} accentColor={accentColor} />
     <div style={{ maxWidth: '440px' }}>
       <p style={{
         fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em',
@@ -332,7 +424,7 @@ const AboutDropdown = ({ onReadMore, accentColor, mutedColor }) => (
       }}>Andreas Lächler · Designer</p>
       <p style={{
         fontSize: '15px', fontWeight: 400, lineHeight: 1.55,
-        color: '#14211C', margin: '0 0 0.75rem',
+        color: '#14211C', margin: '0 0 0.9rem',
       }}>
         Product designer and architect in New York. Currently at Algoma. Previously Arquitectonica, trained at Pratt and Lehigh.
       </p>
@@ -366,4 +458,68 @@ const Avatar = ({ size = 96, accentColor = '#D45A1B' }) => (
   </div>
 );
 
-Object.assign(window, { Nav, NavPill, DropdownTile, DropdownCarousel, AboutDropdown, Avatar, AL_MARK });
+// Hamburger — animated to X when open. Uses two divs as bars so we can tween them into a cross.
+const HamburgerButton = ({ open, onClick, color }) => {
+  const barBase = {
+    position: 'absolute', left: '50%', top: '50%',
+    width: '20px', height: '1.5px',
+    background: color,
+    borderRadius: '1px',
+    transition: 'transform 260ms cubic-bezier(0.22,1,0.36,1), opacity 180ms',
+  };
+  return (
+    <button
+      onClick={onClick}
+      aria-label={open ? 'Close menu' : 'Open menu'}
+      style={{
+        justifySelf: 'end',
+        width: '40px', height: '40px',
+        background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+        position: 'relative',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}
+    >
+      <div style={{
+        ...barBase,
+        transform: open ? 'translate(-50%, -50%) rotate(45deg)' : 'translate(-50%, calc(-50% - 5px))',
+      }} />
+      <div style={{
+        ...barBase,
+        transform: open ? 'translate(-50%, -50%) rotate(-45deg)' : 'translate(-50%, calc(-50% + 5px))',
+      }} />
+    </button>
+  );
+};
+
+// Mobile vertical menu row — tap-sized, with active highlight in accent.
+const MobileLink = ({ label, onClick, active, accentColor }) => {
+  const [pressed, setPressed] = React.useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onTouchStart={() => setPressed(true)}
+      onTouchEnd={() => setPressed(false)}
+      style={{
+        textAlign: 'left',
+        background: active ? accentColor : (pressed ? 'rgba(20,33,28,0.06)' : 'transparent'),
+        color: active ? '#F2EFE6' : '#14211C',
+        border: active ? '1px solid rgba(255,255,255,0.20)' : '1px solid transparent',
+        borderRadius: '10px',
+        padding: '14px 16px',
+        cursor: 'pointer',
+        fontSize: '16px', fontWeight: active ? 500 : 400,
+        fontFamily: "'Inter', system-ui, sans-serif",
+        boxShadow: active
+          ? `inset 0px 1px 0px 0px rgba(255,255,255,0.20), 0px 4px 16px 0px ${accentColor}50`
+          : 'none',
+        transition: 'background 150ms, color 150ms, box-shadow 150ms',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}
+    >
+      <span>{label}</span>
+      <span style={{ opacity: 0.5, fontSize: '14px' }}>→</span>
+    </button>
+  );
+};
+
+Object.assign(window, { Nav, NavPill, DropdownTile, DropdownCarousel, AboutDropdown, Avatar, AL_MARK, HamburgerButton, MobileLink, useIsMobile });
