@@ -147,6 +147,35 @@ const PROJECT_DATA = {
     credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
     details: [{ label: 'Program', value: '32-unit residential' }, { label: 'Location', value: 'Brickell, Miami' }, { label: 'Structure', value: 'Mass timber' }],
     tileBg: '#14211C', imageIndex: 4,
+    next: 'exhibition-trailer',
+  },
+  'exhibition-trailer': {
+    title: 'Exhibition Trailer',
+    org: 'Independent', year: '2022', role: 'Design \u2014 mobile pop-up',
+    bg: '#3D5448',
+    lede: 'A sustainable mobile exhibition trailer. Existing gooseneck base, glulam-and-recycled-timber enclosure, deck that folds into the face for transport and opens on site into an inhabitable off-grid pop-up.',
+    body: 'An independent competition submission for a modular brand trailer. The brief called for a mobile exhibition space that could move between trade shows and events without the cost and embodied carbon of custom fabrication. The proposal repurposes an off-the-shelf gooseneck trailer as the base and builds a demountable enclosure on top that folds down into the face for transport and opens on-site into a full exhibition interior.',
+    process: [
+      'Embodied carbon drove most of the material choices \u2014 glulam beams, recycled timber paneling, recycled composite boards. The brand\u2019s mission around clean water and ethical sourcing meant rejecting custom fabrication wherever an existing assembly was viable.',
+      'The deck folds up against the enclosure face for transport; the railing rolls into a compact bundle of wood rods and recycled nylon cord that stores under the interior bench. Set-up is quick, tear-down is quicker, and the truck never has to wait.',
+      'The enclosure attaches to the trailer chassis using the same frame-mounting logic as shipping containers \u2014 the trailer becomes a modular flatbed. That single decision turned the whole thing into a kit-of-parts that can be upgraded, replaced, or re-sited without rebuilding the base.',
+      'Interior balances exhibition surfaces \u2014 brand story, product samples \u2014 with an open, light-filled feel: a moon-roof, tall ceilings, warm neutrals. The tail bench folds down when parked to stage a photo moment for visitors.',
+    ],
+    insights: [
+      { label: 'Reuse as a design driver', body: 'The cheapest and lowest-carbon trailer is the one already in production. Starting from a standard gooseneck rather than a custom platform forced the design to work within constraints that made it better \u2014 modular, scalable, replaceable.' },
+      { label: 'Packing as a feature, not a problem', body: 'The deck-folds-into-face move means the trailer is one object when parked and another when deployed. That changed the brand moment: the act of opening is itself the exhibition\u2019s opening.' },
+      { label: 'Brand as interior architecture', body: 'The walls carry the company story, the tail-bench frames the visitor photo, the moon-roof adds legibility and light. Branding isn\u2019t wallpaper \u2014 it\u2019s how the volume organizes attention.' },
+    ],
+    insightsLabel: 'Design decisions',
+    outcome: 'Competition submission, summer 2022. Full package: plans, elevations, sections, exploded assembly axon, and final renderings.',
+    credits: 'Independent submission. Design: Andreas L\u00e4chler.',
+    details: [
+      { label: 'Scope', value: 'Mobile exhibition + brand enclosure' },
+      { label: 'Structure', value: 'Modified gooseneck + glulam' },
+      { label: 'Materials', value: 'Recycled timber \u00b7 composite panels \u00b7 glulam' },
+      { label: 'Year', value: '2022' },
+    ],
+    tileBg: '#3D5448', imageIndex: 1,
     next: 'autoease',
   },
   'comps': {
@@ -179,6 +208,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
   const nextProject = project.next ? PROJECT_DATA[project.next] : null;
   const [heroHov, setHeroHov] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
+  const isMobile = (window.useIsMobile || (() => false))(768);
   React.useEffect(() => { requestAnimationFrame(() => setMounted(true)); setHeroHov(false); }, [projectId]);
 
   const fade = (delay) => ({
@@ -191,161 +221,214 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
   const heroText = light ? '#14211C' : '#F2EFE6';
   const heroMuted = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
 
-  return (
-    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '8.5rem 2.5rem 6rem' }}>
+  const outerPad = isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 6rem';
+  const heroPad = isMobile ? '1.25rem' : '2rem';
+  const ledeSize = isMobile ? 'clamp(17px, 4.5vw, 20px)' : 'clamp(18px, 1.8vw, 22px)';
 
-      {/* Hero tile */}
-      <div style={{ ...fade(0), marginBottom: '4rem' }}>
+  return (
+    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: outerPad }}>
+
+      {/* Hero tile — full container width */}
+      <div style={{ ...fade(0), marginBottom: isMobile ? '2.5rem' : '4rem' }}>
         <div
           style={{
             background: project.tileBg, borderRadius: '10px',
-            height: 'clamp(280px, 32vw, 420px)',
+            height: isMobile ? 'clamp(220px, 55vw, 320px)' : 'clamp(280px, 32vw, 420px)',
             position: 'relative', overflow: 'hidden', cursor: 'default',
-            transition: 'transform 0ms',
+            border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
           }}
           onMouseEnter={() => setHeroHov(true)}
           onMouseLeave={() => setHeroHov(false)}
         >
           <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} />
-          <div style={{ position: 'absolute', inset: 0, padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+          <div style={{ position: 'absolute', inset: 0, padding: heroPad, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
               {project.org} · {project.year} · {project.role}
             </p>
-            <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: heroText, margin: 0 }}>
+            <h1 style={{ fontSize: isMobile ? 'clamp(24px, 6.5vw, 32px)' : 'clamp(26px, 3.5vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: heroText, margin: 0 }}>
               {project.title}
             </h1>
           </div>
         </div>
       </div>
 
-      {/* Main content + sidebar */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '5rem', maxWidth: '1000px' }}>
-        {/* Left: text content */}
+      {/* Lede — readable width, left-aligned */}
+      <div style={{ ...fade(80), maxWidth: '820px', marginBottom: isMobile ? '2rem' : '3rem' }}>
+        <p style={{ fontSize: ledeSize, fontWeight: 400, lineHeight: 1.55, color: '#14211C', margin: 0 }}>
+          {project.lede}
+        </p>
+      </div>
+
+      {/* Body + details — two-column on desktop, stacked on mobile */}
+      <div style={{
+        ...fade(140),
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 2fr) minmax(0, 1fr)',
+        gap: isMobile ? '2.5rem' : '4rem',
+        marginBottom: isMobile ? '3rem' : '4rem',
+      }}>
         <div>
-          <p style={{ ...fade(80), fontSize: '20px', fontWeight: 400, lineHeight: 1.6, color: '#14211C', marginBottom: '2rem' }}>
-            {project.lede}
-          </p>
-          <p style={{ ...fade(140), fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.7)', marginBottom: '3rem' }}>
-            {project.body}
-          </p>
-
-          {/* Detail visual — either an interactive iPhone-framed live embed
-              or the default tile-pair for static projects. */}
-          {project.interactiveUrl ? (
-            <div style={{ ...fade(180), marginBottom: '3rem', padding: '0.5rem 0', borderTop: '0.5px solid rgba(20,33,28,0.1)', borderBottom: '0.5px solid rgba(20,33,28,0.1)' }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginTop: '1.5rem', marginBottom: '0.5rem' }}>Try it out</p>
-              <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '0.5rem' }}>
-                The full prototype is embedded below. Tap the screen to launch — all four flows (Browse, Answers, Sell, Price Check) are wired up.
-              </p>
-              <TryItOut src={project.interactiveUrl} label={project.title} />
-            </div>
-          ) : (
-            <div style={{ ...fade(180), display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '0.625rem', marginBottom: '3rem' }}>
-              <DetailBlock imageIndex={project.imageIndex} bg={project.tileBg} hovered={false} />
-              <DetailBlock imageIndex={(project.imageIndex + 2) % 7} bg={['#3D5448','#14211C','#E8E4D5','#D45A1B','#3D5448','#14211C','#3D5448'][project.imageIndex]} hovered={false} />
-            </div>
-          )}
-
-          {project.insights && project.insights.length > 0 && (
-            <div style={{ ...fade(200), marginBottom: '2.5rem' }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.insightsLabel || 'Insights from research'}</p>
-              {project.insights.map((item, i) => (
-                <div key={i} style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: i < project.insights.length - 1 ? '0.5px solid rgba(20,33,28,0.08)' : 'none' }}>
-                  <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.01em' }}>{item.label}</p>
-                  <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(20,33,28,0.7)', margin: 0 }}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div style={fade(220)}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Process</p>
-            {project.process.map((para, i) => (
-              <p key={i} style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.7)', marginBottom: '1.25rem' }}>{para}</p>
-            ))}
-          </div>
-
-          {project.designSystem && project.designSystem.length > 0 && (
-            <div style={{ ...fade(240), marginTop: '2.5rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.designSystemLabel || 'Design system'}</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
-                {project.designSystem.map((item, i) => (
-                  <div key={i} style={{ padding: '1.25rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)' }}>
-                    <p style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.005em' }}>{item.label}</p>
-                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{item.body}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {project.influences && project.influences.length > 0 && (
-            <div style={{ ...fade(250), marginTop: '2.5rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Influences</p>
-              {project.influences.map((item, i) => (
-                <div key={i} style={{ marginBottom: '1rem', display: 'grid', gridTemplateColumns: '140px 1fr', gap: '1.25rem', alignItems: 'baseline' }}>
-                  <p style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '0.01em' }}>{item.label}</p>
-                  <p style={{ fontSize: '14px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div style={{ ...fade(260), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginTop: '2.5rem' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Current state</p>
-            <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(20,33,28,0.65)' }}>{project.outcome}</p>
-          </div>
-
-          <div style={{ ...fade(300), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '1.5rem', marginTop: '2.5rem' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>Credits</p>
-            <p style={{ fontSize: '13px', color: 'rgba(20,33,28,0.55)', lineHeight: 1.6 }}>{project.credits}</p>
-          </div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Context</p>
+          <p style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.body}</p>
         </div>
-
-        {/* Right: sidebar details */}
-        <div style={fade(100)}>
-          <div style={{ position: 'sticky', top: '80px' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Details</p>
-            {project.details.map(d => (
-              <div key={d.label} style={{ marginBottom: '1rem' }}>
-                <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', margin: '0 0 3px' }}>{d.label}</p>
-                <p style={{ fontSize: '14px', fontWeight: 400, color: '#14211C', margin: 0 }}>{d.value}</p>
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Details</p>
+          <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+            {project.details.map((d, i) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.7rem 0', borderBottom: '0.5px solid rgba(20,33,28,0.1)', gap: '1rem' }}>
+                <span style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.5)', flexShrink: 0 }}>{d.label}</span>
+                <span style={{ fontSize: '13px', color: '#14211C', textAlign: 'right' }}>{d.value}</span>
               </div>
             ))}
-
-            <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-              <ArrowLink onClick={() => onNavigate('work')} style={{ fontSize: '13px', color: 'rgba(20,33,28,0.55)' }}>Back to work</ArrowLink>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Next project */}
+      {/* Interactive embed OR tile pair — full content width */}
+      {project.interactiveUrl ? (
+        <div style={{ ...fade(180), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '1.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.5rem' }}>Try it out</p>
+          <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '1rem', maxWidth: '820px' }}>
+            The full prototype is embedded below. Tap the screen to launch — all four flows (Browse, Answers, Sell, Price Check) are wired up.
+          </p>
+          <TryItOut src={project.interactiveUrl} label={project.title} />
+        </div>
+      ) : (
+        <div style={{
+          ...fade(180),
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr',
+          gap: '0.625rem',
+          marginBottom: isMobile ? '3rem' : '4rem',
+        }}>
+          <div style={{ height: isMobile ? '200px' : '320px' }}>
+            <DetailBlock imageIndex={project.imageIndex} bg={project.tileBg} hovered={false} />
+          </div>
+          <div style={{ height: isMobile ? '160px' : '320px' }}>
+            <DetailBlock imageIndex={(project.imageIndex + 2) % 7} bg={['#3D5448','#14211C','#E8E4D5','#D45A1B','#3D5448','#14211C','#3D5448'][project.imageIndex]} hovered={false} />
+          </div>
+        </div>
+      )}
+
+      {/* Process */}
+      <div style={{ ...fade(220), maxWidth: '820px', marginBottom: isMobile ? '3rem' : '4rem' }}>
+        <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Process</p>
+        {project.process.map((para, i) => (
+          <p key={i} style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', marginBottom: '1.25rem' }}>{para}</p>
+        ))}
+      </div>
+
+      {/* Insights */}
+      {project.insights && project.insights.length > 0 && (
+        <div style={{ ...fade(260), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.insightsLabel || 'Insights from research'}</p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: isMobile ? '1.25rem' : '2rem',
+          }}>
+            {project.insights.map((item, i) => (
+              <div key={i} style={{ padding: isMobile ? '1.25rem' : '1.5rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)' }}>
+                <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.01em' }}>{item.label}</p>
+                <p style={{ fontSize: '14px', lineHeight: 1.7, color: 'rgba(20,33,28,0.7)', margin: 0 }}>{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Design system / Four arcs */}
+      {project.designSystem && project.designSystem.length > 0 && (
+        <div style={{ ...fade(300), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.designSystemLabel || 'Design system'}</p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: isMobile ? '1rem' : '1.25rem',
+          }}>
+            {project.designSystem.map((item, i) => (
+              <div key={i} style={{ padding: '1.25rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem' }}>{item.label}</p>
+                <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Influences */}
+      {project.influences && project.influences.length > 0 && (
+        <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', maxWidth: '820px' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Influences</p>
+          {project.influences.map((item, i) => (
+            <div key={i} style={{
+              marginBottom: '1rem',
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '140px 1fr',
+              gap: isMobile ? '0.35rem' : '1.25rem',
+              alignItems: 'baseline',
+            }}>
+              <p style={{ fontSize: '13px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '0.01em' }}>{item.label}</p>
+              <p style={{ fontSize: '14px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{item.body}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Outcome + Credits — two-column */}
+      <div style={{
+        ...fade(380),
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1fr)',
+        gap: isMobile ? '2rem' : '4rem',
+        borderTop: '0.5px solid rgba(20,33,28,0.1)',
+        paddingTop: '2.5rem',
+        marginBottom: isMobile ? '3rem' : '4rem',
+      }}>
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Current state</p>
+          <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.outcome}</p>
+        </div>
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Credits</p>
+          <p style={{ fontSize: '13px', lineHeight: 1.7, color: 'rgba(20,33,28,0.6)', margin: 0 }}>{project.credits}</p>
+        </div>
+      </div>
+
+      {/* Back to work */}
+      <div style={{ ...fade(420), marginBottom: isMobile ? '3rem' : '4rem' }}>
+        <ArrowLink onClick={() => onNavigate('work')} style={{ fontSize: '13px', color: 'rgba(20,33,28,0.55)' }}>Back to work</ArrowLink>
+      </div>
+
+      {/* Next project — full container width, matches hero */}
       {nextProject && (
-        <div style={{ ...fade(340), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '3rem', marginTop: '4rem', maxWidth: '1000px' }}>
+        <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', marginBottom: '1.5rem' }}>Next</p>
-          <NextProjectCard project={nextProject} onNavigate={onNavigate} />
+          <NextProjectCard project={nextProject} onNavigate={onNavigate} isMobile={isMobile} />
         </div>
       )}
     </main>
   );
 };
 
-const NextProjectCard = ({ project, onNavigate }) => {
+const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
   const [hov, setHov] = React.useState(false);
   const light = project.tileBg === '#F2EFE6' || project.tileBg === '#E8E4D5';
   const textC = light ? '#14211C' : '#F2EFE6';
   const mutedC = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
 
+  // Find this project's own id in PROJECT_DATA so we navigate to the *next* project.
+  const targetId = project.next || Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project);
+
   return (
     <div
-      onClick={() => onNavigate('project', project.next || project.id)}
+      onClick={() => onNavigate('project', targetId)}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
         background: project.tileBg, borderRadius: '10px',
-        padding: '2rem 2.5rem', cursor: 'pointer',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        height: isMobile ? 'clamp(180px, 40vw, 260px)' : 'clamp(220px, 22vw, 300px)',
+        cursor: 'pointer',
         position: 'relative', overflow: 'hidden',
         transform: hov ? 'translateY(-2px)' : 'none',
         transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1)',
@@ -353,11 +436,18 @@ const NextProjectCard = ({ project, onNavigate }) => {
       }}
     >
       <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={hov} />
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedC, margin: '0 0 5px' }}>{project.org} · {project.year}</p>
-        <p style={{ fontSize: '18px', fontWeight: 500, color: textC, margin: 0 }}>{project.title}</p>
+      <div style={{
+        position: 'absolute', inset: 0,
+        padding: isMobile ? '1.25rem' : '2rem',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+        gap: '1rem',
+      }}>
+        <div style={{ zIndex: 1 }}>
+          <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedC, margin: '0 0 5px' }}>{project.org} · {project.year}</p>
+          <p style={{ fontSize: isMobile ? '18px' : 'clamp(20px, 2.2vw, 28px)', fontWeight: 500, color: textC, margin: 0, letterSpacing: '-0.01em' }}>{project.title}</p>
+        </div>
+        <span style={{ zIndex: 1, fontSize: isMobile ? '18px' : '22px', color: textC, transition: 'transform 180ms', transform: hov ? 'translateX(5px)' : 'none', flexShrink: 0 }}>→</span>
       </div>
-      <span style={{ position: 'relative', zIndex: 1, fontSize: '18px', color: textC, transition: 'transform 180ms', transform: hov ? 'translateX(5px)' : 'none' }}>→</span>
     </div>
   );
 };
