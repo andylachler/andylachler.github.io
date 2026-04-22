@@ -5,14 +5,17 @@ const AboutPage = () => (
       {/* Bio */}
       <div>
         <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '2rem' }}>About</p>
-        <p style={{ fontSize: '18px', fontWeight: 400, lineHeight: 1.7, color: '#14211C', marginBottom: '1.5rem', maxWidth: '460px' }}>
-          I design product interfaces and physical objects. Trained as an architect at Lehigh and Pratt. Currently at Algoma in New York.
+        <p style={{ fontSize: '18px', fontWeight: 400, lineHeight: 1.7, color: '#14211C', marginBottom: '1.5rem', maxWidth: '480px' }}>
+          I'm a designer and technologist working at the intersection of architecture, product, and automation. My practice spans the full stack of how buildings get made — from permit sets and feasibility studies to the software, data, and brand systems that shape how architects and developers make decisions.
         </p>
-        <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.68)', marginBottom: '1.5rem', maxWidth: '460px' }}>
-          At Arquitectonica, I led facade resolution and consultant coordination on residential and mixed-use projects from 20 units to over a million square feet. Promoted from Project Designer to Associate in under two years.
+        <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.68)', marginBottom: '1.5rem', maxWidth: '480px' }}>
+          As Product Lead at Algoma, I drive the platform end-to-end: wireframing and shipping features, designing AI-powered zoning and market-intelligence tools, integrating GIS and regulatory data, and shaping the brand and go-to-market system. I partner closely with engineering and learn directly from users through design-partner interviews and customer research.
         </p>
-        <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.68)', maxWidth: '460px' }}>
-          Three languages — English, Spanish fluent; German proficient. US and German dual national. Hands-on making: carpentry, 3D printing, model making.
+        <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.68)', marginBottom: '1.5rem', maxWidth: '480px' }}>
+          Before Algoma, I was an Associate Designer at Arquitectonica on large-scale multifamily projects, where I helped introduce AI-driven visualization and computational workflows. Earlier work at boutique firms grounded me in the full arc of design, from concept through schematic development.
+        </p>
+        <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.68)', maxWidth: '480px' }}>
+          Master of Architecture from Pratt, B.S. Architecture from Lehigh. Dual US / German national — fluent English and Spanish, proficient German. Hands-on with carpentry, 3D printing, and model making.
         </p>
       </div>
 
@@ -22,7 +25,7 @@ const AboutPage = () => (
         <div style={{ marginBottom: '3rem' }}>
           <ContactRow label="Email" value="andy@lachler.com" link />
           <ContactRow label="Location" value="New York, NY" />
-          <ContactRow label="Currently" value="Algoma" />
+          <ContactRow label="Currently" value="Algoma — Product Lead" />
         </div>
 
         <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginBottom: '2rem' }}>
@@ -33,7 +36,7 @@ const AboutPage = () => (
 
         <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Experience</p>
-          <InfoRow left="Algoma" sub="Product Designer" right="2024–" />
+          <InfoRow left="Algoma" sub="Product Lead" right="2024–" />
           <InfoRow left="Arquitectonica" sub="Associate" right="2022–24" />
         </div>
       </div>

@@ -41,17 +41,38 @@ const PROJECT_DATA = {
   },
   'feasibility': {
     title: 'Feasibility platform',
-    org: 'Algoma', year: '2024', role: 'Product Design',
+    org: 'Algoma', year: '2024\u2013', role: 'Product Lead',
     bg: '#3D5448',
-    lede: 'Algoma evaluates what a development site can become. I design the surfaces where that question gets answered.',
-    body: 'The product is an AI platform that helps developers understand what a site can actually become, running zoning, program, and economics in parallel. My role covers the full product surface — from the initial site search through zoning analysis, capacity modeling, and comparable sales.',
-    process: [
-      'Designed from first principles — no inherited design system, no legacy patterns. Started with the question: what does a developer actually need to decide?',
-      'Architecture training covers the same problem in a different medium: take something with too many moving parts and give it a shape a person can move through.',
+    lede: 'Algoma evaluates what a development site can become. As Product Lead, I design the surfaces where that question gets answered \u2014 from first site summary through zoning analysis, capacity modeling, and the handoff into schematic design.',
+    body: 'I joined at the start of V.02 and have led the platform\u2019s design language, feature set, and brand system since. The work spans four connected arcs \u2014 product design, data and AI intelligence, brand and GTM, and the architecture practice that keeps feeding the product real problems to solve. Each arc teaches the next: feasibility studies surface what the software should actually do, the software changes how we deliver architecture, and the brand carries the whole thing to market.',
+    insights: [
+      { label: 'Phase-based project framing', body: 'Design partners kept asking "where is this site in our pipeline?" \u2014 acquisition, feasibility, or active design. That question became the product\u2019s primary organizing metaphor. Sites are treated as things that move through phases rather than static records, and each phase has its own surface in service of that motion.' },
+      { label: 'One flow, two typologies', body: 'Early prototypes split single-family and multi-family capacity into separate tools. Interviews showed the opposite pattern \u2014 developers compared typologies on the same site within the same conversation with their LPs. We unified the flow, and the shared surface now carries both analyses with a single switch.' },
+      { label: 'AI with visible uncertainty', body: 'The zoning analysis feature runs language models over the underlying code text. The UX challenge was surfacing model confidence without overpromising. The answer pattern cites code sections inline, flags ambiguity rather than hiding it, and pushes the user toward verification rather than blind trust. Three model tiers were tested in parallel to tune the threshold for when to defer.' },
+      { label: 'Map as theme, not hero', body: 'Feasibility tools love maps, but the comps workflow is a judgment workflow, not a map workflow. The decision was to demote the map from primary surface to secondary view and lead with a table tuned for underwriter scan patterns. Map became a theme across the product \u2014 a consistent visual layer \u2014 not a centerpiece.' },
     ],
-    outcome: 'In active development. Details anonymized per client agreement.',
-    credits: 'Algoma. Product design: Andreas Lächler.',
-    details: [{ label: 'Scope', value: 'Full product surface' }, { label: 'Type', value: 'AI platform' }, { label: 'Status', value: 'Active' }],
+    insightsLabel: 'Key design decisions',
+    process: [
+      'Every non-trivial feature ships through the same loop \u2014 sketch, interactive prototype in Figma, walk three or four design partners through it, rebuild, then hand off to engineering. By the time something lands in the codebase, the people it\u2019s being built for have already pushed back on it at least twice.',
+      'Customer and design-partner interviews run on a weekly cadence. Patterns that surface in three conversations become backlog candidates; the ones that show up in one stay in the notes. A Posthog dashboard tells us whether what shipped actually gets used \u2014 the interviews tell us why.',
+      'The architecture practice runs in parallel, not separately. Feasibility studies for live development projects become stress tests for the platform: if the tool makes a real study faster, it\u2019s solving a real problem. If it doesn\u2019t, the feature changes.',
+    ],
+    designSystem: [
+      { label: 'Product design', body: 'End-to-end design for the V.02 platform \u2014 site summary, capacity studies, comps, exports, onboarding, billing, help content, and the presentation surfaces developers use to pitch their LPs.' },
+      { label: 'Data & AI intelligence', body: 'Shaped the AI zoning analysis, GIS data layers, state-level legislative overlays, and the 3D model hosting backbone. The work runs from research and legislation reading through to the final user-facing surface.' },
+      { label: 'Brand & GTM', body: 'Rebuilt the marketing site, ran the brand system refresh live across site and platform, designed campaigns and conference collateral (IBS, RETCON, IMN), and set up the analytics dashboards that tell us whether any of it is working.' },
+      { label: 'Architecture practice', body: 'Lead architect on several of the studio\u2019s active residential and industrial feasibility projects. The platform gets better because the practice keeps finding edge cases it has to solve.' },
+    ],
+    designSystemLabel: 'Four connected arcs',
+    outcome: 'V.02 platform shipped September 2025 \u2014 site summary, capacity, comps, and exports. AI zoning analysis and legislative data overlays shipped through late 2025. Marketing system overhaul live April 2026. Weekly research\u2192design\u2192ship cadence continues. Specific features and client work remain confidential; this page teases the patterns, not the proprietary surfaces.',
+    credits: 'Algoma. Product Lead, brand, and design system: Andreas L\u00e4chler. Built with the Algoma engineering and leadership team.',
+    details: [
+      { label: 'Role', value: 'Product Lead' },
+      { label: 'Timeframe', value: 'Dec 2024 \u2013 present' },
+      { label: 'Scope', value: 'Product \u00b7 data/AI \u00b7 brand \u00b7 architecture' },
+      { label: 'Methods', value: 'Design-partner interviews \u00b7 Figma prototyping \u00b7 Posthog' },
+      { label: 'Status', value: 'Active \u00b7 V.02 shipped 09/2025' },
+    ],
     tileBg: '#3D5448', imageIndex: 0,
     next: 'ella',
   },
@@ -227,7 +248,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
 
           {project.insights && project.insights.length > 0 && (
             <div style={{ ...fade(200), marginBottom: '2.5rem' }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Insights from research</p>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.insightsLabel || 'Insights from research'}</p>
               {project.insights.map((item, i) => (
                 <div key={i} style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: i < project.insights.length - 1 ? '0.5px solid rgba(20,33,28,0.08)' : 'none' }}>
                   <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.01em' }}>{item.label}</p>
@@ -246,7 +267,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
 
           {project.designSystem && project.designSystem.length > 0 && (
             <div style={{ ...fade(240), marginTop: '2.5rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Design system</p>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.designSystemLabel || 'Design system'}</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
                 {project.designSystem.map((item, i) => (
                   <div key={i} style={{ padding: '1.25rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)' }}>
