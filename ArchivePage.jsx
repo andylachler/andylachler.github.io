@@ -1,11 +1,11 @@
 // ArchivePage.jsx
 const ARCHIVE_ITEMS = [
-  { title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Thesis', desc: 'Structural and spatial investigation into mesa-top habitation. Studio thesis, Pratt School of Architecture.', bg: '#3D5448', imageIndex: 0 },
-  { title: 'Fluxing', year: '2020', org: 'Pratt Institute', type: 'Studio project', desc: 'Abstract paper architecture exploring form and movement without gravitational constraint.', bg: '#14211C', imageIndex: 1 },
-  { title: 'Mass Studies', year: '2019', org: 'Pratt Institute', type: 'Studio project', desc: 'Volumetric composition studies. Material: chipboard and basswood.', bg: '#E8E4D5', imageIndex: 2 },
-  { title: 'Urban Threshold', year: '2018', org: 'Lehigh University', type: 'Studio project', desc: 'Adaptive reuse examining threshold conditions in urban context.', bg: '#3D5448', imageIndex: 3 },
-  { title: 'Lehigh Paper Architecture', year: '2017', org: 'Lehigh University', type: 'Studio work', desc: 'Form and composition work from undergraduate studio. No program, no gravity.', bg: '#14211C', imageIndex: 4 },
-  { title: 'Surface Studies', year: '2016', org: 'Lehigh University', type: 'Studio work', desc: 'Material and surface explorations. Hand-built models.', bg: '#E8E4D5', imageIndex: 5 },
+  { title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'Structural and spatial investigation into mesa-top habitation. Graduate studio, Pratt School of Architecture.', bg: '#3D5448', imageIndex: 0 },
+  { title: 'Bethlehem Riverfront', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network to connect North and South Bethlehem across the river.', bg: '#14211C', imageIndex: 1 },
+  { title: 'One Room Schoolhouse', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Expanded single-use structure on the Lehigh green for the Psychology department\u2019s child studies program. Angular faceted roof tuned to keep young attention focused outward into the space.', bg: '#E8E4D5', imageIndex: 2 },
+  { title: 'Bethlehem Culinary Institute', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Four-story culinary school in South Bethlehem. Programmed around the regional farm economy and the 30-minute gap in culinary schools across the Allentown\u2013Bethlehem\u2013Easton region.', bg: '#3D5448', imageIndex: 3 },
+  { title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Independent study', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4 },
+  { title: 'Singular Development + Flow', year: '2017', org: 'Lehigh University', type: 'Independent study', desc: 'A single lightweight three-dimensional unit joined to a mirror of itself. Viewable right-side up or upside-down \u2014 band thickness varies row to row to produce a flow of density through the form.', bg: '#E8E4D5', imageIndex: 5 },
 ];
 window.ARCHIVE_ITEMS = ARCHIVE_ITEMS;
 

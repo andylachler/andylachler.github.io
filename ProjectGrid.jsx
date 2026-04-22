@@ -4,7 +4,7 @@ const PROJECTS = [
   { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Design — full product surface', bg: '#3D5448', featured: true, imageIndex: 0 },
   { id: 'site-search', title: 'Site search', org: 'Algoma', year: '2024', role: 'Product Design — search + map interface', bg: '#14211C', featured: false, imageIndex: 1 },
   { id: 'zoning-chat', title: 'Zoning chat', org: 'Algoma', year: '2024', role: 'Product Design — conversational UI', bg: '#E8E4D5', featured: true, imageIndex: 3 },
-  { id: 'the-ella', title: 'The Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — facade & schematic design', bg: '#D45A1B', featured: false, imageIndex: 2 },
+  { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: false, imageIndex: 2 },
   { id: 'brickell', title: 'Brickell residential', org: 'Arquitectonica', year: '2023', role: 'Architecture — 32-unit multifamily', bg: '#14211C', featured: false, imageIndex: 4 },
   { id: 'comps', title: 'Comps analysis', org: 'Algoma', year: '2024', role: 'Product Design — data visualization', bg: '#3D5448', featured: false, imageIndex: 5 },
 ];
