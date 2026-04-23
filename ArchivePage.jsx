@@ -277,6 +277,14 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
   const light = bg === '#E8E4D5' || bg === '#F2EFE6';
   const textC = light ? '#14211C' : '#F2EFE6';
   const mutedC = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
+  // Description color — only rendered on hover, sits over the grey-out
+  // overlay, so it uses a higher-opacity variant of the muted tone for
+  // legibility without being as strong as the title.
+  const descC = light ? 'rgba(20,33,28,0.75)' : 'rgba(242,239,230,0.85)';
+  // Eyebrow color — mirrors the hero banner treatment. On dark tiles we
+  // punch up to cream at 0.9 so the label pops against both the silhouette
+  // and the warm background; light tiles keep their ink-at-0.5 tone.
+  const eyebrowC = light ? mutedC : 'rgba(242,239,230,0.9)';
 
   const shadow = hov
     ? (window.tileBoxShadow ? tileBoxShadow(bg, true) : 'none')
@@ -313,11 +321,15 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
           : 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Hover tint */}
+      {/* Hover grey-out — dims the silhouette + colors so the description
+          reads clearly on hover. Sits above the silhouette but below the
+          content stack (which has zIndex:1), so title + metadata stay
+          un-dimmed while the background recedes. */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: hov ? (light ? 'rgba(20,33,28,0.03)' : 'rgba(0,0,0,0.05)') : 'transparent',
-        transition: 'background 250ms',
+        background: light ? 'rgba(20,33,28,0.09)' : 'rgba(0,0,0,0.22)',
+        opacity: hov ? 1 : 0,
+        transition: 'opacity 220ms ease-out',
       }} />
 
       {/* Hover arrow */}
@@ -330,12 +342,23 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
       }}>→</div>
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedC, margin: '0 0 6px' }}>
+        <p style={{ fontSize: compact ? '11px' : '12px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: eyebrowC, margin: '0 0 7px' }}>
           {item.org} · {item.year}
         </p>
         <p style={{ fontSize: compact ? '14px' : '16px', fontWeight: 500, color: textC, margin: '0 0 6px', lineHeight: 1.25 }}>{item.title}</p>
+        {/* Description — hidden at rest, expands in on hover. Sits in its
+            natural slot between title and type; max-height + margin animate
+            so the tile visibly "opens up" rather than the desc just fading
+            in over the type. */}
         {!compact && (
-          <p style={{ fontSize: '12px', color: mutedC, lineHeight: 1.5, margin: 0 }}>{item.desc}</p>
+          <p style={{
+            fontSize: '12px', color: descC, lineHeight: 1.5,
+            margin: hov ? '0 0 6px' : 0,
+            maxHeight: hov ? '120px' : 0,
+            opacity: hov ? 1 : 0,
+            overflow: 'hidden',
+            transition: 'max-height 280ms ease-out, opacity 220ms ease-out 60ms, margin 280ms ease-out',
+          }}>{item.desc}</p>
         )}
         <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: mutedC, margin: (compact ? '0.6rem' : '0.9rem') + ' 0 0' }}>{item.type}</p>
       </div>
@@ -361,7 +384,10 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
 
   const light = project.tileBg === '#F2EFE6' || project.tileBg === '#E8E4D5';
   const heroText = light ? '#14211C' : '#F2EFE6';
-  const heroMuted = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
+  // Eyebrow on dark tiles: cream at high opacity. Linework has been dialed
+  // back to ~0.35, so a cream eyebrow with a slight weight + size bump reads
+  // cleanly over it without fighting the title for attention.
+  const heroMuted = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.9)';
 
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 6rem' }}>
@@ -392,7 +418,34 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
             border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
           }}
         >
-          {window.TilePlaceholder && <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} />}
+          {/* Fading dot grid — sits behind the linework. Opacity fades from
+              top (more visible) down through the text area (invisible), so the
+              dots read as "distance" above the silhouette without competing
+              with the title. Uses a pattern + mask so dots stay round at any
+              hero aspect ratio. */}
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <pattern id="mvHeroDots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="14" cy="14" r="1.25" fill={heroText} />
+              </pattern>
+              <linearGradient id="mvHeroDotFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#fff" stopOpacity="0.45" />
+                <stop offset="55%" stopColor="#fff" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+              </linearGradient>
+              <mask id="mvHeroDotMask">
+                <rect width="100%" height="100%" fill="url(#mvHeroDotFade)" />
+              </mask>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#mvHeroDots)" mask="url(#mvHeroDotMask)" />
+          </svg>
+
+          {/* Silhouette — fills the full banner. Text renders after this in
+              DOM order, so the title overlays the linework as an architectural
+              blueprint beneath it. `variant="hero"` keeps stroke + opacity
+              subtle; the archive grid tile (default `variant="tile"`) uses
+              the heavier treatment. */}
+          {window.TilePlaceholder && <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} variant="hero" />}
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
             background: light
@@ -400,7 +453,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               : 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%)',
           }} />
           <div style={{ position: 'absolute', inset: 0, padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
+            <p style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.6rem' }}>
               {project.org} · {project.year} · {project.role}
             </p>
             <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: heroText, margin: 0 }}>

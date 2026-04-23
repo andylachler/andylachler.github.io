@@ -51,49 +51,60 @@ const tileInset = (bg) => {
 // because the source reference is a black silhouette, and we use a single
 // tone so the shapes read cleanly on any brand-color tile.
 const SILHOUETTES = {
-  // Mesa Verde — cluster of concrete paraboloid "mesas" emerging from a
-  // warehouse. Left→right: curled base, tall bottle, squat block, tallest
-  // pointed paraboloid, stepped block, stepped+cap, flat block, two
-  // swooping sails. Proportions match the attached reference outline.
-  'mesa-verde': (stroke, hovered) => (
-    <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg"
+  // Mesa Verde — architectural linework of the paraboloid cluster + swooping
+  // extension, sitting on the warehouse ground line. This is Andy's own
+  // hand-drawn outline from Container.svg, preserved path-for-path. Strokes
+  // use `vectorEffect="non-scaling-stroke"` so the line weight stays constant
+  // regardless of tile size, and `preserveAspectRatio="xMidYMax meet"` roots
+  // the drawing to the bottom of the tile so the mesas always "stand on" the
+  // floor of the card.
+  // `variant`: 'tile' (archive grid, homepage tile) → heavier stroke + higher
+  // opacity so the linework reads at small size. 'hero' (project banner) →
+  // subtler, since the linework sits across a larger canvas.
+  'mesa-verde': (stroke, hovered, variant = 'tile') => (
+    <svg viewBox="320 140 1010 440" xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMax meet"
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%',
-        opacity: hovered ? 0.32 : 0.22, transition: 'opacity 350ms ease-out' }}>
-      <g fill={stroke}>
-        {/* 1 — curled boot base */}
-        <path d="M 10 230 L 10 118 Q 12 108 22 108 L 48 108 Q 58 108 58 120 L 58 188 Q 58 206 50 216 Q 42 224 32 228 L 32 230 Z" />
-        {/* 2 — tall narrow bottle */}
-        <path d="M 72 230 L 72 92 Q 72 80 78 76 L 78 62 L 92 62 L 92 76 Q 98 80 98 92 L 98 230 Z" />
-        {/* 3 — small squat block */}
-        <path d="M 103 230 L 103 164 L 119 164 L 119 230 Z" />
-        {/* 4 — tallest paraboloid (centerpiece) */}
-        <path d="M 124 230 Q 124 182 136 142 Q 148 94 158 14 Q 168 94 180 142 Q 192 182 192 230 Z" />
-        {/* 5 — stepped block, flat top */}
-        <path d="M 200 230 L 200 128 L 222 128 L 222 230 Z" />
-        {/* 6 — wider stepped block with cap */}
-        <path d="M 228 230 L 228 150 L 232 150 L 232 134 L 250 134 L 250 150 L 258 150 L 258 230 Z" />
-        {/* 7 — flat medium block */}
-        <path d="M 264 230 L 264 148 L 302 148 L 302 230 Z" />
-        {/* 8 — left swooping sail */}
-        <path d="M 308 230 Q 308 192 316 158 Q 326 112 340 70 Q 350 94 354 126 Q 358 158 358 200 L 358 230 Z" />
-        {/* 9 — right swooping sail (shorter) */}
-        <path d="M 362 230 Q 362 198 370 172 Q 378 146 384 138 Q 390 158 392 188 L 392 230 Z" />
+        opacity: variant === 'hero'
+          ? (hovered ? 0.5 : 0.35)
+          : (hovered ? 0.75 : 0.6),
+        transition: 'opacity 350ms ease-out',
+        pointerEvents: 'none' }}>
+      <g fill="none" stroke={stroke} strokeWidth={variant === 'hero' ? 1.4 : 2}
+        strokeLinecap="round" strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke">
+        {/* Main building section — warehouse roof, paraboloid cluster,
+            stepped blocks, and arm to the right sail */}
+        <path d="M 377.539 573.107H699.668M699.668 573.107C697.681 535.907 700.027 487.371 701.853 461.764C702.051 458.989 702.243 456.482 702.422 454.289H610.359M699.668 573.107H711.471M610.359 454.289H550.163M610.359 454.289C611.539 431.208 616.103 369.15 624.916 305.571H678.029C678.009 322.572 683.492 362.069 703.695 402.749M857.829 411.405H720.52C719.577 416.791 718.714 422.175 717.926 427.536M857.829 411.405H863.337L866.485 438.643M857.829 411.405C854.825 397.507 851.998 383.695 849.343 370.094M866.485 438.643L840.911 438.945C844.583 462.945 855.469 523.376 869.632 573.107M866.485 438.643L915.271 438.066M1041.17 551.468C1083.98 508.977 1096.51 424.388 1097.43 387.405H1222.54C1242.06 433.358 1294.41 530.353 1318.15 573.107H1041.17M1041.17 551.468C1029.63 534.943 1006.7 488.911 1007.33 436.978L915.271 438.066M1041.17 551.468V573.107M849.343 370.094C831.136 276.809 821.068 193.421 818.092 160H757.503C745.858 309.19 716.779 383.996 703.695 402.749M849.343 370.094H901.107C903.992 384.852 910.864 419.108 915.271 438.066M703.695 402.749C707.804 411.022 712.522 419.344 717.926 427.536M717.926 427.536C708.715 490.159 709.659 549.671 711.471 573.107M711.471 573.107H869.632M869.632 573.107H1041.17" />
+        {/* Curl across to the left sail base */}
+        <path d="M 550.163 454.289H548.983C550.557 460.584 549.612 474.276 533.245 478.682C513.047 484.12 491.314 497.995 332.494 477.143" />
+        {/* Left sail — inner arcs */}
+        <path d="M 332.833 477.188C329.757 476.095 327.541 475.988 326.299 476.322C320.397 478.945 322.144 501.659 377.539 573.107M359.741 480.65C382.166 472.912 426.782 438.002 425.838 360.259" />
+        {/* Left sail — connector up */}
+        <path d="M 332.833 477.188C338.203 479.096 346.194 484.007 356.2 494.813" />
+        {/* Left sail — sweep down to ground */}
+        <path d="M 356.2 494.813C364.855 504.78 390.979 534.393 426.231 573.107" />
+        {/* Right sail — section + ground tick */}
+        <path d="M 1010.48 472.387C1019.4 470.814 1046.52 468.138 1083.66 470.027M1149.76 387.405C1160.01 414.521 1183.73 465.1 1216.25 510.701M1272.12 572.713C1251.63 555.833 1232.8 533.912 1216.25 510.701M1226.08 572.713L1216.25 510.701" />
+        {/* Inner buttress + roof return */}
+        <path d="M 595.015 453.896C582.556 438.814 556.93 399.366 554.097 362.226M426.231 359.078H554.097" />
+        {/* Small vertical tick */}
+        <path d="M 554.097 362.226V359.078" />
       </g>
-      {/* Ground line so forms sit on something */}
-      <line x1="0" y1="230" x2="400" y2="230" stroke={stroke} strokeWidth="0.6" opacity="0.55" />
     </svg>
   ),
 };
 
 // SVG architectural placeholder patterns
-const TilePlaceholder = ({ bg, index, hovered, silhouette }) => {
+const TilePlaceholder = ({ bg, index, hovered, silhouette, variant = 'tile' }) => {
   // If a named silhouette is supplied, it wins — used for archive tiles
   // where the pattern should read as the specific project.
   if (silhouette && SILHOUETTES[silhouette]) {
     // Stroke/fill color: cream on dark tiles, ink on light tiles.
     const light = bg === '#F2EFE6' || bg === '#E8E4D5';
     const tone = light ? '#14211C' : '#F2EFE6';
-    return SILHOUETTES[silhouette](tone, hovered);
+    // `variant` lets silhouettes tune stroke weight + opacity per context.
+    return SILHOUETTES[silhouette](tone, hovered, variant);
   }
   const patterns = [
     // 0: Dot grid — Feasibility platform
