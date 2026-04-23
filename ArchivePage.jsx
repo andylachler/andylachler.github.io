@@ -17,6 +17,13 @@ const ARCHIVE_ITEMS = [
   { id: 'elevate-ravenswood', title: 'Elevate Ravenswood', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A mixed-use sports, education, and community-health building for the Ravenswood Community Land Trust. Mass timber, Vierendeel trusses, and a sunken basketball arena programmed to stay visible from the street.', bg: '#3D5448', imageIndex: 3, featured: true },
   { id: 'unit-multiplication', title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Independent study', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4, featured: true },
 
+  // ── Playable ──────────────────────────────────────────────────────────
+  // Unity / WebGL experiments — self-initiated. Architecture-adjacent:
+  // terrain, environment, physics, real-time lighting. Each project page
+  // offers a "Play in browser" button that lazy-loads the Unity canvas.
+  { id: 'ground-is-lava', title: 'Ground Is Lava', year: '2024', org: 'Self-initiated', type: 'Unity / WebGL', desc: 'A 3D terrain-and-ramps exercise in Unity. Rising lava, custom terrain, and first-person traversal — built to get comfortable with real-time 3D, materials, and physics.', bg: '#3D5448', imageIndex: 1, section: 'playable' },
+  { id: 'ball-game', title: 'Ball Game', year: '2024', org: 'Self-initiated', type: 'Unity / WebGL', desc: 'A small interactive ball-and-environment piece. Outdoor scene, camera rig, and physics-driven movement. Built as a scripting + prefab sandbox.', bg: '#14211C', imageIndex: 0, section: 'playable' },
+
   // ── Also ───────────────────────────────────────────────────────────────
   { id: 'bethlehem-riverfront', title: 'Bethlehem Riverfront', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network.', bg: '#14211C', imageIndex: 5 },
   { id: 'bethlehem-culinary', title: 'Bethlehem Culinary Institute', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Four-story culinary school in South Bethlehem, programmed around the regional farm economy.', bg: '#3D5448', imageIndex: 6 },
@@ -213,12 +220,65 @@ const ARCHIVE_DATA = {
     ],
     next: 'bethlehem-riverfront',
   },
+  // ── Playable (Unity / WebGL) ─────────────────────────────────────────
+  // `unityBuild` points to the build's index folder (we only reference the
+  // Build/ + loader.js; the embed code owns its own canvas chrome, so we
+  // don't use Unity's default index.html).
+  'ground-is-lava': {
+    title: 'Ground Is Lava',
+    org: 'Self-initiated', year: '2024', role: 'Unity / WebGL',
+    bg: '#3D5448', tileBg: '#3D5448', imageIndex: 1,
+    lede: 'A 3D terrain-and-ramps exercise built in Unity. Lava rises from the floor; a first-person camera traverses a network of raised platforms and ramps before the ground is gone.',
+    body: 'Ground Is Lava was a self-directed exercise to get comfortable with real-time 3D outside the architectural-render pipeline. The goal was to understand Unity\u2019s terrain tools, physics-based movement, URP materials, and play-state logic \u2014 how a spatial designer thinks differently when the scene is something you move through instead of look at.',
+    process: [
+      'Built the terrain using Unity\u2019s heightmap editor, then hand-placed ramps and site objects imported from SketchUp as OBJ. Kept the geometry intentionally blocky so the rising lava reads as the primary event.',
+      'Rising-lava mechanic driven by a simple time-based Y translation on a wide volume with an emissive URP Lit material. Collision triggers end-game.',
+      'First-person controller uses a CharacterController with standard WASD + jump. Camera rig parented to the controller with a mouse-look script.',
+      'Exported to WebGL for the web so the project can be played in-browser without install friction.',
+    ],
+    outcome: 'Self-directed Unity study, 2024. Playable build embedded below \u2014 desktop recommended.',
+    credits: 'Self-initiated. Andreas L\u00e4chler.',
+    details: [
+      { label: 'Engine', value: 'Unity 2022 LTS' },
+      { label: 'Target', value: 'WebGL' },
+      { label: 'Type', value: 'Self-directed study' },
+      { label: 'Year', value: '2024' },
+    ],
+    unityBuild: 'unity/ground-is-lava/',
+    next: 'ball-game',
+  },
+
+  'ball-game': {
+    title: 'Ball Game',
+    org: 'Self-initiated', year: '2024', role: 'Unity / WebGL',
+    bg: '#14211C', tileBg: '#14211C', imageIndex: 0,
+    lede: 'A small interactive ball-and-environment piece. Outdoor scene, camera rig, physics-driven movement \u2014 built as a scripting and prefab sandbox.',
+    body: 'Ball Game is a companion study to Ground Is Lava. Where that project focused on terrain and environment, this one is about object behavior: prefabs, scripts, collision layers, and a camera that tracks a physics object without getting in its way.',
+    process: [
+      'Outdoor scene reused the SketchUp-authored site mesh from earlier architectural work, imported as OBJ and retopologized for Unity lightmap baking.',
+      'Ball is a prefab with Rigidbody + SphereCollider; input maps WASD to AddForce so the physics simulator \u2014 not the script \u2014 decides the movement feel.',
+      'Camera rig follows the ball with smoothed translation and a small angular offset so the horizon tilts with movement.',
+    ],
+    outcome: 'Self-directed Unity study, 2024. Playable build in progress \u2014 WebGL export pending.',
+    credits: 'Self-initiated. Andreas L\u00e4chler.',
+    details: [
+      { label: 'Engine', value: 'Unity 2022 LTS' },
+      { label: 'Target', value: 'WebGL' },
+      { label: 'Type', value: 'Self-directed study' },
+      { label: 'Year', value: '2024' },
+    ],
+    // unityBuild: 'unity/ball-game/',  // ← Uncomment + drop build into portfolio/unity/ball-game/
+    unityPending: true,
+    next: 'ground-is-lava',
+  },
+
 };
 window.ARCHIVE_DATA = ARCHIVE_DATA;
 
 const ArchivePage = ({ onNavigate }) => {
   const featured = ARCHIVE_ITEMS.filter(i => i.featured);
-  const also = ARCHIVE_ITEMS.filter(i => !i.featured);
+  const playable = ARCHIVE_ITEMS.filter(i => i.section === 'playable');
+  const also = ARCHIVE_ITEMS.filter(i => !i.featured && i.section !== 'playable');
   const isMobile = (window.useIsMobile || (() => false))(768);
 
   return (
@@ -244,6 +304,28 @@ const ArchivePage = ({ onNavigate }) => {
           <ArchiveTile key={item.id} item={item} onNavigate={onNavigate} />
         ))}
       </div>
+
+      {/* Playable — Unity / WebGL experiments. Same grid dimensions as
+          Featured, but behind a labeled divider so the section reads as
+          a separate category from the architectural work. */}
+      {playable.length > 0 && (
+        <>
+          <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>Playable</p>
+            <p style={{ fontSize: '11px', letterSpacing: '0.1em', color: 'rgba(20,33,28,0.35)', margin: 0 }}>Unity &middot; WebGL</p>
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '0.625rem',
+            marginBottom: '4rem',
+          }}>
+            {playable.map(item => (
+              <ArchiveTile key={item.id} item={item} onNavigate={onNavigate} />
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Also — quieter, more compact */}
       {also.length > 0 && (
@@ -373,8 +455,13 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
   const nextProject = project.next ? ARCHIVE_DATA[project.next] : null;
   const [heroHov, setHeroHov] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
+  const [playing, setPlaying] = React.useState(false);
   const isMobile = (window.useIsMobile || (() => false))(768);
-  React.useEffect(() => { requestAnimationFrame(() => setMounted(true)); setHeroHov(false); }, [projectId]);
+  React.useEffect(() => {
+    requestAnimationFrame(() => setMounted(true));
+    setHeroHov(false);
+    setPlaying(false); // reset Unity embed when navigating between projects
+  }, [projectId]);
 
   const fade = (delay) => ({
     opacity: mounted ? 1 : 0,
@@ -462,6 +549,92 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
           </div>
         </div>
       </div>
+
+      {/* Playable — Unity / WebGL embed. Only renders when the project
+          declares either a ready build (`unityBuild`) or a pending one
+          (`unityPending`). The iframe is lazy: we don't inject it until
+          the user clicks Play, so the 14MB WebGL bundle never loads for
+          visitors just browsing the detail page. */}
+      {(project.unityBuild || project.unityPending) && (
+        <div style={{ ...fade(100), marginBottom: '3rem' }}>
+          {!playing && project.unityBuild && (
+            <div style={{
+              background: '#F2EFE6',
+              border: '0.5px solid rgba(20,33,28,0.12)',
+              borderRadius: '10px',
+              padding: isMobile ? '1.5rem' : '2rem',
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: isMobile ? 'flex-start' : 'center',
+              justifyContent: 'space-between',
+              gap: '1.25rem',
+            }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.5rem' }}>Play in browser</p>
+                <p style={{ fontSize: '15px', color: 'rgba(20,33,28,0.75)', lineHeight: 1.55, margin: 0, maxWidth: '52ch' }}>
+                  Unity WebGL build &middot; ~14 MB download on first play. Keyboard + mouse &middot; desktop recommended.
+                </p>
+              </div>
+              <button
+                onClick={() => setPlaying(true)}
+                style={{
+                  background: '#14211C', color: '#F2EFE6', border: 'none',
+                  padding: '0.8rem 1.6rem', borderRadius: '8px',
+                  fontSize: '14px', fontWeight: 500, letterSpacing: '0.02em',
+                  cursor: 'pointer', fontFamily: "'Inter', system-ui, sans-serif",
+                  display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span style={{ fontSize: '12px' }}>&#9654;</span> Play {project.title}
+              </button>
+            </div>
+          )}
+          {playing && project.unityBuild && (
+            <div style={{
+              position: 'relative',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              background: '#14211C',
+              aspectRatio: '16 / 9',
+            }}>
+              <iframe
+                src={project.unityBuild}
+                title={project.title}
+                style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+                allow="autoplay; fullscreen; gamepad"
+                allowFullScreen
+              />
+              <button
+                onClick={() => setPlaying(false)}
+                style={{
+                  position: 'absolute', top: '0.75rem', right: '0.75rem',
+                  background: 'rgba(20,33,28,0.85)', color: '#F2EFE6',
+                  border: '0.5px solid rgba(242,239,230,0.2)',
+                  padding: '0.4rem 0.8rem', borderRadius: '6px',
+                  fontSize: '12px', fontWeight: 500, cursor: 'pointer',
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                }}
+              >
+                Stop
+              </button>
+            </div>
+          )}
+          {!project.unityBuild && project.unityPending && (
+            <div style={{
+              background: '#F2EFE6',
+              border: '0.5px dashed rgba(20,33,28,0.2)',
+              borderRadius: '10px',
+              padding: isMobile ? '1.5rem' : '2rem',
+            }}>
+              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.5rem' }}>Playable &middot; build in progress</p>
+              <p style={{ fontSize: '15px', color: 'rgba(20,33,28,0.75)', lineHeight: 1.55, margin: 0, maxWidth: '52ch' }}>
+                The WebGL export for this project is not yet published. Check back soon &mdash; or see the companion project for a playable Unity build.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Lede */}
       <div style={{ ...fade(140), maxWidth: '760px', marginBottom: '3rem' }}>
