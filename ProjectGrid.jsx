@@ -3,10 +3,10 @@
 // into the Feasibility platform case study rather than standing as separate entries.
 const PROJECTS = [
   { id: 'autoease', title: 'AutoEase', org: 'Independent', year: '2026', role: 'Product Design — consumer car-buying prototype', bg: '#1A2520', featured: true, imageIndex: 6 },
-  { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Design — AI platform for real estate feasibility', bg: '#3D5448', featured: true, imageIndex: 0 },
+  { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Lead — AI-powered B2B SaaS platform', bg: '#3D5448', featured: true, imageIndex: 0 },
+  { id: 'exhibition-trailer', title: 'Exhibition Trailer', org: 'Independent', year: '2022', role: 'Physical prototyping — modular off-grid pop-up', bg: '#3D5448', featured: true, imageIndex: 1 },
   { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: true, imageIndex: 2 },
   { id: 'brickell', title: 'Brickell residential', org: 'Arquitectonica', year: '2023', role: 'Architecture — 32-unit multifamily', bg: '#14211C', featured: true, imageIndex: 4 },
-  { id: 'exhibition-trailer', title: 'Exhibition Trailer', org: 'Independent', year: '2022', role: 'Design — modular off-grid pop-up', bg: '#3D5448', featured: true, imageIndex: 1 },
 ];
 
 // expose so other pages can reference

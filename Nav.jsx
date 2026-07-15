@@ -107,7 +107,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
                 Andreas Lächler
               </div>
               <div style={{ fontSize: isMobile ? '11px' : '12px', fontWeight: 400, color: subColor, letterSpacing: '0.06em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms', textTransform: 'uppercase' }}>
-                Designer
+                Product Designer
               </div>
             </div>
           </button>
@@ -416,12 +416,12 @@ const AboutDropdown = ({ onReadMore, accentColor, mutedColor }) => (
         fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em',
         textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)',
         margin: '0 0 0.6rem',
-      }}>Andreas Lächler · Designer</p>
+      }}>Andreas Lächler · Product Designer</p>
       <p style={{
         fontSize: '15px', fontWeight: 400, lineHeight: 1.55,
         color: '#14211C', margin: '0 0 0.9rem',
       }}>
-        Product designer and architect in New York. Currently at Algoma. Previously Arquitectonica, trained at Pratt and Lehigh.
+        Product designer in New York, working across digital and physical. Currently at Algoma. Previously Arquitectonica; trained as an architect at Pratt and Lehigh.
       </p>
       <button
         onClick={onReadMore}

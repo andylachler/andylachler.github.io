@@ -20,7 +20,7 @@ const ScrollWork = ({ onNavigate, tweaks = {} }) => {
             Selected Work
           </p>
           <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: '#14211C', margin: 0, maxWidth: '720px' }}>
-            Product design, research,<br />and architecture.
+            Product design, research,<br />and prototyping — digital and physical.
           </h2>
         </div>
         <button onClick={() => onNavigate('work')} style={{

@@ -11,7 +11,7 @@ const AboutPage = () => {
       {/* Lede — larger, full reading width */}
       <div style={{ maxWidth: '920px', marginBottom: isMobile ? '3rem' : '4.5rem' }}>
         <p style={{ fontSize: isMobile ? 'clamp(18px, 4.8vw, 22px)' : 'clamp(20px, 2.1vw, 26px)', fontWeight: 400, lineHeight: 1.5, color: '#14211C', margin: 0, letterSpacing: '-0.005em' }}>
-          I'm a designer and technologist working at the intersection of architecture, product, and automation. My practice spans the full stack of how buildings get made — from permit sets and feasibility studies to the software, data, and brand systems that shape how architects and developers make decisions.
+          I'm a product designer who works end-to-end — research, strategy, interface, and shipping — and moves between mediums. I spent years designing buildings before designing software, so my practice runs from data-dense B2B interfaces to physical prototypes you can hold, sit in, or walk through.
         </p>
       </div>
 
@@ -31,7 +31,7 @@ const AboutPage = () => {
             Before Algoma, I was an Associate Designer at Arquitectonica on large-scale multifamily projects, where I helped introduce AI-driven visualization and computational workflows. Earlier work at boutique firms grounded me in the full arc of design, from concept through schematic development.
           </p>
           <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', margin: 0 }}>
-            Master of Architecture from Pratt, B.S. Architecture from Lehigh. Dual US / German national — fluent English and Spanish, proficient German. Hands-on with carpentry, 3D printing, and model making.
+            Master of Architecture from Pratt, B.S. Architecture from Lehigh. Dual US / German national — fluent English and Spanish, proficient German. Hands-on with carpentry, 3D printing, and model making — prototyping doesn't stop at the screen.
           </p>
         </div>
 

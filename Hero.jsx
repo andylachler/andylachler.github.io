@@ -50,7 +50,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
             </h1>
             <div style={fade(480)}>
               <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'rgba(242,239,230,0.65)', marginBottom: '2rem' }}>
-                Currently at Algoma. Previously at Arquitectonica on residential and mixed-use projects at significant scale.
+                Currently at Algoma, shipping B2B SaaS end-to-end. Before software, buildings at Arquitectonica — I prototype in both mediums.
               </p>
               <HeroArrow onClick={() => onNavigate('work')} color={accentColor}>Selected work</HeroArrow>
             </div>
@@ -61,7 +61,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
               A product designer<br />trained as an architect.
             </h1>
             <p style={{ ...fade(500), fontSize: '18px', fontWeight: 400, lineHeight: 1.65, color: 'rgba(242,239,230,0.6)', maxWidth: '540px', marginBottom: '3rem' }}>
-              Currently at Algoma, designing an AI platform for real estate feasibility. Previously at Arquitectonica on residential and mixed-use projects at significant scale.
+              Currently at Algoma, designing and shipping a data-dense B2B SaaS platform end-to-end. Before software, buildings — so I prototype as comfortably in the physical world as on screen.
             </p>
             <div style={{ ...fade(620), display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
               <HeroArrow onClick={() => onNavigate('work')} color={accentColor}>Selected work</HeroArrow>
