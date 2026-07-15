@@ -393,7 +393,7 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
       {/* Background SVG pattern — matches the homepage tile language. If the
           archive entry tags a `silhouette`, TilePlaceholder will render the
           project-specific outline instead of the generic pattern. */}
-      {window.TilePlaceholder && <TilePlaceholder bg={bg} index={item.imageIndex} hovered={hov} silhouette={item.silhouette} />}
+      {window.ProjectVisual && <ProjectVisual projectId={item.id} bg={bg} index={item.imageIndex} hovered={hov} silhouette={item.silhouette} />}
 
       {/* Top-down shimmer */}
       <div style={{
@@ -532,7 +532,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               blueprint beneath it. `variant="hero"` keeps stroke + opacity
               subtle; the archive grid tile (default `variant="tile"`) uses
               the heavier treatment. */}
-          {window.TilePlaceholder && <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} variant="hero" />}
+          {window.ProjectVisual && <ProjectVisual projectId={project.id} kind="hero" bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} variant="hero" />}
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
             background: light

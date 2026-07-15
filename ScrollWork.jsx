@@ -172,7 +172,7 @@ const MobileProjectCard = ({ project, onNavigate, accentColor }) => {
     >
       {/* Visual */}
       <div style={{ position: 'relative', aspectRatio: '16 / 10', overflow: 'hidden' }}>
-        {window.TilePlaceholder && <TilePlaceholder bg={tileBg} index={project.imageIndex} hovered={false} />}
+        {window.ProjectVisual && <ProjectVisual projectId={project.id} bg={tileBg} index={project.imageIndex} hovered={false} />}
         <div style={{
           position: 'absolute', inset: 0,
           background: light
@@ -275,7 +275,7 @@ const ScrollTileVisual = ({ project, active, onNavigate }) => {
         pointerEvents: active ? 'auto' : 'none',
       }}
     >
-      {window.TilePlaceholder && <TilePlaceholder bg={tileBg} index={project.imageIndex} hovered={hov} />}
+      {window.ProjectVisual && <ProjectVisual projectId={project.id} bg={tileBg} index={project.imageIndex} hovered={hov} />}
 
       <div style={{
         position: 'absolute', inset: 0,

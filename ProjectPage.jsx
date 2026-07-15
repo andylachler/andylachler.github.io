@@ -234,6 +234,7 @@ const DetailBlock = ({ imageIndex, bg, hovered }) => (
 const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
   const project = PROJECT_DATA[projectId] || PROJECT_DATA['feasibility'];
   const nextProject = project.next ? PROJECT_DATA[project.next] : null;
+  const gallery = ((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || [];
   const [heroHov, setHeroHov] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const isMobile = (window.useIsMobile || (() => false))(768);
@@ -268,7 +269,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
           onMouseEnter={() => setHeroHov(true)}
           onMouseLeave={() => setHeroHov(false)}
         >
-          <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={heroHov} />
+          <ProjectVisual projectId={projectId} kind="hero" bg={project.tileBg} index={project.imageIndex} hovered={heroHov} />
           <div style={{ position: 'absolute', inset: 0, padding: heroPad, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
               {project.org} · {project.year} · {project.role}
@@ -417,6 +418,32 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         </div>
       )}
 
+      {/* Gallery — images from images/<project-id>/ via the manifest.
+          Add numbered files (01.jpg, 02.jpg…) + optional captions.json,
+          rebuild the manifest, and they appear here. No images = no section. */}
+      {gallery.length > 0 && (
+        <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Gallery</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
+            {gallery.map((g, i) => (
+              <figure key={g.src} style={{ margin: 0 }}>
+                <img
+                  src={g.src}
+                  alt={g.caption || `${project.title} — image ${i + 1}`}
+                  loading="lazy"
+                  style={{ width: '100%', display: 'block', borderRadius: '10px' }}
+                />
+                {g.caption && (
+                  <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>
+                    {g.caption}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Influences */}
       {project.influences && project.influences.length > 0 && (
         <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', maxWidth: '820px' }}>
@@ -496,7 +523,7 @@ const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
         border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
       }}
     >
-      <TilePlaceholder bg={project.tileBg} index={project.imageIndex} hovered={hov} />
+      <ProjectVisual projectId={Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project)} bg={project.tileBg} index={project.imageIndex} hovered={hov} />
       <div style={{
         position: 'absolute', inset: 0,
         padding: isMobile ? '1.25rem' : '2rem',

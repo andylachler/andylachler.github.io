@@ -384,7 +384,7 @@ const DropdownTile = ({ project, onNavigate, accentColor }) => {
           : 'linear-gradient(rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 50%, rgba(0,0,0,0) 100%)',
         pointerEvents: 'none',
       }} />
-      {window.TilePlaceholder && <TilePlaceholder bg={bg} index={project.imageIndex} hovered={hov} />}
+      {window.ProjectVisual && <ProjectVisual projectId={project.id} bg={bg} index={project.imageIndex} hovered={hov} />}
       {/* Hover arrow */}
       <div style={{
         position: 'absolute', top: '0.75rem', right: '0.75rem', zIndex: 1,
