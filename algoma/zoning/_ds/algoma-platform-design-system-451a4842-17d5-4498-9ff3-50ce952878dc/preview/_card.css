@@ -1,0 +1,26 @@
+/* Shared baseline for all Platform Design System cards */
+@import url("../colors_and_type.css");
+
+html, body {
+  margin: 0; padding: 0;
+  width: 100%;
+  background: #F7F7F0;
+  color: #0D292B;
+  font-family: 'Poppins', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body { padding: 24px; }
+
+.row { display: flex; gap: 12px; align-items: stretch; }
+.col { flex: 1 1 0; min-width: 0; }
+
+.label-xs {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #999999;
+  font-weight: 500;
+}
+.sp { height: 12px; }

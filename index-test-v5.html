@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Andreas Lächler — Studio (test · v5)</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon-lockup.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #F2EFE6;
+    --cream-2: #E9E5D7;
+    --ink:   #14211C;
+    --ink-2: #0E1714;
+    --orange:#D45A1B;
+    --moss:  #3D5448;
+    --ff: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: var(--ff); background: var(--ink); color: var(--cream); }
+  body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+  /* ───────── SMOOTH-SCROLL HOST (native scroll; was inertial, caused freeze) ───────── */
+  .smooth { position: relative; }
+
+  /* ───────── LOADER ───────── */
+  .loader {
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--ink);
+    display: grid; place-items: center;
+    transition: transform 1000ms cubic-bezier(.7,0,.2,1);
+  }
+  .loader.sweep { transform: translateY(-100%); }
+  .loader canvas { width: 280px; height: 280px; }
+  .loader__meta {
+    position: absolute; bottom: 40px; left: 40px; right: 40px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(242,239,230,0.55);
+  }
+  .loader__count { font-variant-numeric: tabular-nums; font-size: 12px; }
+
+  /* ───────── NAV (inverts on scroll past hero) ───────── */
+  .nav {
+    position: fixed; top: 20px; left: 20px; right: 20px;
+    z-index: 60;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cream);
+    transition: background 500ms ease, color 500ms ease, border-color 500ms ease, backdrop-filter 500ms ease;
+    border: 1px solid transparent;
+    opacity: 0; transform: translateY(-8px);
+  }
+  .nav.in { opacity: 1; transform: translateY(0); transition: opacity 600ms ease 300ms, transform 600ms ease 300ms, background 500ms ease, color 500ms ease, border-color 500ms ease; }
+  .nav.inverted {
+    background: rgba(242,239,230,0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: var(--ink);
+    border-color: rgba(20,33,28,0.08);
+  }
+  .nav__brand { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 13px; }
+  .nav__mark {
+    width: 26px; height: 26px; border-radius: 999px;
+    display: grid; place-items: center;
+    background: var(--cream); color: var(--ink);
+    font-size: 10px; font-weight: 600; letter-spacing: -0.02em;
+    transition: background 400ms ease, color 400ms ease;
+  }
+  .nav.inverted .nav__mark { background: var(--ink); color: var(--cream); }
+  .nav__links { display: flex; gap: 28px; }
+  .nav__link { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.72; transition: opacity 220ms ease; }
+  .nav__link:hover { opacity: 1; }
+  .nav__cta {
+    padding: 8px 16px; border-radius: 999px;
+    background: var(--cream); color: var(--ink);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: background 400ms ease, color 400ms ease;
+  }
+  .nav.inverted .nav__cta { background: var(--ink); color: var(--cream); }
+
+  /* ───────── LAYOUT PRIMITIVES ───────── */
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 0 40px; }
+  .kicker {
+    font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: currentColor; opacity: 0.55;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .kicker::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: var(--orange); }
+
+  .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 900ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .clip { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .clip > span { display: inline-block; transform: translateY(110%); transition: transform 1000ms cubic-bezier(.2,.7,.2,1); }
+  .clip.in > span { transform: translateY(0); }
+
+  /* ───────── HERO (DARK) ───────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 140px 0 80px;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .hero__bg { position: absolute; inset: 0; z-index: 0; }
+  .hero__inner {
+    position: relative; z-index: 2;
+    padding: 0 40px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: calc(100vh - 140px - 80px);
+    min-height: 520px;
+  }
+  .hero__title {
+    align-self: center;
+    font-size: clamp(52px, 8.6vw, 148px);
+    line-height: 0.93;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    margin: 0;
+    max-width: 18ch;
+  }
+  .hero__title em { font-style: italic; font-weight: 300; color: rgba(242,239,230,0.78); }
+  .hero__foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(242,239,230,0.15);
+  }
+  .hero__foot__sub {
+    max-width: 38ch;
+    font-size: 15px; line-height: 1.55;
+    color: rgba(242,239,230,0.68);
+  }
+  .hero__foot__meta {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(242,239,230,0.55);
+    text-align: right;
+  }
+  .hero__foot__meta div + div { margin-top: 6px; }
+
+  /* ───────── MARQUEE STRIP ───────── */
+  .marquee {
+    overflow: hidden; white-space: nowrap;
+    border-top: 1px solid rgba(242,239,230,0.12);
+    border-bottom: 1px solid rgba(242,239,230,0.12);
+    background: var(--ink);
+    padding: 36px 0;
+  }
+  .marquee__track {
+    display: inline-flex; gap: 40px; padding-right: 40px;
+    animation: slide 46s linear infinite;
+    font-size: clamp(26px, 3.4vw, 52px);
+    font-weight: 300; letter-spacing: -0.02em;
+    color: rgba(242,239,230,0.9);
+  }
+  .marquee__track span { display: inline-flex; align-items: center; gap: 40px; }
+  .marquee__track span::after { content: "●"; color: var(--orange); font-size: 0.5em; vertical-align: middle; }
+  @keyframes slide {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ───────── PROJECT GRID (LIGHT) ───────── */
+  .grid-sec {
+    background: var(--cream);
+    color: var(--ink);
+    padding: 140px 0 120px;
+  }
+  .grid-sec__head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 40px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(20,33,28,0.12);
+  }
+  .grid-sec__title {
+    font-size: clamp(40px, 5.2vw, 80px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    margin: 16px 0 0;
+  }
+  .grid-sec__title em { font-style: italic; font-weight: 300; color: rgba(20,33,28,0.68); }
+  .grid-sec__intro { max-width: 32ch; font-size: 14px; line-height: 1.55; color: rgba(20,33,28,0.65); }
+
+  .grid {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+  }
+  .tile {
+    position: relative;
+    grid-column: span 6;
+    min-height: 440px;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    background: var(--ink);
+    color: var(--cream);
+    transition: transform 500ms cubic-bezier(.2,.7,.2,1);
+  }
+  .tile:hover { transform: translateY(-4px); }
+  .tile::after {
+    content: ""; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(242,239,230,0.22) 1px, transparent 1.4px);
+    background-size: 14px 14px;
+    background-position: 0 0;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 70% 90% at 70% 50%, #000 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 90% at 70% 50%, #000 40%, transparent 80%);
+    transition: background-size 600ms cubic-bezier(.2,.7,.2,1), opacity 600ms ease;
+    opacity: 0.8;
+  }
+  .tile:hover::after { background-size: 7px 7px; opacity: 1; }
+
+  .tile--moss { background: var(--moss); }
+  .tile--orange { background: var(--orange); }
+
+  .tile--3 { grid-column: span 4; }
+  .tile--8 { grid-column: span 8; }
+  .tile--12 { grid-column: span 12; min-height: 380px; }
+
+  .tile__num {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(242,239,230,0.6);
+  }
+  .tile__body { position: relative; z-index: 2; }
+  .tile__title {
+    font-size: clamp(28px, 2.8vw, 42px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin: 0 0 14px;
+    max-width: 18ch;
+  }
+  .tile__title em { font-style: italic; font-weight: 300; color: rgba(242,239,230,0.75); }
+  .tile__meta {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(242,239,230,0.65);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .tile__meta svg { width: 14px; height: 14px; stroke: currentColor; }
+
+  /* ───────── MANIFESTO (DARK, pinned-feel) ───────── */
+  .manifesto {
+    position: relative;
+    background: var(--ink);
+    padding: 200px 0 180px;
+    overflow: hidden;
+    border-top: 1px solid rgba(242,239,230,0.1);
+  }
+  .manifesto__bg { position: absolute; inset: 0; z-index: 0; }
+  .manifesto__inner {
+    position: relative; z-index: 2; padding: 0 40px;
+    max-width: 1080px; margin: 0 auto;
+  }
+  .manifesto__body {
+    font-size: clamp(34px, 4.6vw, 76px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+    color: var(--cream);
+    margin: 32px 0 0;
+  }
+  .manifesto__body em { font-style: italic; color: rgba(242,239,230,0.72); }
+
+  /* ───────── CTA (LIGHT) ───────── */
+  .cta-sec {
+    background: var(--cream);
+    color: var(--ink);
+    padding: 160px 40px 140px;
+    text-align: center;
+  }
+  .cta-sec h2 {
+    font-size: clamp(44px, 6.4vw, 112px);
+    line-height: 0.95; letter-spacing: -0.03em; font-weight: 400;
+    max-width: 20ch; margin: 24px auto 40px;
+  }
+  .cta-sec h2 em { font-style: italic; font-weight: 300; color: rgba(20,33,28,0.68); }
+  .cta-sec a.btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 18px 28px;
+    background: var(--ink); color: var(--cream);
+    border-radius: 999px;
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: transform 260ms ease, background 260ms ease;
+  }
+  .cta-sec a.btn:hover { transform: translateY(-2px); background: var(--orange); }
+
+  /* ───────── FOOTER ───────── */
+  footer {
+    background: var(--ink); color: rgba(242,239,230,0.45);
+    padding: 40px 40px 32px;
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    border-top: 1px solid rgba(242,239,230,0.1);
+  }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width: 1020px) {
+    .tile, .tile--3, .tile--8, .tile--12 { grid-column: span 12; }
+    .hero__foot { flex-direction: column; align-items: flex-start; }
+    .hero__foot__meta { text-align: left; }
+  }
+  @media (max-width: 640px) {
+    .nav__links { display: none; }
+    .nav { top: 12px; left: 12px; right: 12px; padding: 10px 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────── LOADER ───────── -->
+<div class="loader" id="loader">
+  <canvas id="logoDots" width="560" height="560" aria-hidden="true"></canvas>
+  <div class="loader__meta">
+    <div>Lachler Studio — Miami</div>
+    <div class="loader__count" id="counter">000</div>
+  </div>
+</div>
+
+<!-- ───────── NAV ───────── -->
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__mark">AL</span>
+    <span>Andreas Lächler</span>
+  </a>
+  <div class="nav__links">
+    <a class="nav__link" href="#work">Work</a>
+    <a class="nav__link" href="#note">Note</a>
+    <a class="nav__link" href="#contact">Contact</a>
+  </div>
+  <a class="nav__cta" href="#contact">Start a project</a>
+</nav>
+
+<!-- ───────── SMOOTH WRAPPER ───────── -->
+<div class="smooth" id="smooth">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <canvas class="hero__bg" id="heroBg"></canvas>
+    <div class="hero__inner">
+      <h1 class="hero__title">
+        <span class="clip"><span>Design that <em>moves</em></span></span><br/>
+        <span class="clip"><span>and holds its</span></span><br/>
+        <span class="clip"><span><em>shape.</em></span></span>
+      </h1>
+      <div class="hero__foot">
+        <p class="hero__foot__sub fade-up">
+          A small Miami studio working at the seam of brand, product, and architecture. Selected projects, held at measured weight.
+        </p>
+        <div class="hero__foot__meta fade-up">
+          <div>Est. MMXIV · Miami 26°N</div>
+          <div>Available · Q3 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Selected work</span><span>2022 — 2026</span><span>Brand</span><span>Product</span><span>Spatial</span><span>Editorial</span>
+      <span>Selected work</span><span>2022 — 2026</span><span>Brand</span><span>Product</span><span>Spatial</span><span>Editorial</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section class="grid-sec" id="work">
+    <div class="wrap">
+      <div class="grid-sec__head">
+        <div class="fade-up">
+          <span class="kicker">Selected · 01 — 06</span>
+          <h2 class="grid-sec__title">A small set,<br/><em>held</em> long.</h2>
+        </div>
+        <p class="grid-sec__intro fade-up">
+          Six projects from the last 24 months. Each links to a case study, plus the small sketches that led there.
+        </p>
+      </div>
+
+      <div class="grid">
+        <a class="tile tile--8 fade-up" href="#">
+          <div class="tile__num"><span>01 · Autoease</span><span>2026</span></div>
+          <div class="tile__body">
+            <h3 class="tile__title">Service OS for <em>independent</em> auto shops.</h3>
+            <div class="tile__meta">
+              <span>Brand · Product · Motion</span>
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+            </div>
+          </div>
+        </a>
+        <a class="tile tile--4 tile--moss fade-up" href="#" style="grid-column: span 4;">
+          <div class="tile__num"><span>02 · Feasibility</span><span>2025</span></div>
+          <div class="tile__body">
+            <h3 class="tile__title"><em>Planning tool</em> for civic teams.</h3>
+            <div class="tile__meta">
+              <span>Research · Interface</span>
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+            </div>
+          </div>
+        </a>
+        <a class="tile tile--4 fade-up" href="#" style="grid-column: span 4;">
+          <div class="tile__num"><span>03 · Ella</span><span>2025</span></div>
+          <div class="tile__body">
+            <h3 class="tile__title">Identity for a children's <em>literacy</em> lab.</h3>
+            <div class="tile__meta">
+              <span>Identity · Editorial</span>
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+            </div>
+          </div>
+        </a>
+        <a class="tile tile--8 tile--orange fade-up" href="#">
+          <div class="tile__num"><span>04 · Brickell</span><span>2024</span></div>
+          <div class="tile__body">
+            <h3 class="tile__title">Wayfinding for a <em>vertical</em> neighborhood.</h3>
+            <div class="tile__meta">
+              <span>Environmental · System</span>
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+            </div>
+          </div>
+        </a>
+        <a class="tile tile--6 fade-up" href="#">
+          <div class="tile__num"><span>05 · Exhibition</span><span>2024</span></div>
+          <div class="tile__body">
+            <h3 class="tile__title">A <em>40-foot</em> touring gallery.</h3>
+            <div class="tile__meta">
+              <span>Spatial · Exhibition</span>
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+            </div>
+          </div>
+        </a>
+        <a class="tile tile--6 tile--moss fade-up" href="#">
+          <div class="tile__num"><span>— · Index</span><span>Archive</span></div>
+          <div class="tile__body">
+            <h3 class="tile__title"><em>34 entries</em> from a decade of work.</h3>
+            <div class="tile__meta">
+              <span>Sketchbook · Archive</span>
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto" id="note">
+    <canvas class="manifesto__bg" id="manifestoBg"></canvas>
+    <div class="manifesto__inner">
+      <span class="kicker fade-up" style="color:var(--cream)">A Note · 02 / 03</span>
+      <p class="manifesto__body fade-up">
+        The studio treats design as a form of <em>restraint</em> — every project is a hypothesis tested against material, audience, and time, and shipped only when it <em>holds.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-sec" id="contact">
+    <span class="kicker fade-up">Next</span>
+    <h2 class="fade-up">Build something <em>worth keeping?</em></h2>
+    <a class="btn fade-up" href="mailto:alachler@gmail.com">
+      alachler@gmail.com
+      <svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 L9 3 M9 3 H4.5 M9 3 V7.5"/></svg>
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>© Lachler Studio · MMXXVI</div>
+    <div>Email · LinkedIn · Read.cv · Are.na</div>
+  </footer>
+
+</div>
+
+<script>
+/* ======================================================================
+   SHARED AL MARK (inline paths so loader works on file://)
+====================================================================== */
+const MARK_PATHS = [
+  "M269.66 913.36H.38l458.74-688.12a73.75 73.75 0 0 1 61.35-32.83H645.7l-436.42 671.4H317.5",
+  "M426.43 913.36h414.82l-18.11-27.16-254.13-381.19-13.56-20.35L136.56 1113h122.55c18.82 0 42.76-12.81 53.2-28.47l291.74-437.62 13.1 19.64 131.5 197.25h-289.2l-33.03 49.55Z"
+];
+const MARK_VB = { w: 841.95, h: 1113.38 };
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ======================================================================
+   LOADER — sample AL mark, swarm ~1500 dots to position
+====================================================================== */
+(function runLoader() {
+  const loader = document.getElementById('loader');
+  const canvas = document.getElementById('logoDots');
+  const ctx = canvas.getContext('2d');
+  const counterEl = document.getElementById('counter');
+
+  const W = canvas.width, H = canvas.height;
+
+  // Rasterize mark to offscreen for alpha sampling
+  const off = document.createElement('canvas');
+  off.width = W; off.height = H;
+  const octx = off.getContext('2d');
+  const scale = Math.min(W / MARK_VB.w, H / MARK_VB.h) * 0.84;
+  const tx = (W - MARK_VB.w * scale) / 2;
+  const ty = (H - MARK_VB.h * scale) / 2;
+  octx.translate(tx, ty);
+  octx.scale(scale, scale);
+  octx.fillStyle = '#fff';
+  MARK_PATHS.forEach(d => octx.fill(new Path2D(d)));
+  const img = octx.getImageData(0, 0, W, H).data;
+
+  // Sample points inside the mark
+  const step = 8;
+  const points = [];
+  for (let y = 0; y < H; y += step) {
+    for (let x = 0; x < W; x += step) {
+      if (img[(y * W + x) * 4 + 3] > 60) {
+        const sx = Math.random() * W * 1.8 - W * 0.4;
+        const sy = Math.random() * H * 1.8 - H * 0.4;
+        points.push({
+          x: sx, y: sy,
+          tx: x + (Math.random() - 0.5) * 1.5,
+          ty: y + (Math.random() - 0.5) * 1.5,
+          r: 1.1 + Math.random() * 1.2,
+          delay: Math.random() * 0.5
+        });
+      }
+    }
+  }
+
+  const DUR = REDUCED ? 200 : 1800;
+  let start = null;
+
+  function tick(ts) {
+    if (!start) start = ts;
+    const raw = Math.min(1, (ts - start) / DUR);
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#F2EFE6';
+    for (let i = 0; i < points.length; i++) {
+      const p = points[i];
+      const local = Math.max(0, Math.min(1, (raw - p.delay) / (1 - p.delay)));
+      const eased = 1 - Math.pow(1 - local, 3);
+      const x = p.x + (p.tx - p.x) * eased;
+      const y = p.y + (p.ty - p.y) * eased;
+      ctx.globalAlpha = 0.3 + 0.7 * local;
+      ctx.beginPath(); ctx.arc(x, y, p.r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    counterEl.textContent = String(Math.floor(raw * 100)).padStart(3, '0');
+
+    if (raw < 1) requestAnimationFrame(tick);
+    else setTimeout(finish, 420);
+  }
+
+  function finish() {
+    loader.classList.add('sweep');
+    document.getElementById('nav').classList.add('in');
+    setTimeout(() => {
+      document.querySelectorAll('.hero .clip, .hero .fade-up').forEach((el, i) => {
+        setTimeout(() => el.classList.add('in'), 80 + i * 130);
+      });
+    }, 250);
+    setTimeout(() => loader.remove(), 1100);
+  }
+
+  requestAnimationFrame(tick);
+})();
+
+/* ======================================================================
+   SMOOTH SCROLL — disabled: was causing freeze (overflow:hidden killed
+   window.scrollY, so nav inversion + reveals never fired). Native scroll
+   works cleanly with all the animations below.
+====================================================================== */
+
+/* ======================================================================
+   NAV INVERSION
+====================================================================== */
+(function navInvert() {
+  const nav = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  const marquee = document.querySelector('.marquee');
+  function update() {
+    const hBottom = hero.offsetTop + hero.offsetHeight;
+    const mBottom = marquee.offsetTop + marquee.offsetHeight;
+    const y = window.scrollY + 80;
+    // Invert on cream sections (after marquee, before manifesto; and inside CTA)
+    const manifesto = document.querySelector('.manifesto');
+    const cta = document.querySelector('.cta-sec');
+    const inCream = (y > mBottom && y < manifesto.offsetTop)
+                 || (y > cta.offsetTop && y < cta.offsetTop + cta.offsetHeight);
+    nav.classList.toggle('inverted', inCream);
+  }
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+})();
+
+/* ======================================================================
+   DOT-MATRIX BACKGROUND (shared factory)
+====================================================================== */
+function dotMatrix(canvasId, opts = {}) {
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let W = 0, H = 0;
+  let mx = -9999, my = -9999;
+  const step = opts.step || 22;
+  const base = opts.base || 'rgba(242,239,230,';
+  const accent = opts.accent || 'rgba(212,90,27,';
+
+  function resize() {
+    const r = c.getBoundingClientRect();
+    W = r.width; H = r.height;
+    c.width = W * DPR; c.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  new ResizeObserver(resize).observe(c);
+
+  window.addEventListener('mousemove', e => {
+    const r = c.getBoundingClientRect();
+    mx = e.clientX - r.left;
+    my = e.clientY - r.top;
+  });
+  c.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+
+  let t = 0;
+  function frame() {
+    t += 0.009;
+    ctx.clearRect(0, 0, W, H);
+    for (let y = step; y < H + step; y += step) {
+      for (let x = step; x < W + step; x += step) {
+        const dx = x - mx, dy = y - my;
+        const d = Math.hypot(dx, dy);
+        const ripple = Math.max(0, 1 - d / 200);
+        const wave = Math.sin((x * 0.008 + y * 0.01) + t) * 0.5 + 0.5;
+        const size = 0.5 + wave * 1.0 + ripple * 2.6;
+        const a = 0.09 + wave * 0.14 + ripple * 0.58;
+        ctx.fillStyle = ripple > 0.08 ? accent + a.toFixed(3) + ')' : base + a.toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(x, y, size, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+dotMatrix('heroBg', { step: 26 });
+dotMatrix('manifestoBg', { step: 22 });
+
+/* ======================================================================
+   SCROLL REVEALS (IntersectionObserver, staggered per row)
+====================================================================== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    // stagger siblings in the same row
+    const row = el.parentElement;
+    if (row && row.classList.contains('grid')) {
+      const items = Array.from(row.querySelectorAll('.fade-up'));
+      const idx = items.indexOf(el);
+      setTimeout(() => el.classList.add('in'), idx * 90);
+    } else {
+      el.classList.add('in');
+    }
+    io.unobserve(el);
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up, .clip').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

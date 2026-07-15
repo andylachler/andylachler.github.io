@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/algoma-platform-design-system-451a4842-17d5-4498-9ff3-50ce952878dc/colors_and_type.css">
+<script src="_ds/algoma-platform-design-system-451a4842-17d5-4498-9ff3-50ce952878dc/_ds_bundle.js"></script>
+<meta name="design_doc_mode" content="canvas">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#E4E7EC;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+  input,select,button,textarea{font-family:'Poppins',sans-serif}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#D0D0CB;border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background:#B8B8B2;background-clip:padding-box}
+</style>
+</helmet>
+
+<div style="padding:48px;display:flex;flex-direction:column;gap:28px;align-items:flex-start">
+
+  <div style="max-width:760px">
+    <div style="font-family:'Ubuntu',sans-serif;font-size:26px;font-weight:500;color:#0D292B">Interactive Zoning Report</div>
+    <div style="font-size:14px;color:#787874;margin-top:8px;line-height:1.6">Site → Zoning tab, shown at 100% with the Controls (AI co-pilot) on the left and Studies (Key Insights) on the right. Two directions for the central report — switch asset class, toggle the affordable bonus, edit assumptions, and watch capacity and insights recompute live. Reference them in chat as <a href="#1a" style="color:#3479FE;font-weight:600;text-decoration:none">1a</a> and <a href="#1b" style="color:#3479FE;font-weight:600;text-decoration:none">1b</a>.</div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+
+    <!-- ============================= DIRECTION 1A ============================= -->
+    <div id="1a" style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-family:'Ubuntu',sans-serif;font-size:13px;font-weight:700;color:#FFFFFF;background:#194651;border-radius:8px;padding:4px 11px">1a</span>
+        <span style="font-size:15px;font-weight:600;color:#0D292B">Underwriting Worksheet</span>
+        <span style="font-size:13px;color:#999999">— document-faithful, dense, citation-first</span>
+      </div>
+
+      <div data-screen-label="Site · Zoning · 1a" style="width:1440px;height:900px;background:#FFFFFF;border:1px solid #DADAD3;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(13,41,43,0.18);display:flex;flex-direction:column">
+
+        <!-- NAVBAR -->
+        <div style="height:64px;flex-shrink:0;background:#FFFFFF;border-bottom:1px solid #B3B3B3;display:flex;align-items:center">
+          <span style="display:flex;align-items:center;padding:0 16px;flex-shrink:0"><svg viewBox="0 0 106 36" style="height:26px;width:auto" fill="#194651"><sc-for list="{{ logoPaths }}" as="p" hint-placeholder-count="6"><path d="{{ p }}"></path></sc-for></svg></span>
+          <div style="display:flex;align-items:center;gap:2px">
+            <button style="min-width:88px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Home</button>
+            <button style="min-width:88px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Your Studies</button>
+            <span style="width:1px;align-self:stretch;margin:14px 8px;background:#D9D9D9"></span>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#3479FE;font-weight:600">Site</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Market</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Comps</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Costs</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Files</button>
+          </div>
+          <span style="flex:1"></span>
+          <button style="width:32px;height:32px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:8px"><svg viewBox="0 0 24 24" width="22" height="22" fill="#0D292C"><path d="M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM11 6l6 6-6 6-1.41-1.41L14.18 12 9.59 7.41z"></path></svg></button>
+          <button style="display:flex;align-items:center;background:#D9D9D9;border-radius:24px;height:32px;border:none;cursor:pointer;padding:0;margin-right:16px;gap:8px"><span style="margin-left:8px;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="#000"><path d="M7 10l5 5 5-5z"></path></svg></span><span style="font-family:'Ubuntu',sans-serif;font-size:0.9rem;color:#000">Administrator</span><span style="width:32px;height:32px;border-radius:50%;background:#F0C1B6;color:#000;font-family:'Ubuntu',sans-serif;font-size:0.9rem;display:flex;align-items:center;justify-content:center">J</span></button>
+        </div>
+
+        <!-- BODY: 3 columns -->
+        <div style="flex:1;display:flex;min-height:0">
+
+          <!-- LEFT: AI co-pilot -->
+          <div style="width:352px;flex-shrink:0;border-right:1px solid #ECECEC;background:#FFFFFF;display:flex;flex-direction:column;min-height:0">
+            <div style="display:flex;border-bottom:1px solid rgba(0,0,0,0.12);flex-shrink:0">
+              <div style="flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#3B3B39">Layers</div>
+              <div style="flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#3479FE;font-weight:500;border-bottom:2px solid #3479FE;margin-bottom:-1px">Chat</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;flex-shrink:0">
+              <span style="width:30px;height:30px;border-radius:8px;background:#EAF1FF;display:flex;align-items:center;justify-content:center;color:#3479FE"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"></path></svg></span>
+              <div style="line-height:1.2"><div style="font-size:15px;font-weight:600;color:#0D292B">Algoma AI Assistant</div><div style="font-size:12px;color:#3B3B39">Zoning co-pilot · synced to report</div></div>
+            </div>
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 14px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ chatView }}" as="m" hint-placeholder-count="2">
+                <div style="display:flex;justify-content:{{ m.justify }}">
+                  <div style="max-width:84%;padding:10px 12px;border-radius:10px;font-size:12.5px;line-height:1.5;background:{{ m.bg }};color:{{ m.fg }}">{{ m.text }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="border-top:1px solid #D9D9D9;padding:12px 14px;display:flex;flex-direction:column;gap:10px;flex-shrink:0">
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="3">
+                  <button onClick="{{ sg.onClick }}" style="font-size:11px;color:#0D292B;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:90px;padding:5px 11px;cursor:pointer">{{ sg.label }}</button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ hasUploads }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ uploaded }}" as="f" hint-placeholder-count="0">
+                    <div style="display:flex;align-items:center;gap:5px;background:#D5F8EB;border:1px solid #99E3B2;border-radius:6px;padding:4px 8px;font-size:11px;color:#0D292B"><svg viewBox="0 0 24 24" width="13" height="13" fill="#2B6960"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>{{ f.name }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="display:flex;align-items:center;gap:8px">
+                <label style="display:flex;align-items:center;justify-content:center;width:36px;height:38px;border:1px solid #D9D9D9;border-radius:8px;cursor:pointer;color:#3B3B39;flex-shrink:0" title="Upload zoning document"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 6v11.5a4 4 0 01-8 0V5a2.5 2.5 0 015 0v10.5a1 1 0 01-2 0V6H10v9.5a2.5 2.5 0 005 0V5a4 4 0 00-8 0v12.5a5.5 5.5 0 0011 0V6h-1.5z"></path></svg><input type="file" onChange="{{ onUpload }}" style="display:none"></label>
+                <input value="{{ draft }}" onInput="{{ onDraft }}" onKeyDown="{{ onKey }}" placeholder="Ask about zoning, or upload a doc…" style="flex:1;border:1px solid #D9D9D9;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#0D292B;background:#FFFFFF;outline:none">
+                <button onClick="{{ onSend }}" style="width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:{{ sendBg }};color:{{ sendFg }};flex-shrink:0"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CENTER: report -->
+          <div style="flex:1;min-width:0;background:#F7F7F0;overflow-y:auto;padding:18px 20px 40px">
+            <div style="display:flex;justify-content:center;margin-bottom:16px">
+              <div style="display:inline-grid;grid-template-columns:repeat(4,1fr);gap:8px;background:#FFFFFF;border-radius:16px;padding:3px;border:1px solid #B3B3B3">
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:transparent;border:none;cursor:pointer;color:#0D292B">Summary</button>
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:transparent;border:none;cursor:pointer;color:#0D292B">Mapping</button>
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:#357CFC;border:none;cursor:pointer;color:#FFFFFF;box-shadow:0 2px 4px rgba(0,0,0,0.2)">Zoning</button>
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:transparent;border:none;cursor:pointer;color:#0D292B">Capacity</button>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #ECECEC;border-radius:20px;box-shadow:0 4px 4px rgba(0,0,0,0.04);padding:22px 24px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div style="font-family:'Ubuntu',sans-serif;font-size:19px;font-weight:500;color:#3479FE">Zoning Report</div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#999"><span>Powered by AI</span><svg viewBox="0 0 24 24" width="15" height="15" fill="#3479FE"><path d="M17.65 6.35A7.95 7.95 0 0012 4a8 8 0 100 16 8 8 0 007.74-6h-2.08A6 6 0 1112 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg></div>
+              </div>
+              <a href="#1a" style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#3479FE;text-decoration:underline;margin-top:8px">Link to Zoning Code <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zM19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7z"></path></svg></a>
+
+              <!-- SELECTORS -->
+              <div style="margin-top:18px;padding:16px;background:#F7F8FA;border:1px solid #ECECEC;border-radius:14px">
+                <div style="font-size:10px;letter-spacing:0.8px;text-transform:uppercase;color:#999;font-weight:600;margin-bottom:10px">Asset class</div>
+                <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px;background:#FFFFFF;border:1px solid #D9D9D9;border-radius:14px;padding:4px">
+                  <sc-for list="{{ vA.classOptions }}" as="opt" hint-placeholder-count="5">
+                    <button onClick="{{ opt.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;border:none;cursor:pointer;padding:9px 6px;border-radius:11px;font-size:11.5px;background:{{ opt.bg }};color:{{ opt.fg }};font-weight:{{ opt.weight }}"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="{{ opt.iconPath }}"></path></svg>{{ opt.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;align-items:center;gap:24px;margin-top:14px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:9px;opacity:{{ vA.affOpacity }}">
+                    <span onClick="{{ vA.onAffordable }}" style="width:34px;height:20px;border-radius:20px;position:relative;cursor:pointer;flex-shrink:0;background:{{ vA.affBg }}"><span style="position:absolute;top:1px;width:18px;height:18px;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,0.25);transition:left .18s;left:{{ vA.affKnobLeft }};background:{{ vA.affKnobBg }}"></span></span>
+                    <span style="font-size:12.5px;color:#0D292B">Affordable / senior bonus</span>
+                  </div>
+                  <label style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#0D292B">Lot type
+                    <select value="{{ vA.lotType }}" onChange="{{ vA.onLot }}" style="font-size:0.8rem;border:1px solid #D9D9D9;border-radius:10px;padding:7px 30px 7px 12px;background:#ECECEC;color:#0D292B;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22%3E%3Cpath d=%22M0 0l5 6 5-6z%22 fill=%22%23999%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 11px center;cursor:pointer"><option value="interior">Interior / through</option><option value="corner">Corner</option></select>
+                  </label>
+                </div>
+              </div>
+
+              <!-- CAPACITY -->
+              <div style="margin-top:18px">
+                <div onClick="{{ vA.onSec.capacity }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.capacity }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">Development Capacity</span>
+                  <span style="font-size:11px;color:#999;background:#EAF1FF;border-radius:6px;padding:2px 8px">live</span>
+                </div>
+                <sc-if value="{{ vA.open.capacity }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:12px">
+                    <div style="display:flex;gap:10px">
+                      <sc-for list="{{ vA.metrics }}" as="t" hint-placeholder-count="4">
+                        <div style="flex:1;min-width:0;border-radius:14px;padding:14px 15px;background:{{ t.bg }};border:1px solid {{ t.border }}">
+                          <div style="font-size:10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500;color:{{ t.labelColor }}">{{ t.label }}</div>
+                          <div style="font-family:'Ubuntu',sans-serif;font-size:23px;font-weight:500;line-height:1.1;margin-top:6px;color:{{ t.fg }}">{{ t.value }}</div>
+                          <div style="font-size:11px;margin-top:4px;color:{{ t.subColor }}">{{ t.sub }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-top:14px;padding:12px 14px;background:#FFFCF4;border:1px dashed #F7C96C;border-radius:12px">
+                      <span style="font-size:10px;letter-spacing:0.5px;text-transform:uppercase;color:#9B8F79;font-weight:600;align-self:center">Editable assumptions</span>
+                      <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#787874">FAR<input type="number" step="0.1" value="{{ vA.editFar }}" onChange="{{ vA.onFar }}" style="width:72px;padding:6px 8px;border:1px solid #D9D9D9;border-radius:8px;background:#FFFFFF;font-size:13px;color:#0D292B"></label>
+                      <sc-if value="{{ vA.hasAvg }}" hint-placeholder-val="{{ true }}"><label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#787874">Avg unit SF<input type="number" step="25" value="{{ vA.editAvg }}" onChange="{{ vA.onAvg }}" style="width:84px;padding:6px 8px;border:1px solid #D9D9D9;border-radius:8px;background:#FFFFFF;font-size:13px;color:#0D292B"></label></sc-if>
+                      <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#787874">Efficiency %<input type="number" step="1" value="{{ vA.editEff }}" onChange="{{ vA.onEff }}" style="width:72px;padding:6px 8px;border:1px solid #D9D9D9;border-radius:8px;background:#FFFFFF;font-size:13px;color:#0D292B"></label>
+                      <sc-if value="{{ vA.hasOverride }}" hint-placeholder-val="{{ false }}"><button onClick="{{ vA.onReset }}" style="align-self:center;font-size:11.5px;color:#3479FE;background:transparent;border:none;cursor:pointer;text-decoration:underline">Reset</button></sc-if>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #ECECEC;margin:18px 0">
+
+              <!-- OVERVIEW -->
+              <div>
+                <div onClick="{{ vA.onSec.overview }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.overview }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">1 · Overview</span>
+                </div>
+                <sc-if value="{{ vA.open.overview }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:10px;padding-left:24px;display:flex;flex-direction:column;gap:7px;font-size:13px;color:#3B3B39;line-height:1.45">
+                    <div><span style="color:#787874;font-weight:600">Site Address:</span> 216 Atlantic Ave, Brooklyn, NY 11201</div>
+                    <div><span style="color:#787874;font-weight:600">Zoning District:</span> {{ vA.overview.district }}</div>
+                    <div><span style="color:#787874;font-weight:600">District Purpose:</span> {{ vA.overview.purpose }}</div>
+                    <div><span style="color:#787874;font-weight:600">Jurisdiction:</span> {{ vA.overview.jurisdiction }}</div>
+                    <div><span style="color:#787874;font-weight:600">Zoning Code:</span> {{ vA.overview.code }}</div>
+                    <div><span style="color:#787874;font-weight:600">Last Updated:</span> {{ vA.overview.updated }}</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #ECECEC;margin:18px 0">
+
+              <!-- CONTROLS TABLE -->
+              <div>
+                <div onClick="{{ vA.onSec.controls }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.controls }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">2 · Bulk &amp; Use Controls</span>
+                  <span style="font-size:11px;color:#9B8F79">changed rules highlighted on switch</span>
+                </div>
+                <sc-if value="{{ vA.open.controls }}" hint-placeholder-val="{{ true }}">
+                  <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px">
+                    <thead><tr style="text-align:left;color:#999;font-size:10px;letter-spacing:0.6px;text-transform:uppercase"><th style="padding:6px 10px;font-weight:600">Control</th><th style="padding:6px 10px;font-weight:600">Value</th><th style="padding:6px 10px;font-weight:600">Assumption</th><th style="padding:6px 10px;font-weight:600">Citation</th></tr></thead>
+                    <tbody>
+                      <sc-for list="{{ vA.controls }}" as="c" hint-placeholder-count="9">
+                        <tr style="border-bottom:1px solid #F0F0EC;background:{{ c.hl }}">
+                          <td style="padding:9px 10px;font-weight:500;color:#0D292B;vertical-align:top">{{ c.label }}<sc-if value="{{ c.badge }}" hint-placeholder-val=""><span style="margin-left:6px;font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:{{ c.badgeBg }};color:#0D292B">{{ c.badge }}</span></sc-if></td>
+                          <td style="padding:9px 10px;font-weight:600;color:#0D292B;white-space:nowrap;vertical-align:top">{{ c.value }}</td>
+                          <td style="padding:9px 10px;color:#787874;vertical-align:top">{{ c.assumption }}</td>
+                          <td style="padding:9px 10px;color:#999;white-space:nowrap;vertical-align:top">{{ c.citation }}</td>
+                        </tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </sc-if>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #ECECEC;margin:18px 0">
+
+              <!-- 3 · DETAILED CONTROLS -->
+              <div>
+                <div onClick="{{ vA.onSec.detailed }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.detailed }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">3 · Detailed Controls</span>
+                  <span style="font-size:11px;color:#9B8F79">expand for the full rule text</span>
+                </div>
+                <sc-if value="{{ vA.open.detailed }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px;padding-left:24px;display:flex;flex-direction:column;gap:14px">
+                    <sc-for list="{{ vA.detailedControls }}" as="g" hint-placeholder-count="5">
+                      <div>
+                        <div style="font-size:11px;font-weight:600;color:#194651;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{{ g.group }}</div>
+                        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px">
+                          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3"><li style="font-size:12.5px;color:#3B3B39;line-height:1.45">{{ it }}</li></sc-for>
+                        </ul>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #ECECEC;margin:18px 0">
+
+              <!-- 4 · OVERLAYS -->
+              <div>
+                <div onClick="{{ vA.onSec.overlays }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.overlays }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">4 · Overlays</span>
+                </div>
+                <sc-if value="{{ vA.open.overlays }}" hint-placeholder-val="{{ false }}">
+                  <ul style="margin:10px 0 0;padding-left:42px;display:flex;flex-direction:column;gap:6px">
+                    <sc-for list="{{ vA.overlays }}" as="o" hint-placeholder-count="2"><li style="font-size:12.5px;color:#3B3B39;line-height:1.45">{{ o }}</li></sc-for>
+                  </ul>
+                </sc-if>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #ECECEC;margin:18px 0">
+
+              <!-- 5 · DECISION POINTS -->
+              <div>
+                <div onClick="{{ vA.onSec.decisions }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.decisions }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">5 · Decision Points</span>
+                </div>
+                <sc-if value="{{ vA.open.decisions }}" hint-placeholder-val="{{ false }}">
+                  <ul style="margin:10px 0 0;padding-left:42px;display:flex;flex-direction:column;gap:7px">
+                    <sc-for list="{{ vA.decisionPoints }}" as="d" hint-placeholder-count="3"><li style="font-size:12.5px;color:#3B3B39;line-height:1.5">{{ d }}</li></sc-for>
+                  </ul>
+                </sc-if>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #ECECEC;margin:18px 0">
+
+              <!-- 6 · KEY TAKEAWAYS -->
+              <div>
+                <div onClick="{{ vA.onSec.takeaways }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.takeaways }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                  <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">6 · Key Takeaways</span>
+                </div>
+                <sc-if value="{{ vA.open.takeaways }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:12px;margin-left:24px;background:#D5F8EB;border:1px solid #99E3B2;border-radius:12px;padding:14px 16px">
+                    <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px">
+                      <sc-for list="{{ vA.keyTakeaways }}" as="k" hint-placeholder-count="4"><li style="font-size:12.5px;color:#0D292B;line-height:1.5">{{ k }}</li></sc-for>
+                    </ul>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Key Insights -->
+          <div style="width:360px;flex-shrink:0;border-left:1px solid #ECECEC;background:#FFFFFF;overflow-y:auto;padding:22px 22px 28px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-family:'Ubuntu',sans-serif;font-size:20px;font-weight:500;color:#0D292B;line-height:1.3">216 Atlantic Ave,<br>Brooklyn, NY 11201, US</div>
+              <span style="font-size:13px;color:#3479FE;white-space:nowrap;cursor:pointer">Expand All</span>
+            </div>
+            <div style="margin-top:18px;border:1px solid #ECECEC;border-radius:16px;padding:16px 18px">
+              <div onClick="{{ vA.onSec.insights }}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none">
+                <div style="display:flex;align-items:center;gap:6px"><span style="font-size:15px;font-weight:600;color:#3479FE">Key Insights</span><svg viewBox="0 0 24 24" width="15" height="15" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vA.chev.insights }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#999"><span>Powered by AI</span><svg viewBox="0 0 24 24" width="14" height="14" fill="#3479FE"><path d="M17.65 6.35A7.95 7.95 0 0012 4a8 8 0 100 16 8 8 0 007.74-6h-2.08A6 6 0 1112 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg></div>
+              </div>
+              <sc-if value="{{ vA.open.insights }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:14px">
+                  <sc-for list="{{ vA.insights }}" as="ins" hint-placeholder-count="4">
+                    <div style="display:flex;gap:8px;margin-bottom:13px"><span style="color:#0D292B;font-size:13px;line-height:1.5">•</span><div style="font-size:12px;line-height:1.55;color:#0D292B"><strong style="font-weight:600">{{ ins.t }}:</strong> {{ ins.b }}</div></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= DIRECTION 1B ============================= -->
+    <div id="1b" style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-family:'Ubuntu',sans-serif;font-size:13px;font-weight:700;color:#FFFFFF;background:#2FB297;border-radius:8px;padding:4px 11px">1b</span>
+        <span style="font-size:15px;font-weight:600;color:#0D292B">Scenario Studio</span>
+        <span style="font-size:13px;color:#999999">— card-led, big metrics, change-aware</span>
+      </div>
+
+      <div data-screen-label="Site · Zoning · 1b" style="width:1440px;height:900px;background:#FFFFFF;border:1px solid #DADAD3;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(13,41,43,0.18);display:flex;flex-direction:column">
+
+        <!-- NAVBAR -->
+        <div style="height:64px;flex-shrink:0;background:#FFFFFF;border-bottom:1px solid #B3B3B3;display:flex;align-items:center">
+          <span style="display:flex;align-items:center;padding:0 16px;flex-shrink:0"><svg viewBox="0 0 106 36" style="height:26px;width:auto" fill="#194651"><sc-for list="{{ logoPaths }}" as="p" hint-placeholder-count="6"><path d="{{ p }}"></path></sc-for></svg></span>
+          <div style="display:flex;align-items:center;gap:2px">
+            <button style="min-width:88px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Home</button>
+            <button style="min-width:88px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Your Studies</button>
+            <span style="width:1px;align-self:stretch;margin:14px 8px;background:#D9D9D9"></span>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#3479FE;font-weight:600">Site</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Market</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Comps</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Costs</button>
+            <button style="min-width:72px;padding:6px 8px;background:transparent;border:none;cursor:pointer;border-radius:4px;font-size:15px;color:#787874;font-weight:500">Files</button>
+          </div>
+          <span style="flex:1"></span>
+          <button style="width:32px;height:32px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:8px"><svg viewBox="0 0 24 24" width="22" height="22" fill="#0D292C"><path d="M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM11 6l6 6-6 6-1.41-1.41L14.18 12 9.59 7.41z"></path></svg></button>
+          <button style="display:flex;align-items:center;background:#D9D9D9;border-radius:24px;height:32px;border:none;cursor:pointer;padding:0;margin-right:16px;gap:8px"><span style="margin-left:8px;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="#000"><path d="M7 10l5 5 5-5z"></path></svg></span><span style="font-family:'Ubuntu',sans-serif;font-size:0.9rem;color:#000">Administrator</span><span style="width:32px;height:32px;border-radius:50%;background:#F0C1B6;color:#000;font-family:'Ubuntu',sans-serif;font-size:0.9rem;display:flex;align-items:center;justify-content:center">J</span></button>
+        </div>
+
+        <!-- BODY -->
+        <div style="flex:1;display:flex;min-height:0">
+
+          <!-- LEFT: AI co-pilot (shared) -->
+          <div style="width:352px;flex-shrink:0;border-right:1px solid #ECECEC;background:#FFFFFF;display:flex;flex-direction:column;min-height:0">
+            <div style="display:flex;border-bottom:1px solid rgba(0,0,0,0.12);flex-shrink:0">
+              <div style="flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#3B3B39">Layers</div>
+              <div style="flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#3479FE;font-weight:500;border-bottom:2px solid #3479FE;margin-bottom:-1px">Chat</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;flex-shrink:0">
+              <span style="width:30px;height:30px;border-radius:8px;background:#EAF1FF;display:flex;align-items:center;justify-content:center;color:#3479FE"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"></path></svg></span>
+              <div style="line-height:1.2"><div style="font-size:15px;font-weight:600;color:#0D292B">Algoma AI Assistant</div><div style="font-size:12px;color:#3B3B39">Zoning co-pilot · synced to report</div></div>
+            </div>
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 14px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ chatView }}" as="m" hint-placeholder-count="2">
+                <div style="display:flex;justify-content:{{ m.justify }}">
+                  <div style="max-width:84%;padding:10px 12px;border-radius:10px;font-size:12.5px;line-height:1.5;background:{{ m.bg }};color:{{ m.fg }}">{{ m.text }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="border-top:1px solid #D9D9D9;padding:12px 14px;display:flex;flex-direction:column;gap:10px;flex-shrink:0">
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="3">
+                  <button onClick="{{ sg.onClick }}" style="font-size:11px;color:#0D292B;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:90px;padding:5px 11px;cursor:pointer">{{ sg.label }}</button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ hasUploads }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ uploaded }}" as="f" hint-placeholder-count="0">
+                    <div style="display:flex;align-items:center;gap:5px;background:#D5F8EB;border:1px solid #99E3B2;border-radius:6px;padding:4px 8px;font-size:11px;color:#0D292B"><svg viewBox="0 0 24 24" width="13" height="13" fill="#2B6960"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>{{ f.name }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="display:flex;align-items:center;gap:8px">
+                <label style="display:flex;align-items:center;justify-content:center;width:36px;height:38px;border:1px solid #D9D9D9;border-radius:8px;cursor:pointer;color:#3B3B39;flex-shrink:0" title="Upload zoning document"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 6v11.5a4 4 0 01-8 0V5a2.5 2.5 0 015 0v10.5a1 1 0 01-2 0V6H10v9.5a2.5 2.5 0 005 0V5a4 4 0 00-8 0v12.5a5.5 5.5 0 0011 0V6h-1.5z"></path></svg><input type="file" onChange="{{ onUpload }}" style="display:none"></label>
+                <input value="{{ draft }}" onInput="{{ onDraft }}" onKeyDown="{{ onKey }}" placeholder="Ask about zoning, or upload a doc…" style="flex:1;border:1px solid #D9D9D9;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#0D292B;background:#FFFFFF;outline:none">
+                <button onClick="{{ onSend }}" style="width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:{{ sendBg }};color:{{ sendFg }};flex-shrink:0"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CENTER: scenario studio -->
+          <div style="flex:1;min-width:0;background:#F7F7F0;overflow-y:auto;padding:18px 20px 40px">
+            <div style="display:flex;justify-content:center;margin-bottom:16px">
+              <div style="display:inline-grid;grid-template-columns:repeat(4,1fr);gap:8px;background:#FFFFFF;border-radius:16px;padding:3px;border:1px solid #B3B3B3">
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:transparent;border:none;cursor:pointer;color:#0D292B">Summary</button>
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:transparent;border:none;cursor:pointer;color:#0D292B">Mapping</button>
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:#357CFC;border:none;cursor:pointer;color:#FFFFFF;box-shadow:0 2px 4px rgba(0,0,0,0.2)">Zoning</button>
+                <button style="min-width:80px;border-radius:13px;padding:5px 14px;font-size:0.875rem;font-weight:300;background:transparent;border:none;cursor:pointer;color:#0D292B">Capacity</button>
+              </div>
+            </div>
+
+            <!-- District header strip -->
+            <div style="background:linear-gradient(135deg,#0D292C,#194651,#247C74);border-radius:18px;padding:18px 22px;color:#FFFFFF;display:flex;align-items:center;justify-content:space-between;gap:16px">
+              <div>
+                <div style="font-size:11px;letter-spacing:0.8px;text-transform:uppercase;color:rgba(255,255,255,0.7);font-weight:500">Zoning Report · 216 Atlantic Ave</div>
+                <div style="font-family:'Ubuntu',sans-serif;font-size:22px;font-weight:500;margin-top:4px">{{ vB.overview.district }}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.12);border-radius:90px;padding:6px 12px"><svg viewBox="0 0 24 24" width="14" height="14" fill="#03F3A3"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5z"></path></svg>Powered by Algoma AI</div>
+            </div>
+
+            <!-- Big segmented class control -->
+            <div style="margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+              <sc-for list="{{ vB.classOptions }}" as="opt" hint-placeholder-count="5">
+                <button onClick="{{ opt.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:7px;border:1px solid {{ opt.cardBorder }};cursor:pointer;padding:14px 8px;border-radius:14px;font-size:12.5px;background:{{ opt.cardBg }};color:{{ opt.cardFg }};font-weight:{{ opt.weight }};box-shadow:{{ opt.shadow }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="{{ opt.iconPath }}"></path></svg>{{ opt.label }}</button>
+              </sc-for>
+            </div>
+
+            <!-- Scenario knobs -->
+            <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <button onClick="{{ vB.onAffordable }}" style="display:flex;align-items:center;gap:8px;border:1px solid {{ vB.affChipBorder }};background:{{ vB.affChipBg }};color:{{ vB.affChipFg }};border-radius:90px;padding:8px 14px;font-size:12.5px;cursor:pointer;opacity:{{ vB.affOpacity }}"><span style="width:30px;height:18px;border-radius:18px;position:relative;flex-shrink:0;background:{{ vB.affBg }}"><span style="position:absolute;top:1px;width:16px;height:16px;border-radius:50%;transition:left .18s;left:{{ vB.affKnobLeft }};background:{{ vB.affKnobBg }}"></span></span>Affordable / senior bonus</button>
+              <div style="display:flex;align-items:center;gap:6px;background:#FFFFFF;border:1px solid #E4E7EC;border-radius:90px;padding:4px">
+                <button onClick="{{ vB.onLotInterior }}" style="border:none;cursor:pointer;border-radius:90px;padding:6px 14px;font-size:12px;background:{{ vB.lotInteriorBg }};color:{{ vB.lotInteriorFg }}">Interior</button>
+                <button onClick="{{ vB.onLotCorner }}" style="border:none;cursor:pointer;border-radius:90px;padding:6px 14px;font-size:12px;background:{{ vB.lotCornerBg }};color:{{ vB.lotCornerFg }}">Corner</button>
+              </div>
+            </div>
+
+            <!-- What changed banner -->
+            <sc-if value="{{ vB.showChanged }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:14px;background:#FFFCF4;border:1px solid #F7C96C;border-radius:14px;padding:13px 16px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+                  <span style="font-size:12.5px;font-weight:600;color:#0D292B">What changed → {{ vB.clsLabel }}</span>
+                  <span onClick="{{ vB.onClearChanged }}" style="font-size:11px;color:#3479FE;cursor:pointer">Dismiss</span>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ vB.changedSummary }}" as="ch" hint-placeholder-count="3">
+                    <span style="font-size:11px;background:#FFFFFF;border:1px solid #F0C1B6;border-radius:6px;padding:3px 9px;color:#0D292B">{{ ch.text }}</span>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- Hero metric tiles -->
+            <div style="margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+              <sc-for list="{{ vB.metrics }}" as="t" hint-placeholder-count="4">
+                <div style="border-radius:16px;padding:18px 16px;background:{{ t.bg }};border:1px solid {{ t.border }}">
+                  <div style="font-size:10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500;color:{{ t.labelColor }}">{{ t.label }}</div>
+                  <div style="font-family:'Ubuntu',sans-serif;font-size:28px;font-weight:500;line-height:1.05;margin-top:8px;color:{{ t.fg }}">{{ t.value }}</div>
+                  <div style="font-size:11px;margin-top:5px;color:{{ t.subColor }}">{{ t.sub }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- Editable assumptions -->
+            <div style="margin-top:12px;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:13px 16px;background:#FFFFFF;border:1px dashed #B1E4EB;border-radius:14px">
+              <span style="font-size:10px;letter-spacing:0.5px;text-transform:uppercase;color:#166787;font-weight:600;align-self:center">Tune assumptions</span>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#787874">FAR<input type="number" step="0.1" value="{{ vB.editFar }}" onChange="{{ vB.onFar }}" style="width:72px;padding:6px 8px;border:1px solid #D9D9D9;border-radius:8px;background:#F7F8FA;font-size:13px;color:#0D292B"></label>
+              <sc-if value="{{ vB.hasAvg }}" hint-placeholder-val="{{ true }}"><label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#787874">Avg unit SF<input type="number" step="25" value="{{ vB.editAvg }}" onChange="{{ vB.onAvg }}" style="width:84px;padding:6px 8px;border:1px solid #D9D9D9;border-radius:8px;background:#F7F8FA;font-size:13px;color:#0D292B"></label></sc-if>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#787874">Efficiency %<input type="number" step="1" value="{{ vB.editEff }}" onChange="{{ vB.onEff }}" style="width:72px;padding:6px 8px;border:1px solid #D9D9D9;border-radius:8px;background:#F7F8FA;font-size:13px;color:#0D292B"></label>
+              <sc-if value="{{ vB.hasOverride }}" hint-placeholder-val="{{ false }}"><button onClick="{{ vB.onReset }}" style="align-self:center;font-size:11.5px;color:#3479FE;background:transparent;border:none;cursor:pointer;text-decoration:underline">Reset to default</button></sc-if>
+            </div>
+
+            <!-- Spec cards -->
+            <div style="margin-top:16px;background:#FFFFFF;border:1px solid #ECECEC;border-radius:18px;padding:18px 20px;box-shadow:0 4px 4px rgba(0,0,0,0.04)">
+              <div onClick="{{ vB.onSec.specs }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vB.chev.specs }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">Bulk &amp; Use Controls</span>
+                <span style="font-size:11px;color:#9B8F79">tap a class above to diff the rules</span>
+              </div>
+              <sc-if value="{{ vB.open.specs }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:11px">
+                  <sc-for list="{{ vB.controls }}" as="c" hint-placeholder-count="9">
+                    <div style="background:{{ c.cardBg }};border:1px solid {{ c.cardBorder }};border-radius:12px;padding:12px 14px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><span style="font-size:11px;color:#787874;line-height:1.3">{{ c.label }}</span><sc-if value="{{ c.badge }}" hint-placeholder-val=""><span style="font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:{{ c.badgeBg }};color:#0D292B;white-space:nowrap">{{ c.badge }}</span></sc-if></div>
+                      <div style="font-family:'Ubuntu',sans-serif;font-size:17px;color:#0D292B;margin-top:5px">{{ c.value }}</div>
+                      <div style="font-size:10.5px;color:#B3B3B3;margin-top:4px">{{ c.citation }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- DETAILED CONTROLS -->
+            <div style="margin-top:16px;background:#FFFFFF;border:1px solid #ECECEC;border-radius:18px;padding:18px 20px;box-shadow:0 4px 4px rgba(0,0,0,0.04)">
+              <div onClick="{{ vB.onSec.detailed }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vB.chev.detailed }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>
+                <span style="font-family:'Ubuntu',sans-serif;font-size:16px;color:#0D292B">Detailed Controls</span>
+                <span style="font-size:11px;color:#9B8F79">full rule text · {{ vB.clsLabel }}</span>
+              </div>
+              <sc-if value="{{ vB.open.detailed }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+                  <sc-for list="{{ vB.detailedControls }}" as="g" hint-placeholder-count="5">
+                    <div style="background:#F7F8FA;border:1px solid #ECECEC;border-radius:12px;padding:13px 15px">
+                      <div style="font-size:11px;font-weight:600;color:#194651;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px">{{ g.group }}</div>
+                      <ul style="margin:0;padding-left:16px;display:flex;flex-direction:column;gap:5px">
+                        <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3"><li style="font-size:12px;color:#3B3B39;line-height:1.45">{{ it }}</li></sc-for>
+                      </ul>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- DECISION POINTS + KEY TAKEAWAYS -->
+            <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div style="background:#FFFFFF;border:1px solid #ECECEC;border-radius:18px;padding:18px 20px;box-shadow:0 4px 4px rgba(0,0,0,0.04)">
+                <div style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="17" height="17" fill="#F05B41"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></svg><span style="font-family:'Ubuntu',sans-serif;font-size:15px;color:#0D292B">Decision Points</span></div>
+                <ul style="margin:12px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ vB.decisionPoints }}" as="d" hint-placeholder-count="3"><li style="font-size:12.5px;color:#3B3B39;line-height:1.5">{{ d }}</li></sc-for>
+                </ul>
+              </div>
+              <div style="background:#0D292B;border-radius:18px;padding:18px 20px">
+                <div style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="17" height="17" fill="#03F3A3"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg><span style="font-family:'Ubuntu',sans-serif;font-size:15px;color:#FFFFFF">Key Takeaways</span></div>
+                <ul style="margin:12px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ vB.keyTakeaways }}" as="k" hint-placeholder-count="4"><li style="font-size:12.5px;color:#E7FBF1;line-height:1.5">{{ k }}</li></sc-for>
+                </ul>
+              </div>
+            </div>
+
+            <!-- OVERLAYS NOTE -->
+            <div style="margin-top:14px;display:flex;gap:9px;align-items:flex-start;background:#FFFCF4;border:1px solid #F7C96C;border-radius:12px;padding:12px 15px">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#CA3500" style="flex-shrink:0;margin-top:1px"><path d="M11 7h2v6h-2zm0 8h2v2h-2zm1-13C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path></svg>
+              <div style="font-size:12px;color:#3B3B39;line-height:1.55"><strong style="color:#0D292B;font-weight:600">Overlays —</strong> <sc-for list="{{ vB.overlays }}" as="o" hint-placeholder-count="2"><span>{{ o }} </span></sc-for></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Key Insights -->
+          <div style="width:360px;flex-shrink:0;border-left:1px solid #ECECEC;background:#FFFFFF;overflow-y:auto;padding:22px 22px 28px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-family:'Ubuntu',sans-serif;font-size:20px;font-weight:500;color:#0D292B;line-height:1.3">216 Atlantic Ave,<br>Brooklyn, NY 11201, US</div>
+              <span style="font-size:13px;color:#3479FE;white-space:nowrap;cursor:pointer">Expand All</span>
+            </div>
+            <div style="margin-top:18px;border:1px solid #ECECEC;border-radius:16px;padding:16px 18px">
+              <div onClick="{{ vB.onSec.insights }}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none">
+                <div style="display:flex;align-items:center;gap:6px"><span style="font-size:15px;font-weight:600;color:#3479FE">Key Insights</span><svg viewBox="0 0 24 24" width="15" height="15" fill="#3479FE" style="transition:transform .15s;transform:rotate({{ vB.chev.insights }})"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#999"><span>Powered by AI</span><svg viewBox="0 0 24 24" width="14" height="14" fill="#3479FE"><path d="M17.65 6.35A7.95 7.95 0 0012 4a8 8 0 100 16 8 8 0 007.74-6h-2.08A6 6 0 1112 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg></div>
+              </div>
+              <sc-if value="{{ vB.open.insights }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:14px">
+                  <sc-for list="{{ vB.insights }}" as="ins" hint-placeholder-count="4">
+                    <div style="display:flex;gap:8px;margin-bottom:13px"><span style="color:#0D292B;font-size:13px;line-height:1.5">•</span><div style="font-size:12px;line-height:1.55;color:#0D292B"><strong style="font-weight:600">{{ ins.t }}:</strong> {{ ins.b }}</div></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;siteLotArea&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4482,&quot;min&quot;:1000,&quot;max&quot;:20000,&quot;step&quot;:1,&quot;unit&quot;:&quot;SF&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Site&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#194651&quot;,&quot;options&quot;:[&quot;#194651&quot;,&quot;#0D292C&quot;,&quot;#2FB297&quot;,&quot;#166787&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Style&quot;},&quot;showWhatChanged&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = {
+    a: { cls:'multifamily', affordable:false, lotType:'interior', overrides:{}, changed:{}, changedSummary:[], open:{overview:true,controls:true,capacity:true,insights:true,detailed:false,overlays:false,decisions:false,takeaways:true} },
+    b: { cls:'multifamily', affordable:false, lotType:'interior', overrides:{}, changed:{}, changedSummary:[], open:{specs:true,insights:true,detailed:false,overlays:false,decisions:false,takeaways:true} },
+    chat: [ {role:'ai', text:"Hi — I'm your Algoma zoning co-pilot. Pick an asset class and I'll keep the report and key insights in sync. Upload a zoning PDF or memo with the paperclip and I'll reference it alongside the as-of-right rules."} ],
+    uploaded: [],
+    draft: ''
+  };
+
+  get CLASSES(){
+    return {
+      multifamily: {
+        label2:'Multifamily', label:'R6A General Residence',
+        purpose:'Medium-density residential; regulates density, bulk, parking, open space and access to light and air.',
+        icon:'M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 8H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z',
+        kind:'multi', far:3.0, farAff:3.9, supportsBonus:true, coverage:0.8, cornerCoverage:1.0, maxHeight:75, maxHeightAff:95, avgUnitSize:850, efficiency:0.82,
+        detailedControls:[
+          {group:'Height', items:['Base height 40–65 ft at the street wall before the required setback.','Maximum 75 ft standard / 95 ft for qualifying affordable or senior housing.','A setback within the sky-exposure plane is required above the base height.']},
+          {group:'Lot Coverage & Yards', items:['Interior / through lots 80% max coverage; corner lots up to 100%.','Required rear yard of 30 ft for the residential portion.','No side yards required for attached buildings.']},
+          {group:'Use & Density', items:['Residential Use Groups 1–2 permitted as-of-right.','Density governed by a 680 SF dwelling-unit factor.','Community-facility uses permitted at a higher FAR.']},
+          {group:'FAR & Floor Area', items:['Residential FAR 3.0 as-of-right; 3.9 with the affordable/senior bonus.','Floor area measured to exterior walls per §12-10.']},
+          {group:'Parking & Loading', items:['0.5 spaces / unit, reduced or waived within the transit zone.','No loading berth required for residential use.']}
+        ],
+        overlays:['No special-purpose or overlay district is mapped on the lot.','Confirm any C1/C2 commercial overlay before assuming ground-floor retail.'],
+        decisionPoints:['Affordable / senior housing unlocks 3.9 FAR and 95 ft — a primary value driver to test.','Interior vs. corner lot shifts coverage (80% → 100%) and the buildable footprint.','Existing 11 units and a 1930 building create tenant-relocation and demolition complexity.'],
+        keyTakeaways:['R6A supports medium-density housing as-of-right at 3.0 FAR (3.9 with bonus).','Headline bulk: 75 / 95 ft height, 80–100% coverage, 30 ft rear yard, 680 SF/unit.','The site appears underbuilt relative to zoning — meaningful redevelopment upside.','Flood Zone X (low); confirm rent roll and regulatory status before underwriting.'],
+        controls:[
+          {label:'Max Height (standard)', value:'75 ft', assumption:'Standard residences under base R6A rules.', citation:'§23-432'},
+          {label:'Max Height (affordable/senior)', value:'95 ft', assumption:'Qualifying affordable or senior housing.', citation:'§23-432'},
+          {label:'FAR (standard)', value:'3.00', assumption:'Standard residences under base R6A.', citation:'§23-22'},
+          {label:'FAR (affordable/senior)', value:'3.90', assumption:'Qualifying affordable/senior housing.', citation:'§23-22'},
+          {label:'Density', value:'680 SF/unit', assumption:'Multiple-dwelling unit factor.', citation:'§23-22'},
+          {label:'Lot Coverage (interior)', value:'80%', assumption:'Interior or through lot, residential.', citation:'§23-153'},
+          {label:'Lot Coverage (corner)', value:'100%', assumption:'Corner lot, residential.', citation:'§23-153'},
+          {label:'Rear Yard', value:'30 ft', assumption:'Required rear yard, residential.', citation:'§23-47'},
+          {label:'Min Parking', value:'0.5 / unit', assumption:'Transit-zone reduced requirement.', citation:'§25-23'}
+        ],
+        insights:[
+          {t:'Redevelopment Potential', b:'Appears underbuilt vs zoning — 1930 building, 11 units; upside via enlargement or redevelopment, but tenant and carry-cost complexity.'},
+          {t:'Entitlement Constraints', b:'Base height 40–65 ft, rear-yard and sky-exposure rules shape efficiency; confirm interior vs corner and frontage.'},
+          {t:'Risk & Diligence', b:'Flood Zone X (low). Confirm rent roll, regulatory status of the units and landmark status before underwriting.'}
+        ]
+      },
+      single: {
+        label2:'Single Family', label:'R3-2 Low-Density Residence',
+        purpose:'Detached and semi-detached homes; preserves low-density residential character.',
+        icon:'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z',
+        kind:'single', far:0.5, farAff:0.5, supportsBonus:false, coverage:0.35, maxHeight:35, efficiency:0.9,
+        detailedControls:[
+          {group:'Height', items:['Maximum 35 ft for a pitched-roof residence.','Perimeter wall height limited to 21 ft before the required setback.']},
+          {group:'Lot Coverage & Yards', items:['35% maximum lot coverage on an interior lot.','Front yard 15 ft; two side yards of 5 ft and 8 ft; rear yard 30 ft.']},
+          {group:'Use & Density', items:['Detached and semi-detached one- and two-family dwellings.','Density set by the 3,800 SF minimum lot area and 40 ft minimum width.']},
+          {group:'FAR & Floor Area', items:['0.5 base residential FAR.','Attic floor-area allowances may apply under §23-142.']},
+          {group:'Parking & Loading', items:['One off-street parking space per dwelling unit.']}
+        ],
+        overlays:['No overlay or special-purpose district information is mapped.','Lower-density context — confirm no contextual or special district adjustment.'],
+        decisionPoints:['As-of-right yield is a single home (or two-family) — limited density.','The 40 ft minimum lot width governs any subdivision or assemblage strategy.','Single-family is likely below highest-and-best use on the corridor.'],
+        keyTakeaways:['R3-2 is a low-density detached district with 0.5 FAR and a 35 ft height cap.','Generous yard requirements and a 35% coverage cap tightly constrain the envelope.','Test rezoning or assemblage for any meaningful residential program.'],
+        controls:[
+          {label:'Max Height (standard)', value:'35 ft', assumption:'Pitched-roof maximum, detached residence.', citation:'§23-631'},
+          {label:'Perimeter Wall Height', value:'21 ft', assumption:'Max height before required setback.', citation:'§23-631'},
+          {label:'FAR (standard)', value:'0.50', assumption:'Base residential floor area ratio.', citation:'§23-141'},
+          {label:'Lot Coverage (interior)', value:'35%', assumption:'Maximum interior lot coverage.', citation:'§23-144'},
+          {label:'Min Lot Area', value:'3,800 SF', assumption:'Per detached single-family dwelling.', citation:'§23-32'},
+          {label:'Min Lot Width', value:'40 ft', assumption:'Per detached single-family dwelling.', citation:'§23-32'},
+          {label:'Front Yard', value:'15 ft', assumption:'Required minimum front yard.', citation:'§23-45'},
+          {label:'Side Yards', value:'5 + 8 ft', assumption:'Two side yards, detached.', citation:'§23-461'},
+          {label:'Rear Yard', value:'30 ft', assumption:'Required rear yard, residential.', citation:'§23-47'},
+          {label:'Min Parking', value:'1 / unit', assumption:'Off-street parking, low-density.', citation:'§25-22'}
+        ],
+        insights:[
+          {t:'Context', b:'Low-density detached district — as-of-right yields a single home (or two-family), so density upside is minimal at this FAR.'},
+          {t:'Constraints', b:'35 ft height with generous yard requirements; the 40 ft min lot width governs any subdivision potential.'},
+          {t:'Risk & Diligence', b:'Single-family is likely below highest-and-best use on the Atlantic Ave corridor — test assemblage or a rezoning thesis.'}
+        ]
+      },
+      commercial: {
+        label2:'Commercial', label:'C4-3 General Commercial',
+        purpose:'Regional commercial centers — retail, office and community facilities outside the central core.',
+        icon:'M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z',
+        kind:'commercial', far:3.4, supportsBonus:false, coverage:1.0, efficiency:0.85,
+        detailedControls:[
+          {group:'Height', items:['Governed by a sky-exposure plane rather than a flat numeric cap.','A base height is permitted, then a setback within the sky-exposure plane.']},
+          {group:'Lot Coverage & Yards', items:['Up to 100% lot coverage permitted.','No rear yard required at grade for commercial use.']},
+          {group:'Use & Density', items:['Use Groups 5–9 (retail, service, office) permitted.','No residential use permitted as-of-right in the C4-3 district.']},
+          {group:'FAR & Floor Area', items:['3.4 commercial FAR.','4.8 community-facility FAR.']},
+          {group:'Parking & Loading', items:['Parking generally waived within transit zones.','One loading berth per the loading provisions.']}
+        ],
+        overlays:['No special-purpose district confirmed from the supplied context.','Verify any Special Enhanced Commercial District before underwriting retail frontage.'],
+        decisionPoints:['Office demand is soft — underwrite retail rents and a triple-net structure carefully.','The sky-exposure plane, not a flat cap, governs achievable height and massing.','No residential as-of-right; a mixed program needs a residential district or overlay.'],
+        keyTakeaways:['C4-3 supports retail and office at 3.4 FAR with minimal parking obligations.','Height is shaped by the sky-exposure plane rather than a simple flat cap.','Confirm Use Group fit and any special commercial district overlay.'],
+        controls:[
+          {label:'Commercial FAR', value:'3.40', assumption:'Base commercial floor area ratio.', citation:'§33-122'},
+          {label:'Community Facility FAR', value:'4.80', assumption:'Community-facility floor area ratio.', citation:'§33-121'},
+          {label:'Max Height', value:'Sky exposure plane', assumption:'Governed by sky-exposure plane, not flat cap.', citation:'§33-43'},
+          {label:'Lot Coverage (interior)', value:'100%', assumption:'No required open space, commercial.', citation:'§33-23'},
+          {label:'Use Groups', value:'5–9', assumption:'Retail, service and office uses.', citation:'§32-00'},
+          {label:'Loading Berths', value:'1', assumption:'Per required loading provisions.', citation:'§36-62'},
+          {label:'Min Parking', value:'Waived (transit)', assumption:'Transit-zone commercial waiver.', citation:'§36-23'},
+          {label:'Rear Yard', value:'None at grade', assumption:'No rear yard for commercial at grade.', citation:'§33-26'}
+        ],
+        insights:[
+          {t:'Use Positioning', b:'C4-3 supports retail and office; the Atlantic Ave frontage favors ground-floor retail with upper-floor office.'},
+          {t:'Envelope', b:'3.4 commercial FAR with a sky-exposure plane governing height — no residential is permitted as-of-right.'},
+          {t:'Risk & Diligence', b:'Office demand is soft; underwrite retail rents and triple-net structure. Parking obligations are minimal in transit zones.'}
+        ]
+      },
+      mixed: {
+        label2:'Mixed Use', label:'R6A with C2-4 Overlay',
+        purpose:'Residential with a commercial overlay enabling ground-floor retail and neighborhood services.',
+        icon:'M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z',
+        kind:'mixed', resFAR:3.0, resFARAff:3.9, commFAR:2.0, supportsBonus:true, coverage:0.8, maxHeight:75, avgUnitSize:800, efficiency:0.8,
+        detailedControls:[
+          {group:'Height', items:['Underlying R6A — 75 ft maximum (95 ft affordable), base 40–65 ft then setback.','Commercial base occupies the lower floors beneath the residential envelope.']},
+          {group:'Lot Coverage & Yards', items:['80% interior lot coverage.','Rear yard of 30 ft above the commercial base.']},
+          {group:'Use & Density', items:['Ground-floor Use Group 6 retail and service.','Residential above governed by the 680 SF dwelling-unit factor.']},
+          {group:'FAR & Floor Area', items:['Residential 3.0 FAR (3.9 with bonus) plus commercial 2.0 overlay FAR.','Commercial limited to the front 100 ft depth of the lot.']},
+          {group:'Parking & Loading', items:['0.5 residential spaces / unit (transit-reduced).','Commercial parking often waived in transit zones.']}
+        ],
+        overlays:['C2-4 commercial overlay mapped over R6A — enables local retail and service.','Overlay depth limits commercial to the front 100 ft of the lot.'],
+        decisionPoints:['Ground-floor retail leasing risk vs. the value of an active street wall.','Coordinate a separate residential entry and loading from the retail base.','The affordable bonus (3.9 FAR) materially increases residential yield above the base.'],
+        keyTakeaways:['R6A + C2-4 overlay is the strongest corridor fit — retail base, housing above.','Commercial is capped at 2.0 FAR / 100 ft depth; residential drives the upper floors.','A blended program should pencil best of the residential options at this location.'],
+        controls:[
+          {label:'Residential FAR', value:'3.00', assumption:'Underlying R6A residential FAR.', citation:'§23-22'},
+          {label:'Residential FAR (aff.)', value:'3.90', assumption:'With affordable/senior bonus.', citation:'§23-22'},
+          {label:'Commercial FAR', value:'2.00', assumption:'C2-4 overlay commercial FAR.', citation:'§33-122'},
+          {label:'Max Commercial Depth', value:'100 ft', assumption:'Overlay commercial depth limit.', citation:'§32-43'},
+          {label:'Max Height (standard)', value:'75 ft', assumption:'Underlying R6A height limit.', citation:'§23-432'},
+          {label:'Ground Floor Use', value:'Retail (UG 6)', assumption:'Local retail and service uses.', citation:'§32-15'},
+          {label:'Lot Coverage (interior)', value:'80%', assumption:'Interior or through lot, residential.', citation:'§23-153'},
+          {label:'Min Parking', value:'0.5 / unit', assumption:'Transit-zone reduced residential.', citation:'§25-23'}
+        ],
+        insights:[
+          {t:'Thesis', b:'R6A + C2-4 overlay enables a retail base with residential above — the strongest fit for an Atlantic Ave corridor site.'},
+          {t:'Massing', b:'Commercial is limited to 2.0 FAR and 100 ft depth; residential drives the upper floors with a bonus to 3.9 FAR.'},
+          {t:'Risk & Diligence', b:'Ground-floor leasing risk; coordinate separate residential entry and loading, and confirm overlay extent on the lot.'}
+        ]
+      },
+      industrial: {
+        label2:'Industrial', label:'M1-1 Light Manufacturing',
+        purpose:'Light industry, warehousing and last-mile uses; buffers heavier industry from residential areas.',
+        icon:'M22 22V9l-6 4V9l-6 4V2H4v20h18zM8 20H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6v-2h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm6 4h-2v-2h2v2zm0-4h-2v-2h2v2z',
+        kind:'industrial', far:1.0, supportsBonus:false, coverage:1.0, efficiency:0.92, clearHeight:'14 ft',
+        detailedControls:[
+          {group:'Height', items:['Sky-exposure plane governs; typical low-rise warehouse / flex massing.']},
+          {group:'Lot Coverage & Yards', items:['Up to 100% lot coverage permitted.','Rear yard generally not required for industrial use.']},
+          {group:'Use & Density', items:['Use Groups 16–18 (manufacturing, warehouse, last-mile).','No residential use permitted as-of-right.']},
+          {group:'FAR & Floor Area', items:['1.0 manufacturing FAR (2.0 for some commercial uses).','2.4 community-facility FAR.']},
+          {group:'Parking & Loading', items:['One parking space per 1,000 SF.','Loading berths per use; ~14 ft minimum clear height typical.']}
+        ],
+        overlays:['No overlay confirmed; check Industrial Business Zone (IBZ) status.','Performance standards apply to noise, emissions and operations.'],
+        decisionPoints:['Likely below highest-and-best use here — weigh rezoning optionality.','IBZ status (if any) can restrict conversion away from industrial use.','Last-mile logistics demand may support interim industrial value.'],
+        keyTakeaways:['M1-1 supports light manufacturing / warehouse at 1.0 FAR; no as-of-right housing.','Sky-exposure plane and performance standards govern the envelope and operations.','Treat as an optionality / rezoning play rather than a residential program today.'],
+        controls:[
+          {label:'Manufacturing FAR', value:'1.00', assumption:'Base manufacturing floor area ratio.', citation:'§43-12'},
+          {label:'Commercial FAR', value:'2.00', assumption:'Permitted commercial uses.', citation:'§43-12'},
+          {label:'Community Facility FAR', value:'2.40', assumption:'Community-facility floor area ratio.', citation:'§43-12'},
+          {label:'Max Height', value:'Sky exposure plane', assumption:'Governed by sky-exposure plane.', citation:'§43-43'},
+          {label:'Lot Coverage (interior)', value:'100%', assumption:'No required open space.', citation:'§43-30'},
+          {label:'Min Clear Height', value:'14 ft', assumption:'Typical for warehouse/last-mile fit-out.', citation:'industry std.'},
+          {label:'Loading Berths', value:'1', assumption:'Per required loading provisions.', citation:'§44-52'},
+          {label:'Use Groups', value:'16–18', assumption:'Manufacturing, warehouse and related.', citation:'§42-00'},
+          {label:'Min Parking', value:'1 / 1,000 SF', assumption:'Per manufacturing parking ratio.', citation:'§44-21'}
+        ],
+        insights:[
+          {t:'Use Positioning', b:'M1-1 supports light manufacturing, warehouse and last-mile logistics; residential is not permitted as-of-right.'},
+          {t:'Envelope', b:'1.0 manufacturing FAR (2.0 for some commercial uses) with performance standards governing operations.'},
+          {t:'Risk & Diligence', b:'Likely below highest-and-best use here; weigh IBZ status and the optionality of a future rezoning.'}
+        ]
+      }
+    };
+  }
+
+  selectClass(dir,key){
+    this.setState(st=>{
+      const sel=st[dir];
+      if(sel.cls===key) return null;
+      const prev=this.CLASSES[sel.cls].controls, next=this.CLASSES[key].controls;
+      const pm={}; prev.forEach(c=>{pm[c.label]=c.value;});
+      const changed={}, summary=[];
+      next.forEach(c=>{
+        if(!(c.label in pm)){ changed[c.label]='new'; summary.push({label:c.label,to:c.value,flag:'new'}); }
+        else if(pm[c.label]!==c.value){ changed[c.label]='changed'; summary.push({label:c.label,from:pm[c.label],to:c.value,flag:'changed'}); }
+      });
+      return { [dir]:{...sel, cls:key, changed, changedSummary:summary} };
+    });
+  }
+
+  setOverride(dir,field,val){
+    this.setState(st=>{
+      const sel=st[dir];
+      const cur={...(sel.overrides[sel.cls]||{})};
+      if(val===''||val==null||(typeof val==='number'&&Number.isNaN(val))) delete cur[field]; else cur[field]=val;
+      return { [dir]:{...sel, overrides:{...sel.overrides, [sel.cls]:cur}} };
+    });
+  }
+  resetOverrides(dir){ this.setState(st=>{ const sel=st[dir]; const o={...sel.overrides}; delete o[sel.cls]; return {[dir]:{...sel,overrides:o}}; }); }
+  toggleAffordable(dir){ this.setState(st=>{ const sel=st[dir]; if(!this.CLASSES[sel.cls].supportsBonus) return null; return {[dir]:{...sel,affordable:!sel.affordable}}; }); }
+  setLot(dir,val){ this.setState(st=>({[dir]:{...st[dir],lotType:val}})); }
+  toggleSec(dir,key){ this.setState(st=>{ const sel=st[dir]; return {[dir]:{...sel,open:{...sel.open,[key]:!sel.open[key]}}}; }); }
+  clearChanged(dir){ this.setState(st=>({[dir]:{...st[dir],changed:{},changedSummary:[]}})); }
+
+  reply(text){
+    const t=(text||'').toLowerCase();
+    if(t.includes('mixed')) return "Mixed-use (R6A + C2-4 overlay) usually pencils best on a corridor like Atlantic Ave — ground-floor retail with residential above and the bonus to 3.9 FAR. Pick Mixed Use in the report and the capacity tiles and key insights update.";
+    if(t.includes('potential')||t.includes('develop')||t.includes('unit')||t.includes('calculate')) return "I'm computing buildable area and unit count live in the capacity tiles. Adjust FAR, average unit size or the affordable toggle and the numbers — and the key insights on the right — recompute instantly.";
+    if(t.includes('chang')) return "Whenever you switch asset class I flag every rule that's changed or new with a badge in the report, and summarize them in the 'What changed' banner. The key insights re-derive from the active scenario.";
+    if(t.includes('summar')||t.includes('zoning')||t.includes('requirement')) return "This site sits in R6A. The report breaks out bulk, density, yards and parking with citations. Want to compare against another class? Choose one from the selector and I'll keep both panels in sync.";
+    return "Got it — I'll factor that in. You can also upload a zoning PDF or memo with the paperclip and I'll reference it alongside the as-of-right rules in this report.";
+  }
+  send(){ const d=(this.state.draft||'').trim(); if(!d) return; this.setState(s=>({chat:[...s.chat,{role:'user',text:d},{role:'ai',text:this.reply(d)}],draft:''})); }
+  suggest(text){ this.setState(s=>({chat:[...s.chat,{role:'user',text},{role:'ai',text:this.reply(text)}]})); }
+  onUpload(e){
+    const f=e.target.files&&e.target.files[0]; if(!f) return;
+    const name=f.name;
+    this.setState(s=>({uploaded:[...s.uploaded,{name}],chat:[...s.chat,{role:'ai',text:"Indexed “"+name+"”. I'll reference it alongside the as-of-right rules — ask me anything about what's inside."}]}));
+    e.target.value='';
+  }
+
+  view(dir){
+    const C=this.CLASSES, s=this.state[dir], cls=C[s.cls];
+    const lot=this.props.siteLotArea ?? 4482;
+    const accent=this.props.accent ?? '#194651';
+    const showW=this.props.showWhatChanged ?? true;
+    const ov=s.overrides[s.cls]||{};
+    const aff=s.affordable && cls.supportsBonus;
+    const fmt=n=>Math.round(n).toLocaleString('en-US');
+    const baseFar=cls.kind==='mixed'?cls.resFAR:cls.far;
+    const affFar=cls.kind==='mixed'?cls.resFARAff:cls.farAff;
+    const farEff=(ov.far!=null?ov.far:(aff?affFar:baseFar));
+    const eff=(ov.eff!=null?ov.eff:cls.efficiency);
+    const coverage=(s.lotType==='corner'&&cls.cornerCoverage)?cls.cornerCoverage:cls.coverage;
+    const footprint=Math.round(lot*coverage);
+    const buildable=Math.round(lot*farEff);
+    let metrics, capBody;
+    if(cls.kind==='multi'){
+      const avg=ov.avgUnit!=null?ov.avgUnit:cls.avgUnitSize;
+      const units=Math.floor(buildable*eff/avg);
+      const floors=Math.max(1,Math.ceil(buildable/footprint));
+      metrics=[
+        {label:'Buildable area', value:fmt(buildable)+' SF', sub:fmt(lot)+' SF lot × '+farEff.toFixed(2)+' FAR', accent:true},
+        {label:'Est. units', value:units, sub:'@ '+avg+' SF · '+Math.round(eff*100)+'% eff'},
+        {label:'Max height', value:(aff?cls.maxHeightAff:cls.maxHeight)+' ft', sub:'≈ '+floors+' stories'},
+        {label:'Floor area ratio', value:farEff.toFixed(2), sub:aff?'affordable bonus':'as-of-right'}
+      ];
+      capBody='R6A yields ~'+fmt(buildable)+' SF buildable at '+farEff.toFixed(2)+' FAR — roughly '+units+' units'+(aff?' with the affordable/senior bonus':'')+'.';
+    } else if(cls.kind==='single'){
+      const floors=Math.min(3,Math.max(1,Math.ceil(buildable/footprint)));
+      metrics=[
+        {label:'Buildable area', value:fmt(buildable)+' SF', sub:fmt(lot)+' SF lot × '+farEff.toFixed(2)+' FAR', accent:true},
+        {label:'Dwelling units', value:'1–2', sub:'detached / semi-detached'},
+        {label:'Max height', value:cls.maxHeight+' ft', sub:'~'+floors+' stories'},
+        {label:'Floor area ratio', value:farEff.toFixed(2), sub:'as-of-right'}
+      ];
+      capBody='R3-2 is low-density: ~'+fmt(buildable)+' SF at '+farEff.toFixed(2)+' FAR supports just 1–2 dwelling units — limited as-of-right upside.';
+    } else if(cls.kind==='commercial'){
+      const leasable=Math.round(buildable*eff);
+      const floors=Math.max(1,Math.ceil(buildable/footprint));
+      metrics=[
+        {label:'Buildable area', value:fmt(buildable)+' SF', sub:fmt(lot)+' SF lot × '+farEff.toFixed(2)+' FAR', accent:true},
+        {label:'Leasable SF', value:fmt(leasable), sub:Math.round(eff*100)+'% efficiency'},
+        {label:'Stories (≈)', value:'~'+floors, sub:fmt(footprint)+' SF plate'},
+        {label:'Commercial FAR', value:farEff.toFixed(2), sub:'as-of-right'}
+      ];
+      capBody='C4-3 allows ~'+fmt(buildable)+' SF of commercial floor area ('+farEff.toFixed(2)+' FAR), about '+fmt(leasable)+' SF leasable across ~'+floors+' stories. No residential as-of-right.';
+    } else if(cls.kind==='mixed'){
+      const avg=ov.avgUnit!=null?ov.avgUnit:cls.avgUnitSize;
+      const retail=footprint, resBuild=buildable, total=resBuild+retail;
+      const units=Math.floor(resBuild*eff/avg);
+      metrics=[
+        {label:'Total buildable', value:fmt(total)+' SF', sub:'residential + ground retail', accent:true},
+        {label:'Residential units', value:units, sub:'@ '+avg+' SF'},
+        {label:'Ground-floor retail', value:fmt(retail)+' SF', sub:'commercial 2.0 FAR cap'},
+        {label:'Residential FAR', value:farEff.toFixed(2), sub:aff?'with bonus':'as-of-right'}
+      ];
+      capBody='The C2-4 overlay enables ~'+fmt(total)+' SF total — about '+units+' residential units above ~'+fmt(retail)+' SF of ground-floor retail.';
+    } else {
+      const usable=Math.round(buildable*eff);
+      const floors=Math.max(1,Math.ceil(buildable/footprint));
+      metrics=[
+        {label:'Buildable area', value:fmt(buildable)+' SF', sub:fmt(lot)+' SF lot × '+farEff.toFixed(2)+' FAR', accent:true},
+        {label:'Usable SF', value:fmt(usable), sub:Math.round(eff*100)+'% efficiency'},
+        {label:'Clear height', value:cls.clearHeight, sub:'~'+floors+' levels'},
+        {label:'Manufacturing FAR', value:farEff.toFixed(2), sub:'as-of-right'}
+      ];
+      capBody='M1-1 permits ~'+fmt(buildable)+' SF ('+farEff.toFixed(2)+' FAR) of manufacturing/warehouse, ~'+fmt(usable)+' SF usable at '+cls.clearHeight+' clear height.';
+    }
+    metrics.forEach(t=>{
+      t.bg=t.accent?accent:'#FFFFFF';
+      t.fg=t.accent?'#FFFFFF':'#0D292B';
+      t.border=t.accent?'transparent':'#ECECEC';
+      t.labelColor=t.accent?'rgba(255,255,255,0.72)':'#999999';
+      t.subColor=t.accent?'rgba(255,255,255,0.72)':'#787874';
+    });
+    const controls=cls.controls.map(c=>{
+      const flag=(s.changed&&s.changed[c.label])||'';
+      return { label:c.label, value:c.value, assumption:c.assumption, citation:c.citation, flag,
+        hl: flag==='new'?'#E7FBF1':flag==='changed'?'#FFFCF4':'transparent',
+        badge: flag==='new'?'NEW':flag==='changed'?'UPDATED':'',
+        badgeBg: flag==='new'?'#99E3B2':'#F7C96C',
+        cardBg: flag==='new'?'#E7FBF1':flag==='changed'?'#FFFCF4':'#FFFFFF',
+        cardBorder: flag==='new'?'#99E3B2':flag==='changed'?'#F7C96C':'#ECECEC' };
+    });
+    const insights=[{t:'Zoning Capacity', b:capBody}, ...cls.insights];
+    const order=['multifamily','single','commercial','mixed','industrial'];
+    const classOptions=order.map(k=>{
+      const active=k===s.cls;
+      return { key:k, label:C[k].label2, iconPath:C[k].icon, active,
+        bg:active?'#3479FE':'transparent', fg:active?'#FFFFFF':'#3B3B39', weight:active?'600':'500',
+        cardBg:active?'#3479FE':'#FFFFFF', cardFg:active?'#FFFFFF':'#3B3B39',
+        cardBorder:active?'#3479FE':'#E4E7EC', shadow:active?'0 6px 16px rgba(52,121,254,0.32)':'none',
+        onClick:()=>this.selectClass(dir,k) };
+    });
+    const deg=b=>b?'90deg':'0deg';
+    const changedSummary=(s.changedSummary||[]).map(ch=>({text: ch.flag==='new'? ch.label+' · new' : ch.label+': '+ch.from+' → '+ch.to}));
+    return {
+      classOptions, metrics, controls, insights,
+      overview:{district:cls.label, purpose:cls.purpose, jurisdiction:'New York City', code:'New York City Zoning Resolution', updated:'December 5, 2024'},
+      clsLabel:cls.label2,
+      detailedControls:cls.detailedControls, overlays:cls.overlays, decisionPoints:cls.decisionPoints, keyTakeaways:cls.keyTakeaways,
+      open:s.open,
+      chev:{ overview:deg(s.open.overview), controls:deg(s.open.controls), capacity:deg(s.open.capacity), insights:deg(s.open.insights), specs:deg(s.open.specs), detailed:deg(s.open.detailed), overlays:deg(s.open.overlays), decisions:deg(s.open.decisions), takeaways:deg(s.open.takeaways) },
+      affBg:aff?'rgba(52,121,254,0.5)':'rgba(0,0,0,0.25)', affKnobLeft:aff?'15px':'1px', affKnobBg:aff?'#3479FE':'#FFFFFF',
+      affChipBg:aff?'#EAF1FF':'#FFFFFF', affChipBorder:aff?'#9DC0FF':'#E4E7EC', affChipFg:'#0D292B',
+      affOpacity:cls.supportsBonus?'1':'0.45',
+      lotType:s.lotType,
+      lotInteriorBg:s.lotType==='interior'?'#194651':'transparent', lotInteriorFg:s.lotType==='interior'?'#FFFFFF':'#3B3B39',
+      lotCornerBg:s.lotType==='corner'?'#194651':'transparent', lotCornerFg:s.lotType==='corner'?'#FFFFFF':'#3B3B39',
+      editFar:Number(farEff.toFixed(2)),
+      editAvg:(cls.kind==='multi'||cls.kind==='mixed')?(ov.avgUnit!=null?ov.avgUnit:cls.avgUnitSize):0,
+      hasAvg:(cls.kind==='multi'||cls.kind==='mixed'),
+      editEff:Math.round(eff*100),
+      hasOverride:Object.keys(ov).length>0,
+      changedSummary, showChanged: showW && changedSummary.length>0,
+      onAffordable:()=>this.toggleAffordable(dir),
+      onLot:(e)=>this.setLot(dir,e.target.value),
+      onLotInterior:()=>this.setLot(dir,'interior'),
+      onLotCorner:()=>this.setLot(dir,'corner'),
+      onFar:(e)=>this.setOverride(dir,'far',parseFloat(e.target.value)),
+      onAvg:(e)=>this.setOverride(dir,'avgUnit',parseInt(e.target.value,10)),
+      onEff:(e)=>this.setOverride(dir,'eff',parseFloat(e.target.value)/100),
+      onReset:()=>this.resetOverrides(dir),
+      onClearChanged:()=>this.clearChanged(dir),
+      onSec:{ overview:()=>this.toggleSec(dir,'overview'), controls:()=>this.toggleSec(dir,'controls'), capacity:()=>this.toggleSec(dir,'capacity'), insights:()=>this.toggleSec(dir,'insights'), specs:()=>this.toggleSec(dir,'specs'), detailed:()=>this.toggleSec(dir,'detailed'), overlays:()=>this.toggleSec(dir,'overlays'), decisions:()=>this.toggleSec(dir,'decisions'), takeaways:()=>this.toggleSec(dir,'takeaways') }
+    };
+  }
+
+  renderVals(){
+    const me=this.state;
+    const chatView=me.chat.map(m=>({ justify:m.role==='user'?'flex-end':'flex-start', bg:m.role==='user'?'#2FB297':'#ECECEC', fg:m.role==='user'?'#FFFFFF':'#0D292B', text:m.text }));
+    const draft=(me.draft||'').trim();
+    const suggestions=['Summarize the zoning for this asset class','Calculate development potential','Compare to a mixed-use scenario'].map(label=>({label, onClick:()=>this.suggest(label)}));
+    return {
+      logoPaths:[
+        'M23.1577 0V26.477H19.0601V0H23.1577Z',
+        'M13.4464 9.9682V12.4685L12.9394 11.6734C12.5188 11.0169 11.8647 10.482 10.9886 10.0857C10.1551 9.708 9.20555 9.51648 8.16308 9.51648C8.09728 9.51648 8.03019 9.5178 7.96439 9.52044C5.66525 9.54554 3.74544 10.4054 2.25397 12.0762C0.757345 13.7523 0 15.9066 0 18.4835C0.0245137 21.0802 0.820565 23.1987 2.36493 24.7811C3.90801 26.3621 5.8046 27.1625 7.99793 27.1625C9.27007 27.1625 10.3745 26.8944 11.2841 26.3647C12.1743 25.8457 12.7213 25.3134 12.9097 24.7837L13.4464 23.2754V26.6342H17.0319V9.96952H13.4464V9.9682ZM13.329 18.6472C13.329 19.9416 12.8594 21.0775 11.933 22.0232C11.0092 22.9703 9.85968 23.4523 8.5153 23.4523C7.17091 23.4523 6.05618 22.9729 5.11821 22.0259C4.18024 21.0802 3.70287 19.8333 3.70287 18.321C3.70287 16.8087 4.16605 15.6437 5.07434 14.6822C5.98651 13.7193 7.14382 13.2306 8.5153 13.2306C9.88678 13.2306 11.0402 13.6968 11.9511 14.6161C12.8658 15.5367 13.3277 16.7017 13.3277 18.0766V18.6459L13.329 18.6472Z',
+        'M58.5865 12.0445C56.9493 10.371 54.9405 9.52173 52.6142 9.52173C50.288 9.52173 48.2714 10.371 46.6213 12.0445C44.9737 13.7206 44.1376 15.8035 44.1376 18.2404C44.1376 20.6773 44.975 22.8302 46.6238 24.5605C48.274 26.2868 50.288 27.1625 52.6129 27.1625C54.9379 27.1625 56.9467 26.2868 58.5814 24.5605C60.2199 22.8315 61.0495 20.705 61.0495 18.2404C61.0495 15.7758 60.2199 13.7206 58.5853 12.0445H58.5865ZM55.9984 21.8555C55.0733 22.8619 53.9354 23.3704 52.6142 23.3704C51.2931 23.3704 50.1551 22.8606 49.23 21.8555C48.3101 20.8556 47.8418 19.6378 47.8418 18.2404C47.8418 16.843 48.3114 15.6873 49.2352 14.7402C50.1603 13.7945 51.2982 13.3138 52.6142 13.3138C53.9302 13.3138 55.0682 13.7945 55.9933 14.7402C56.9183 15.6873 57.3867 16.8654 57.3867 18.2404C57.3867 19.6154 56.9209 20.8556 55.9984 21.8555Z',
+        'M85.5375 11.2744C84.3634 10.1095 82.7894 9.52173 80.8554 9.52173C78.7007 9.52173 77.0067 10.3063 75.821 11.8556L75.5901 12.1581L75.3759 11.845C74.3063 10.2812 72.86 9.52173 70.9479 9.52173C69.9971 9.52173 69.1339 9.75948 68.3869 10.2336C67.6347 10.7078 67.0928 11.2546 66.7741 11.8582L66.2542 12.8409V10.0501H62.7074V26.6341H66.2542V16.9368C66.2542 15.7573 66.5651 14.8023 67.1793 14.101C67.8024 13.3891 68.6669 13.0285 69.7532 13.0285C70.8396 13.0285 71.7001 13.3732 72.3233 14.0547C72.9413 14.7323 73.2548 15.6609 73.2548 16.8139V26.6341H76.799V16.8139C76.799 15.6595 77.1202 14.7284 77.7499 14.0534C78.3859 13.3745 79.2426 13.0285 80.298 13.0285C81.3534 13.0285 82.2384 13.3666 82.8474 14.0349C83.4525 14.6967 83.7583 15.6331 83.7583 16.8152V26.6355H87.3025V16.3265C87.3025 14.1353 86.709 12.4368 85.5362 11.2771V11.2744H85.5375Z',
+        'M102.412 9.9682V12.4685L101.904 11.6734C101.486 11.0169 100.829 10.482 99.9528 10.0857C99.1194 9.708 98.1698 9.51648 97.1273 9.51648C97.0615 9.51648 96.9944 9.5178 96.9286 9.52044C94.6295 9.54554 92.7097 10.4054 91.2182 12.0762C89.7229 13.7523 88.9642 15.9066 88.9642 18.4835C88.99 21.0802 89.7848 23.1987 91.3292 24.7811C92.8735 26.3621 94.7688 27.1625 96.9647 27.1625C98.2343 27.1625 99.3413 26.8944 100.25 26.3647C101.14 25.8457 101.687 25.3134 101.878 24.7837L102.415 23.2754V26.6342H106V9.96952H102.412V9.9682ZM102.292 18.6472C102.292 19.9416 101.822 21.0775 100.899 22.0232C99.9748 22.9689 98.8226 23.4523 97.4795 23.4523C96.1364 23.4523 95.0204 22.9729 94.0825 22.0259C93.1445 21.0802 92.6684 19.8333 92.6684 18.321C92.6684 16.8087 93.129 15.6437 94.0386 14.6822C94.9507 13.7193 96.1081 13.2306 97.4795 13.2306C98.851 13.2306 100.004 13.6968 100.918 14.6161C101.83 15.5367 102.293 16.7017 102.293 18.0766V18.6459L102.292 18.6472Z',
+        'M43.7686 9.52173H33.5154C31.1712 9.52173 29.143 10.3737 27.4902 12.0524C25.8375 13.7285 25.0001 15.7982 25.0001 18.1968C25.0001 20.5954 25.8452 22.7364 27.5134 24.468C29.1791 26.2009 31.2112 27.0793 33.5554 27.0793C35.1308 27.0793 36.5693 26.683 37.8286 25.9024L38.2569 25.6369V27.6168C38.2285 28.9641 37.7447 30.1145 36.8145 31.0404C35.883 31.961 34.7747 32.4285 33.5167 32.4285C32.2588 32.4285 31.1131 31.961 30.1983 31.039C29.3455 30.1792 28.872 29.1278 28.7882 27.9048H25.0492C25.1369 30.1488 25.9794 32.06 27.5483 33.5895C29.1894 35.189 31.197 36 33.5167 36C35.8365 36 37.8415 35.189 39.4852 33.5895C41.1224 31.994 41.9662 29.9824 41.9907 27.6129L42.0565 18.1717C42.0604 17.7781 42.0449 17.4347 42.0101 17.1243C41.863 15.8933 41.4502 14.7442 40.7818 13.71L40.4928 13.2623H43.7712V9.52305H43.7686V9.52173ZM38.253 18.9074C38.1202 19.9799 37.6712 20.9322 36.9203 21.7379C36.0042 22.7179 34.8714 23.2159 33.5554 23.2159C32.2394 23.2159 31.0989 22.7179 30.1713 21.7379C29.2436 20.7618 28.774 19.5691 28.774 18.1968C28.774 16.8245 29.2475 15.6952 30.179 14.7733C31.1066 13.8527 32.2433 13.3851 33.5554 13.3851C34.8676 13.3851 35.9668 13.8751 36.8983 14.842C37.706 15.6807 38.1679 16.6449 38.2724 17.7121C38.2892 17.8693 38.2969 18.033 38.2969 18.1968C38.2969 18.4425 38.2814 18.6829 38.2543 18.9087H38.253V18.9074Z'
+      ],
+      chatView, uploaded:me.uploaded, hasUploads:me.uploaded.length>0, draft:me.draft, suggestions,
+      onDraft:(e)=>this.setState({draft:e.target.value}),
+      onKey:(e)=>{ if(e.key==='Enter'){ e.preventDefault(); this.send(); } },
+      onSend:()=>this.send(),
+      onUpload:(e)=>this.onUpload(e),
+      sendBg:draft?'#3479FE':'transparent', sendFg:draft?'#FFFFFF':'#B3B3B3',
+      vA:this.view('a'), vB:this.view('b')
+    };
+  }
+}
+</script>
+</body>
+</html>

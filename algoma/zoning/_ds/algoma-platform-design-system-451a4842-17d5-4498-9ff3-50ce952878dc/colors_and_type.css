@@ -1,0 +1,149 @@
+/* Algoma Platform Design System — tokens from theme.ts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&family=Tinos:ital,wght@0,400;1,400&display=swap');
+
+:root {
+  /* Primary — Blue Crayola (Primary Action) */
+  --primary:        #3479FE;
+  --primary-light:  #8CCFEB; /* Sky Blue */
+  --primary-dark:   #1200FA; /* Blue — electric accent */
+
+  /* Brand · Primary Base Colors (the 7 core) */
+  --blue-crayola:    #3479FE; /* Primary Action */
+  --picton-blue:     #1EA5E1; /* Secondary Action */
+  --mint-green:      #D5F8EB; /* Light Surface */
+  --aquamarine:      #03F3A3; /* Brand Accent */
+  --keppel:          #2FB297; /* Readable Green */
+  --midnight-green:  #194651; /* Dark Accent */
+  --gunmetal:        #0D292C; /* Dark Foundation */
+
+  /* Brand · Expanded palette */
+  --cerulean:        #166787; /* Deep teal */
+  --blue:            #1200FA; /* Electric accent */
+  --sky-blue:        #8CCFEB; /* Light blue fill */
+  --non-photo-blue:  #B1E4EB; /* Soft blue */
+  --aquamarine-light:#A1F7D9; /* Hover state */
+  --emerald:         #19D39D; /* Success dark */
+  --skobeloff:       #247C74; /* Deep green */
+
+  /* Secondary */
+  --secondary:       #DCFA66; /* Bright Lime */
+  --secondary-light: #59FFBA; /* Bright Teal */
+  --secondary-dark:  #F05B41; /* Blood Orange */
+
+  /* Backgrounds */
+  --bg-body:  #F7F7F0;
+  --bg-paper: #FFFFFF;
+
+  /* Text */
+  --text-primary:   #0D292B; /* Dark Forest */
+  --text-secondary: #3B3B39; /* Charcoal Gray */
+  --text-muted:     #999999;
+
+  /* Grey scale */
+  --grey-100: #ECECEC;
+  --grey-200: #F7F7F7;
+  --grey-300: #D9D9D9;
+  --grey-400: #B3B3B3;
+  --grey-500: #B8B8B2;
+  --grey-600: #999999;
+  --grey-700: #787874;
+  --grey-800: #333333;
+
+  /* Green ramp */
+  --green-100: #D5F8EB;
+  --green-200: #99E3B2;
+  --green-300: #77C29B;
+  --green-400: #2FB297;
+  --green-500: #00D17A;
+  --green-600: #297B74;
+  --green-700: #2B6960;
+  --green-800: #194651;
+  --green-900: #0D292B;
+
+  /* Blue ramp */
+  --blue-200: #8ccfeb;
+  --blue-300: #56B9CE;
+  --blue-400: #4795E2;
+  --blue-500: #1EA5E1;
+  --blue-600: #6B7C92;
+  --blue-700: #357CFC;
+  --blue-800: #3479FE;
+  --blue-900: #1200FA;
+
+  /* Red ramp */
+  --red-100: #FFEEEB;
+  --red-200: #F0C1B6;
+  --red-400: #F08C75;
+  --red-600: #F05B41;
+
+  /* Orange ramp */
+  --orange-100: #FFFCF4;
+  --orange-200: #f59e0b;
+  --orange-300: #F7C96C;
+  --orange-500: #F54900;
+  --orange-800: #CA3500;
+
+  /* Semantic */
+  --success: #99E3B2;
+  --error:   #F08C75;
+  --warning: #f59e0b;
+  --info:    #3479FE;
+
+  /* Fonts */
+  --font-heading: 'Ubuntu', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+  --font-serif:   'Tinos', serif;
+
+  /* Radius */
+  --radius-button: 90px;
+  --radius-input:  10px;
+  --radius-card:   20px; /* SectionCard ships 20px */
+  --radius-sm:     4px;
+
+  /* Shadows */
+  --shadow-card:   0px 4px 4px rgba(0, 0, 0, 0.25); /* @kind shadow */
+
+  /* Gradients */
+  --gradient-primary:       linear-gradient(to bottom, #2b6960, #F7F7F0); /* @kind color */
+  --gradient-primary-light: linear-gradient(#2b6960 0%, #F7F7F0 30%); /* @kind color */
+  --gradient-secondary:     linear-gradient(to bottom, #0D292B, #F7F7F0); /* @kind color */
+
+  /* Brand gradients (135deg) */
+  --gradient-primary-brand: linear-gradient(135deg, #03F3A3, #1EA5E1); /* @kind color */
+  --gradient-dark-surface:  linear-gradient(135deg, #0D292C, #194651, #247C74); /* @kind color */
+  --gradient-warm-accent:   linear-gradient(135deg, #FFFFFF, #45F79E, #03F3A3); /* @kind color */
+
+  /* Teal / Purple accent */
+  --teal:   #54B6B7;
+  --purple: #8b5cf6;
+
+  /* Brown ramp */
+  --brown-300: #EEDBBA; /* Light Maple */
+  --brown-600: #544E42; /* Bark */
+  --brown-700: #9B8F79; /* Brown Paper */
+
+  /* Zoning (map fills) */
+  --zoning-residential:         #FBFFC2;
+  --zoning-commercial:          #FB6767;
+  --zoning-industrial:          #A98EFA;
+  --zoning-mixed:               #F8C163;
+  --zoning-special:             #FF71D0;
+  --zoning-agriculture:         #2FB297;
+  --zoning-planned-development: #87CEEB;
+
+  /* Rent comps (by unit type) */
+  --rent-studio:   #F08C75;
+  --rent-one-bed:  #99E3B2;
+  --rent-two-bed:  #357CFC;
+  --rent-three-bed:#194651;
+
+  /* Charts */
+  --chart-install:  #2FB297;
+  --chart-material: #00D17A;
+  --chart-profit:   #99E3B2;
+  --chart-division-a: #999999;
+  --chart-division-b: #1e4572;
+  --chart-division-c: #3479FE;
+  --chart-division-d: #008ba0;
+  --chart-division-e: #62d965;
+}

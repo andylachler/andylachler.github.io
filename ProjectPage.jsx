@@ -64,7 +64,35 @@ const PROJECT_DATA = {
       { label: 'Architecture practice', body: 'Lead architect on several of the studio\u2019s active residential and industrial feasibility projects. The platform gets better because the practice keeps finding edge cases it has to solve.' },
     ],
     designSystemLabel: 'Four connected arcs',
-    outcome: 'V.02 platform shipped September 2025 \u2014 site summary, capacity, comps, and exports. AI zoning analysis and legislative data overlays shipped through late 2025. Marketing system overhaul live April 2026. Weekly research\u2192design\u2192ship cadence continues. Specific features and client work remain confidential; this page teases the patterns, not the proprietary surfaces.',
+    modules: [
+      {
+        title: 'AI assistant \u2014 chat module',
+        blurb: 'The conversational surface for zoning analysis, documented as a hand-off spec: every component state and value, input through streaming through error, all mapped to design-system tokens. The flows canvas shows how ambiguity, citations, and attachments move through a single conversation.',
+        src: 'algoma/chat/',
+        label: 'Chat module \u00b7 flows & states',
+        gateTitle: 'Tap to explore the chat module spec',
+        gateNote: 'A full wireframe canvas \u2014 flows, states, and component values. Scroll and pan inside the frame.',
+      },
+      {
+        title: 'Zoning report module',
+        blurb: 'Zoning rules as a diffable table. Bulk & use controls show one row per rule with citations back to the zoning resolution; switching asset class re-derives the table and flags what changed. Detail lives one layer down, collapsed by default, so the module stays scannable.',
+        src: 'algoma/zoning/',
+        label: 'Zoning report \u00b7 module wireframe',
+        gateTitle: 'Tap to explore the zoning report',
+        gateNote: 'Annotated wireframe \u2014 summary tables, rule diffing, and the detail layer behind them.',
+      },
+      {
+        title: 'Take this site further',
+        blurb: 'The hand-off moment \u2014 where a feasibility answer becomes a next step. This module sits at the end of the site workflow and routes the user toward capacity studies, comps, or the architecture practice, keeping the map as theme rather than hero.',
+        src: 'algoma/module/',
+        label: 'Site workflow \u00b7 module wireframe',
+        gateTitle: 'Tap to explore the module wireframe',
+        gateNote: 'Full module canvas over the platform map layer.',
+      },
+    ],
+    modulesLabel: 'Featured modules',
+    modulesIntro: 'Selected wireframes from the platform, embedded live. These are working design canvases \u2014 flows, states, and hand-off specs \u2014 not marketing screenshots.',
+    outcome: 'V.02 platform shipped September 2025 \u2014 site summary, capacity, comps, and exports. AI zoning analysis and legislative data overlays shipped through late 2025. Marketing system overhaul live April 2026. Weekly research\u2192design\u2192ship cadence continues. Selected wireframes are embedded above; client-specific data and unreleased surfaces stay out of view.',
     credits: 'Algoma. Product Lead, brand, and design system: Andreas L\u00e4chler. Built with the Algoma engineering and leadership team.',
     details: [
       { label: 'Role', value: 'Product Lead' },
@@ -353,6 +381,39 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Featured modules — interactive wireframe embeds */}
+      {project.modules && project.modules.length > 0 && (
+        <div style={{ ...fade(320), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>{project.modulesLabel || 'Featured modules'}</p>
+          {project.modulesIntro && (
+            <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '2.5rem', maxWidth: '820px' }}>{project.modulesIntro}</p>
+          )}
+          {project.modules.map((m, i) => (
+            <div key={i} style={{ marginBottom: i < project.modules.length - 1 ? (isMobile ? '3rem' : '4.5rem') : 0 }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 2fr)',
+                gap: isMobile ? '1rem' : '3rem',
+                alignItems: 'start',
+              }}>
+                <div>
+                  <p style={{ fontSize: '17px', fontWeight: 500, color: '#14211C', margin: '0 0 0.6rem', letterSpacing: '-0.01em' }}>{m.title}</p>
+                  <p style={{ fontSize: '14px', lineHeight: 1.7, color: 'rgba(20,33,28,0.7)', margin: 0 }}>{m.blurb}</p>
+                </div>
+                <DesktopFrame
+                  src={m.src}
+                  label={m.label}
+                  gateTitle={m.gateTitle}
+                  gateNote={m.gateNote}
+                  designW={m.designW || 1440}
+                  designH={m.designH || 900}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

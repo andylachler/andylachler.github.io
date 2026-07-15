@@ -290,3 +290,141 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
 };
 
 window.TryItOut = TryItOut;
+
+// DesktopFrame — browser-window-framed embed for desktop-scale wireframes.
+// Same tap-to-load gate as TryItOut, but framed as a macOS-style browser
+// window and scaled to fit the content column. Renders the iframe at a
+// fixed design width (default 1440) and transform-scales it down.
+//
+// Props:
+//   src:      string — URL loaded inside the frame (e.g. 'algoma/chat/').
+//   label:    string — caption under the frame.
+//   gateTitle:string — headline on the tap-to-load gate.
+//   gateNote: string — small print on the gate.
+//   designW / designH: number — native canvas size of the embedded page.
+
+const DesktopFrame = ({ src, label = 'Interactive wireframe', gateTitle = 'Tap to load', gateNote = '', designW = 1440, designH = 900 }) => {
+  const [loaded, setLoaded] = React.useState(false);
+  const [ready, setReady] = React.useState(false);
+  const [reloadKey, setReloadKey] = React.useState(0);
+
+  const wrapRef = React.useRef(null);
+  const [scale, setScale] = React.useState(1);
+  React.useEffect(() => {
+    const recalc = () => {
+      const w = wrapRef.current ? wrapRef.current.clientWidth : designW;
+      setScale(Math.min(1, w / designW));
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    return () => window.removeEventListener('resize', recalc);
+  }, [designW]);
+
+  const CHROME_H = 36;
+
+  return (
+    <div ref={wrapRef} style={{ width: '100%' }}>
+      <div style={{
+        width: '100%',
+        borderRadius: 10,
+        overflow: 'hidden',
+        boxShadow: '0 0 0 0.5px rgba(20,33,28,0.15), 0 24px 48px -16px rgba(20,33,28,0.35), 0 6px 16px -6px rgba(20,33,28,0.2)',
+        background: '#0c100e',
+      }}>
+        {/* Browser chrome bar */}
+        <div style={{
+          height: CHROME_H,
+          background: 'linear-gradient(180deg, #1a1d1c 0%, #121514 100%)',
+          display: 'flex', alignItems: 'center', gap: 6,
+          padding: '0 14px',
+        }}>
+          <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#3D5448' }} />
+          <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#5a6e60' }} />
+          <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#8ba190' }} />
+          <span style={{
+            marginLeft: 12, flex: 1, maxWidth: 380, height: 20, borderRadius: 5,
+            background: 'rgba(255,255,255,0.07)',
+            display: 'flex', alignItems: 'center', padding: '0 10px',
+            fontSize: 10, letterSpacing: '0.06em', color: 'rgba(242,239,230,0.45)',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>{label}</span>
+        </div>
+
+        {/* Viewport — scaled iframe or gate */}
+        <div style={{ width: '100%', height: designH * scale, position: 'relative', overflow: 'hidden', background: '#F2EFE6' }}>
+          {!loaded ? (
+            <div
+              onClick={() => setLoaded(true)}
+              style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(180deg, #1A2520 0%, #0c100e 100%)',
+                color: '#F2EFE6',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', padding: '0 2rem', textAlign: 'center', gap: '1.1rem',
+              }}
+            >
+              <div style={{
+                width: 52, height: 52, borderRadius: 13,
+                background: 'rgba(245,200,140,0.12)', border: '1px solid rgba(245,200,140,0.35)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 5v14l11-7L8 5z" fill="#F5C88C" />
+                </svg>
+              </div>
+              <div>
+                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.55)', margin: '0 0 0.4rem' }}>Interactive wireframe</p>
+                <p style={{ fontSize: 15, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>{gateTitle}</p>
+                {gateNote && <p style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(242,239,230,0.5)', margin: '0.45rem 0 0', maxWidth: 420 }}>{gateNote}</p>}
+              </div>
+            </div>
+          ) : (
+            <>
+              {!ready && (
+                <div style={{ position: 'absolute', inset: 0, background: '#1A2520', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 4 }}>
+                  <div style={{
+                    width: 24, height: 24,
+                    border: '2px solid rgba(245,200,140,0.2)', borderTopColor: '#F5C88C',
+                    borderRadius: '50%', animation: 'ae-spin 700ms linear infinite',
+                  }} />
+                  <style>{`@keyframes ae-spin { to { transform: rotate(360deg); } }`}</style>
+                </div>
+              )}
+              <iframe
+                key={reloadKey}
+                src={src}
+                onLoad={() => setReady(true)}
+                title={label}
+                style={{
+                  width: designW, height: designH,
+                  transform: `scale(${scale})`, transformOrigin: 'top left',
+                  border: 0, background: '#F2EFE6', display: 'block',
+                }}
+              />
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Caption + controls */}
+      <div style={{ marginTop: '0.9rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+        <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>{label}</span>
+        {loaded && (
+          <button
+            onClick={() => { setReady(false); setReloadKey(k => k + 1); }}
+            style={{
+              background: 'transparent', border: '0.5px solid rgba(20,33,28,0.2)',
+              color: 'rgba(20,33,28,0.7)', fontSize: 11, fontWeight: 500, letterSpacing: '0.06em',
+              padding: '5px 11px', borderRadius: 999, cursor: 'pointer',
+            }}
+          >↻ Reload</button>
+        )}
+        <a href={src} target="_blank" rel="noopener noreferrer"
+          style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.06em', color: 'rgba(20,33,28,0.55)', textDecoration: 'none' }}
+        >Open full screen ↗</a>
+      </div>
+    </div>
+  );
+};
+
+window.DesktopFrame = DesktopFrame;
