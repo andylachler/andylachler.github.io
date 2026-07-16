@@ -76,11 +76,11 @@ card(*positions[3], cw, ch, 'Ella · Arquitectonica', 'built at scale', ['95-uni
 card(80, 850, cw, 150, 'Brickell residential', 'built depth', ['Mass timber, 32 units — thinnest case study'], change='✓ moved to Foundations (done)', ghost=True)
 # orphan pages note
 parts.append(f'<rect x="570" y="850" width="{cw}" height="150" rx="10" fill="{CREAM}" stroke="rgba(20,33,28,0.18)"/>')
-parts.append(f'<text x="588" y="878" font-size="14" font-weight="600" fill="{INK}">✓ Component stories (were “orphan pages”)</text>')
-parts.append(f'<text x="588" y="900" font-size="12.5" fill="{SAGE}">zoning-chat · comps · site-search — now linked as cards from</text>')
-parts.append(f'<text x="588" y="918" font-size="12.5" fill="{SAGE}">the Feasibility page; each tells one component’s development.</text>')
+parts.append(f'<text x="588" y="878" font-size="14" font-weight="600" fill="{INK}">✓ Mini UX studies — “Algoma — Product” on the Work page</text>')
+parts.append(f'<text x="588" y="900" font-size="12.5" fill="{SAGE}">zoning-chat · comps · site-search: tiles under Algoma — Product,</text>')
+parts.append(f'<text x="588" y="918" font-size="12.5" fill="{SAGE}">cards on the Feasibility page. One new mini per wireframe upload.</text>')
 parts.append(f'<circle cx="594" cy="944" r="3.5" fill="{ORANGE}"/>')
-parts.append(f'<text x="604" y="948" font-size="12" font-weight="600" fill="{ORANGE}">next: build out step-by-step iteration content per story</text>')
+parts.append(f'<text x="604" y="948" font-size="12" font-weight="600" fill="{ORANGE}">ready to convert: Rendering Module · Address &amp; Naming</text>')
 note(80, 1052, ['Grid order = the story order: product first, physical proof second, scale third.'])
 note(80, 1090, ['Physical is WOVEN here — model shots and process photos inside each case study,', 'not a separate section. The images task is what makes this real.'], color=ORANGE)
 
@@ -131,7 +131,7 @@ parts.append(f'<path d="M 1770 620 Q 1805 630 1844 648" fill="none" stroke="{ORA
 py = H-110
 parts.append(f'<rect x="48" y="{py}" width="{W-96}" height="76" rx="10" fill="{INK}"/>')
 parts.append(f'<text x="70" y="{py+28}" font-size="12" font-weight="700" letter-spacing="2" fill="{CREAM}">STATUS — JULY 15, 2026</text>')
-parts.append(f'<text x="70" y="{py+54}" font-size="13.5" fill="rgba(242,239,230,0.85)">DONE: grid of 4 · Foundations rename + lede · Brickell moved · component stories linked · Ground Is Lava removed      TO DO: images everywhere (trailer renders/animations, Ella, Foundations photos) · craft strip photos · fix Ball Game · component story content · hero tagline (tabled)</text>')
+parts.append(f'<text x="70" y="{py+54}" font-size="13.5" fill="rgba(242,239,230,0.85)">DONE: grid of 4 · Foundations + galleries populated · tiles w/ offset images · Work page: Algoma — Product / Arquitectonica — Architecture · mini-study pipeline live      TO DO: Ella + Fluxing images · AutoEase tile · fix Ball Game · mini-study content depth · hero tagline (tabled)</text>')
 
 svg = f'''<svg viewBox="0 0 {W} {H}" width="{W}" height="{H}" xmlns="http://www.w3.org/2000/svg" font-family="Inter, -apple-system, system-ui, sans-serif" role="img">
 <title>lachler.com site structure map</title>
