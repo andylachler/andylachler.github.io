@@ -64,35 +64,26 @@ const PROJECT_DATA = {
       { label: 'Architecture practice', body: 'Lead architect on several of the studio\u2019s active residential and industrial feasibility projects. The platform gets better because the practice keeps finding edge cases it has to solve.' },
     ],
     designSystemLabel: 'Four connected arcs',
-    modules: [
+    componentStories: [
       {
-        title: 'AI assistant \u2014 chat module',
-        blurb: 'The conversational surface for zoning analysis, documented as a hand-off spec: every component state and value, input through streaming through error, all mapped to design-system tokens. The flows canvas shows how ambiguity, citations, and attachments move through a single conversation.',
-        src: 'algoma/chat/',
-        label: 'Chat module \u00b7 flows & states',
-        gateTitle: 'Tap to explore the chat module spec',
-        gateNote: 'A full wireframe canvas \u2014 flows, states, and component values. Scroll and pan inside the frame.',
+        id: 'zoning-chat',
+        title: 'Zoning chat',
+        blurb: 'How a legal document became a conversation. The citation pattern, uncertainty states, and response format \u2014 developed step by step until developers could trust what they were reading.',
       },
       {
-        title: 'Zoning report module',
-        blurb: 'Zoning rules as a diffable table. Bulk & use controls show one row per rule with citations back to the zoning resolution; switching asset class re-derives the table and flags what changed. Detail lives one layer down, collapsed by default, so the module stays scannable.',
-        src: 'algoma/zoning/',
-        label: 'Zoning report \u00b7 module wireframe',
-        gateTitle: 'Tap to explore the zoning report',
-        gateNote: 'Annotated wireframe \u2014 summary tables, rule diffing, and the detail layer behind them.',
+        id: 'comps',
+        title: 'Comps analysis',
+        blurb: 'From map-first to table-first. How underwriter scan patterns reshaped the comps surface across iterations \u2014 judgment support, not fake automation.',
       },
       {
-        title: 'Take this site further',
-        blurb: 'The hand-off moment \u2014 where a feasibility answer becomes a next step. This module sits at the end of the site workflow and routes the user toward capacity studies, comps, or the architecture practice, keeping the map as theme rather than hero.',
-        src: 'algoma/module/',
-        label: 'Site workflow \u00b7 module wireframe',
-        gateTitle: 'Tap to explore the module wireframe',
-        gateNote: 'Full module canvas over the platform map layer.',
+        id: 'site-search',
+        title: 'Site search',
+        blurb: 'Search for people who don\'t yet know what they\'re looking for. Filters derived from the decision space developers actually navigate, not bolted on.',
       },
     ],
-    modulesLabel: 'Featured modules',
-    modulesIntro: 'Selected wireframes from the platform, embedded live. These are working design canvases \u2014 flows, states, and hand-off specs \u2014 not marketing screenshots.',
-    outcome: 'V.02 platform shipped September 2025 \u2014 site summary, capacity, comps, and exports. AI zoning analysis and legislative data overlays shipped through late 2025. Marketing system overhaul live April 2026. Weekly research\u2192design\u2192ship cadence continues. Selected wireframes are embedded above; client-specific data and unreleased surfaces stay out of view.',
+    componentStoriesLabel: 'Component stories',
+    componentStoriesIntro: 'The platform grew component by component. Each story walks one surface from first sketch toward its shipped state \u2014 the step-by-step UX decisions, shown as process, not demos.',
+    outcome: 'V.02 platform shipped September 2025 \u2014 site summary, capacity, comps, and exports. AI zoning analysis and legislative data overlays shipped through late 2025. Marketing system overhaul live April 2026. Weekly research\u2192design\u2192ship cadence continues. Component development is shown as step-by-step stories above; client-specific data and unreleased surfaces stay out of view.',
     credits: 'Algoma. Product Lead, brand, and design system: Andreas L\u00e4chler. Built with the Algoma engineering and leadership team.',
     details: [
       { label: 'Role', value: 'Product Lead' },
@@ -104,6 +95,7 @@ const PROJECT_DATA = {
     tileBg: '#3D5448', imageIndex: 0,
     next: 'ella',
   },
+  // Component stories — linked from the Feasibility platform case study.
   'site-search': {
     title: 'Site search',
     org: 'Algoma', year: '2024', role: 'Product Design',
@@ -118,7 +110,7 @@ const PROJECT_DATA = {
     credits: 'Algoma. Product design: Andreas Lächler.',
     details: [{ label: 'Scope', value: 'Search + map interface' }, { label: 'Type', value: 'Data-dense UI' }, { label: 'Status', value: 'Shipped' }],
     tileBg: '#14211C', imageIndex: 1,
-    next: 'ella',
+    next: 'zoning-chat',
   },
   'ella': {
     title: 'Ella',
@@ -143,7 +135,7 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'CD 90% \u00b7 Complete 2026' },
     ],
     tileBg: '#D45A1B', imageIndex: 2,
-    next: 'brickell',
+    next: 'exhibition-trailer',
   },
   'zoning-chat': {
     title: 'Zoning chat',
@@ -159,24 +151,9 @@ const PROJECT_DATA = {
     credits: 'Algoma. Product design: Andreas Lächler.',
     details: [{ label: 'Scope', value: 'Conversational UI' }, { label: 'Type', value: 'AI interface' }, { label: 'Status', value: 'Shipped' }],
     tileBg: '#E8E4D5', imageIndex: 3,
-    next: 'brickell',
+    next: 'comps',
   },
-  'brickell': {
-    title: 'Brickell residential',
-    org: 'Arquitectonica', year: '2023', role: 'Architecture',
-    bg: '#14211C',
-    lede: '32-unit multifamily in Brickell. Mass timber structure, constrained lot, ground-floor retail.',
-    body: 'Led schematic design and consultant coordination for a 32-unit residential building on a constrained infill lot in Miami\'s Brickell neighborhood. Mass timber structure was the client\'s requirement — the design problem was making it work within a tight lot footprint and local zoning.',
-    process: [
-      'The structural system drove everything. Mass timber spans are long, which gave us open floor plates but constrained the facade module. Most of the design work was resolving that constraint.',
-      'Ground-floor retail required coordination with a separate tenant buildout team. Designed the base as a neutral frame.',
-    ],
-    outcome: 'Schematic design complete. Handed off to design development team.',
-    credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
-    details: [{ label: 'Program', value: '32-unit residential' }, { label: 'Location', value: 'Brickell, Miami' }, { label: 'Structure', value: 'Mass timber' }],
-    tileBg: '#14211C', imageIndex: 4,
-    next: 'exhibition-trailer',
-  },
+  // 'brickell' moved to Foundations (ARCHIVE_DATA in ArchivePage.jsx) — July 2026 structure pass.
   'exhibition-trailer': {
     title: 'Exhibition Trailer',
     org: 'Independent', year: '2022', role: 'Design \u2014 mobile pop-up',
@@ -220,7 +197,7 @@ const PROJECT_DATA = {
     credits: 'Algoma. Product design: Andreas Lächler.',
     details: [{ label: 'Scope', value: 'Data visualization' }, { label: 'Type', value: 'Analytics surface' }, { label: 'Status', value: 'Shipped' }],
     tileBg: '#3D5448', imageIndex: 5,
-    next: 'autoease',
+    next: 'feasibility',
   },
 };
 window.PROJECT_DATA = PROJECT_DATA;
@@ -385,6 +362,25 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         </div>
       )}
 
+      {/* Component stories — linked step-by-step development narratives */}
+      {project.componentStories && project.componentStories.length > 0 && (
+        <div style={{ ...fade(310), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>{project.componentStoriesLabel || 'Component stories'}</p>
+          {project.componentStoriesIntro && (
+            <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '1.5rem', maxWidth: '820px' }}>{project.componentStoriesIntro}</p>
+          )}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: isMobile ? '1rem' : '1.25rem',
+          }}>
+            {project.componentStories.map((s) => (
+              <ComponentStoryCard key={s.id} story={s} onNavigate={onNavigate} />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Featured modules — interactive wireframe embeds */}
       {project.modules && project.modules.length > 0 && (
         <div style={{ ...fade(320), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
@@ -496,6 +492,33 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         </div>
       )}
     </main>
+  );
+};
+
+// ComponentStoryCard — clickable card linking to a component's own case study
+// page (zoning-chat, comps, site-search). Not an embed: the story pages carry
+// the step-by-step development narrative.
+const ComponentStoryCard = ({ story, onNavigate }) => {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <div
+      onClick={() => onNavigate('project', story.id)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        padding: '1.5rem', borderRadius: '8px', cursor: 'pointer',
+        background: hov ? 'rgba(20,33,28,0.05)' : 'rgba(20,33,28,0.025)',
+        border: '0.5px solid rgba(20,33,28,0.08)',
+        transition: 'background 180ms, transform 250ms cubic-bezier(0.22,1,0.36,1)',
+        transform: hov ? 'translateY(-2px)' : 'none',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.6rem' }}>
+        <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '-0.01em' }}>{story.title}</p>
+        <span style={{ fontSize: '15px', color: hov ? '#D45A1B' : 'rgba(20,33,28,0.4)', transition: 'transform 180ms, color 180ms', transform: hov ? 'translateX(4px)' : 'none', flexShrink: 0 }}>→</span>
+      </div>
+      <p style={{ fontSize: '13.5px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{story.blurb}</p>
+    </div>
   );
 };
 

@@ -16,12 +16,14 @@ const ARCHIVE_ITEMS = [
   { id: 'mesa-verde', title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Graduate CAP studio', desc: 'A Waste-to-Energy plant and nightclub on the Anable Basin in Long Island City. Concrete paraboloid "mesas" cluster out of an existing warehouse and organize the program where their bases intersect.', bg: '#D45A1B', imageIndex: 2, silhouette: 'mesa-verde', featured: true },
   { id: 'elevate-ravenswood', title: 'Elevate Ravenswood', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A mixed-use sports, education, and community-health building for the Ravenswood Community Land Trust. Mass timber, Vierendeel trusses, and a sunken basketball arena programmed to stay visible from the street.', bg: '#3D5448', imageIndex: 3, featured: true },
   { id: 'unit-multiplication', title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Independent study', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4, featured: true },
+  { id: 'brickell', title: 'Brickell Residential', year: '2023', org: 'Arquitectonica', type: 'Professional — schematic design', desc: 'A 32-unit mass timber multifamily building on a constrained infill lot in Brickell, Miami. Led schematic design and consultant coordination — long timber spans opened the floor plates and constrained the facade module.', bg: '#14211C', imageIndex: 4, featured: true },
 
   // ── Playable ──────────────────────────────────────────────────────────
   // Unity / WebGL experiments — self-initiated. Architecture-adjacent:
   // terrain, environment, physics, real-time lighting. Each project page
   // offers a "Play in browser" button that lazy-loads the Unity canvas.
-  { id: 'ground-is-lava', title: 'Ground Is Lava', year: '2024', org: 'Self-initiated', type: 'Unity / WebGL', desc: 'A 3D terrain-and-ramps exercise in Unity. Rising lava, custom terrain, and first-person traversal — built to get comfortable with real-time 3D, materials, and physics.', bg: '#3D5448', imageIndex: 1, section: 'playable' },
+  // 'ground-is-lava' removed from the grid July 2026 (structure pass) — detail
+  // data retained below; restore by re-adding an item here.
   { id: 'ball-game', title: 'Ball Game', year: '2024', org: 'Self-initiated', type: 'Unity / WebGL', desc: 'A small interactive ball-and-environment piece. Outdoor scene, camera rig, and physics-driven movement. Built as a scripting + prefab sandbox.', bg: '#14211C', imageIndex: 0, section: 'playable' },
 
   // ── Also ───────────────────────────────────────────────────────────────
@@ -35,6 +37,25 @@ window.ARCHIVE_ITEMS = ARCHIVE_ITEMS;
 // Detail-page data. Shape matches PROJECT_DATA so ArchiveProjectPage can reuse
 // the ProjectPage pattern.
 const ARCHIVE_DATA = {
+  'brickell': {
+    title: 'Brickell Residential',
+    org: 'Arquitectonica', year: '2023', role: 'Architecture — schematic design',
+    bg: '#14211C', tileBg: '#14211C', imageIndex: 4,
+    lede: '32-unit multifamily in Brickell. Mass timber structure, constrained lot, ground-floor retail.',
+    body: 'Led schematic design and consultant coordination for a 32-unit residential building on a constrained infill lot in Miami\'s Brickell neighborhood. Mass timber structure was the client\'s requirement — the design problem was making it work within a tight lot footprint and local zoning.',
+    process: [
+      'The structural system drove everything. Mass timber spans are long, which gave us open floor plates but constrained the facade module. Most of the design work was resolving that constraint.',
+      'Ground-floor retail required coordination with a separate tenant buildout team. Designed the base as a neutral frame.',
+    ],
+    outcome: 'Schematic design complete. Handed off to design development team.',
+    credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
+    details: [
+      { label: 'Program', value: '32-unit residential' },
+      { label: 'Location', value: 'Brickell, Miami' },
+      { label: 'Structure', value: 'Mass timber' },
+    ],
+    next: 'fluxing',
+  },
   'fluxing': {
     title: 'Fluxing',
     org: 'Pratt Institute', year: '2022', role: 'Graduate thesis',
@@ -269,7 +290,7 @@ const ARCHIVE_DATA = {
     ],
     // unityBuild: 'unity/ball-game/',  // ← Uncomment + drop build into portfolio/unity/ball-game/
     unityPending: true,
-    next: 'ground-is-lava',
+    next: 'brickell',
   },
 
 };
@@ -284,12 +305,12 @@ const ArchivePage = ({ onNavigate }) => {
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 5rem' }}>
       <div style={{ maxWidth: '600px', marginBottom: '4rem' }}>
-        <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Archive</p>
+        <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Foundations</p>
         <h1 style={{ fontSize: 'clamp(26px,3vw,38px)', fontWeight: 500, letterSpacing: '-0.02em', color: '#14211C', lineHeight: 1.1, marginBottom: '1.25rem' }}>
-          Before buildings, there were drawings of buildings that couldn&rsquo;t exist.
+          Learning to think with my hands.
         </h1>
         <p style={{ fontSize: '16px', color: 'rgba(20,33,28,0.6)', lineHeight: 1.65, margin: 0 }}>
-          Graduate work from Pratt and selected independent studies from Lehigh, 2017&ndash;2022.
+          Graduate work from Pratt, studies from Lehigh, and early professional work, 2017&ndash;2023 — shown for what they are: model making, material studies, and physical craft. These are the foundations under the product work. Each tile&rsquo;s linework is hand-traced from the original project.
         </p>
       </div>
 
@@ -449,7 +470,7 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
 };
 
 // Archive project detail page — reuses the ProjectPage visual language.
-// Hero tile, lede + body, process, details grid, and a "Next archive project" link.
+// Hero tile, lede + body, process, details grid, and a "Next in Foundations" link.
 const ArchiveProjectPage = ({ projectId, onNavigate }) => {
   const project = ARCHIVE_DATA[projectId] || ARCHIVE_DATA['fluxing'];
   const nextProject = project.next ? ARCHIVE_DATA[project.next] : null;
@@ -672,6 +693,26 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         </div>
       )}
 
+      {/* Gallery — photographs from images/<project-id>/ via the manifest.
+          Foundations pages are photo-first: model shots, drawings, process.
+          Add numbered files + captions.json and they appear here. */}
+      {(((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || []).length > 0 && (
+        <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Photographs</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
+            {((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery.map((g, i) => (
+              <figure key={g.src} style={{ margin: 0 }}>
+                <img src={g.src} alt={g.caption || `${project.title} — photograph ${i + 1}`} loading="lazy"
+                  style={{ width: '100%', display: 'block', borderRadius: '10px' }} />
+                {g.caption && (
+                  <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>{g.caption}</figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Outcome + credits */}
       <div style={{ ...fade(380), display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1fr)', gap: isMobile ? '2rem' : '4rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem', marginBottom: isMobile ? '3rem' : '4rem' }}>
         <div>
@@ -684,11 +725,11 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         </div>
       </div>
 
-      {/* Next archive project */}
+      {/* Next in Foundations */}
       {nextProject && (
         <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem' }}>
           <div>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.35rem' }}>Next archive project</p>
+            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.35rem' }}>Next in Foundations</p>
             <p style={{ fontSize: '20px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '-0.01em' }}>{nextProject.title}</p>
           </div>
           <button onClick={() => onNavigate('archive-project', project.next)} style={{

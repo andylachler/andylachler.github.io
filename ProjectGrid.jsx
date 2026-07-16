@@ -1,12 +1,12 @@
 // ProjectGrid.jsx
-// Five canonical projects. Site search, Zoning chat, and Comps analysis are folded
-// into the Feasibility platform case study rather than standing as separate entries.
+// The featured four. Site search, Zoning chat, and Comps analysis are component
+// stories linked from the Feasibility platform case study. Brickell lives in
+// Foundations (ArchivePage) as of the July 2026 structure pass.
 const PROJECTS = [
   { id: 'autoease', title: 'AutoEase', org: 'Independent', year: '2026', role: 'Product Design — consumer car-buying prototype', bg: '#1A2520', featured: true, imageIndex: 6 },
   { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Lead — AI-powered B2B SaaS platform', bg: '#3D5448', featured: true, imageIndex: 0 },
   { id: 'exhibition-trailer', title: 'Exhibition Trailer', org: 'Independent', year: '2022', role: 'Physical prototyping — modular off-grid pop-up', bg: '#3D5448', featured: true, imageIndex: 1 },
   { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: true, imageIndex: 2 },
-  { id: 'brickell', title: 'Brickell residential', org: 'Arquitectonica', year: '2023', role: 'Architecture — 32-unit multifamily', bg: '#14211C', featured: true, imageIndex: 4 },
 ];
 
 // expose so other pages can reference
@@ -75,8 +75,8 @@ const ProjectGrid = ({ onNavigate, tweaks = {} }) => {
       }
 
       <div style={{ marginTop: isMobile ? '2rem' : '3rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
-        <p style={{ fontSize: '14px', color: 'rgba(20,33,28,0.5)', margin: 0 }}>Earlier work from Pratt and Lehigh, 2014–2022.</p>
-        <ArrowLink onClick={() => onNavigate('archive')}>Archive</ArrowLink>
+        <p style={{ fontSize: '14px', color: 'rgba(20,33,28,0.5)', margin: 0 }}>Models, drawings, and built work — the physical foundations, 2017–2023.</p>
+        <ArrowLink onClick={() => onNavigate('archive')}>Foundations</ArrowLink>
       </div>
     </section>
   );

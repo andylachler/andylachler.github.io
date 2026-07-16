@@ -134,7 +134,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
                   onDark={onDark}
                   textColor={textColor}
                   mutedColor={mutedColor}
-                >Archive</NavPill>
+                >Foundations</NavPill>
               </div>
 
               <div onMouseEnter={() => open('about')}>
@@ -203,7 +203,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
               <DropdownCarousel
                 items={archiveItems}
                 onItemClick={(id) => { closeNow(); onNavigate('archive-project', id); }}
-                ctaLabel="View all archive →"
+                ctaLabel="View all foundations →"
                 onCta={() => { closeNow(); onNavigate('archive'); }}
                 accentColor={accentColor}
                 mutedColor={dropdownMuted}
@@ -251,7 +251,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
               onClick={() => { closeNow(); onNavigate('work'); }}
             />
             <MobileLink
-              label="Archive"
+              label="Foundations"
               active={page === 'archive'}
               accentColor={accentColor}
               onClick={() => { closeNow(); onNavigate('archive'); }}
