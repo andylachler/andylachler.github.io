@@ -313,6 +313,21 @@ const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featu
           {org} · {year}
         </p>
         <p style={{ fontSize: '16px', fontWeight: 500, color: textColor, margin: 0, lineHeight: 1.25 }}>{title}</p>
+        {/* Hover description — same expand-open behavior as Foundations tiles.
+            Uses the case study's lede (PROJECT_DATA) unless a desc is passed. */}
+        {(() => {
+          const desc = ((window.PROJECT_DATA || {})[pid] || {}).lede;
+          return desc ? (
+            <p style={{
+              fontSize: '12px', color: mutedColor, lineHeight: 1.5,
+              margin: hovered ? '6px 0 0' : 0,
+              maxHeight: hovered ? '140px' : 0,
+              opacity: hovered ? 1 : 0,
+              overflow: 'hidden',
+              transition: 'max-height 280ms ease-out, opacity 220ms ease-out 60ms, margin 280ms ease-out',
+            }}>{desc}</p>
+          ) : null;
+        })()}
         <p style={{ fontSize: '12px', color: mutedColor, margin: '5px 0 0', lineHeight: 1.4 }}>{role}</p>
       </div>
       <div style={{

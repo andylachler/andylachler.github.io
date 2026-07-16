@@ -1,6 +1,7 @@
 // Hero.jsx — full-bleed with mouse-reactive canvas background
 const Hero = ({ onNavigate, tweaks = {} }) => {
   const { heroLayout = 'default', accentColor = '#D45A1B' } = tweaks;
+  const isMobile = (window.useIsMobile || (() => false))(768);
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -16,10 +17,14 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
   return (
     <section style={{
       position: 'relative',
-      minHeight: '100vh',
+      // svh = small viewport height — honest on iOS where the URL bar makes
+      // 100vh taller than the visible screen. Mobile also gets top padding so
+      // a content stack taller than the viewport pushes DOWN, never up under
+      // the fixed nav (was the header/hero overlap bug).
+      minHeight: isMobile ? '100svh' : '100vh',
       marginTop: '-80px', // pull up behind taller fixed nav
       display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-      padding: '0 2.5rem 5rem',
+      padding: isMobile ? '7.5rem 1.25rem 3.5rem' : '0 2.5rem 5rem',
       overflow: 'hidden',
       background: '#14211C',
     }}>
@@ -35,7 +40,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
 
       {/* Content */}
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-        <p style={{ ...fade(200), fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.45)', marginBottom: '2rem' }}>
+        <p style={{ ...fade(200), fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.45)', marginBottom: isMobile ? '1rem' : '2rem' }}>
           Based in New York
         </p>
 
@@ -57,10 +62,10 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
           </div>
         ) : (
           <>
-            <h1 style={{ ...fade(350), fontSize: 'clamp(52px, 6.5vw, 84px)', fontWeight: 500, letterSpacing: '-0.024em', lineHeight: 1.04, color: '#F2EFE6', maxWidth: '960px', marginBottom: '2.5rem' }}>
+            <h1 style={{ ...fade(350), fontSize: isMobile ? 'clamp(34px, 9.5vw, 52px)' : 'clamp(52px, 6.5vw, 84px)', fontWeight: 500, letterSpacing: '-0.024em', lineHeight: 1.06, color: '#F2EFE6', maxWidth: '960px', marginBottom: isMobile ? '1.5rem' : '2.5rem' }}>
               A product designer<br />trained as an architect.
             </h1>
-            <p style={{ ...fade(500), fontSize: '18px', fontWeight: 400, lineHeight: 1.65, color: 'rgba(242,239,230,0.6)', maxWidth: '540px', marginBottom: '3rem' }}>
+            <p style={{ ...fade(500), fontSize: isMobile ? '16px' : '18px', fontWeight: 400, lineHeight: 1.65, color: 'rgba(242,239,230,0.6)', maxWidth: '540px', marginBottom: isMobile ? '2rem' : '3rem' }}>
               Currently at Algoma, designing and shipping a data-dense B2B SaaS platform end-to-end. Before software, buildings — so I prototype as comfortably in the physical world as on screen.
             </p>
             <div style={{ ...fade(620), display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
@@ -79,8 +84,9 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
         )}
       </div>
 
-      {/* Scroll indicator — anchored to viewport bottom */}
-      <div style={{
+      {/* Scroll indicator — anchored to viewport bottom; hidden on mobile
+          where it collides with the CTA row on short screens */}
+      {!isMobile && <div style={{
         ...fade(900),
         position: 'absolute', bottom: '2rem', left: '50%', transform: mounted ? 'translate(-50%, 0)' : 'translate(-50%, 18px)',
         zIndex: 10,
@@ -89,7 +95,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
         <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
         <span style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.35)' }}>Scroll</span>
         <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
-      </div>
+      </div>}
     </section>
   );
 };
