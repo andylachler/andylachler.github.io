@@ -271,7 +271,30 @@ const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featu
         position: 'relative', overflow: 'hidden',
       }}
     >
-      <ProjectVisual projectId={pid} bg={bg} index={imageIndex} hovered={hovered} silhouette={silhouette} />
+      {/* Offset media layout (July 2026): when a tile image exists in the
+          manifest, it renders as an inset media card above the text — per
+          Andy's mockup — instead of a full-bleed background. Pattern/
+          silhouette full-bleed remains the no-image fallback. */}
+      {((window.IMAGE_MANIFEST || {})[pid] || {}).tile ? (
+        <div style={{
+          position: 'relative', zIndex: 1, flex: 1,
+          minHeight: featured ? '170px' : '110px',
+          borderRadius: '14px', overflow: 'hidden',
+          marginBottom: '1.1rem',
+          background: light ? 'rgba(20,33,28,0.05)' : 'rgba(0,0,0,0.25)',
+        }}>
+          <img
+            src={window.IMAGE_MANIFEST[pid].tile} alt="" loading="lazy"
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+              transform: hovered ? 'scale(1.04)' : 'scale(1)',
+              transition: 'transform 600ms cubic-bezier(0.22,1,0.36,1)',
+            }}
+          />
+        </div>
+      ) : (
+        <ProjectVisual projectId={pid} bg={bg} index={imageIndex} hovered={hovered} silhouette={silhouette} />
+      )}
       {/* White shimmer overlay — top-to-bottom per Figma */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',

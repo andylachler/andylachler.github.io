@@ -427,10 +427,28 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
         boxShadow: shadow,
       }}
     >
-      {/* Background SVG pattern — matches the homepage tile language. If the
-          archive entry tags a `silhouette`, TilePlaceholder will render the
-          project-specific outline instead of the generic pattern. */}
-      {window.ProjectVisual && <ProjectVisual projectId={item.id} bg={bg} index={item.imageIndex} hovered={hov} silhouette={item.silhouette} />}
+      {/* Offset media layout: tile image (manifest) renders as an inset media
+          card above the text. Silhouette/pattern full-bleed is the fallback. */}
+      {((window.IMAGE_MANIFEST || {})[item.id] || {}).tile ? (
+        <div style={{
+          position: 'relative', zIndex: 1, flex: 1,
+          minHeight: compact ? '110px' : '150px',
+          borderRadius: '14px', overflow: 'hidden',
+          marginBottom: compact ? '0.9rem' : '1.1rem',
+          background: light ? 'rgba(20,33,28,0.05)' : 'rgba(0,0,0,0.25)',
+        }}>
+          <img
+            src={window.IMAGE_MANIFEST[item.id].tile} alt="" loading="lazy"
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+              transform: hov ? 'scale(1.04)' : 'scale(1)',
+              transition: 'transform 600ms cubic-bezier(0.22,1,0.36,1)',
+            }}
+          />
+        </div>
+      ) : (
+        window.ProjectVisual && <ProjectVisual projectId={item.id} bg={bg} index={item.imageIndex} hovered={hov} silhouette={item.silhouette} />
+      )}
 
       {/* Top-down shimmer */}
       <div style={{
@@ -569,7 +587,10 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               blueprint beneath it. `variant="hero"` keeps stroke + opacity
               subtle; the archive grid tile (default `variant="tile"`) uses
               the heavier treatment. */}
-          {window.ProjectVisual && <ProjectVisual projectId={project.id} kind="hero" bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} variant="hero" />}
+          {window.ProjectVisual && <ProjectVisual projectId={projectId} kind="hero" bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} variant="hero" />}
+          {(((window.IMAGE_MANIFEST || {})[projectId] || {}).hero || ((window.IMAGE_MANIFEST || {})[projectId] || {}).tile) && (
+            <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(12,16,14,0.62) 0%, rgba(12,16,14,0.18) 38%, transparent 60%)' }} />
+          )}
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
             background: light

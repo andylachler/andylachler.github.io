@@ -5,6 +5,7 @@ window.IMAGE_MANIFEST = {
     "hero": "images/about/hero.jpg"
   },
   "bethlehem-culinary": {
+    "tile": "images/bethlehem-culinary/tile.jpg",
     "gallery": [
       {
         "src": "images/bethlehem-culinary/01.jpg"
@@ -18,6 +19,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "bethlehem-riverfront": {
+    "tile": "images/bethlehem-riverfront/tile.jpg",
     "gallery": [
       {
         "src": "images/bethlehem-riverfront/01.jpg"
@@ -47,6 +49,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "dissection": {
+    "tile": "images/dissection/tile.jpg",
     "gallery": [
       {
         "src": "images/dissection/01.png",
@@ -63,18 +66,58 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "exhibition-trailer": {
+    "tile": "images/exhibition-trailer/tile.jpg",
     "gallery": [
       {
-        "src": "images/exhibition-trailer/01.mp4",
-        "video": true
+        "src": "images/exhibition-trailer/01.jpg",
+        "caption": "MiiR Exhibition Trailer, deployed — recycled-timber skin over glulam structure, fold-out deck."
       },
       {
-        "src": "images/exhibition-trailer/02.mp4",
-        "video": true
+        "src": "images/exhibition-trailer/02.jpg",
+        "caption": "Night. The moon-roof and interior glow turn the enclosure into a lantern."
+      },
+      {
+        "src": "images/exhibition-trailer/03.jpg",
+        "caption": "Kit of parts — exploded axonometric and the trailer in transport configuration."
+      },
+      {
+        "src": "images/exhibition-trailer/04.jpg",
+        "caption": "Interior — exhibition surfaces, moon-roof, warm neutrals."
+      },
+      {
+        "src": "images/exhibition-trailer/05.jpg",
+        "caption": "Elevations."
+      },
+      {
+        "src": "images/exhibition-trailer/06.jpg",
+        "caption": "Sections — the demountable enclosure over a stock gooseneck chassis."
+      },
+      {
+        "src": "images/exhibition-trailer/07.jpg",
+        "caption": "Plan — front room, exhibition space, fold-down tail bench."
+      },
+      {
+        "src": "images/exhibition-trailer/08.jpg",
+        "caption": "Section render."
+      },
+      {
+        "src": "images/exhibition-trailer/09.jpg",
+        "caption": "Section render."
+      },
+      {
+        "src": "images/exhibition-trailer/10.mp4",
+        "video": true,
+        "caption": "Animation."
+      },
+      {
+        "src": "images/exhibition-trailer/11.mp4",
+        "video": true,
+        "caption": "Animation."
       }
     ]
   },
   "feasibility": {
+    "tile": "images/feasibility/tile.jpg",
     "gallery": [
       {
         "src": "images/feasibility/01.png",
@@ -87,6 +130,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "mesa-verde": {
+    "tile": "images/mesa-verde/tile.jpg",
     "gallery": [
       {
         "src": "images/mesa-verde/01.jpg"
@@ -106,6 +150,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "one-room-schoolhouse": {
+    "tile": "images/one-room-schoolhouse/tile.jpg",
     "gallery": [
       {
         "src": "images/one-room-schoolhouse/01.jpg"
@@ -119,6 +164,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "pastoral-urbanity": {
+    "tile": "images/pastoral-urbanity/tile.jpg",
     "gallery": [
       {
         "src": "images/pastoral-urbanity/01.jpg"
@@ -138,6 +184,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "singular-flow": {
+    "tile": "images/singular-flow/tile.jpg",
     "gallery": [
       {
         "src": "images/singular-flow/01.jpg"
@@ -151,6 +198,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "unit-multiplication": {
+    "tile": "images/unit-multiplication/tile.jpg",
     "gallery": [
       {
         "src": "images/unit-multiplication/01.jpg"

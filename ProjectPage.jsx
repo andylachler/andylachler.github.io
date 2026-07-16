@@ -158,8 +158,8 @@ const PROJECT_DATA = {
     title: 'Exhibition Trailer',
     org: 'Independent', year: '2022', role: 'Design \u2014 mobile pop-up',
     bg: '#3D5448',
-    lede: 'A sustainable mobile exhibition trailer. Existing gooseneck base, glulam-and-recycled-timber enclosure, deck that folds into the face for transport and opens on site into an inhabitable off-grid pop-up.',
-    body: 'An independent competition submission for a modular brand trailer. The brief called for a mobile exhibition space that could move between trade shows and events without the cost and embodied carbon of custom fabrication. The proposal repurposes an off-the-shelf gooseneck trailer as the base and builds a demountable enclosure on top that folds down into the face for transport and opens on-site into a full exhibition interior.',
+    lede: 'A sustainable mobile exhibition trailer for MiiR. Existing gooseneck base, glulam-and-recycled-timber enclosure, deck that folds into the face for transport and opens on site into an inhabitable off-grid pop-up.',
+    body: 'A submission to the Duggal Junior Designer Design Challenge: a mobile exhibition space for MiiR that moves between trade shows and events without the cost — monetary or embodied-carbon — of custom fabrication. MiiR’s mission funds projects for clean water, a healthy environment, and strong communities, so the enclosure is built from recycled timber, glulam beams, and existing components wherever a stock assembly was viable. An off-the-shelf gooseneck trailer forms the base, lightly modified with a deck-mounted battery system and container-style frame mounting points; the demountable enclosure folds down into the face for transport and opens on-site into a full exhibition interior under tall ceilings and a moon-roof.',
     process: [
       'Embodied carbon drove most of the material choices \u2014 glulam beams, recycled timber paneling, recycled composite boards. The brand\u2019s mission around clean water and ethical sourcing meant rejecting custom fabrication wherever an existing assembly was viable.',
       'The deck folds up against the enclosure face for transport; the railing rolls into a compact bundle of wood rods and recycled nylon cord that stores under the interior bench. Set-up is quick, tear-down is quicker, and the truck never has to wait.',
@@ -172,10 +172,12 @@ const PROJECT_DATA = {
       { label: 'Brand as interior architecture', body: 'The walls carry the company story, the tail-bench frames the visitor photo, the moon-roof adds legibility and light. Branding isn\u2019t wallpaper \u2014 it\u2019s how the volume organizes attention.' },
     ],
     insightsLabel: 'Design decisions',
-    outcome: 'Competition submission, summer 2022. Full package: plans, elevations, sections, exploded assembly axon, and final renderings.',
-    credits: 'Independent submission. Design: Andreas L\u00e4chler.',
+    outcome: 'Submitted to the Duggal Junior Designer Design Challenge, summer 2022. Full package: plans, elevations, sections, exploded assembly axon, final renderings, and animations \u2014 shown in the gallery below.',
+    credits: 'Duggal Junior Designer Design Challenge submission. Brand brief: MiiR. Design: Andreas L\u00e4chler.',
     details: [
       { label: 'Scope', value: 'Mobile exhibition + brand enclosure' },
+      { label: 'Competition', value: 'Duggal Junior Designer Challenge' },
+      { label: 'Brand brief', value: 'MiiR' },
       { label: 'Structure', value: 'Modified gooseneck + glulam' },
       { label: 'Materials', value: 'Recycled timber \u00b7 composite panels \u00b7 glulam' },
       { label: 'Year', value: '2022' },
@@ -247,6 +249,10 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
           onMouseLeave={() => setHeroHov(false)}
         >
           <ProjectVisual projectId={projectId} kind="hero" bg={project.tileBg} index={project.imageIndex} hovered={heroHov} />
+          {/* Legibility gradient — only when a photo hero renders behind the title */}
+          {(((window.IMAGE_MANIFEST || {})[projectId] || {}).hero || ((window.IMAGE_MANIFEST || {})[projectId] || {}).tile) && (
+            <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(12,16,14,0.62) 0%, rgba(12,16,14,0.18) 38%, transparent 60%)' }} />
+          )}
           <div style={{ position: 'absolute', inset: 0, padding: heroPad, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
               {project.org} · {project.year} · {project.role}
