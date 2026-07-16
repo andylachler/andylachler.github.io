@@ -423,12 +423,20 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
             {gallery.map((g, i) => (
               <figure key={g.src} style={{ margin: 0 }}>
+                {g.video ? (
+                  <video
+                    src={g.src}
+                    controls muted loop playsInline preload="metadata"
+                    style={{ width: '100%', display: 'block', borderRadius: '10px', background: '#14211C' }}
+                  />
+                ) : (
                 <img
                   src={g.src}
                   alt={g.caption || `${project.title} — image ${i + 1}`}
                   loading="lazy"
                   style={{ width: '100%', display: 'block', borderRadius: '10px' }}
                 />
+                )}
                 {g.caption && (
                   <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>
                     {g.caption}

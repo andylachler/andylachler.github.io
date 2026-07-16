@@ -66,6 +66,33 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Craft strip — photographs from images/craft/ via the manifest.
+          The About-page anchor for the physical thread: models, reliefs,
+          material studies. Section disappears cleanly if the folder empties. */}
+      {((((window.IMAGE_MANIFEST || {}).craft || {}).gallery) || []).length > 0 && (
+        <div style={{ marginTop: isMobile ? '3.5rem' : '5rem', paddingTop: '2.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>Craft</p>
+          <p style={{ fontSize: '15px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', marginBottom: '1.75rem', maxWidth: '720px' }}>
+            Prototyping doesn&rsquo;t stop at the screen. Laser-cut chipboard, folded paper, layered reliefs — made by hand, photographed as built.
+          </p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '0.625rem',
+          }}>
+            {window.IMAGE_MANIFEST.craft.gallery.map((g, i) => (
+              <img
+                key={g.src}
+                src={g.src}
+                alt={g.caption || `Craft — ${i + 1}`}
+                loading="lazy"
+                style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block', borderRadius: '8px' }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </main>
   );
 };

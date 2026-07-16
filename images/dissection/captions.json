@@ -1,0 +1,5 @@
+{
+  "01": "First pass — pure Make2D linework, the object cut by three section planes.",
+  "02": "Second pass — hatch and tone begin separating solid from cut surface.",
+  "03": "Final drawing — color splits skin, section cut, and interior void."
+}

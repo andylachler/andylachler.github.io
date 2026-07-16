@@ -4,6 +4,76 @@ window.IMAGE_MANIFEST = {
   "about": {
     "hero": "images/about/hero.jpg"
   },
+  "bethlehem-culinary": {
+    "gallery": [
+      {
+        "src": "images/bethlehem-culinary/01.jpg"
+      },
+      {
+        "src": "images/bethlehem-culinary/02.jpg"
+      },
+      {
+        "src": "images/bethlehem-culinary/03.jpg"
+      }
+    ]
+  },
+  "bethlehem-riverfront": {
+    "gallery": [
+      {
+        "src": "images/bethlehem-riverfront/01.jpg"
+      },
+      {
+        "src": "images/bethlehem-riverfront/02.jpg"
+      }
+    ]
+  },
+  "craft": {
+    "gallery": [
+      {
+        "src": "images/craft/01.jpg"
+      },
+      {
+        "src": "images/craft/02.jpg"
+      },
+      {
+        "src": "images/craft/03.jpg"
+      },
+      {
+        "src": "images/craft/04.jpg"
+      },
+      {
+        "src": "images/craft/05.jpg"
+      }
+    ]
+  },
+  "dissection": {
+    "gallery": [
+      {
+        "src": "images/dissection/01.png",
+        "caption": "First pass — pure Make2D linework, the object cut by three section planes."
+      },
+      {
+        "src": "images/dissection/02.png",
+        "caption": "Second pass — hatch and tone begin separating solid from cut surface."
+      },
+      {
+        "src": "images/dissection/03.png",
+        "caption": "Final drawing — color splits skin, section cut, and interior void."
+      }
+    ]
+  },
+  "exhibition-trailer": {
+    "gallery": [
+      {
+        "src": "images/exhibition-trailer/01.mp4",
+        "video": true
+      },
+      {
+        "src": "images/exhibition-trailer/02.mp4",
+        "video": true
+      }
+    ]
+  },
   "feasibility": {
     "gallery": [
       {
@@ -13,6 +83,83 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/feasibility/02.png",
         "caption": "Zoning report module — bulk & use controls with rule-change diffing; detail collapsed one layer down so the table stays scannable."
+      }
+    ]
+  },
+  "mesa-verde": {
+    "gallery": [
+      {
+        "src": "images/mesa-verde/01.jpg"
+      },
+      {
+        "src": "images/mesa-verde/02.jpg"
+      },
+      {
+        "src": "images/mesa-verde/03.jpg"
+      },
+      {
+        "src": "images/mesa-verde/04.jpg"
+      },
+      {
+        "src": "images/mesa-verde/05.jpg"
+      }
+    ]
+  },
+  "one-room-schoolhouse": {
+    "gallery": [
+      {
+        "src": "images/one-room-schoolhouse/01.jpg"
+      },
+      {
+        "src": "images/one-room-schoolhouse/02.jpg"
+      },
+      {
+        "src": "images/one-room-schoolhouse/03.jpg"
+      }
+    ]
+  },
+  "pastoral-urbanity": {
+    "gallery": [
+      {
+        "src": "images/pastoral-urbanity/01.jpg"
+      },
+      {
+        "src": "images/pastoral-urbanity/02.jpg"
+      },
+      {
+        "src": "images/pastoral-urbanity/03.jpg"
+      },
+      {
+        "src": "images/pastoral-urbanity/04.jpg"
+      },
+      {
+        "src": "images/pastoral-urbanity/05.jpg"
+      }
+    ]
+  },
+  "singular-flow": {
+    "gallery": [
+      {
+        "src": "images/singular-flow/01.jpg"
+      },
+      {
+        "src": "images/singular-flow/02.jpg"
+      },
+      {
+        "src": "images/singular-flow/03.jpg"
+      }
+    ]
+  },
+  "unit-multiplication": {
+    "gallery": [
+      {
+        "src": "images/unit-multiplication/01.jpg"
+      },
+      {
+        "src": "images/unit-multiplication/02.jpg"
+      },
+      {
+        "src": "images/unit-multiplication/03.jpg"
       }
     ]
   }

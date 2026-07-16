@@ -31,12 +31,28 @@ const ARCHIVE_ITEMS = [
   { id: 'bethlehem-culinary', title: 'Bethlehem Culinary Institute', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Four-story culinary school in South Bethlehem, programmed around the regional farm economy.', bg: '#3D5448', imageIndex: 6 },
   { id: 'one-room-schoolhouse', title: 'One Room Schoolhouse', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Expanded single-use structure on the Lehigh green for the Psychology department\u2019s child studies program.', bg: '#E8E4D5', imageIndex: 0 },
   { id: 'singular-flow', title: 'Singular Development + Flow', year: '2017', org: 'Lehigh University', type: 'Independent study', desc: 'A lightweight three-dimensional unit joined to a mirror of itself. Band thickness varies row to row to produce a flow of density.', bg: '#E8E4D5', imageIndex: 2 },
+  { id: 'dissection', title: 'Dissection', year: '2019', org: 'Pratt Institute', type: 'Intro sequence', desc: 'An everyday object cut apart on paper. Make2D linework, section planes, and three drawing iterations from the first-semester intro sequence.', bg: '#E8E4D5', imageIndex: 3 },
 ];
 window.ARCHIVE_ITEMS = ARCHIVE_ITEMS;
 
 // Detail-page data. Shape matches PROJECT_DATA so ArchiveProjectPage can reuse
 // the ProjectPage pattern.
 const ARCHIVE_DATA = {
+  'dissection': {
+    title: 'Dissection',
+    org: 'Pratt Institute', year: '2019', role: 'Intro sequence — drawing',
+    bg: '#E8E4D5', tileBg: '#E8E4D5', imageIndex: 3,
+    lede: 'An everyday object taken apart on paper. Orthographic dissection drawings from the first-semester intro sequence at Pratt.',
+    body: 'The exercise: dissect a familiar object and redraw it as a precise projection system. Section planes slice the volume, Make2D linework flattens it, and hatch and color progressively separate skin, cut surface, and interior void. Three iterations of the same drawing are shown below — the visual language tightening with each pass.',
+    outcome: 'Drawing series, Fall 2019.',
+    credits: 'Pratt Institute, graduate intro sequence. Andreas Lächler.',
+    details: [
+      { label: 'Course', value: 'Intro sequence, first semester' },
+      { label: 'Medium', value: 'Rhino Make2D · Illustrator' },
+      { label: 'Year', value: '2019' },
+    ],
+    next: 'unit-multiplication',
+  },
   'brickell': {
     title: 'Brickell Residential',
     org: 'Arquitectonica', year: '2023', role: 'Architecture — schematic design',
@@ -702,8 +718,13 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
             {((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery.map((g, i) => (
               <figure key={g.src} style={{ margin: 0 }}>
+                {g.video ? (
+                  <video src={g.src} controls muted loop playsInline preload="metadata"
+                    style={{ width: '100%', display: 'block', borderRadius: '10px', background: '#14211C' }} />
+                ) : (
                 <img src={g.src} alt={g.caption || `${project.title} — photograph ${i + 1}`} loading="lazy"
                   style={{ width: '100%', display: 'block', borderRadius: '10px' }} />
+                )}
                 {g.caption && (
                   <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>{g.caption}</figcaption>
                 )}

@@ -18,6 +18,7 @@ const ROOT = path.join(__dirname, '..');
 const IMAGES = path.join(ROOT, 'images');
 const OUT = path.join(IMAGES, 'manifest.js');
 const EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
+const VID = /\.(mp4|webm)$/i;
 const SIZE_WARN = 600 * 1024;
 
 const manifest = {};
@@ -40,19 +41,20 @@ for (const dir of fs.readdirSync(IMAGES, { withFileTypes: true })) {
 
   const gallery = [];
   for (const f of fs.readdirSync(folder).sort()) {
-    if (!EXT.test(f)) continue;
+    const isVid = VID.test(f);
+    if (!EXT.test(f) && !isVid) continue;
     const rel = `images/${id}/${f}`;
-    const base = f.replace(EXT, '');
+    const base = f.replace(EXT, '').replace(VID, '');
     const { size } = fs.statSync(path.join(folder, f));
-    if (size > SIZE_WARN) warnings.push(`${rel} is ${(size / 1024 / 1024).toFixed(1)}MB — compress it`);
+    if (size > (isVid ? 60 * 1024 * 1024 : SIZE_WARN)) warnings.push(`${rel} is ${(size / 1024 / 1024).toFixed(1)}MB — compress it`);
 
     if (base === 'tile') entry.tile = rel;
     else if (base === 'hero') entry.hero = rel;
-    else if (/^\d+$/.test(base)) gallery.push({ n: parseInt(base, 10), src: rel, caption: captions[base] || captions[f] || null });
+    else if (/^\d+$/.test(base)) gallery.push({ n: parseInt(base, 10), src: rel, video: isVid || undefined, caption: captions[base] || captions[f] || null });
     else warnings.push(`${rel} ignored — name it tile.*, hero.*, or a number (01.jpg)`);
   }
   gallery.sort((a, b) => a.n - b.n);
-  if (gallery.length) entry.gallery = gallery.map(({ src, caption }) => caption ? { src, caption } : { src });
+  if (gallery.length) entry.gallery = gallery.map(({ src, caption, video }) => ({ src, ...(video ? { video: true } : {}), ...(caption ? { caption } : {}) }));
 
   if (Object.keys(entry).length) manifest[id] = entry;
 }
