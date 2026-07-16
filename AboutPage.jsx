@@ -35,8 +35,17 @@ const AboutPage = () => {
           </p>
         </div>
 
-        {/* Right: contact + education + experience */}
+        {/* Right: portrait + contact + education + experience */}
         <div>
+          {/* Portrait — from images/about/hero.jpg via the manifest; column
+              renders identically without it if the file is ever removed. */}
+          {((window.IMAGE_MANIFEST || {}).about || {}).hero && (
+            <img
+              src={window.IMAGE_MANIFEST.about.hero}
+              alt="Andreas Lächler"
+              style={{ width: '100%', display: 'block', borderRadius: '10px', marginBottom: '2.5rem' }}
+            />
+          )}
           <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Contact</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', marginBottom: '2.5rem' }}>
             <ContactRow label="Email" value="andy@lachler.com" link />

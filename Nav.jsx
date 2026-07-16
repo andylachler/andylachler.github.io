@@ -440,18 +440,24 @@ const AboutDropdown = ({ onReadMore, accentColor, mutedColor }) => (
 );
 
 // Placeholder headshot. Replace with <img src="assets/headshot.jpg" .../> when you have one.
-const Avatar = ({ size = 96, accentColor = '#D45A1B' }) => (
-  <div style={{
-    width: size, height: size, borderRadius: '50%',
-    background: '#E8E4D5',
-    border: '0.5px solid rgba(20,33,28,0.12)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    flexShrink: 0,
-    boxShadow: 'inset 0px 1px 0px 0px rgba(255,255,255,0.4), 0px 2px 8px 0px rgba(20,33,28,0.06)',
-  }}>
-    <AL_MARK color={accentColor} size={size * 0.42} />
-  </div>
-);
+const Avatar = ({ size = 96, accentColor = '#D45A1B' }) => {
+  // Photo from images/about/hero.jpg (manifest) when available; AL mark otherwise.
+  const photo = ((window.IMAGE_MANIFEST || {}).about || {}).hero;
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: '50%',
+      background: '#E8E4D5',
+      border: '0.5px solid rgba(20,33,28,0.12)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0, overflow: 'hidden',
+      boxShadow: 'inset 0px 1px 0px 0px rgba(255,255,255,0.4), 0px 2px 8px 0px rgba(20,33,28,0.06)',
+    }}>
+      {photo
+        ? <img src={photo} alt="Andreas Lächler" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }} />
+        : <AL_MARK color={accentColor} size={size * 0.42} />}
+    </div>
+  );
+};
 
 // Hamburger — animated to X when open. Uses two divs as bars so we can tween them into a cross.
 const HamburgerButton = ({ open, onClick, color }) => {
