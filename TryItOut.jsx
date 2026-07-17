@@ -158,8 +158,8 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
                 </div>
                 <div>
                   <p style={{ fontSize: 10, fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.55)', margin: '0 0 0.5rem' }}>Interactive prototype</p>
-                  <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>Tap to launch AutoEase</p>
-                  <p style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(242,239,230,0.5)', margin: '0.5rem 0 0' }}>Loads the real Next.js build inside this frame. Browse, Answers, Sell, and Price Check all work.</p>
+                  <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>Tap to launch {label}</p>
+                  <p style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(242,239,230,0.5)', margin: '0.5rem 0 0' }}>Loads the live design inside this frame — interact like it's on your phone.</p>
                 </div>
               </div>
             ) : (

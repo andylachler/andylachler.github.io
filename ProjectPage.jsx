@@ -36,7 +36,12 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'Portfolio prototype' },
     ],
     tileBg: '#1A2520', imageIndex: 6,
-    interactiveUrl: 'https://autoease-prototype.vercel.app/',
+    // v2 design (July 2026): Home & Guided Search, hosted locally. The complete
+    // v1 prototype (all four flows) stays reachable via interactiveAltUrl.
+    interactiveUrl: 'autoease-v2/',
+    interactiveNote: 'The v2 redesign of the Home screen and guided search flow, embedded live. The complete v1 prototype — Browse, Answers, Sell, and Price Check — is still available full-screen below.',
+    interactiveAltUrl: 'https://autoease-prototype.vercel.app/',
+    interactiveAltLabel: 'Open the full v1 prototype ↗',
     next: 'feasibility',
   },
   'feasibility': {
@@ -301,9 +306,18 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         <div style={{ ...fade(180), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '1.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.5rem' }}>Try it out</p>
           <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '1rem', maxWidth: '820px' }}>
-            The full prototype is embedded below. Tap the screen to launch — all four flows (Browse, Answers, Sell, Price Check) are wired up.
+            {project.interactiveNote || 'The full prototype is embedded below. Tap the screen to launch — all four flows (Browse, Answers, Sell, Price Check) are wired up.'}
           </p>
           <TryItOut src={project.interactiveUrl} label={project.title} />
+          {project.interactiveAltUrl && (
+            <p style={{ textAlign: 'center', marginTop: '0.75rem' }}>
+              <a href={project.interactiveAltUrl} target="_blank" rel="noopener noreferrer" style={{
+                fontFamily: 'var(--ff-mono)', fontSize: '11px', fontWeight: 400,
+                letterSpacing: '0.14em', textTransform: 'uppercase',
+                color: 'rgba(20,33,28,0.55)', textDecoration: 'none',
+              }}>{project.interactiveAltLabel || 'Open the full prototype ↗'}</a>
+            </p>
+          )}
         </div>
       ) : (
         <div style={{
