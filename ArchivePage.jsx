@@ -321,8 +321,8 @@ const ArchivePage = ({ onNavigate }) => {
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 5rem' }}>
       <div style={{ maxWidth: '600px', marginBottom: '4rem' }}>
-        <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Foundations</p>
-        <h1 style={{ fontSize: 'clamp(26px,3vw,38px)', fontWeight: 500, letterSpacing: '-0.02em', color: '#14211C', lineHeight: 1.1, marginBottom: '1.25rem' }}>
+        <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Foundations</p>
+        <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(32px,3.8vw,50px)', fontWeight: 400, letterSpacing: '-0.03em', color: '#14211C', lineHeight: 1.05, marginBottom: '1.25rem' }}>
           Learning to think with my hands.
         </h1>
         <p style={{ fontSize: '16px', color: 'rgba(20,33,28,0.6)', lineHeight: 1.65, margin: 0 }}>
@@ -348,7 +348,7 @@ const ArchivePage = ({ onNavigate }) => {
       {playable.length > 0 && (
         <>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>Playable</p>
+            <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>Playable</p>
             <p style={{ fontSize: '11px', letterSpacing: '0.1em', color: 'rgba(20,33,28,0.35)', margin: 0 }}>Unity &middot; WebGL</p>
           </div>
           <div style={{
@@ -368,7 +368,7 @@ const ArchivePage = ({ onNavigate }) => {
       {also.length > 0 && (
         <>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>Also from the archive</p>
+            <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>Also from the archive</p>
             <p style={{ fontSize: '11px', letterSpacing: '0.1em', color: 'rgba(20,33,28,0.35)', margin: 0 }}>Lehigh · 2017</p>
           </div>
           <div style={{
@@ -479,10 +479,10 @@ const ArchiveTile = ({ item, onNavigate, compact = false }) => {
       }}>→</div>
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <p style={{ fontSize: compact ? '11px' : '12px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: eyebrowC, margin: '0 0 7px' }}>
+        <p style={{ fontSize: compact ? '11px' : '12px', fontWeight: 600, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: eyebrowC, margin: '0 0 7px' }}>
           {item.org} · {item.year}
         </p>
-        <p style={{ fontSize: compact ? '14px' : '16px', fontWeight: 500, color: textC, margin: '0 0 6px', lineHeight: 1.25 }}>{item.title}</p>
+        <p style={{ fontFamily: 'var(--ff-serif)', fontSize: compact ? '17px' : '20px', fontWeight: 400, color: textC, margin: '0 0 6px', lineHeight: 1.15, letterSpacing: '-0.01em' }}>{item.title}</p>
         {/* Description — hidden at rest, expands in on hover. Sits in its
             natural slot between title and type; max-height + margin animate
             so the tile visibly "opens up" rather than the desc just fading
@@ -598,10 +598,10 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               : 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%)',
           }} />
           <div style={{ position: 'absolute', inset: 0, padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.6rem' }}>
+            <p style={{ fontSize: '12px', fontWeight: 600, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.6rem' }}>
               {project.org} · {project.year} · {project.role}
             </p>
-            <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: heroText, margin: 0 }}>
+            <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(32px, 4.2vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.04, color: heroText, margin: 0 }}>
               {project.title}
             </h1>
           </div>
@@ -628,7 +628,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               gap: '1.25rem',
             }}>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.5rem' }}>Play in browser</p>
+                <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.5rem' }}>Play in browser</p>
                 <p style={{ fontSize: '15px', color: 'rgba(20,33,28,0.75)', lineHeight: 1.55, margin: 0, maxWidth: '52ch' }}>
                   Unity WebGL build &middot; ~14 MB download on first play. Keyboard + mouse &middot; desktop recommended.
                 </p>
@@ -685,7 +685,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               borderRadius: '10px',
               padding: isMobile ? '1.5rem' : '2rem',
             }}>
-              <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.5rem' }}>Playable &middot; build in progress</p>
+              <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.5rem' }}>Playable &middot; build in progress</p>
               <p style={{ fontSize: '15px', color: 'rgba(20,33,28,0.75)', lineHeight: 1.55, margin: 0, maxWidth: '52ch' }}>
                 The WebGL export for this project is not yet published. Check back soon &mdash; or see the companion project for a playable Unity build.
               </p>
@@ -704,15 +704,15 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
       {/* Body + details two-column */}
       <div style={{ ...fade(220), display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 2fr) minmax(0, 1fr)', gap: isMobile ? '2.5rem' : '4rem', marginBottom: isMobile ? '3rem' : '4rem' }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Context</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Context</p>
           <p style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.body}</p>
         </div>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Details</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Details</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
             {project.details.map((d, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.7rem 0', borderBottom: '0.5px solid rgba(20,33,28,0.1)', gap: '1rem' }}>
-                <span style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.5)' }}>{d.label}</span>
+                <span style={{ fontSize: '12px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.5)' }}>{d.label}</span>
                 <span style={{ fontSize: '13px', color: '#14211C', textAlign: 'right' }}>{d.value}</span>
               </div>
             ))}
@@ -723,7 +723,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
       {/* Process */}
       {project.process && (
         <div style={{ ...fade(300), marginBottom: '4rem', maxWidth: '760px' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Process</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Process</p>
           {project.process.map((p, i) => (
             <p key={i} style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', marginBottom: '1rem' }}>{p}</p>
           ))}
@@ -735,7 +735,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
           Add numbered files + captions.json and they appear here. */}
       {(((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || []).length > 0 && (
         <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Photographs</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Photographs</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
             {((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery.map((g, i) => (
               <figure key={g.src} style={{ margin: 0 }}>
@@ -758,11 +758,11 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
       {/* Outcome + credits */}
       <div style={{ ...fade(380), display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1fr)', gap: isMobile ? '2rem' : '4rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem', marginBottom: isMobile ? '3rem' : '4rem' }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Outcome</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Outcome</p>
           <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.outcome}</p>
         </div>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Credits</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Credits</p>
           <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.credits}</p>
         </div>
       </div>
@@ -771,7 +771,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
       {nextProject && (
         <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem' }}>
           <div>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.35rem' }}>Next in Foundations</p>
+            <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.35rem' }}>Next in Foundations</p>
             <p style={{ fontSize: '20px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '-0.01em' }}>{nextProject.title}</p>
           </div>
           <button onClick={() => onNavigate('archive-project', project.next)} style={{

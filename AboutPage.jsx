@@ -6,11 +6,11 @@ const AboutPage = () => {
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: outerPad }}>
       {/* Section label */}
-      <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: isMobile ? '1.5rem' : '2.5rem' }}>About</p>
+      <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: isMobile ? '1.5rem' : '2.5rem' }}>About</p>
 
       {/* Lede — larger, full reading width */}
       <div style={{ maxWidth: '920px', marginBottom: isMobile ? '3rem' : '4.5rem' }}>
-        <p style={{ fontSize: isMobile ? 'clamp(18px, 4.8vw, 22px)' : 'clamp(20px, 2.1vw, 26px)', fontWeight: 400, lineHeight: 1.5, color: '#14211C', margin: 0, letterSpacing: '-0.005em' }}>
+        <p style={{ fontFamily: 'var(--ff-serif)', fontSize: isMobile ? 'clamp(22px, 5.6vw, 28px)' : 'clamp(26px, 2.6vw, 34px)', fontWeight: 400, lineHeight: 1.35, color: '#14211C', margin: 0, letterSpacing: '-0.015em' }}>
           I'm a product designer who works end-to-end — research, strategy, interface, and shipping — and moves between mediums. I spent years designing buildings before designing software, so my practice runs from data-dense B2B interfaces to physical prototypes you can hold, sit in, or walk through.
         </p>
       </div>
@@ -23,7 +23,7 @@ const AboutPage = () => {
       }}>
         {/* Left: biography */}
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Practice</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Practice</p>
           <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', marginBottom: '1.25rem' }}>
             As Product Lead at Algoma, I drive the platform end-to-end: wireframing and shipping features, designing AI-powered zoning and market-intelligence tools, integrating GIS and regulatory data, and shaping the brand and go-to-market system. I partner closely with engineering and learn directly from users through design-partner interviews and customer research.
           </p>
@@ -46,20 +46,20 @@ const AboutPage = () => {
               style={{ width: '100%', display: 'block', borderRadius: '10px', marginBottom: '2.5rem' }}
             />
           )}
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Contact</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Contact</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', marginBottom: '2.5rem' }}>
             <ContactRow label="Email" value="andy@lachler.com" link />
             <ContactRow label="Location" value="New York, NY" />
             <ContactRow label="Currently" value="Algoma — Product Lead" />
           </div>
 
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Education</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Education</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', marginBottom: '2.5rem' }}>
             <InfoRow left="Pratt Institute" sub="M.Arch" right="2022" />
             <InfoRow left="Lehigh University" sub="B.S. Architecture" right="2018" />
           </div>
 
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Experience</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Experience</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
             <InfoRow left="Algoma" sub="Product Lead" right="2024–" />
             <InfoRow left="Arquitectonica" sub="Associate" right="2022–24" />
@@ -72,7 +72,7 @@ const AboutPage = () => {
           material studies. Section disappears cleanly if the folder empties. */}
       {((((window.IMAGE_MANIFEST || {}).craft || {}).gallery) || []).length > 0 && (
         <div style={{ marginTop: isMobile ? '3.5rem' : '5rem', paddingTop: '2.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>Craft</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>Craft</p>
           <p style={{ fontSize: '15px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', marginBottom: '1.75rem', maxWidth: '720px' }}>
             Prototyping doesn&rsquo;t stop at the screen. Laser-cut chipboard, folded paper, layered reliefs — made by hand, photographed as built.
           </p>

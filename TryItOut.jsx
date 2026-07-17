@@ -157,7 +157,7 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
                   </svg>
                 </div>
                 <div>
-                  <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.55)', margin: '0 0 0.5rem' }}>Interactive prototype</p>
+                  <p style={{ fontSize: 10, fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.55)', margin: '0 0 0.5rem' }}>Interactive prototype</p>
                   <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>Tap to launch AutoEase</p>
                   <p style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(242,239,230,0.5)', margin: '0.5rem 0 0' }}>Loads the real Next.js build inside this frame. Browse, Answers, Sell, and Price Check all work.</p>
                 </div>
@@ -373,7 +373,7 @@ const DesktopFrame = ({ src, label = 'Interactive wireframe', gateTitle = 'Tap t
                 </svg>
               </div>
               <div>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.55)', margin: '0 0 0.4rem' }}>Interactive wireframe</p>
+                <p style={{ fontSize: 10, fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.55)', margin: '0 0 0.4rem' }}>Interactive wireframe</p>
                 <p style={{ fontSize: 15, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>{gateTitle}</p>
                 {gateNote && <p style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(242,239,230,0.5)', margin: '0.45rem 0 0', maxWidth: 420 }}>{gateNote}</p>}
               </div>
@@ -408,7 +408,7 @@ const DesktopFrame = ({ src, label = 'Interactive wireframe', gateTitle = 'Tap t
 
       {/* Caption + controls */}
       <div style={{ marginTop: '0.9rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>{label}</span>
+        <span style={{ fontSize: 10, fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>{label}</span>
         {loaded && (
           <button
             onClick={() => { setReady(false); setReloadKey(k => k + 1); }}

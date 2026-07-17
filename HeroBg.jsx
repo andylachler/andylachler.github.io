@@ -1,23 +1,20 @@
-// HeroBg.jsx — mouse-reactive parallax canvas background.
+// HeroBg.jsx — ambient dot field with mouse ripple (v4 design language, P2).
 //
-// Performance architecture (rewritten July 2026):
-//   • Each layer is pre-rendered ONCE to an offscreen canvas (padded by the
-//     max parallax displacement). The per-frame cost is six drawImage calls
-//     instead of ~300 stroke/fill calls.
-//   • The rAF loop only runs while the parallax is actually converging.
-//     When the eased offset settles (or the mouse never moves — touch
-//     devices), the loop STOPS. Idle cost: zero.
-//   • An IntersectionObserver stops everything while the hero is scrolled
-//     out of view.
-//   • window.__HERO_BG_STATUS exposes 'running' / 'idle' for the design lab
-//     FPS meter.
+// Replaces the blueprint parallax. Perf architecture:
+//   • Dot positions precomputed once per resize (no per-frame allocation).
+//   • Dots are batched by quantized alpha bucket — ~14 beginPath/fill calls
+//     per frame instead of one per dot (~2,700 on a laptop viewport).
+//   • DPR capped at 1.75; grid step scales up on small screens.
+//   • IntersectionObserver pauses the loop when the hero is offscreen.
+//   • Touch devices and prefers-reduced-motion get a single static frame —
+//     zero animation cost on phones.
+//   • window.__HERO_BG_STATUS = 'running' | 'idle' for the design-lab meter.
 const HeroBg = () => {
   const canvasRef = React.useRef(null);
   const state = React.useRef({
-    mouse: { x: 0.5, y: 0.5 },
-    target: { x: 0.5, y: 0.5 },
     raf: null, running: false, inView: true,
-    W: 0, H: 0, dpr: 1, pad: 44, sprites: [],
+    W: 0, H: 0, mx: -9999, my: -9999, t: 0,
+    dots: null, cols: 0, rows: 0, step: 22,
   });
 
   React.useEffect(() => {
@@ -25,208 +22,117 @@ const HeroBg = () => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const s = state.current;
-    const maxDisp = 60; // px at depth=1
 
-    // ── Layer definitions (unchanged visuals) ──────────────────────────────
-    const layers = [
-      // Layer 0 — deepest: fine grid
-      {
-        depth: 0.04,
-        draw: (ctx, W, H) => {
-          ctx.strokeStyle = 'rgba(242,239,230,0.06)';
-          ctx.lineWidth = 0.5;
-          const step = 48;
-          ctx.beginPath();
-          for (let x = -step; x < W + step * 2; x += step) { ctx.moveTo(x, -step); ctx.lineTo(x, H + step); }
-          for (let y = -step; y < H + step * 2; y += step) { ctx.moveTo(-step, y); ctx.lineTo(W + step, y); }
-          ctx.stroke();
-        }
-      },
-      // Layer 1 — far: large building footprint / site plan
-      {
-        depth: 0.10,
-        draw: (ctx, W, H) => {
-          ctx.strokeStyle = 'rgba(242,239,230,0.10)';
-          ctx.lineWidth = 1;
-          const x0 = W * 0.08, y0 = H * 0.20, bw = W * 0.50, bh = H * 0.50;
-          ctx.strokeRect(x0, y0, bw, bh);
-          ctx.lineWidth = 0.6;
-          ctx.strokeStyle = 'rgba(242,239,230,0.07)';
-          ctx.strokeRect(x0 + bw * 0.22, y0 + bh * 0.15, bw * 0.36, bh * 0.30);
-          ctx.strokeRect(x0 + bw * 0.22, y0 + bh * 0.55, bw * 0.36, bh * 0.30);
-          ctx.strokeRect(x0 + bw * 0.62, y0 + bh * 0.15, bw * 0.28, bh * 0.30);
-          ctx.setLineDash([4, 6]);
-          ctx.lineWidth = 0.4;
-          ctx.strokeStyle = 'rgba(242,239,230,0.05)';
-          ctx.beginPath(); ctx.moveTo(x0, y0 - 20); ctx.lineTo(x0 + bw, y0 - 20); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(x0 - 20, y0); ctx.lineTo(x0 - 20, y0 + bh); ctx.stroke();
-          ctx.setLineDash([]);
-        }
-      },
-      // Layer 2 — mid: dot constellation (structural grid)
-      {
-        depth: 0.18,
-        draw: (ctx, W, H) => {
-          ctx.fillStyle = 'rgba(242,239,230,0.20)';
-          const cols = 14, rows = 9;
-          const sx = W * 0.55, sy = H * 0.10, gx = W * 0.40 / cols, gy = H * 0.70 / rows;
-          ctx.beginPath();
-          for (let r = 0; r <= rows; r++) {
-            for (let c = 0; c <= cols; c++) {
-              ctx.moveTo(sx + c * gx + 1.2, sy + r * gy);
-              ctx.arc(sx + c * gx, sy + r * gy, 1.2, 0, Math.PI * 2);
-            }
-          }
-          ctx.fill();
-        }
-      },
-      // Layer 3 — mid: building section elevation
-      {
-        depth: 0.28,
-        draw: (ctx, W, H) => {
-          const ground = H * 0.88;
-          ctx.strokeStyle = 'rgba(242,239,230,0.12)';
-          ctx.lineWidth = 0.75;
-          ctx.beginPath(); ctx.moveTo(W * 0.58, ground); ctx.lineTo(W * 1.05, ground); ctx.stroke();
-          const blocks = [
-            { x: W * 0.60, w: 44, h: H * 0.38 },
-            { x: W * 0.66, w: 36, h: H * 0.28 },
-            { x: W * 0.725, w: 48, h: H * 0.44 },
-            { x: W * 0.80, w: 36, h: H * 0.22 },
-            { x: W * 0.86, w: 44, h: H * 0.34 },
-            { x: W * 0.925, w: 36, h: H * 0.26 },
-          ];
-          blocks.forEach(b => {
-            ctx.strokeStyle = 'rgba(242,239,230,0.12)';
-            ctx.lineWidth = 0.75;
-            ctx.strokeRect(b.x, ground - b.h, b.w, b.h);
-            ctx.strokeStyle = 'rgba(242,239,230,0.08)';
-            ctx.lineWidth = 0.4;
-            const floors = Math.floor(b.h / 22);
-            for (let f = 0; f < floors - 1; f++) {
-              const wy = ground - b.h + 10 + f * 22;
-              ctx.strokeRect(b.x + 6, wy, 12, 10);
-              if (b.w > 36) ctx.strokeRect(b.x + 24, wy, 12, 10);
-            }
-          });
-        }
-      },
-      // Layer 4 — near: cutting plane + section markers
-      {
-        depth: 0.40,
-        draw: (ctx, W, H) => {
-          ctx.strokeStyle = 'rgba(212,90,27,0.12)';
-          ctx.lineWidth = 0.5;
-          ctx.setLineDash([2, 8]);
-          ctx.beginPath(); ctx.moveTo(W * 0.06, H * 0.48); ctx.lineTo(W * 0.62, H * 0.48); ctx.stroke();
-          ctx.setLineDash([]);
-          ctx.strokeStyle = 'rgba(212,90,27,0.18)';
-          ctx.lineWidth = 0.75;
-          ctx.beginPath(); ctx.arc(W * 0.06, H * 0.48, 8, 0, Math.PI * 2); ctx.stroke();
-          ctx.beginPath(); ctx.arc(W * 0.62, H * 0.48, 8, 0, Math.PI * 2); ctx.stroke();
-        }
-      },
-      // Layer 5 — nearest: sparse large geometry
-      {
-        depth: 0.55,
-        draw: (ctx, W, H) => {
-          ctx.strokeStyle = 'rgba(242,239,230,0.06)';
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(W * 0.12, H * 0.12);
-          ctx.lineTo(W * 0.12, H * 0.72);
-          ctx.lineTo(W * 0.38, H * 0.72);
-          ctx.lineTo(W * 0.38, H * 0.42);
-          ctx.lineTo(W * 0.55, H * 0.42);
-          ctx.lineTo(W * 0.55, H * 0.12);
-          ctx.closePath();
-          ctx.stroke();
-        }
-      },
-    ];
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animated = !isTouch && !reduced;
 
-    // ── Pre-render each layer to an offscreen sprite ───────────────────────
-    const buildSprites = () => {
-      const { W, H, dpr, pad } = s;
-      s.sprites = layers.map(layer => {
-        const off = document.createElement('canvas');
-        off.width = (W + pad * 2) * dpr;
-        off.height = (H + pad * 2) * dpr;
-        const octx = off.getContext('2d');
-        octx.scale(dpr, dpr);
-        octx.translate(pad, pad);
-        layer.draw(octx, W, H);
-        return { canvas: off, depth: layer.depth };
-      });
-    };
-
-    // ── Composite one frame: six drawImage calls ───────────────────────────
-    const drawFrame = () => {
-      const { W, H, pad } = s;
-      const dx = (s.target.x - 0.5) * maxDisp;
-      const dy = (s.target.y - 0.5) * maxDisp;
-      ctx.clearRect(0, 0, W, H);
-      for (const sp of s.sprites) {
-        ctx.drawImage(sp.canvas, dx * sp.depth - pad, dy * sp.depth - pad, W + pad * 2, H + pad * 2);
-      }
-    };
+    const CREAM = [242, 239, 230];
+    const ORANGE = [212, 90, 27];
+    const BUCKETS = 14;      // alpha quantization levels
+    const MAX_ALPHA = 0.75;
 
     const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
       s.W = canvas.offsetWidth;
       s.H = canvas.offsetHeight;
-      s.dpr = window.devicePixelRatio || 1;
-      canvas.width = s.W * s.dpr;
-      canvas.height = s.H * s.dpr;
-      ctx.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
-      buildSprites();
+      canvas.width = s.W * dpr;
+      canvas.height = s.H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      s.step = s.W < 640 ? 28 : 22;
+      s.cols = Math.ceil(s.W / s.step) + 2;
+      s.rows = Math.ceil(s.H / s.step) + 2;
+      // Precompute grid positions (flat arrays — cache-friendly)
+      const n = s.cols * s.rows;
+      s.dots = { x: new Float32Array(n), y: new Float32Array(n) };
+      let k = 0;
+      for (let j = 0; j < s.rows; j++) {
+        for (let i = 0; i < s.cols; i++) {
+          s.dots.x[k] = i * s.step;
+          s.dots.y[k] = j * s.step;
+          k++;
+        }
+      }
       drawFrame();
     };
 
-    // ── Loop runs only while converging; stops when settled ───────────────
-    const EPS = 0.0012; // normalized: ~0.04px at max depth — visually settled
-    const loop = () => {
-      s.target.x += (s.mouse.x - s.target.x) * 0.06;
-      s.target.y += (s.mouse.y - s.target.y) * 0.06;
-      drawFrame();
-      if (Math.abs(s.mouse.x - s.target.x) < EPS && Math.abs(s.mouse.y - s.target.y) < EPS) {
-        s.running = false;
-        window.__HERO_BG_STATUS = 'idle';
-        return;
+    // One frame: bucket dots by (alpha, orange?) then fill each bucket once.
+    const buckets = [];
+    const drawFrame = () => {
+      const { W, H, mx, my, t, dots } = s;
+      if (!dots) return;
+      ctx.clearRect(0, 0, W, H);
+      // reset buckets: [bucketIndex][isOrange] -> array of (x, y, size)
+      buckets.length = 0;
+      for (let b = 0; b < BUCKETS * 2; b++) buckets.push([]);
+
+      const n = dots.x.length;
+      for (let k = 0; k < n; k++) {
+        const x = dots.x[k], y = dots.y[k];
+        const dx = x - mx, dy = y - my;
+        const d2 = dx * dx + dy * dy;
+        const ripple = d2 < 48400 ? 1 - Math.sqrt(d2) / 220 : 0; // 220px radius
+        const wave = Math.sin((x + y) * 0.012 + t) * 0.5 + 0.5;
+        const size = 0.4 + wave * 0.9 + ripple * 2.2;
+        const alpha = 0.07 + wave * 0.11 + ripple * 0.5;
+        const bi = Math.min(BUCKETS - 1, (alpha / MAX_ALPHA * BUCKETS) | 0);
+        buckets[ripple > 0.12 ? BUCKETS + bi : bi].push(x, y, size);
       }
+      for (let b = 0; b < BUCKETS * 2; b++) {
+        const arr = buckets[b];
+        if (!arr.length) continue;
+        const orange = b >= BUCKETS;
+        const a = ((b % BUCKETS) + 0.5) / BUCKETS * MAX_ALPHA;
+        const c = orange ? ORANGE : CREAM;
+        ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a.toFixed(3)})`;
+        ctx.beginPath();
+        for (let i = 0; i < arr.length; i += 3) {
+          ctx.moveTo(arr[i] + arr[i + 2], arr[i + 1]);
+          ctx.arc(arr[i], arr[i + 1], arr[i + 2], 0, 6.2832);
+        }
+        ctx.fill();
+      }
+    };
+
+    const loop = () => {
+      s.t += 0.008;
+      drawFrame();
       s.raf = requestAnimationFrame(loop);
     };
     const start = () => {
-      if (s.running || !s.inView) return;
+      if (s.running || !s.inView || !animated) return;
       s.running = true;
       window.__HERO_BG_STATUS = 'running';
       s.raf = requestAnimationFrame(loop);
     };
+    const stop = () => {
+      cancelAnimationFrame(s.raf);
+      s.running = false;
+      window.__HERO_BG_STATUS = 'idle';
+    };
 
     const onMove = (e) => {
       const rect = canvas.getBoundingClientRect();
-      s.mouse.x = (e.clientX - rect.left) / rect.width;
-      s.mouse.y = (e.clientY - rect.top) / rect.height;
-      start();
+      s.mx = e.clientX - rect.left;
+      s.my = e.clientY - rect.top;
     };
 
-    // Stop everything while the hero is offscreen
     const io = new IntersectionObserver(([entry]) => {
       s.inView = entry.isIntersecting;
-      if (!s.inView && s.running) {
-        cancelAnimationFrame(s.raf);
-        s.running = false;
-        window.__HERO_BG_STATUS = 'idle';
-      }
+      if (s.inView) start(); else stop();
     });
     io.observe(canvas);
 
     resize();
     window.__HERO_BG_STATUS = 'idle';
     window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', onMove);
+    if (animated) {
+      window.addEventListener('mousemove', onMove);
+      start();
+    }
 
     return () => {
-      cancelAnimationFrame(s.raf);
+      stop();
       io.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMove);
@@ -240,6 +146,7 @@ const HeroBg = () => {
         position: 'absolute', inset: 0,
         width: '100%', height: '100%',
         display: 'block',
+        opacity: 0.55,
       }}
     />
   );

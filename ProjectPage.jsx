@@ -254,10 +254,10 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
             <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(12,16,14,0.62) 0%, rgba(12,16,14,0.18) 38%, transparent 60%)' }} />
           )}
           <div style={{ position: 'absolute', inset: 0, padding: heroPad, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
+            <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
               {project.org} · {project.year} · {project.role}
             </p>
-            <h1 style={{ fontSize: isMobile ? 'clamp(24px, 6.5vw, 32px)' : 'clamp(26px, 3.5vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: heroText, margin: 0 }}>
+            <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: isMobile ? 'clamp(28px, 7.5vw, 38px)' : 'clamp(32px, 4.2vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.04, color: heroText, margin: 0 }}>
               {project.title}
             </h1>
           </div>
@@ -280,15 +280,15 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         marginBottom: isMobile ? '3rem' : '4rem',
       }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Context</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Context</p>
           <p style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.body}</p>
         </div>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Details</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Details</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
             {project.details.map((d, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.7rem 0', borderBottom: '0.5px solid rgba(20,33,28,0.1)', gap: '1rem' }}>
-                <span style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.5)', flexShrink: 0 }}>{d.label}</span>
+                <span style={{ fontSize: '12px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.5)', flexShrink: 0 }}>{d.label}</span>
                 <span style={{ fontSize: '13px', color: '#14211C', textAlign: 'right' }}>{d.value}</span>
               </div>
             ))}
@@ -299,7 +299,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Interactive embed OR tile pair — full content width */}
       {project.interactiveUrl ? (
         <div style={{ ...fade(180), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '1.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.5rem' }}>Try it out</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.5rem' }}>Try it out</p>
           <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '1rem', maxWidth: '820px' }}>
             The full prototype is embedded below. Tap the screen to launch — all four flows (Browse, Answers, Sell, Price Check) are wired up.
           </p>
@@ -324,7 +324,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
 
       {/* Process */}
       <div style={{ ...fade(220), maxWidth: '820px', marginBottom: isMobile ? '3rem' : '4rem' }}>
-        <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Process</p>
+        <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Process</p>
         {project.process.map((para, i) => (
           <p key={i} style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', marginBottom: '1.25rem' }}>{para}</p>
         ))}
@@ -333,7 +333,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Insights */}
       {project.insights && project.insights.length > 0 && (
         <div style={{ ...fade(260), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.insightsLabel || 'Insights from research'}</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.insightsLabel || 'Insights from research'}</p>
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -352,7 +352,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Design system / Four arcs */}
       {project.designSystem && project.designSystem.length > 0 && (
         <div style={{ ...fade(300), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.designSystemLabel || 'Design system'}</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>{project.designSystemLabel || 'Design system'}</p>
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -371,7 +371,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Component stories — linked step-by-step development narratives */}
       {project.componentStories && project.componentStories.length > 0 && (
         <div style={{ ...fade(310), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>{project.componentStoriesLabel || 'Component stories'}</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>{project.componentStoriesLabel || 'Component stories'}</p>
           {project.componentStoriesIntro && (
             <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '1.5rem', maxWidth: '820px' }}>{project.componentStoriesIntro}</p>
           )}
@@ -390,7 +390,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Featured modules — interactive wireframe embeds */}
       {project.modules && project.modules.length > 0 && (
         <div style={{ ...fade(320), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>{project.modulesLabel || 'Featured modules'}</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>{project.modulesLabel || 'Featured modules'}</p>
           {project.modulesIntro && (
             <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(20,33,28,0.6)', marginBottom: '2.5rem', maxWidth: '820px' }}>{project.modulesIntro}</p>
           )}
@@ -425,7 +425,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
           rebuild the manifest, and they appear here. No images = no section. */}
       {gallery.length > 0 && (
         <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Gallery</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Gallery</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
             {gallery.map((g, i) => (
               <figure key={g.src} style={{ margin: 0 }}>
@@ -457,7 +457,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Influences */}
       {project.influences && project.influences.length > 0 && (
         <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', maxWidth: '820px' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Influences</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Influences</p>
           {project.influences.map((item, i) => (
             <div key={i} style={{
               marginBottom: '1rem',
@@ -484,11 +484,11 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         marginBottom: isMobile ? '3rem' : '4rem',
       }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Current state</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Current state</p>
           <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(20,33,28,0.75)', margin: 0 }}>{project.outcome}</p>
         </div>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Credits</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1rem' }}>Credits</p>
           <p style={{ fontSize: '13px', lineHeight: 1.7, color: 'rgba(20,33,28,0.6)', margin: 0 }}>{project.credits}</p>
         </div>
       </div>
@@ -501,7 +501,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
       {/* Next project — full container width, matches hero */}
       {nextProject && (
         <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', marginBottom: '1.5rem' }}>Next</p>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', marginBottom: '1.5rem' }}>Next</p>
           <NextProjectCard project={nextProject} onNavigate={onNavigate} isMobile={isMobile} />
         </div>
       )}
@@ -568,8 +568,8 @@ const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
         gap: '1rem',
       }}>
         <div style={{ zIndex: 1 }}>
-          <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedC, margin: '0 0 5px' }}>{project.org} · {project.year}</p>
-          <p style={{ fontSize: isMobile ? '18px' : 'clamp(20px, 2.2vw, 28px)', fontWeight: 500, color: textC, margin: 0, letterSpacing: '-0.01em' }}>{project.title}</p>
+          <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedC, margin: '0 0 5px' }}>{project.org} · {project.year}</p>
+          <p style={{ fontFamily: 'var(--ff-serif)', fontSize: isMobile ? '21px' : 'clamp(24px, 2.6vw, 34px)', fontWeight: 400, color: textC, margin: 0, letterSpacing: '-0.02em' }}>{project.title}</p>
         </div>
         <span style={{ zIndex: 1, fontSize: isMobile ? '18px' : '22px', color: textC, transition: 'transform 180ms', transform: hov ? 'translateX(5px)' : 'none', flexShrink: 0 }}>→</span>
       </div>

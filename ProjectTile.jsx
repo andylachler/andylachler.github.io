@@ -309,10 +309,10 @@ const ProjectTile = ({ title, org, year, role, bg = '#3D5448', onNavigate, featu
         background: hovered ? (light ? 'rgba(20,33,28,0.03)' : 'rgba(0,0,0,0.05)') : 'transparent',
       }} />
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedColor, margin: '0 0 5px' }}>
+        <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.12em', textTransform: 'uppercase', color: mutedColor, margin: '0 0 5px' }}>
           {org} · {year}
         </p>
-        <p style={{ fontSize: '16px', fontWeight: 500, color: textColor, margin: 0, lineHeight: 1.25 }}>{title}</p>
+        <p style={{ fontFamily: 'var(--ff-serif)', fontSize: '20px', fontWeight: 400, color: textColor, margin: 0, lineHeight: 1.15, letterSpacing: '-0.01em' }}>{title}</p>
         {/* Hover description — same expand-open behavior as Foundations tiles.
             Uses the case study's lede (PROJECT_DATA) unless a desc is passed. */}
         {(() => {

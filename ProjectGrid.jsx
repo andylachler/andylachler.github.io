@@ -58,7 +58,7 @@ const ProjectGrid = ({ onNavigate, tweaks = {} }) => {
   return (
     <section style={{ padding: isMobile ? '3rem 1.25rem 4rem' : '5rem 2.5rem', maxWidth: '1400px', margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: isMobile ? '1.5rem' : '2rem' }}>
-        <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#D45A1B', margin: 0 }}>
+        <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#D45A1B', margin: 0 }}>
           Selected Work
         </p>
         <ArrowLink onClick={() => onNavigate('work')}>All projects</ArrowLink>

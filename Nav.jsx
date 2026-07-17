@@ -7,6 +7,30 @@ const AL_MARK = ({ color = '#14211C', size = 20 }) => (
 );
 
 // Viewport-width hook — true below breakpoint. Used to swap desktop pills for a hamburger.
+// NavClock — live NYC time, mono, sits in the nav's right column (desktop).
+// Part of the v4 design-language migration (P1).
+const NavClock = ({ color }) => {
+  const [now, setNow] = React.useState(() => new Date());
+  React.useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  const ss = String(now.getSeconds()).padStart(2, '0');
+  return (
+    <div style={{
+      justifySelf: 'end',
+      fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 400,
+      letterSpacing: '0.2em', textTransform: 'uppercase',
+      color, transition: 'color 300ms',
+      fontVariantNumeric: 'tabular-nums',
+    }}>
+      NYC · {hh}:{mm}:{ss}
+    </div>
+  );
+};
+
 const useIsMobile = (bp = 768) => {
   const [isMobile, setIsMobile] = React.useState(
     typeof window !== 'undefined' ? window.innerWidth < bp : false
@@ -159,7 +183,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
               color={textColor}
             />
           ) : (
-            <div style={{ justifySelf: 'end' }} />
+            <NavClock color={subColor} />
           )}
         </nav>
       </div>
@@ -393,7 +417,7 @@ const DropdownTile = ({ project, onNavigate, accentColor }) => {
         fontSize: '13px', color: tc,
       }}>→</div>
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <p style={{ fontSize: '9px', fontWeight: 500, letterSpacing: '0.11em', textTransform: 'uppercase', color: mc, margin: '0 0 3px' }}>{project.org}</p>
+        <p style={{ fontSize: '9px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.11em', textTransform: 'uppercase', color: mc, margin: '0 0 3px' }}>{project.org}</p>
         <p style={{ fontSize: '13px', fontWeight: 500, color: tc, margin: 0, lineHeight: 1.2 }}>{project.title}</p>
       </div>
     </div>

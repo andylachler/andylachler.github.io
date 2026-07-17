@@ -16,10 +16,10 @@ const ScrollWork = ({ onNavigate, tweaks = {} }) => {
         flexWrap: 'wrap',
       }}>
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>
             Selected Work
           </p>
-          <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1, color: '#14211C', margin: 0, maxWidth: '720px' }}>
+          <h2 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.05, color: '#14211C', margin: 0, maxWidth: '720px' }}>
             Product design, research,<br />and prototyping — digital and physical.
           </h2>
         </div>
@@ -84,7 +84,7 @@ const FeaturedPinned = ({ projects, onNavigate, accentColor }) => {
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
 
         <div style={{ padding: '2rem 2.5rem 0', maxWidth: '1400px', margin: '0 auto', width: '100%', display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>
             Featured
           </p>
           <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.35)' }}>
@@ -183,7 +183,7 @@ const MobileProjectCard = ({ project, onNavigate, accentColor }) => {
       </div>
       {/* Meta */}
       <div style={{ padding: '1rem 1.25rem 1.25rem' }}>
-        <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: mc, margin: '0 0 0.35rem' }}>
+        <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.12em', textTransform: 'uppercase', color: mc, margin: '0 0 0.35rem' }}>
           {project.org} · {project.year}
         </p>
         <p style={{ fontSize: '17px', fontWeight: 500, color: tc, margin: '0 0 0.35rem', lineHeight: 1.25 }}>
@@ -212,7 +212,7 @@ const ProjectInfoPanel = ({ project, active, onNavigate, accentColor }) => {
       transition: 'opacity 450ms cubic-bezier(0.22,1,0.36,1), transform 450ms cubic-bezier(0.22,1,0.36,1)',
       pointerEvents: active ? 'all' : 'none',
     }}>
-      <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>
+      <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>
         {project.org} · {project.year}
       </p>
       <h3 style={{ fontSize: 'clamp(30px, 3.5vw, 48px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.08, color: '#14211C', marginBottom: '1.5rem' }}>

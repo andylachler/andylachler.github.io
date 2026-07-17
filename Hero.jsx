@@ -14,6 +14,18 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
     transition: `opacity 700ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform 700ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
   });
 
+  // Line-mask reveal (v4 rline): each line slides up from behind an
+  // overflow-hidden wrapper. Delay staggers per line.
+  const RLine = ({ children, delay = 0, style = {} }) => (
+    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', ...style }}>
+      <span style={{
+        display: 'inline-block',
+        transform: mounted ? 'translateY(0)' : 'translateY(112%)',
+        transition: `transform 950ms cubic-bezier(0.2,0.7,0.2,1) ${delay}ms`,
+      }}>{children}</span>
+    </span>
+  );
+
   return (
     <section style={{
       position: 'relative',
@@ -40,7 +52,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
 
       {/* Content */}
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-        <p style={{ ...fade(200), fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.45)', marginBottom: isMobile ? '1rem' : '2rem' }}>
+        <p style={{ ...fade(200), fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.45)', marginBottom: isMobile ? '1rem' : '2rem' }}>
           Based in New York
         </p>
 
@@ -62,8 +74,15 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
           </div>
         ) : (
           <>
-            <h1 style={{ ...fade(350), fontSize: isMobile ? 'clamp(34px, 9.5vw, 52px)' : 'clamp(52px, 6.5vw, 84px)', fontWeight: 500, letterSpacing: '-0.024em', lineHeight: 1.06, color: '#F2EFE6', maxWidth: '960px', marginBottom: isMobile ? '1.5rem' : '2.5rem' }}>
-              A product designer<br />trained as an architect.
+            <h1 style={{
+              fontFamily: 'var(--ff-serif)',
+              fontSize: isMobile ? 'clamp(38px, 10.5vw, 58px)' : 'clamp(56px, 7vw, 96px)',
+              fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.02,
+              color: '#F2EFE6', maxWidth: '1020px',
+              marginBottom: isMobile ? '1.5rem' : '2.5rem',
+            }}>
+              <RLine delay={250}>A product designer</RLine><br />
+              <RLine delay={400}><em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.72)' }}>trained</em>&nbsp;as an architect.</RLine>
             </h1>
             <p style={{ ...fade(500), fontSize: isMobile ? '16px' : '18px', fontWeight: 400, lineHeight: 1.65, color: 'rgba(242,239,230,0.6)', maxWidth: '540px', marginBottom: isMobile ? '2rem' : '3rem' }}>
               Currently at Algoma, designing and shipping a data-dense B2B SaaS platform end-to-end. Before software, buildings — so I prototype as comfortably in the physical world as on screen.
@@ -93,7 +112,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
         display: 'flex', alignItems: 'center', gap: '0.75rem',
       }}>
         <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
-        <span style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.35)' }}>Scroll</span>
+        <span style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.35)' }}>Scroll</span>
         <div style={{ width: '24px', height: '1px', background: 'rgba(242,239,230,0.3)' }} />
       </div>}
     </section>
