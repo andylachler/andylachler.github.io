@@ -15,7 +15,7 @@ const ARCHIVE_ITEMS = [
   { id: 'pastoral-urbanity', title: 'Pastoral Urbanity', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A speculative expansion of Farragut Houses in Brooklyn, framed as commons-based housing. Derived from a Grasshopper aggregation script tuned to stack outdoor commons below and private residence above.', bg: '#3D5448', imageIndex: 1, featured: true },
   { id: 'mesa-verde', title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Graduate CAP studio', desc: 'A Waste-to-Energy plant and nightclub on the Anable Basin in Long Island City. Concrete paraboloid "mesas" cluster out of an existing warehouse and organize the program where their bases intersect.', bg: '#D45A1B', imageIndex: 2, silhouette: 'mesa-verde', featured: true },
   { id: 'elevate-ravenswood', title: 'Elevate Ravenswood', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A mixed-use sports, education, and community-health building for the Ravenswood Community Land Trust. Mass timber, Vierendeel trusses, and a sunken basketball arena programmed to stay visible from the street.', bg: '#3D5448', imageIndex: 3, featured: true },
-  { id: 'unit-multiplication', title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Independent study', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4, featured: true },
+  { id: 'unit-multiplication', title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Craft — paper model', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4, featured: true },
   { id: 'brickell', title: 'Brickell Residential', year: '2023', org: 'Arquitectonica', type: 'Professional — schematic design', desc: 'A 32-unit mass timber multifamily building on a constrained infill lot in Brickell, Miami. Led schematic design and consultant coordination — long timber spans opened the floor plates and constrained the facade module.', bg: '#14211C', imageIndex: 4, featured: true },
 
   // ── Playable ──────────────────────────────────────────────────────────
@@ -27,10 +27,10 @@ const ARCHIVE_ITEMS = [
   { id: 'ball-game', title: 'Ball Game', year: '2024', org: 'Self-initiated', type: 'Unity / WebGL', desc: 'A small interactive ball-and-environment piece. Outdoor scene, camera rig, and physics-driven movement. Built as a scripting + prefab sandbox.', bg: '#14211C', imageIndex: 0, section: 'playable' },
 
   // ── Also ───────────────────────────────────────────────────────────────
-  { id: 'bethlehem-riverfront', title: 'Bethlehem Riverfront', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network.', bg: '#14211C', imageIndex: 5 },
-  { id: 'bethlehem-culinary', title: 'Bethlehem Culinary Institute', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Four-story culinary school in South Bethlehem, programmed around the regional farm economy.', bg: '#3D5448', imageIndex: 6 },
-  { id: 'one-room-schoolhouse', title: 'One Room Schoolhouse', year: '2017', org: 'Lehigh University', type: 'Studio project', desc: 'Expanded single-use structure on the Lehigh green for the Psychology department\u2019s child studies program.', bg: '#E8E4D5', imageIndex: 0 },
-  { id: 'singular-flow', title: 'Singular Development + Flow', year: '2017', org: 'Lehigh University', type: 'Independent study', desc: 'A lightweight three-dimensional unit joined to a mirror of itself. Band thickness varies row to row to produce a flow of density.', bg: '#E8E4D5', imageIndex: 2 },
+  { id: 'bethlehem-riverfront', title: 'Bethlehem Riverfront', year: '2017', org: 'Lehigh University', type: 'Craft — physical model', desc: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network.', bg: '#14211C', imageIndex: 5 },
+  { id: 'bethlehem-culinary', title: 'Bethlehem Culinary Institute', year: '2017', org: 'Lehigh University', type: 'Craft — physical model', desc: 'Four-story culinary school in South Bethlehem, programmed around the regional farm economy.', bg: '#3D5448', imageIndex: 6 },
+  { id: 'one-room-schoolhouse', title: 'One Room Schoolhouse', year: '2017', org: 'Lehigh University', type: 'Craft — physical model', desc: 'Expanded single-use structure on the Lehigh green for the Psychology department\u2019s child studies program.', bg: '#E8E4D5', imageIndex: 0 },
+  { id: 'singular-flow', title: 'Singular Development + Flow', year: '2017', org: 'Lehigh University', type: 'Craft — paper model', desc: 'A lightweight three-dimensional unit joined to a mirror of itself. Band thickness varies row to row to produce a flow of density.', bg: '#E8E4D5', imageIndex: 2 },
   { id: 'dissection', title: 'Dissection', year: '2019', org: 'Pratt Institute', type: 'Intro sequence', desc: 'An everyday object cut apart on paper. Make2D linework, section planes, and three drawing iterations from the first-semester intro sequence.', bg: '#E8E4D5', imageIndex: 3 },
 ];
 window.ARCHIVE_ITEMS = ARCHIVE_ITEMS;
@@ -162,7 +162,7 @@ const ARCHIVE_DATA = {
 
   'unit-multiplication': {
     title: 'Unit Multiplication',
-    org: 'Lehigh University', year: '2018', role: 'Independent study',
+    org: 'Lehigh University', year: '2018', role: 'Craft — paper model',
     bg: '#14211C', tileBg: '#14211C', imageIndex: 4,
     lede: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself.',
     body: 'An independent study in parametric paper architecture at Lehigh. Starting from a single folded unit, the project tests how a field of units behaves when joined at controlled points by brass fasteners \u2014 how density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. The same piece, recombined, produces a catalog of forms.',
@@ -184,7 +184,7 @@ const ARCHIVE_DATA = {
   // ── Also (quieter entries — still clickable, still full detail pages) ──
   'bethlehem-riverfront': {
     title: 'Bethlehem Riverfront',
-    org: 'Lehigh University', year: '2017', role: 'Studio project',
+    org: 'Lehigh University', year: '2017', role: 'Craft — physical model',
     bg: '#14211C', tileBg: '#14211C', imageIndex: 5,
     lede: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network to connect North and South Bethlehem across the river.',
     body: 'Bethlehem\u2019s two halves \u2014 the old steel north side and the industrial south side \u2014 are separated by the Lehigh River and a rail corridor. The project proposes a riverfront park and a small interpretive museum on the south bank, using the existing towpath and trail network as connective tissue back to the South Side and over to the North.',
@@ -203,7 +203,7 @@ const ARCHIVE_DATA = {
   },
   'bethlehem-culinary': {
     title: 'Bethlehem Culinary Institute',
-    org: 'Lehigh University', year: '2017', role: 'Studio project',
+    org: 'Lehigh University', year: '2017', role: 'Craft — physical model',
     bg: '#3D5448', tileBg: '#3D5448', imageIndex: 6,
     lede: 'Four-story culinary school in South Bethlehem. Programmed around the regional farm economy and the 30-minute gap in culinary schools across the Allentown\u2013Bethlehem\u2013Easton region.',
     body: 'A four-story culinary institute in South Bethlehem. The brief was an \u201curban store\u201d generic; the project reframed it around a concrete regional gap \u2014 the 30-minute drive between the Lehigh Valley and the nearest culinary school \u2014 and tied the program to the farm economy of the surrounding region.',
@@ -222,7 +222,7 @@ const ARCHIVE_DATA = {
   },
   'one-room-schoolhouse': {
     title: 'One Room Schoolhouse',
-    org: 'Lehigh University', year: '2017', role: 'Studio project',
+    org: 'Lehigh University', year: '2017', role: 'Craft — physical model',
     bg: '#E8E4D5', tileBg: '#E8E4D5', imageIndex: 0,
     lede: 'Expanded single-use structure on the Lehigh green for the Psychology department\u2019s child studies program. Angular faceted roof tuned to keep young attention focused outward into the space.',
     body: 'A one-room schoolhouse expanded for contemporary program. The client was Lehigh\u2019s Psychology department and its early-childhood studies program, which needed a single dedicated room on the main green. The architectural question was how to make a single-volume structure that stays legible to a young user while still accommodating adult observation and circulation.',
@@ -241,7 +241,7 @@ const ARCHIVE_DATA = {
   },
   'singular-flow': {
     title: 'Singular Development + Flow',
-    org: 'Lehigh University', year: '2017', role: 'Independent study',
+    org: 'Lehigh University', year: '2017', role: 'Craft — paper model',
     bg: '#E8E4D5', tileBg: '#E8E4D5', imageIndex: 2,
     lede: 'A single lightweight three-dimensional unit joined to a mirror of itself. Viewable right-side up or upside-down \u2014 band thickness varies row to row to produce a flow of density through the form.',
     body: 'An independent study in unit-based three-dimensional form. A single lightweight unit is joined to a mirror of itself, then varied by band thickness as the rows progress, producing a gradient of density through the form. The piece is designed to read either way up \u2014 top or bottom is a property of the viewer, not of the object.',
