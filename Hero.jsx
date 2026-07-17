@@ -27,7 +27,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
   );
 
   return (
-    <section style={{
+    <section id="home-hero" style={{
       position: 'relative',
       // svh = small viewport height — honest on iOS where the URL bar makes
       // 100vh taller than the visible screen. Mobile also gets top padding so

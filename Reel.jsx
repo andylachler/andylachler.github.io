@@ -151,7 +151,7 @@ const Reel = ({ onNavigate }) => {
 
   if (isMobile) {
     return (
-      <section style={{ background: '#14211C', padding: '5rem 1.25rem' }}>
+      <section id="home-reel" style={{ background: '#14211C', padding: '5rem 1.25rem' }}>
         {head}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {items.map(it => <ReelCard key={it.id} item={it} onNavigate={onNavigate} isMobile />)}
@@ -161,7 +161,7 @@ const Reel = ({ onNavigate }) => {
   }
 
   return (
-    <div ref={hostRef} style={{ position: 'relative', background: '#14211C' }}>
+    <div ref={hostRef} id="home-reel" style={{ position: 'relative', background: '#14211C' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
         {head}
         <div ref={trackRef} style={{

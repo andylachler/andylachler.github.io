@@ -7,6 +7,54 @@ const AL_MARK = ({ color = '#14211C', size = 20 }) => (
 );
 
 // Viewport-width hook — true below breakpoint. Used to swap desktop pills for a hamburger.
+// NavDropRow — v4 dropdown row: title left, mono meta right, hover wash.
+const NavDropRow = ({ label, meta, onClick }) => {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '24px',
+        width: '100%', textAlign: 'left',
+        padding: '10px 12px', borderRadius: '8px',
+        background: hov ? 'rgba(242,239,230,0.07)' : 'transparent',
+        border: 'none', cursor: 'pointer',
+        transition: 'background 160ms ease',
+        fontFamily: "'Inter', system-ui, sans-serif",
+      }}
+    >
+      <span style={{ fontSize: '14px', fontWeight: 500, color: '#F2EFE6' }}>{label}</span>
+      <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '9px', fontWeight: 400, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.45)', whiteSpace: 'nowrap' }}>{meta}</span>
+    </button>
+  );
+};
+
+// NavDropCta — mono orange call-to-action row at the panel foot.
+const NavDropCta = ({ children, onClick, accentColor = '#D45A1B', bare = false }) => {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: 'block', textAlign: 'left',
+        width: bare ? 'auto' : '100%',
+        padding: bare ? 0 : '10px 12px',
+        marginTop: bare ? 0 : '6px',
+        background: 'transparent', border: 'none', cursor: 'pointer',
+        fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 400,
+        letterSpacing: '0.2em', textTransform: 'uppercase',
+        color: accentColor,
+        opacity: hov ? 1 : 0.85,
+        transition: 'opacity 160ms ease',
+      }}
+    >{children}</button>
+  );
+};
+
 // NavClock — live NYC time, mono, sits in the nav's right column (desktop).
 // Part of the v4 design-language migration (P1).
 const NavClock = ({ color }) => {
@@ -66,14 +114,16 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
   }, [isMobile]);
 
   const open          = (m) => { clearTimeout(closeTimer.current); setOpenMenu(m); };
-  const scheduleClose = () => { closeTimer.current = setTimeout(() => setOpenMenu(null), 120); };
+  // 240ms grace: the v4 panel floats 12px below the nav, so the pointer needs
+  // time to cross the gap without the panel vanishing.
+  const scheduleClose = () => { closeTimer.current = setTimeout(() => setOpenMenu(null), 240); };
   const cancelClose   = () => { clearTimeout(closeTimer.current); };
   const closeNow      = () => { clearTimeout(closeTimer.current); setOpenMenu(null); setMobileOpen(false); };
 
   const menuOpen = openMenu !== null;
-  // The nav "wakes up" to frosted state whenever any panel is open (dropdown or mobile sheet),
-  // so the surfaces read as a single continuous glass body over dark heroes.
-  const overDark = isDarkHero && !scrolled && !menuOpen && !mobileOpen;
+  // v4 dropdown floats detached below the nav, so opening a menu no longer
+  // needs to frost the nav row itself — only the mobile sheet does.
+  const overDark = isDarkHero && !scrolled && !mobileOpen;
 
   const navBg        = overDark ? 'transparent' : 'rgba(242,239,230,0.584)';
   const navBorder    = overDark ? '1px solid transparent' : '1px solid rgba(20,33,28,0.082)';
@@ -101,7 +151,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
           background: navBg,
           backdropFilter: overDark ? 'none' : 'blur(12px)',
           WebkitBackdropFilter: overDark ? 'none' : 'blur(12px)',
-          borderBottom: menuOpen ? 'none' : navBorder, // seam hidden when dropdown extends it
+          borderBottom: navBorder,
           borderLeft: overDark ? '1px solid transparent' : '1px solid rgba(20,33,28,0.082)',
           borderRight: overDark ? '1px solid transparent' : '1px solid rgba(20,33,28,0.082)',
           transition: 'background 350ms cubic-bezier(0.22,1,0.36,1), border-color 350ms cubic-bezier(0.22,1,0.36,1)',
@@ -188,57 +238,68 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
         </nav>
       </div>
 
-      {/* Desktop dropdown panel — separate frosted container with rounded bottom corners.
-          Sits flush under the nav row so they read as one continuous glass surface. */}
+      {/* Desktop dropdown — v4 design language: compact ink glass panel floating
+          12px below the nav, centered under the pills. Text rows, not tiles. */}
       {!isMobile && (
-        <div
-          onMouseEnter={cancelClose}
-          onMouseLeave={scheduleClose}
-          style={{
-            maxHeight: menuOpen ? '320px' : '0px',
-            overflow: 'hidden',
-            transition: 'max-height 350ms cubic-bezier(0.22,1,0.36,1)',
-          }}
-        >
-          <div style={{
-            background: panelBg,
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            borderBottom: panelBorder,
-            borderLeft: panelBorder,
-            borderRight: panelBorder,
-            borderRadius: '0 0 24px 24px',
-            padding: '1.25rem 2.5rem 1.5rem',
-            opacity: menuOpen ? 1 : 0,
-            transform: menuOpen ? 'translateY(0)' : 'translateY(-6px)',
-            transition: 'opacity 240ms cubic-bezier(0.22,1,0.36,1) 60ms, transform 240ms cubic-bezier(0.22,1,0.36,1) 60ms',
-          }}>
+        <div style={{
+          position: 'absolute', top: '80px', left: 0, right: 0,
+          display: 'flex', justifyContent: 'center',
+          paddingTop: '12px',
+          pointerEvents: 'none',
+        }}>
+          <div
+            onMouseEnter={cancelClose}
+            onMouseLeave={scheduleClose}
+            style={{
+              pointerEvents: menuOpen ? 'auto' : 'none',
+              minWidth: '400px', maxWidth: '560px',
+              background: 'rgba(16,26,22,0.92)',
+              backdropFilter: 'blur(14px)',
+              WebkitBackdropFilter: 'blur(14px)',
+              border: '1px solid rgba(242,239,230,0.1)',
+              borderRadius: '14px',
+              padding: '14px',
+              opacity: menuOpen ? 1 : 0,
+              visibility: menuOpen ? 'visible' : 'hidden',
+              transform: menuOpen ? 'translateY(0)' : 'translateY(-6px)',
+              transition: menuOpen
+                ? 'opacity 220ms ease, transform 220ms ease'
+                : 'opacity 220ms ease, transform 220ms ease, visibility 0s linear 220ms',
+            }}
+          >
             {openMenu === 'work' && (
-              <DropdownCarousel
-                items={projects}
-                onItemClick={(id) => { closeNow(); onNavigate('project', id); }}
-                ctaLabel="All projects →"
-                onCta={() => { closeNow(); onNavigate('work'); }}
-                accentColor={accentColor}
-                mutedColor={dropdownMuted}
-              />
+              <>
+                {projects.map(p => (
+                  <NavDropRow key={p.id} label={p.title}
+                    meta={`${(p.role || '').split(' — ')[0]} · ${p.year}`}
+                    onClick={() => { closeNow(); onNavigate('project', p.id); }} />
+                ))}
+                <NavDropCta accentColor={accentColor} onClick={() => { closeNow(); onNavigate('work'); }}>All work →</NavDropCta>
+              </>
             )}
             {openMenu === 'archive' && (
-              <DropdownCarousel
-                items={archiveItems}
-                onItemClick={(id) => { closeNow(); onNavigate('archive-project', id); }}
-                ctaLabel="View all foundations →"
-                onCta={() => { closeNow(); onNavigate('archive'); }}
-                accentColor={accentColor}
-                mutedColor={dropdownMuted}
-              />
+              <>
+                {archiveItems.map(it => (
+                  <NavDropRow key={it.id} label={it.title}
+                    meta={`${(it.type || '').split(' — ')[0]} · ${it.year}`}
+                    onClick={() => { closeNow(); onNavigate('archive-project', it.id); }} />
+                ))}
+                <NavDropCta accentColor={accentColor} onClick={() => { closeNow(); onNavigate('archive'); }}>View all foundations →</NavDropCta>
+              </>
             )}
             {openMenu === 'about' && (
-              <AboutDropdown
-                onReadMore={() => { closeNow(); onNavigate('about'); }}
-                accentColor={accentColor}
-                mutedColor={dropdownMuted}
-              />
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', padding: '6px' }}>
+                {((window.IMAGE_MANIFEST || {}).about || {}).hero
+                  ? <img src={window.IMAGE_MANIFEST.about.hero} alt="Andreas Lächler" style={{ width: '84px', height: '84px', borderRadius: '999px', objectFit: 'cover', objectPosition: 'center 20%', flexShrink: 0, border: '1px solid rgba(242,239,230,0.15)' }} />
+                  : <Avatar size={84} accentColor={accentColor} />}
+                <div>
+                  <p style={{ margin: '2px 0 6px', fontFamily: 'var(--ff-mono)', fontSize: '9px', fontWeight: 400, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.5)' }}>Andreas Lächler · Product Designer</p>
+                  <p style={{ margin: '0 0 10px', fontSize: '13px', lineHeight: 1.55, color: 'rgba(242,239,230,0.75)' }}>
+                    Product designer in New York, working across digital and physical. Currently at Algoma. Previously Arquitectonica; trained as an architect at Pratt and Lehigh.
+                  </p>
+                  <NavDropCta accentColor={accentColor} bare onClick={() => { closeNow(); onNavigate('about'); }}>Full about →</NavDropCta>
+                </div>
+              </div>
             )}
           </div>
         </div>
