@@ -91,6 +91,14 @@ const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
             transition: 'transform 700ms cubic-bezier(0.2,0.7,0.2,1)',
           }} />
         </>
+      ) : window.ProjectVisual ? (
+        /* No tile in the manifest — fall back to the hand-traced linework
+           silhouette (TilePlaceholder) on the project's own background color,
+           same as the old ProjectTile grammar. Upgrades automatically when a
+           tile.jpg lands in images/<id>/. */
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0 }}>
+          <ProjectVisual projectId={item.id} bg={item.bg || '#16261F'} index={item.imageIndex || 0} hovered={hov} silhouette={item.silhouette} />
+        </div>
       ) : (
         <div aria-hidden="true" style={{
           position: 'absolute', right: '-4%', bottom: '-14%',
@@ -124,6 +132,7 @@ const Reel = ({ onNavigate }) => {
       cat: (p.role || '').split(' — ')[0] || 'Project',
       sub: (p.role || '').split(' — ')[1] || '',
       meta: p.org, nav: ['project', p.id],
+      bg: p.bg, imageIndex: p.imageIndex, silhouette: p.silhouette,
       n: String(i + 1).padStart(2, '0'),
     }));
     return [...featured, REEL_MORE];

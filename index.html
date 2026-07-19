@@ -114,10 +114,17 @@ const WorkPage = ({ onNavigate }) => {
       note: 'Unity / WebGL experiments — architecture-adjacent: terrain, environment, physics, real-time lighting.' },
   ];
   const toCard = (pid) => {
+    // bg / imageIndex / silhouette feed ReelCard's linework fallback for
+    // projects that don't have a tile image in the manifest yet.
     const p = window.PROJECT_DATA?.[pid];
-    if (p) return { id: pid, title: p.title, year: String(p.year), cat: (p.role || '').split(' — ')[0] || 'Project', sub: (p.role || '').split(' — ')[1] || '', meta: p.org, nav: ['project', pid] };
+    if (p) {
+      const feat = (window.PROJECTS || []).find(x => x.id === pid) || {};
+      return { id: pid, title: p.title, year: String(p.year), cat: (p.role || '').split(' — ')[0] || 'Project', sub: (p.role || '').split(' — ')[1] || '', meta: p.org, nav: ['project', pid],
+        bg: p.bg || p.tileBg || feat.bg, imageIndex: p.imageIndex ?? feat.imageIndex, silhouette: p.silhouette || feat.silhouette };
+    }
     const a = (window.ARCHIVE_ITEMS || []).find(it => it.id === pid);
-    if (a) return { id: pid, title: a.title, year: String(a.year), cat: (a.type || '').split(' — ')[0] || 'Project', sub: (a.type || '').split(' — ')[1] || '', meta: a.org, nav: ['archive-project', pid] };
+    if (a) return { id: pid, title: a.title, year: String(a.year), cat: (a.type || '').split(' — ')[0] || 'Project', sub: (a.type || '').split(' — ')[1] || '', meta: a.org, nav: ['archive-project', pid],
+      bg: a.bg, imageIndex: a.imageIndex, silhouette: a.silhouette };
     return null;
   };
   return (
