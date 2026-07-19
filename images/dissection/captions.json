@@ -1,5 +1,10 @@
 {
   "01": "First pass — pure Make2D linework, the object cut by three section planes.",
   "02": "Second pass — hatch and tone begin separating solid from cut surface.",
-  "03": "Final drawing — color splits skin, section cut, and interior void."
+  "03": "Final drawing — color splits skin, section cut, and interior void.",
+  "04": "Primitive study — the crumpled-paper volume the drawings were projected onto.",
+  "05": "Primitive study — second orientation.",
+  "06": "Primitive study — third orientation.",
+  "07": "Top view — the projected linework as a layered paper relief.",
+  "08": "The constructed cutout — plywood strata and paper void, the drawing rebuilt in three dimensions."
 }

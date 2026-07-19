@@ -163,6 +163,7 @@ const PROJECT_DATA = {
     title: 'Exhibition Trailer',
     org: 'Independent', year: '2022', role: 'Design \u2014 mobile pop-up',
     bg: '#3D5448',
+    bookLabel: 'From the M.Arch portfolio \u00b7 2022', bookCols: 2,
     lede: 'A sustainable mobile exhibition trailer for MiiR. Existing gooseneck base, glulam-and-recycled-timber enclosure, deck that folds into the face for transport and opens on site into an inhabitable off-grid pop-up.',
     body: 'A submission to the Duggal Junior Designer Design Challenge: a mobile exhibition space for MiiR that moves between trade shows and events without the cost — monetary or embodied-carbon — of custom fabrication. MiiR’s mission funds projects for clean water, a healthy environment, and strong communities, so the enclosure is built from recycled timber, glulam beams, and existing components wherever a stock assembly was viable. An off-the-shelf gooseneck trailer forms the base, lightly modified with a deck-mounted battery system and container-style frame mounting points; the demountable enclosure folds down into the face for transport and opens on-site into a full exhibition interior under tall ceilings and a moon-roof.',
     process: [
@@ -432,6 +433,20 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Portfolio book pages — shared BookSpreads component. Renders only
+          when images/<project-id>/book-NN.jpg exist (e.g. exhibition-trailer's
+          M.Arch 2022 pages). Layout metadata comes from PROJECT_DATA. */}
+      {window.BookSpreads && (
+        <BookSpreads
+          projectId={projectId}
+          title={project.title}
+          label={project.bookLabel || 'From the portfolio book'}
+          cols={project.bookCols || 1}
+          isMobile={isMobile}
+          style={fade(320)}
+        />
       )}
 
       {/* Gallery — images from images/<project-id>/ via the manifest.

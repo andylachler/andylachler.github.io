@@ -105,6 +105,46 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/dissection/03.png",
         "caption": "Final drawing — color splits skin, section cut, and interior void."
+      },
+      {
+        "src": "images/dissection/04.jpg",
+        "caption": "Primitive study — the crumpled-paper volume the drawings were projected onto."
+      },
+      {
+        "src": "images/dissection/05.jpg",
+        "caption": "Primitive study — second orientation."
+      },
+      {
+        "src": "images/dissection/06.jpg",
+        "caption": "Primitive study — third orientation."
+      },
+      {
+        "src": "images/dissection/07.jpg",
+        "caption": "Top view — the projected linework as a layered paper relief."
+      },
+      {
+        "src": "images/dissection/08.jpg",
+        "caption": "The constructed cutout — plywood strata and paper void, the drawing rebuilt in three dimensions."
+      }
+    ]
+  },
+  "elevate-ravenswood": {
+    "book": [
+      {
+        "src": "images/elevate-ravenswood/book-01.jpg",
+        "caption": "Portfolio page — Elevate Ravenswood: building proposal for the community land trust."
+      },
+      {
+        "src": "images/elevate-ravenswood/book-02.jpg",
+        "caption": "Portfolio page — site context and the sunken arena interior."
+      },
+      {
+        "src": "images/elevate-ravenswood/book-03.jpg",
+        "caption": "Portfolio page — long section through arena and community floors."
+      },
+      {
+        "src": "images/elevate-ravenswood/book-04.jpg",
+        "caption": "Portfolio page — program massing and roof; mass-timber logic."
       }
     ]
   },
@@ -157,6 +197,24 @@ window.IMAGE_MANIFEST = {
         "video": true,
         "caption": "Animation."
       }
+    ],
+    "book": [
+      {
+        "src": "images/exhibition-trailer/book-01.jpg",
+        "caption": "Portfolio page — MiiR Exhibition Trailer: competition brief and exterior."
+      },
+      {
+        "src": "images/exhibition-trailer/book-02.jpg",
+        "caption": "Portfolio page — exploded axonometric; the demountable kit of parts."
+      },
+      {
+        "src": "images/exhibition-trailer/book-03.jpg",
+        "caption": "Portfolio page — interior views and chassis sections."
+      },
+      {
+        "src": "images/exhibition-trailer/book-04.jpg",
+        "caption": "Portfolio page — final renders and interior details."
+      }
     ]
   },
   "feasibility": {
@@ -169,6 +227,26 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/feasibility/02.png",
         "caption": "Zoning report module — bulk & use controls with rule-change diffing; detail collapsed one layer down so the table stays scannable."
+      }
+    ]
+  },
+  "fluxing": {
+    "book": [
+      {
+        "src": "images/fluxing/book-01.jpg",
+        "caption": "Portfolio page — Fluxing: reimagining New York’s relationship to the waterfront."
+      },
+      {
+        "src": "images/fluxing/book-02.jpg",
+        "caption": "Portfolio page — the timber vault opening toward the skyline."
+      },
+      {
+        "src": "images/fluxing/book-03.jpg",
+        "caption": "Portfolio page — water-surface studies and the site from above."
+      },
+      {
+        "src": "images/fluxing/book-04.jpg",
+        "caption": "Portfolio page — inside the vault; Newtown Creek site maps."
       }
     ]
   },
@@ -190,9 +268,28 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/mesa-verde/05.jpg"
       }
+    ],
+    "book": [
+      {
+        "src": "images/mesa-verde/book-01.jpg",
+        "caption": "Portfolio page — Mesa Verde: integrated building systems seminar; the existing silos."
+      },
+      {
+        "src": "images/mesa-verde/book-02.jpg",
+        "caption": "Portfolio page — site plan and massing on the Anable Basin."
+      },
+      {
+        "src": "images/mesa-verde/book-03.jpg",
+        "caption": "Portfolio page — envelope detail section."
+      },
+      {
+        "src": "images/mesa-verde/book-04.jpg",
+        "caption": "Portfolio page — interior perspectives; waste-to-energy machinery and nightclub light."
+      }
     ]
   },
   "one-room-schoolhouse": {
+    "hero": "images/one-room-schoolhouse/hero.jpg",
     "tile": "images/one-room-schoolhouse/tile.jpg",
     "gallery": [
       {
@@ -238,21 +335,28 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/pastoral-urbanity/05.jpg"
       }
+    ],
+    "book": [
+      {
+        "src": "images/pastoral-urbanity/book-01.jpg",
+        "caption": "Portfolio page — Pastoral Urbanity: rethinking the commons as habitat; sectional strategy."
+      },
+      {
+        "src": "images/pastoral-urbanity/book-02.jpg",
+        "caption": "Portfolio page — the aggregated tower against the Brooklyn skyline."
+      },
+      {
+        "src": "images/pastoral-urbanity/book-03.jpg",
+        "caption": "Portfolio page — unit components, material studies, and aggregation logic."
+      },
+      {
+        "src": "images/pastoral-urbanity/book-04.jpg",
+        "caption": "Portfolio page — night render; the commons lit within the stack."
+      }
     ]
   },
   "singular-flow": {
     "tile": "images/singular-flow/tile.jpg",
-    "gallery": [
-      {
-        "src": "images/singular-flow/01.jpg"
-      },
-      {
-        "src": "images/singular-flow/02.jpg"
-      },
-      {
-        "src": "images/singular-flow/03.jpg"
-      }
-    ],
     "book": [
       {
         "src": "images/singular-flow/book-01.jpg",

@@ -77,7 +77,7 @@ const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
         border: '1px solid rgba(242,239,230,0.08)',
         borderRadius: '6px', overflow: 'hidden',
         display: 'grid', gridTemplateRows: 'auto 1fr auto',
-        padding: grid ? '20px' : '26px', cursor: 'pointer',
+        padding: 0, cursor: 'pointer',
         transform: hov ? 'translateY(-3px)' : 'none',
         transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1)',
       }}
@@ -90,10 +90,6 @@ const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
             transform: hov ? 'scale(1.045)' : 'scale(1.001)',
             transition: 'transform 700ms cubic-bezier(0.2,0.7,0.2,1)',
           }} />
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to top, rgba(11,21,19,0.92) 0%, rgba(11,21,19,0.45) 34%, rgba(11,21,19,0.12) 60%, rgba(11,21,19,0.25) 100%)',
-          }} />
         </>
       ) : (
         <div aria-hidden="true" style={{
@@ -103,22 +99,14 @@ const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
           color: 'rgba(242,239,230,0.05)', pointerEvents: 'none', userSelect: 'none',
         }}>{item.ghost || item.title[0]}</div>
       )}
-      <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.6)' }}>
-        <span>{[item.n, item.year].filter(Boolean).join(' · ')}</span><span>{item.cat}</span>
-      </div>
-      <div style={{ position: 'relative', alignSelf: 'end' }}>
-        <h3 style={{ fontFamily: 'var(--ff-serif)', fontSize: grid ? 'clamp(21px, 1.6vw, 27px)' : 'clamp(28px, 3.2vw, 42px)', lineHeight: 1.05, letterSpacing: '-0.02em', fontWeight: 400, color: '#F2EFE6', margin: 0 }}>
+      <div />
+      <div />
+      {/* Bottom info strip — compact, fades up into the image */}
+      <div style={{ position: 'relative', background: 'linear-gradient(to top, rgba(11,21,19,0.82) 0%, rgba(11,21,19,0.58) 55%, rgba(11,21,19,0) 100%)', padding: grid ? '30px 20px 12px' : '42px 26px 16px' }}>
+        <h3 style={{ fontFamily: 'var(--ff-serif)', fontSize: grid ? 'clamp(19px, 1.5vw, 24px)' : 'clamp(24px, 2.6vw, 32px)', lineHeight: 1.05, letterSpacing: '-0.02em', fontWeight: 400, color: '#F2EFE6', margin: 0 }}>
           {item.em ? <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.8)' }}>{item.title}</em> : item.title}
         </h3>
-        <p style={{ margin: '10px 0 0', fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.6)' }}>{item.sub}</p>
-      </div>
-      <div style={{ position: 'relative', marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(242,239,230,0.14)', paddingTop: '13px', fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.6)' }}>
-        <span>{item.meta}</span>
-        <span style={{
-          width: '30px', height: '30px', borderRadius: '999px', border: '1px solid rgba(242,239,230,0.25)',
-          display: 'grid', placeItems: 'center', color: 'rgba(242,239,230,0.85)',
-          transform: hov ? 'translate(2px, -2px)' : 'none', transition: 'transform 200ms',
-        }}>↗</span>
+        <p style={{ margin: '6px 0 0', fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.65)' }}>{[item.sub, item.meta].filter(Boolean).join(' · ')}</p>
       </div>
     </article>
   );

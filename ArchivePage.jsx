@@ -42,15 +42,20 @@ const ARCHIVE_DATA = {
     title: 'Dissection',
     org: 'Pratt Institute', year: '2019', role: 'Intro sequence — drawing',
     bg: '#E8E4D5', tileBg: '#E8E4D5', imageIndex: 3,
-    lede: 'An everyday object taken apart on paper. Orthographic dissection drawings from the first-semester intro sequence at Pratt.',
-    body: 'The exercise: dissect a familiar object and redraw it as a precise projection system. Section planes slice the volume, Make2D linework flattens it, and hatch and color progressively separate skin, cut surface, and interior void. Three iterations of the same drawing are shown below — the visual language tightening with each pass.',
-    outcome: 'Drawing series, Fall 2019.',
+    lede: 'An everyday object taken apart on paper, then rebuilt in the material. Dissection drawings and the constructed cutout from the first-semester intro sequence at Pratt.',
+    body: 'The exercise started two-dimensional: dissect a familiar object and redraw it as a precise projection system. Section planes slice the volume, Make2D linework flattens it, and hatch and color progressively separate skin, cut surface, and interior void — three iterations of the same drawing, the visual language tightening with each pass. The drawing then left the page: the linework was projected onto a primitive volume to inform the cutout and the void constructed physically — a layered paper relief and a plywood-and-paper model that rebuild the dissection in three dimensions.',
+    process: [
+      'The three drawing passes run as a triptych below — linework, then tone, then color, each pass sharpening the separation of skin, cut, and void.',
+      'The projection step turned the 2D system into instructions for making: crumpled-paper primitives established the receiving volume, and the projected linework drove the cutout — where material was removed and where the void was built up in plywood strata.',
+    ],
+    outcome: 'Drawing series and constructed models, Fall 2019.',
     credits: 'Pratt Institute, graduate intro sequence. Andreas Lächler.',
     details: [
       { label: 'Course', value: 'Intro sequence, first semester' },
-      { label: 'Medium', value: 'Rhino Make2D · Illustrator' },
+      { label: 'Medium', value: 'Rhino Make2D · Illustrator · paper, plywood' },
       { label: 'Year', value: '2019' },
     ],
+    galleryCols: 3,
     next: 'unit-multiplication',
   },
   'brickell': {
@@ -321,6 +326,16 @@ const ARCHIVE_DATA = {
   },
 
 };
+
+// Portfolio-book metadata — which book a project's pages come from and how
+// they lay out. The 2018 undergrad book is wide 2.4:1 spreads (stacked
+// full-width); the 2022 M.Arch book is portrait letter pages (2-up grid).
+['singular-flow', 'unit-multiplication', 'bethlehem-riverfront', 'bethlehem-culinary', 'one-room-schoolhouse'].forEach(id => {
+  if (ARCHIVE_DATA[id]) ARCHIVE_DATA[id].bookLabel = 'From the portfolio book · 2018';
+});
+['fluxing', 'pastoral-urbanity', 'mesa-verde', 'elevate-ravenswood'].forEach(id => {
+  if (ARCHIVE_DATA[id]) Object.assign(ARCHIVE_DATA[id], { bookLabel: 'From the M.Arch portfolio · 2022', bookCols: 2 });
+});
 window.ARCHIVE_DATA = ARCHIVE_DATA;
 
 const ArchivePage = ({ onNavigate }) => {
@@ -522,24 +537,12 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
   const [heroHov, setHeroHov] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const [playing, setPlaying] = React.useState(false);
-  const [zoom, setZoom] = React.useState(null); // { src, caption } — lightbox for portfolio spreads
   const isMobile = (window.useIsMobile || (() => false))(768);
   React.useEffect(() => {
     requestAnimationFrame(() => setMounted(true));
     setHeroHov(false);
     setPlaying(false); // reset Unity embed when navigating between projects
-    setZoom(null);
   }, [projectId]);
-
-  // Lightbox: Escape closes, body scroll locks while open.
-  React.useEffect(() => {
-    if (!zoom) return;
-    const onKey = (e) => { if (e.key === 'Escape') setZoom(null); };
-    window.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
-  }, [zoom]);
 
   const fade = (delay) => ({
     opacity: mounted ? 1 : 0,
@@ -753,32 +756,18 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         </div>
       )}
 
-      {/* Portfolio spreads — pages pulled from the 2018 undergraduate portfolio
-          book (images/<project-id>/book-NN.jpg via the manifest). Wide 2.4:1
-          InDesign spreads: diagrams, site analysis, design decisions. Shown
-          full-width with a click-to-zoom lightbox (spread text is small at
-          column width); the large-format photographs follow below. */}
-      {(((window.IMAGE_MANIFEST || {})[projectId] || {}).book || []).length > 0 && (
-        <div style={{ ...fade(320), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem', marginBottom: '1.5rem' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>From the portfolio book · 2018</p>
-            <p style={{ fontSize: '11px', fontFamily: 'var(--ff-mono)', letterSpacing: '0.08em', color: 'rgba(20,33,28,0.35)', margin: 0 }}>Click a spread to enlarge</p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.5rem' : '2rem' }}>
-            {((window.IMAGE_MANIFEST || {})[projectId] || {}).book.map((b, i) => (
-              <figure key={b.src} style={{ margin: 0 }}>
-                <img
-                  src={b.src} alt={b.caption || `${project.title} — portfolio spread ${i + 1}`} loading="lazy"
-                  onClick={() => setZoom(b)}
-                  style={{ width: '100%', display: 'block', borderRadius: '10px', border: '0.5px solid rgba(20,33,28,0.12)', cursor: 'zoom-in', background: '#fff' }}
-                />
-                {b.caption && (
-                  <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>{b.caption}</figcaption>
-                )}
-              </figure>
-            ))}
-          </div>
-        </div>
+      {/* Portfolio book pages — shared BookSpreads component (undergrad 2018
+          wide spreads stack full-width; M.Arch 2022 portrait pages render
+          2-up via bookCols). Photographs follow below. */}
+      {window.BookSpreads && (
+        <BookSpreads
+          projectId={projectId}
+          title={project.title}
+          label={project.bookLabel || 'From the portfolio book'}
+          cols={project.bookCols || 1}
+          isMobile={isMobile}
+          style={fade(320)}
+        />
       )}
 
       {/* Gallery — photographs from images/<project-id>/ via the manifest.
@@ -787,7 +776,11 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
       {(((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || []).length > 0 && (
         <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Photographs</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
+          {/* galleryCols: multi-column grid (e.g. dissection's triptych rows) —
+              images too large to stack vertically sit side by side instead. */}
+          <div style={project.galleryCols && !isMobile
+            ? { display: 'grid', gridTemplateColumns: `repeat(${project.galleryCols}, 1fr)`, gap: '1rem', alignItems: 'start' }
+            : { display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
             {((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery.map((g, i) => (
               <figure key={g.src} style={{ margin: 0 }}>
                 {g.video ? (
@@ -836,50 +829,6 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         </div>
       )}
 
-      {/* Spread lightbox — dark overlay; the spread renders at ~85vh tall so
-          diagram text is actually legible, with horizontal scroll to pan the
-          wide 2.4:1 page. Click backdrop or press Escape to close. */}
-      {zoom && (
-        <div
-          onClick={() => setZoom(null)}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 2000,
-            background: 'rgba(12,16,14,0.94)',
-            display: 'flex', flexDirection: 'column',
-            padding: isMobile ? '3.5rem 0 1rem' : '3.5rem 1.5rem 1.5rem',
-            cursor: 'zoom-out',
-          }}
-        >
-          <button
-            onClick={() => setZoom(null)}
-            aria-label="Close"
-            style={{
-              position: 'absolute', top: '1rem', right: '1.25rem',
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: 'rgba(242,239,230,0.8)', fontSize: '13px',
-              fontFamily: 'var(--ff-mono)', letterSpacing: '0.1em', textTransform: 'uppercase',
-            }}
-          >
-            Close ✕
-          </button>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{ flex: 1, overflow: 'auto', display: 'flex', alignItems: 'center', cursor: 'default', WebkitOverflowScrolling: 'touch' }}
-          >
-            <img
-              src={zoom.src} alt={zoom.caption || 'Portfolio spread'}
-              style={isMobile
-                ? { width: 'auto', height: '72vh', maxWidth: 'none', margin: 'auto', display: 'block' }
-                : { height: '82vh', width: 'auto', maxWidth: 'none', margin: 'auto', display: 'block', borderRadius: '4px' }}
-            />
-          </div>
-          {zoom.caption && (
-            <p onClick={(e) => e.stopPropagation()} style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(242,239,230,0.6)', margin: '0.85rem auto 0', maxWidth: '80ch', textAlign: 'center', cursor: 'default', padding: '0 1rem' }}>
-              {zoom.caption} · Scroll sideways to pan
-            </p>
-          )}
-        </div>
-      )}
     </main>
   );
 };

@@ -8,7 +8,6 @@
 const RAIL_SECTIONS = [
   { id: 'home-hero', label: 'Intro' },
   { id: 'home-reel', label: 'Work' },
-  { id: 'home-teaser', label: 'Foundations' },
   { id: 'site-footer', label: 'Contact' },
 ];
 
@@ -29,7 +28,8 @@ const ScrollRail = () => {
         if (el && el.offsetTop <= mid) a = i;
       });
       setActive(a);
-      const cream = document.getElementById('home-teaser');
+      // Flip to ink when the cream zone (footer) reaches mid-viewport.
+      const cream = document.getElementById('site-footer');
       setLight(cream ? cream.getBoundingClientRect().top < window.innerHeight * 0.5 : false);
     };
     update();
@@ -47,7 +47,11 @@ const ScrollRail = () => {
   const idle = light ? 'rgba(20,33,28,0.18)' : 'rgba(242,239,230,0.18)';
   const labelC = light ? 'rgba(20,33,28,0.45)' : 'rgba(242,239,230,0.45)';
 
-  return (
+  // Portal to <body>: the page wrapper's enter animation retains a CSS
+  // transform, which makes any `position: fixed` descendant scroll with the
+  // page (a transformed ancestor becomes its containing block). Rendering
+  // outside that wrapper keeps the rail truly fixed on screen.
+  return ReactDOM.createPortal(
     <aside aria-hidden="true" style={{
       position: 'fixed', left: '24px', top: '50%', transform: 'translateY(-50%)',
       zIndex: 40,
@@ -71,7 +75,8 @@ const ScrollRail = () => {
         writingMode: 'vertical-rl', transform: 'rotate(180deg)',
         marginTop: '8px',
       }}>Scroll</span>
-    </aside>
+    </aside>,
+    document.body
   );
 };
 
