@@ -4,6 +4,9 @@ window.IMAGE_MANIFEST = {
   "about": {
     "hero": "images/about/hero.jpg"
   },
+  "autoease": {
+    "tile": "images/autoease/tile.jpg"
+  },
   "bethlehem-culinary": {
     "tile": "images/bethlehem-culinary/tile.jpg",
     "gallery": [
