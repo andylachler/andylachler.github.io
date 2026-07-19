@@ -167,14 +167,16 @@ const ARCHIVE_DATA = {
     lede: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself.',
     body: 'An independent study in parametric paper architecture at Lehigh. Starting from a single folded unit, the project tests how a field of units behaves when joined at controlled points by brass fasteners \u2014 how density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. The same piece, recombined, produces a catalog of forms.',
     process: [
-      'Folded a unit at fixed dimensions, then studied the form as a function of joint location. Every result came from the same unit; nothing was recut.',
-      'Multiplied into larger planar assemblies, documented the resulting curvature, and catalogued the joint patterns against the emergent geometry. The project treats the joint as the operative design move \u2014 the paper is the substrate.',
+      'Each unit stems from a simple geometric shape: folded to establish verticality, cut to establish form, then opened with voids to allow variance. The unit is cut flat \u2014 fold lines and fastener points printed on the sheet \u2014 so every result comes from the same unit; nothing was recut.',
+      'Brass fasteners act as the mesh that holds each unit together and the model as a whole. Rows are offset according to void-size variation, and a fastener locks each offset \u2014 the joint pattern, not the unit, sets the directions of flow across the field.',
+      'Because the fasteners are the only color in the model, their organization and density become the visual emphasis. The voids read darker than the surrounding paper, so weight disparity expands and contracts from one end of the form to the other.',
     ],
-    outcome: 'Independent study with Prof. Hyun-Tae Jung. Physical artifacts and documentation.',
+    outcome: 'Independent study with Prof. Hyun-Tae Jung. Final field model 5\u2032 \u00d7 2\u00bd\u2032 in bristol paper and brass fasteners, plus documentation.',
     credits: 'Lehigh University. Advisor: Prof. Hyun-Tae Jung. Student: Andreas L\u00e4chler.',
     details: [
       { label: 'Type', value: 'Independent study' },
-      { label: 'Material', value: 'Paper, brass fasteners' },
+      { label: 'Material', value: 'Bristol paper, brass fasteners' },
+      { label: 'Final model', value: '5\u2032 \u00d7 2\u00bd\u2032' },
       { label: 'Advisor', value: 'Prof. Hyun-Tae Jung' },
       { label: 'Year', value: '2018' },
     ],
@@ -186,18 +188,20 @@ const ARCHIVE_DATA = {
     title: 'Bethlehem Riverfront',
     org: 'Lehigh University', year: '2017', role: 'Craft — physical model',
     bg: '#14211C', tileBg: '#14211C', imageIndex: 5,
-    lede: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network to connect North and South Bethlehem across the river.',
-    body: 'Bethlehem\u2019s two halves \u2014 the old steel north side and the industrial south side \u2014 are separated by the Lehigh River and a rail corridor. The project proposes a riverfront park and a small interpretive museum on the south bank, using the existing towpath and trail network as connective tissue back to the South Side and over to the North.',
+    lede: 'A riverfront park on the south bank of the Lehigh, stitched into the existing bike-and-running trail network to connect North and South Bethlehem across the river.',
+    body: 'Bethlehem\u2019s two halves are separated by the Lehigh River. The North side has the D&L and Sand Island trails; the South side \u2014 the industrial worker\u2019s side, searching for a new identity since Bethlehem Steel closed \u2014 has only a short stretch of path along the Greenway and almost no accessible green space, forcing residents across the bridges to reach recreation. The project proposes a riverfront park between the New St. and Hill-to-Hill bridges as the missing link: a center for cultural, social, and leisure activity on a site the existing infrastructure already touches.',
     process: [
-      'Traced the existing trail system and located the interventions at the gaps \u2014 places where a walker or cyclist currently has to dead-end or double back.',
-      'Programmed the museum around the site\u2019s own history (steel, immigration, Moravian settlement) rather than importing a new subject. Kept the architecture low and long so the river stays the figure.',
+      'Circulation is organized around four speeds of movement: a separated bicycle path for quick passage, a direct pedestrian walkway for those continuing past the park, an elevated walkway with seating and a connection to the bridge, and local circulation that breaks down and encloses the spaces within the park itself.',
+      'The program is drawn from what the South side lacks \u2014 a local supermarket and farmers market, a performance venue sized for Musikfest, a dog park, waterfront seating \u2014 with a future bike-path extension linking the Greenway, the D&L Trail, and the ArtsQuest pedestrian area at the steel stacks.',
+      'Rail tracks from the Bethlehem Steel era run through the site; the proposal reuses the steel rails and ties in the park\u2019s built elements, tying the development back into the history of the ground it sits on.',
     ],
-    outcome: 'Undergraduate studio. Site plan, building plans, and perspective drawings.',
-    credits: 'Lehigh University, Department of Art, Architecture and Design. Student: Andreas L\u00e4chler.',
+    outcome: 'Independent study with Prof. Hyun-Tae Jung. Site analysis, circulation studies, and a full physical model of the park.',
+    credits: 'Lehigh University. Advisor: Prof. Hyun-Tae Jung. Student: Andreas L\u00e4chler.',
     details: [
-      { label: 'Program', value: 'Park + museum' },
+      { label: 'Program', value: 'Riverfront park + venue' },
       { label: 'Location', value: 'South Bethlehem, PA' },
-      { label: 'Type', value: 'Undergraduate studio' },
+      { label: 'Site', value: 'New St. \u2013 Hill-to-Hill Bridge' },
+      { label: 'Type', value: 'Independent study' },
     ],
     next: 'bethlehem-culinary',
   },
@@ -206,17 +210,19 @@ const ARCHIVE_DATA = {
     org: 'Lehigh University', year: '2017', role: 'Craft — physical model',
     bg: '#3D5448', tileBg: '#3D5448', imageIndex: 6,
     lede: 'Four-story culinary school in South Bethlehem. Programmed around the regional farm economy and the 30-minute gap in culinary schools across the Allentown\u2013Bethlehem\u2013Easton region.',
-    body: 'A four-story culinary institute in South Bethlehem. The brief was an \u201curban store\u201d generic; the project reframed it around a concrete regional gap \u2014 the 30-minute drive between the Lehigh Valley and the nearest culinary school \u2014 and tied the program to the farm economy of the surrounding region.',
+    body: 'A four-story culinary institute in South Bethlehem, reframed around a concrete regional gap \u2014 every other culinary school is 30+ minutes from the Allentown\u2013Bethlehem\u2013Easton region \u2014 and tied to the farm economy around it. Agriculture is Pennsylvania\u2019s largest export, and the farm-to-table program uses local, in-season sourcing to connect students to their community while teaching flexibility and waste discipline. The site\u2019s slope and the empty plot behind the building give it continuous access to the Bethlehem Greenway.',
     process: [
-      'Anchored the program in a teaching kitchen at grade with a public-facing retail front, so the ground floor reads as a shop and not an institution.',
-      'Classrooms, prep kitchens, and offices stack above with daylight from both long faces. A rooftop herb garden closes the produce loop visibly.',
+      'The organizing move is a set of bands that run through the building and designate its circulation. Offsetting the bands pulls natural light into the middle portions of the building \u2014 not just the ends \u2014 and opens a gap between the institute and its neighbors on either side.',
+      'Circulation sits at the center of the plan so every floor uses its full depth. The public program faces outward: a market leads onto the Greenway with a rotating menu of student-prepared items, and the event space showcases student work, with mixology placed just off it so it doubles as a bar during events.',
+      'Teaching splits by mode \u2014 hands-on cooking spaces for technique, a classroom for the business side \u2014 with cold storage for aging and ingredient experiments, and administrative space above.',
     ],
-    outcome: 'Undergraduate studio. Full design package with plans, sections, renderings, and program diagram.',
-    credits: 'Lehigh University. Student: Andreas L\u00e4chler.',
+    outcome: 'Independent study with Prof. Hyun-Tae Jung. Site analysis, program sections, and a sectional model at 3/16\u2033 scale in basswood and acrylic.',
+    credits: 'Lehigh University. Advisor: Prof. Hyun-Tae Jung. Student: Andreas L\u00e4chler.',
     details: [
-      { label: 'Program', value: 'Culinary institute + retail' },
+      { label: 'Program', value: 'Culinary institute + market' },
       { label: 'Location', value: 'South Bethlehem, PA' },
       { label: 'Stories', value: '4' },
+      { label: 'Model', value: '3/16\u2033 scale, basswood + acrylic' },
     ],
     next: 'one-room-schoolhouse',
   },
@@ -225,17 +231,19 @@ const ARCHIVE_DATA = {
     org: 'Lehigh University', year: '2017', role: 'Craft — physical model',
     bg: '#E8E4D5', tileBg: '#E8E4D5', imageIndex: 0,
     lede: 'Expanded single-use structure on the Lehigh green for the Psychology department\u2019s child studies program. Angular faceted roof tuned to keep young attention focused outward into the space.',
-    body: 'A one-room schoolhouse expanded for contemporary program. The client was Lehigh\u2019s Psychology department and its early-childhood studies program, which needed a single dedicated room on the main green. The architectural question was how to make a single-volume structure that stays legible to a young user while still accommodating adult observation and circulation.',
+    body: 'A one-room schoolhouse for Lehigh\u2019s Psychology department, whose child studies program \u2014 working with children with ADHD, anxiety, depression, and autism \u2014 had outgrown an inadequate borrowed room. The proposal gives the program its own building with a deliberately simple plan, on the premise that a classroom\u2019s culture and its learning space are tightly linked. The complex angular exterior is the point: it draws children\u2019s attention away from the idea that they are at school, keeping them focused on the learning environment instead.',
     process: [
-      'The roof became the main move \u2014 an angular faceted geometry that visually compresses the space where children sit, and opens up along the edges where adults move.',
-      'A continuous band of clerestory lets daylight in without framing specific views, which kept attention inside the room on the activity rather than on the green outside.',
+      'Sited in the core of the university grounds, in a large green space ringed by historic buildings \u2014 pedestrian, vehicular, and accessible routes already reach it, and the placement keeps the schoolhouse visible from the University Center and the front lawn.',
+      'The form was developed in three passes: a primary form identified and varied, a secondary form draped and fragmented over it, and a tertiary faceted roof structure. Skin emphasizes form \u2014 linework accentuates the tubes and separates them from the fractured, angular roof.',
+      'Inside, the cross-shaped plan holds a quiet work space, mixed-use space, storage, and two entrances, with a sloped pathway for easy access and outdoor recreation space on the terraced site.',
     ],
-    outcome: 'Undergraduate studio. Plans, sections, and roof study model.',
-    credits: 'Lehigh University. Student: Andreas L\u00e4chler.',
+    outcome: 'Independent study with Prof. Hyun-Tae Jung. Elevations, form studies, and a 27\u2033 \u00d7 32\u2033 site model at 3/16\u2033 scale in chipboard and bristol paper.',
+    credits: 'Lehigh University. Advisor: Prof. Hyun-Tae Jung. Student: Andreas L\u00e4chler.',
     details: [
-      { label: 'Program', value: 'Early childhood studies room' },
+      { label: 'Program', value: 'Child studies schoolhouse' },
       { label: 'Location', value: 'Lehigh University green' },
-      { label: 'Type', value: 'Undergraduate studio' },
+      { label: 'Model', value: '27\u2033 \u00d7 32\u2033, 3/16\u2033 scale' },
+      { label: 'Type', value: 'Independent study' },
     ],
     next: 'singular-flow',
   },
@@ -246,13 +254,16 @@ const ARCHIVE_DATA = {
     lede: 'A single lightweight three-dimensional unit joined to a mirror of itself. Viewable right-side up or upside-down \u2014 band thickness varies row to row to produce a flow of density through the form.',
     body: 'An independent study in unit-based three-dimensional form. A single lightweight unit is joined to a mirror of itself, then varied by band thickness as the rows progress, producing a gradient of density through the form. The piece is designed to read either way up \u2014 top or bottom is a property of the viewer, not of the object.',
     process: [
-      'Started from the reflected pair and treated it as the irreducible unit, rather than the single piece.',
-      'Varied band thickness along the stack to tune how much light passes through \u2014 the resulting density reads as \u201cflow,\u201d which became the name.',
+      'The unit sequence: establish the unit, create disruptions in it, join opposite ends, fold the remaining ends together \u2014 the final form is the original unit with its own reflection glued behind it. The reflected pair, not the single piece, is the irreducible element.',
+      'Band thickness determines unit variation. Rows thicken toward the center and thin at the ends, producing a flow of density through the form \u2014 which became the name.',
+      'Red tabs connect the units and establish order in the model; their color accentuates the linear elements in an otherwise complex array of forms, and the assembly holds its identity viewed from any orientation.',
     ],
-    outcome: 'Independent study. Physical artifact.',
-    credits: 'Lehigh University. Student: Andreas L\u00e4chler.',
+    outcome: 'Independent study with Prof. Hyun-Tae Jung. Final model 2\u00bd\u2032 \u00d7 1\u00bc\u2032 in sketchbook paper, colored paper, and glue.',
+    credits: 'Lehigh University. Advisor: Prof. Hyun-Tae Jung. Student: Andreas L\u00e4chler.',
     details: [
       { label: 'Type', value: 'Independent study' },
+      { label: 'Material', value: 'Sketchbook + colored paper' },
+      { label: 'Final model', value: '2\u00bd\u2032 \u00d7 1\u00bc\u2032' },
       { label: 'Year', value: '2017' },
     ],
     next: 'bethlehem-riverfront',
@@ -511,12 +522,24 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
   const [heroHov, setHeroHov] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const [playing, setPlaying] = React.useState(false);
+  const [zoom, setZoom] = React.useState(null); // { src, caption } — lightbox for portfolio spreads
   const isMobile = (window.useIsMobile || (() => false))(768);
   React.useEffect(() => {
     requestAnimationFrame(() => setMounted(true));
     setHeroHov(false);
     setPlaying(false); // reset Unity embed when navigating between projects
+    setZoom(null);
   }, [projectId]);
+
+  // Lightbox: Escape closes, body scroll locks while open.
+  React.useEffect(() => {
+    if (!zoom) return;
+    const onKey = (e) => { if (e.key === 'Escape') setZoom(null); };
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
+  }, [zoom]);
 
   const fade = (delay) => ({
     opacity: mounted ? 1 : 0,
@@ -730,6 +753,34 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         </div>
       )}
 
+      {/* Portfolio spreads — pages pulled from the 2018 undergraduate portfolio
+          book (images/<project-id>/book-NN.jpg via the manifest). Wide 2.4:1
+          InDesign spreads: diagrams, site analysis, design decisions. Shown
+          full-width with a click-to-zoom lightbox (spread text is small at
+          column width); the large-format photographs follow below. */}
+      {(((window.IMAGE_MANIFEST || {})[projectId] || {}).book || []).length > 0 && (
+        <div style={{ ...fade(320), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem', marginBottom: '1.5rem' }}>
+            <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0 }}>From the portfolio book · 2018</p>
+            <p style={{ fontSize: '11px', fontFamily: 'var(--ff-mono)', letterSpacing: '0.08em', color: 'rgba(20,33,28,0.35)', margin: 0 }}>Click a spread to enlarge</p>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.5rem' : '2rem' }}>
+            {((window.IMAGE_MANIFEST || {})[projectId] || {}).book.map((b, i) => (
+              <figure key={b.src} style={{ margin: 0 }}>
+                <img
+                  src={b.src} alt={b.caption || `${project.title} — portfolio spread ${i + 1}`} loading="lazy"
+                  onClick={() => setZoom(b)}
+                  style={{ width: '100%', display: 'block', borderRadius: '10px', border: '0.5px solid rgba(20,33,28,0.12)', cursor: 'zoom-in', background: '#fff' }}
+                />
+                {b.caption && (
+                  <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>{b.caption}</figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Gallery — photographs from images/<project-id>/ via the manifest.
           Foundations pages are photo-first: model shots, drawings, process.
           Add numbered files + captions.json and they appear here. */}
@@ -782,6 +833,51 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
           }}>
             Open <span>→</span>
           </button>
+        </div>
+      )}
+
+      {/* Spread lightbox — dark overlay; the spread renders at ~85vh tall so
+          diagram text is actually legible, with horizontal scroll to pan the
+          wide 2.4:1 page. Click backdrop or press Escape to close. */}
+      {zoom && (
+        <div
+          onClick={() => setZoom(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 2000,
+            background: 'rgba(12,16,14,0.94)',
+            display: 'flex', flexDirection: 'column',
+            padding: isMobile ? '3.5rem 0 1rem' : '3.5rem 1.5rem 1.5rem',
+            cursor: 'zoom-out',
+          }}
+        >
+          <button
+            onClick={() => setZoom(null)}
+            aria-label="Close"
+            style={{
+              position: 'absolute', top: '1rem', right: '1.25rem',
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: 'rgba(242,239,230,0.8)', fontSize: '13px',
+              fontFamily: 'var(--ff-mono)', letterSpacing: '0.1em', textTransform: 'uppercase',
+            }}
+          >
+            Close ✕
+          </button>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ flex: 1, overflow: 'auto', display: 'flex', alignItems: 'center', cursor: 'default', WebkitOverflowScrolling: 'touch' }}
+          >
+            <img
+              src={zoom.src} alt={zoom.caption || 'Portfolio spread'}
+              style={isMobile
+                ? { width: 'auto', height: '72vh', maxWidth: 'none', margin: 'auto', display: 'block' }
+                : { height: '82vh', width: 'auto', maxWidth: 'none', margin: 'auto', display: 'block', borderRadius: '4px' }}
+            />
+          </div>
+          {zoom.caption && (
+            <p onClick={(e) => e.stopPropagation()} style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(242,239,230,0.6)', margin: '0.85rem auto 0', maxWidth: '80ch', textAlign: 'center', cursor: 'default', padding: '0 1rem' }}>
+              {zoom.caption} · Scroll sideways to pan
+            </p>
+          )}
         </div>
       )}
     </main>

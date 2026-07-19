@@ -6,7 +6,8 @@
 //   tile.(jpg|jpeg|png|webp|avif)   → grid/carousel/dropdown tile image
 //   hero.(jpg|jpeg|png|webp|avif)   → case-study hero (falls back to tile)
 //   01.jpg, 02.png, …               → gallery, sorted numerically
-//   captions.json                   → optional: { "01": "Caption text", … }
+//   book-01.jpg, book-02.jpg, …     → portfolio-book spreads, sorted numerically
+//   captions.json                   → optional: { "01": "Caption text", "book-01": "…", … }
 //
 // Run from the portfolio root:  node tools/build-image-manifest.js
 // Warns about files >600KB (resize/compress before shipping).
@@ -40,6 +41,7 @@ for (const dir of fs.readdirSync(IMAGES, { withFileTypes: true })) {
   }
 
   const gallery = [];
+  const book = [];
   for (const f of fs.readdirSync(folder).sort()) {
     const isVid = VID.test(f);
     if (!EXT.test(f) && !isVid) continue;
@@ -51,10 +53,13 @@ for (const dir of fs.readdirSync(IMAGES, { withFileTypes: true })) {
     if (base === 'tile') entry.tile = rel;
     else if (base === 'hero') entry.hero = rel;
     else if (/^\d+$/.test(base)) gallery.push({ n: parseInt(base, 10), src: rel, video: isVid || undefined, caption: captions[base] || captions[f] || null });
-    else warnings.push(`${rel} ignored — name it tile.*, hero.*, or a number (01.jpg)`);
+    else if (/^book-\d+$/.test(base)) book.push({ n: parseInt(base.slice(5), 10), src: rel, caption: captions[base] || captions[f] || null });
+    else warnings.push(`${rel} ignored — name it tile.*, hero.*, a number (01.jpg), or book-NN.jpg`);
   }
   gallery.sort((a, b) => a.n - b.n);
   if (gallery.length) entry.gallery = gallery.map(({ src, caption, video }) => ({ src, ...(video ? { video: true } : {}), ...(caption ? { caption } : {}) }));
+  book.sort((a, b) => a.n - b.n);
+  if (book.length) entry.book = book.map(({ src, caption }) => ({ src, ...(caption ? { caption } : {}) }));
 
   if (Object.keys(entry).length) manifest[id] = entry;
 }

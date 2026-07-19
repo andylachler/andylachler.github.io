@@ -16,6 +16,24 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/bethlehem-culinary/03.jpg"
       }
+    ],
+    "book": [
+      {
+        "src": "images/bethlehem-culinary/book-01.jpg",
+        "caption": "Portfolio spread — site analysis: the culinary-school gap in the region, vehicular access, and the greenway connection."
+      },
+      {
+        "src": "images/bethlehem-culinary/book-02.jpg",
+        "caption": "Portfolio spread — program section: market, teaching, cooking, and event space stacked around central circulation."
+      },
+      {
+        "src": "images/bethlehem-culinary/book-03.jpg",
+        "caption": "Portfolio spread — concept development: defining, splitting, and stacking the band that organizes the building."
+      },
+      {
+        "src": "images/bethlehem-culinary/book-04.jpg",
+        "caption": "Portfolio spread — sectional model in basswood and acrylic."
+      }
     ]
   },
   "bethlehem-riverfront": {
@@ -26,6 +44,28 @@ window.IMAGE_MANIFEST = {
       },
       {
         "src": "images/bethlehem-riverfront/02.jpg"
+      }
+    ],
+    "book": [
+      {
+        "src": "images/bethlehem-riverfront/book-01.jpg",
+        "caption": "Portfolio spread — connecting two sides of a river: site and trail-network analysis."
+      },
+      {
+        "src": "images/bethlehem-riverfront/book-02.jpg",
+        "caption": "Portfolio spread — circulation expansion: linking the D&L Trail, the Greenway, and the proposed riverfront path."
+      },
+      {
+        "src": "images/bethlehem-riverfront/book-03.jpg",
+        "caption": "Portfolio spread — form concept and circulation development: four speeds of movement through the park."
+      },
+      {
+        "src": "images/bethlehem-riverfront/book-04.jpg",
+        "caption": "Portfolio spread — riverfront detail: market, performance venue, dog park, waterfront seating."
+      },
+      {
+        "src": "images/bethlehem-riverfront/book-05.jpg",
+        "caption": "Portfolio spread — final model, perspective views."
       }
     ]
   },
@@ -161,6 +201,20 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/one-room-schoolhouse/03.jpg"
       }
+    ],
+    "book": [
+      {
+        "src": "images/one-room-schoolhouse/book-01.jpg",
+        "caption": "Portfolio spread — site placement on the Lehigh green: circulation, accessibility, external visibility."
+      },
+      {
+        "src": "images/one-room-schoolhouse/book-02.jpg",
+        "caption": "Portfolio spread — primary, secondary, and tertiary form studies; form emphasis through skin."
+      },
+      {
+        "src": "images/one-room-schoolhouse/book-03.jpg",
+        "caption": "Portfolio spread — final model: the faceted roof over a cross-shaped plan on the sloped site."
+      }
     ]
   },
   "pastoral-urbanity": {
@@ -195,6 +249,16 @@ window.IMAGE_MANIFEST = {
       {
         "src": "images/singular-flow/03.jpg"
       }
+    ],
+    "book": [
+      {
+        "src": "images/singular-flow/book-01.jpg",
+        "caption": "Portfolio spread — unit development, the red-tab connection system, and density-of-form studies."
+      },
+      {
+        "src": "images/singular-flow/book-02.jpg",
+        "caption": "Portfolio spread — final model in shot-sheet paper; the form read from multiple orientations."
+      }
     ]
   },
   "unit-multiplication": {
@@ -208,6 +272,20 @@ window.IMAGE_MANIFEST = {
       },
       {
         "src": "images/unit-multiplication/03.jpg"
+      }
+    ],
+    "book": [
+      {
+        "src": "images/unit-multiplication/book-01.jpg",
+        "caption": "Portfolio spread — unit development and construction: fold lines, subtracted voids, opening variation."
+      },
+      {
+        "src": "images/unit-multiplication/book-02.jpg",
+        "caption": "Portfolio spread — connecting the units: brass fasteners, offset rows, and directions of flow."
+      },
+      {
+        "src": "images/unit-multiplication/book-03.jpg",
+        "caption": "Portfolio spread — final field model in bristol paper and brass fasteners, with detail views."
       }
     ]
   }
