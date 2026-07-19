@@ -92,37 +92,51 @@ const useReveal = () => {
 };
 
 // ── WorkPage ──────────────────────────────────────────────────────────────
+// One index for everything (July 2026 continuity pass): the standalone
+// Foundations/archive page is retired and its projects live here as sections.
+// Cards use the home reel's ReelCard grammar (grid variant) so the card
+// design is identical on every page. pid resolution: PROJECT_DATA → project
+// page; ARCHIVE_ITEMS → archive-project detail page.
 const WorkPage = ({ onNavigate }) => {
   useReveal();
-  // Sections carry a discipline label after the dash. Under Algoma — Product,
-  // the platform case study is followed by mini UX/product studies — one per
-  // wireframe set Andy uploads (pipeline documented in Notion HQ). Brickell
-  // lives in Foundations.
+  const isMobile = (window.useIsMobile || (() => false))(768);
   const sections = [
     { org: 'Independent', period: '2022–2026', projects: ['autoease','exhibition-trailer'] },
     { org: 'Algoma — Product', period: '2024–present', projects: ['feasibility','zoning-chat','comps','site-search'],
       note: 'The platform case study, followed by mini studies — individual components taken from first sketch toward shipped, one story per surface.' },
-    { org: 'Arquitectonica — Architecture', period: '2022–2024', projects: ['ella'] },
+    { org: 'Arquitectonica — Architecture', period: '2022–2024', projects: ['ella','brickell'] },
+    { org: 'Foundations — Pratt', period: '2019–2022', projects: ['fluxing','pastoral-urbanity','mesa-verde','elevate-ravenswood','dissection'],
+      note: 'Learning to think with my hands — graduate work shown for what it is: model making, material studies, and physical craft.' },
+    { org: 'Foundations — Lehigh', period: '2017–2018', projects: ['unit-multiplication','singular-flow','bethlehem-riverfront','bethlehem-culinary','one-room-schoolhouse'],
+      note: 'Undergraduate independent studies with Prof. Hyun-Tae Jung — paper and physical models, with the original portfolio-book spreads on each page.' },
+    { org: 'Playable', period: '2024', projects: ['ball-game'],
+      note: 'Unity / WebGL experiments — architecture-adjacent: terrain, environment, physics, real-time lighting.' },
   ];
+  const toCard = (pid) => {
+    const p = window.PROJECT_DATA?.[pid];
+    if (p) return { id: pid, title: p.title, year: String(p.year), cat: (p.role || '').split(' — ')[0] || 'Project', sub: (p.role || '').split(' — ')[1] || '', meta: p.org, nav: ['project', pid] };
+    const a = (window.ARCHIVE_ITEMS || []).find(it => it.id === pid);
+    if (a) return { id: pid, title: a.title, year: String(a.year), cat: (a.type || '').split(' — ')[0] || 'Project', sub: (a.type || '').split(' — ')[1] || '', meta: a.org, nav: ['archive-project', pid] };
+    return null;
+  };
   return (
-    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '8.5rem 2.5rem 5rem' }}>
+    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 5rem' }}>
       <p className="reveal" style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '3.5rem' }}>Work</p>
       {sections.map((sec, si) => {
-        const projects = sec.projects
-          .map(pid => ({ pid, data: window.PROJECT_DATA?.[pid] }))
-          .filter(x => x.data);
+        const cards = sec.projects.map(toCard).filter(Boolean);
+        if (!cards.length) return null;
         return (
           <div key={si} className="reveal" style={{ marginBottom: '4rem' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: sec.note ? '0.5rem' : '1.25rem', paddingBottom: '0.75rem', borderBottom: '0.5px solid rgba(20,33,28,0.1)' }}>
               <span style={{ fontSize: '15px', fontWeight: 500 }}>{sec.org}</span>
-              <span style={{ fontSize: '12px', color: 'rgba(20,33,28,0.4)' }}>{sec.period}</span>
+              <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)' }}>{sec.period}</span>
             </div>
             {sec.note && (
               <p style={{ fontSize: '13px', color: 'rgba(20,33,28,0.5)', lineHeight: 1.6, margin: '0 0 1.25rem', maxWidth: '640px' }}>{sec.note}</p>
             )}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px,1fr))', gap: '0.625rem' }}>
-              {projects.map(({ pid, data: p }) => (
-                <ProjectTile key={pid} id={pid} {...p} bg={p.tileBg} onNavigate={(pg, id) => onNavigate(pg, id || pid)} />
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px,1fr))', gap: '0.75rem' }}>
+              {cards.map(card => (
+                <ReelCard key={card.id} item={card} onNavigate={onNavigate} isMobile={isMobile} grid />
               ))}
             </div>
           </div>
@@ -205,42 +219,6 @@ const Footer = ({ tweaks = {} }) => {
   );
 };
 
-// ── Archive section teaser (home) ─────────────────────────────────────────
-const ArchiveTeaser = ({ onNavigate, tweaks = {} }) => {
-  const accent = tweaks.accentColor || '#D45A1B';
-  const [hov, setHov] = React.useState(false);
-  const isMobile = (window.useIsMobile || (() => false))(768);
-  return (
-    <section id="home-teaser" className="reveal" style={{ background: '#F2EFE6', padding: isMobile ? '3rem 1.25rem 3.5rem' : '4rem 2.5rem 5rem', borderTop: '0.5px solid rgba(20,33,28,0.08)' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' }}>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Archive</p>
-          <h2 style={{ fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 500, letterSpacing: '-0.018em', color: '#14211C', lineHeight: 1.2, maxWidth: '520px', margin: 0 }}>
-            Earlier work from Lehigh and Pratt, 2014–2022.
-          </h2>
-        </div>
-        <button
-          onClick={() => onNavigate('archive')}
-          onMouseEnter={() => setHov(true)}
-          onMouseLeave={() => setHov(false)}
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-            fontSize: '15px', fontWeight: 500,
-            color: hov ? accent : '#14211C',
-            fontFamily: "'Inter', system-ui, sans-serif",
-            transition: 'color 150ms',
-            flexShrink: 0,
-          }}
-        >
-          Browse archive
-          <span style={{ display: 'inline-block', transition: 'transform 150ms', transform: hov ? 'translateX(4px)' : 'none' }}>→</span>
-        </button>
-      </div>
-    </section>
-  );
-};
-
 // ── HomePage ──────────────────────────────────────────────────────────────
 const HomePage = ({ onNavigate, tweaks }) => {
   useReveal();
@@ -253,7 +231,6 @@ const HomePage = ({ onNavigate, tweaks }) => {
         ? (window.Reel ? <Reel onNavigate={onNavigate} /> : <ScrollWork onNavigate={onNavigate} tweaks={tweaks} />)
         : <ProjectGrid onNavigate={onNavigate} tweaks={tweaks} />
       }
-      <ArchiveTeaser onNavigate={onNavigate} tweaks={tweaks} />
       <Footer tweaks={tweaks} />
     </>
   );
@@ -368,7 +345,9 @@ const App = () => {
     home:              <HomePage onNavigate={navigate} tweaks={tweaks} />,
     work:              <><WorkPage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
     project:           <><ProjectPage projectId={projectId} onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
-    archive:           <><ArchivePage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
+    // 'archive' retired July 2026 — foundations live on the Work page now.
+    // Kept as an alias so stored localStorage state and old links land well.
+    archive:           <><WorkPage onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
     'archive-project': <><ArchiveProjectPage projectId={projectId} onNavigate={navigate} /><Footer tweaks={tweaks} /></>,
     about:             <><AboutPage /><Footer tweaks={tweaks} /></>,
   };

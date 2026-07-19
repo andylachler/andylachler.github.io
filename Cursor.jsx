@@ -59,8 +59,11 @@ const Cursor = () => {
   return (
     <>
       <style>{`
+        /* !important + universal selector: components set cursor:'pointer'
+           inline, which outranks a plain stylesheet rule — that was the
+           "hand icon shows next to the custom cursor" bug. */
         @media (pointer: fine) {
-          body, a, button { cursor: none; }
+          *, *::before, *::after { cursor: none !important; }
         }
         .cursor-dot {
           position: fixed; top: 0; left: 0; z-index: 99999;
@@ -70,7 +73,8 @@ const Cursor = () => {
           mix-blend-mode: difference;
           transition: width 180ms ease, height 180ms ease;
         }
-        .cursor-dot.cursor-big { width: 36px; height: 36px; }
+        /* Hover growth — 27px (75% of the previous 36px). */
+        .cursor-dot.cursor-big { width: 27px; height: 27px; }
       `}</style>
       <div ref={dotRef} className="cursor-dot" />
     </>

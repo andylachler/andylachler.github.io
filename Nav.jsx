@@ -136,8 +136,6 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
   const dropdownMuted = 'rgba(20,33,28,0.45)';
 
   const projects = (window.PROJECTS || []).slice(0, 6);
-  // Mirror the archive page: only the five `featured` projects surface in the nav.
-  const archiveItems = (window.ARCHIVE_ITEMS || []).filter(it => it.featured);
 
   return (
     <div style={{ position: 'fixed', top: 0, zIndex: 200, width: '100%', fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -180,7 +178,7 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
               <div style={{ fontSize: isMobile ? '17px' : '20px', fontWeight: 500, color: textColor, lineHeight: 1.2, letterSpacing: '0.004em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms' }}>
                 Andreas Lächler
               </div>
-              <div style={{ fontSize: isMobile ? '11px' : '12px', fontWeight: 400, color: subColor, letterSpacing: '0.06em', fontFamily: "'Inter', system-ui, sans-serif", transition: 'color 300ms', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '9px', fontWeight: 400, color: subColor, letterSpacing: '0.22em', fontFamily: 'var(--ff-mono)', transition: 'color 300ms', textTransform: 'uppercase' }}>
                 Product Designer
               </div>
             </div>
@@ -198,17 +196,6 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
                   textColor={textColor}
                   mutedColor={mutedColor}
                 >Work</NavPill>
-              </div>
-
-              <div onMouseEnter={() => open('archive')}>
-                <NavPill
-                  active={page === 'archive'}
-                  onClick={() => { closeNow(); onNavigate('archive'); }}
-                  accentColor={accentColor}
-                  onDark={onDark}
-                  textColor={textColor}
-                  mutedColor={mutedColor}
-                >Foundations</NavPill>
               </div>
 
               <div onMouseEnter={() => open('about')}>
@@ -277,16 +264,6 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
                 <NavDropCta accentColor={accentColor} onClick={() => { closeNow(); onNavigate('work'); }}>All work →</NavDropCta>
               </>
             )}
-            {openMenu === 'archive' && (
-              <>
-                {archiveItems.map(it => (
-                  <NavDropRow key={it.id} label={it.title}
-                    meta={`${(it.type || '').split(' — ')[0]} · ${it.year}`}
-                    onClick={() => { closeNow(); onNavigate('archive-project', it.id); }} />
-                ))}
-                <NavDropCta accentColor={accentColor} onClick={() => { closeNow(); onNavigate('archive'); }}>View all foundations →</NavDropCta>
-              </>
-            )}
             {openMenu === 'about' && (
               <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', padding: '6px' }}>
                 {((window.IMAGE_MANIFEST || {}).about || {}).hero
@@ -331,15 +308,9 @@ const Nav = ({ page, onNavigate, tweaks = {} }) => {
           }}>
             <MobileLink
               label="Work"
-              active={page === 'work' || page === 'project'}
+              active={page === 'work' || page === 'project' || page === 'archive' || page === 'archive-project'}
               accentColor={accentColor}
               onClick={() => { closeNow(); onNavigate('work'); }}
-            />
-            <MobileLink
-              label="Foundations"
-              active={page === 'archive'}
-              accentColor={accentColor}
-              onClick={() => { closeNow(); onNavigate('archive'); }}
             />
             <MobileLink
               label="About"
@@ -390,49 +361,34 @@ const DropdownCarousel = ({ items, onItemClick, ctaLabel, onCta, accentColor, mu
   </React.Fragment>
 );
 
-// Nav pill — active = orange glass, inactive = subtle glass
+// Nav pill — v4 design language (matches the ink-glass dropdown + reel):
+// mono, uppercase, tracked-out, transparent at rest with a subtle wash on
+// hover/active. No orange glass, no shimmer — the accent lives in the
+// dropdown CTA and the active dot.
 const NavPill = ({ children, active, onClick, accentColor, onDark, textColor, mutedColor }) => {
   const [hov, setHov] = React.useState(false);
-
-  const activeBg = accentColor;
-  const activeShadow = `inset 0px 1px 0px 0px rgba(255,255,255,0.20), 0px 4px 16px 0px ${accentColor}50`;
-  const inactiveBg = onDark
-    ? (hov ? 'rgba(212,90,27,0.18)' : 'transparent')
-    : (hov ? 'rgba(20,33,28,0.06)' : 'transparent');
-  const inactiveBorder = onDark
-    ? (hov ? `1px solid rgba(212,90,27,0.35)` : '1px solid rgba(255,255,255,0.12)')
-    : '1px solid transparent';
-  const inactiveShadow = onDark && hov ? `0px 4px 12px 0px rgba(212,90,27,0.20)` : 'none';
-
+  const wash = onDark ? 'rgba(242,239,230,0.10)' : 'rgba(20,33,28,0.06)';
   return (
     <button
       onClick={onClick}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        position: 'relative', overflow: 'hidden',
-        background: active ? activeBg : inactiveBg,
-        border: active ? '1px solid rgba(255,255,255,0.20)' : inactiveBorder,
-        borderRadius: '10px',
+        display: 'inline-flex', alignItems: 'center', gap: '7px',
+        background: (active || hov) ? wash : 'transparent',
+        border: 'none',
+        borderRadius: '999px',
         padding: '8px 16px',
         cursor: 'pointer',
-        fontSize: '14px', fontWeight: active ? 500 : 400,
-        color: active ? '#F2EFE6' : (hov ? textColor : mutedColor),
-        fontFamily: "'Inter', system-ui, sans-serif",
-        boxShadow: active ? activeShadow : inactiveShadow,
-        transition: 'color 150ms, background 150ms, box-shadow 150ms, border-color 150ms',
-        opacity: 1,
+        fontFamily: 'var(--ff-mono)',
+        fontSize: '11px', fontWeight: active ? 500 : 400,
+        letterSpacing: '0.14em', textTransform: 'uppercase',
+        color: (active || hov) ? textColor : mutedColor,
+        transition: 'color 200ms ease, background 200ms ease',
       }}
     >
-      {/* White gradient shimmer on active orange */}
-      {active && (
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)',
-          pointerEvents: 'none',
-        }} />
-      )}
-      <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+      {active && <span aria-hidden="true" style={{ width: '4px', height: '4px', borderRadius: '999px', background: accentColor, flexShrink: 0 }} />}
+      {children}
     </button>
   );
 };
@@ -577,7 +533,8 @@ const HamburgerButton = ({ open, onClick, color }) => {
   );
 };
 
-// Mobile vertical menu row — tap-sized, with active highlight in accent.
+// Mobile vertical menu row — v4 language: mono uppercase, ink wash for the
+// active row, accent dot instead of orange glass.
 const MobileLink = ({ label, onClick, active, accentColor }) => {
   const [pressed, setPressed] = React.useState(false);
   return (
@@ -587,22 +544,23 @@ const MobileLink = ({ label, onClick, active, accentColor }) => {
       onTouchEnd={() => setPressed(false)}
       style={{
         textAlign: 'left',
-        background: active ? accentColor : (pressed ? 'rgba(20,33,28,0.06)' : 'transparent'),
-        color: active ? '#F2EFE6' : '#14211C',
-        border: active ? '1px solid rgba(255,255,255,0.20)' : '1px solid transparent',
+        background: active || pressed ? 'rgba(20,33,28,0.07)' : 'transparent',
+        color: '#14211C',
+        border: 'none',
         borderRadius: '10px',
         padding: '14px 16px',
         cursor: 'pointer',
-        fontSize: '16px', fontWeight: active ? 500 : 400,
-        fontFamily: "'Inter', system-ui, sans-serif",
-        boxShadow: active
-          ? `inset 0px 1px 0px 0px rgba(255,255,255,0.20), 0px 4px 16px 0px ${accentColor}50`
-          : 'none',
-        transition: 'background 150ms, color 150ms, box-shadow 150ms',
+        fontFamily: 'var(--ff-mono)',
+        fontSize: '13px', fontWeight: active ? 500 : 400,
+        letterSpacing: '0.14em', textTransform: 'uppercase',
+        transition: 'background 150ms, color 150ms',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}
     >
-      <span>{label}</span>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+        {active && <span aria-hidden="true" style={{ width: '4px', height: '4px', borderRadius: '999px', background: accentColor }} />}
+        {label}
+      </span>
       <span style={{ opacity: 0.5, fontSize: '14px' }}>→</span>
     </button>
   );

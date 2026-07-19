@@ -1,27 +1,68 @@
 // Reel.jsx — pinned horizontal selected-work reel (v4 design language, P4).
 //
 // Replaces ScrollWork in the home flow. Cards: the featured four from
-// PROJECTS + two door cards (Mini studies → Work page, Foundations → archive).
-// Card imagery comes from the image manifest (tile.jpg); projects without a
-// tile get the ghost-letter treatment and upgrade automatically when a tile
-// lands. Scroll-per-card is held constant regardless of card count (0.62
-// advance factor — the "too much scrolling" fix). Mobile: stacked cards.
-const REEL_DOORS = [
-  {
-    id: '__work', title: 'Mini studies', em: true, year: '2024—', cat: 'UX',
-    sub: 'Zoning chat · comps · site search', meta: 'Component Stories · Algoma',
-    img: 'images/feasibility/01.png', ghost: 'M', nav: ['work'],
-  },
-  {
-    id: '__foundations', title: 'Foundations', em: true, year: 'Index', cat: 'Foundations',
-    sub: '12 entries · 2017 – 2023', meta: 'Models · Drawings · Craft',
-    img: 'images/unit-multiplication/tile.jpg', ghost: 'F', nav: ['archive'],
-  },
-];
+// PROJECTS + one terminal "More projects" arrow card (→ Work page). The
+// door cards with project imagery are gone — a card that represents many
+// projects shouldn't wear the image of one. Card imagery comes from the
+// image manifest (tile.jpg); projects without a tile get the ghost-letter
+// treatment and upgrade automatically when a tile lands. Desktop cards are
+// wide-format (4:3) so the horizontal scroll reads as a filmstrip; mobile
+// keeps the vertical 3:4 card. Scroll-per-card is held constant regardless
+// of card count (0.62 advance factor). Mobile: stacked cards.
+// `grid` prop: fluid width for use in page grids (WorkPage) — same card
+// grammar everywhere, per the continuity pass.
+const REEL_MORE = {
+  id: '__more', more: true, nav: ['work'],
+  title: 'More projects',
+  sub: 'Mini studies · Foundations · Playable',
+  note: 'Everything else — component stories from Algoma, graduate and undergraduate work from Pratt and Lehigh, and playable experiments.',
+};
 
-const ReelCard = ({ item, onNavigate, isMobile }) => {
+// Terminal reel card — no image, just an arrow and a note. Represents the
+// index, not any single project.
+const ReelMoreCard = ({ item, onNavigate, isMobile, grid }) => {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <article
+      onClick={() => onNavigate(...item.nav)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        position: 'relative', flex: '0 0 auto',
+        width: grid ? '100%' : (isMobile ? '100%' : 'min(86vh, 660px)'),
+        minWidth: grid ? 0 : (isMobile ? 0 : '440px'),
+        aspectRatio: isMobile && !grid ? '3 / 4' : '4 / 3',
+        background: 'linear-gradient(160deg, #16261F 0%, #0B1513 70%)',
+        border: '1px dashed rgba(242,239,230,0.22)',
+        borderRadius: '6px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        gap: '18px', padding: '26px', cursor: 'pointer', textAlign: 'center',
+        transform: hov ? 'translateY(-3px)' : 'none',
+        transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1), border-color 250ms',
+      }}
+    >
+      <span style={{
+        width: '64px', height: '64px', borderRadius: '999px',
+        border: '1px solid rgba(242,239,230,0.3)',
+        display: 'grid', placeItems: 'center',
+        fontSize: '24px', color: '#F2EFE6',
+        transform: hov ? 'translateX(6px)' : 'none',
+        transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1)',
+      }}>→</span>
+      <h3 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(26px, 2.8vw, 36px)', lineHeight: 1, letterSpacing: '-0.02em', fontWeight: 400, color: '#F2EFE6', margin: 0 }}>
+        <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.8)' }}>{item.title}</em>
+      </h3>
+      <p style={{ margin: 0, fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.6)' }}>{item.sub}</p>
+      <p style={{ margin: 0, maxWidth: '40ch', fontSize: '13px', lineHeight: 1.6, color: 'rgba(242,239,230,0.55)' }}>{item.note}</p>
+      <p style={{ margin: 0, fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#D45A1B', opacity: hov ? 1 : 0.85 }}>Click to see more projects</p>
+    </article>
+  );
+};
+
+const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
   const [hov, setHov] = React.useState(false);
   const img = item.img || (((window.IMAGE_MANIFEST || {})[item.id] || {}).tile);
+  if (item.more) return <ReelMoreCard item={item} onNavigate={onNavigate} isMobile={isMobile} grid={grid} />;
   return (
     <article
       onClick={() => onNavigate(...(item.nav || ['project', item.id]))}
@@ -29,14 +70,14 @@ const ReelCard = ({ item, onNavigate, isMobile }) => {
       onMouseLeave={() => setHov(false)}
       style={{
         position: 'relative', flex: '0 0 auto',
-        width: isMobile ? '100%' : 'min(52vh, 480px)',
-        minWidth: isMobile ? 0 : '340px',
-        aspectRatio: '3 / 4',
+        width: grid ? '100%' : (isMobile ? '100%' : 'min(86vh, 660px)'),
+        minWidth: grid ? 0 : (isMobile ? 0 : '440px'),
+        aspectRatio: isMobile && !grid ? '3 / 4' : '4 / 3',
         background: img ? '#0B1513' : 'linear-gradient(160deg, #16261F 0%, #0B1513 70%)',
         border: '1px solid rgba(242,239,230,0.08)',
         borderRadius: '6px', overflow: 'hidden',
         display: 'grid', gridTemplateRows: 'auto 1fr auto',
-        padding: '26px', cursor: 'pointer',
+        padding: grid ? '20px' : '26px', cursor: 'pointer',
         transform: hov ? 'translateY(-3px)' : 'none',
         transition: 'transform 250ms cubic-bezier(0.22,1,0.36,1)',
       }}
@@ -63,10 +104,10 @@ const ReelCard = ({ item, onNavigate, isMobile }) => {
         }}>{item.ghost || item.title[0]}</div>
       )}
       <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.6)' }}>
-        <span>{item.n} · {item.year}</span><span>{item.cat}</span>
+        <span>{[item.n, item.year].filter(Boolean).join(' · ')}</span><span>{item.cat}</span>
       </div>
       <div style={{ position: 'relative', alignSelf: 'end' }}>
-        <h3 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(28px, 3.2vw, 42px)', lineHeight: 1, letterSpacing: '-0.02em', fontWeight: 400, color: '#F2EFE6', margin: 0 }}>
+        <h3 style={{ fontFamily: 'var(--ff-serif)', fontSize: grid ? 'clamp(21px, 1.6vw, 27px)' : 'clamp(28px, 3.2vw, 42px)', lineHeight: 1.05, letterSpacing: '-0.02em', fontWeight: 400, color: '#F2EFE6', margin: 0 }}>
           {item.em ? <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.8)' }}>{item.title}</em> : item.title}
         </h3>
         <p style={{ margin: '10px 0 0', fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.6)' }}>{item.sub}</p>
@@ -90,14 +131,16 @@ const Reel = ({ onNavigate }) => {
   const [idx, setIdx] = React.useState(1);
 
   const items = React.useMemo(() => {
-    const featured = (window.PROJECTS || []).map(p => ({
+    const featured = (window.PROJECTS || []).map((p, i) => ({
       id: p.id, title: p.title, year: String(p.year),
       cat: (p.role || '').split(' — ')[0] || 'Project',
       sub: (p.role || '').split(' — ')[1] || '',
       meta: p.org, nav: ['project', p.id],
+      n: String(i + 1).padStart(2, '0'),
     }));
-    return [...featured, ...REEL_DOORS].map((it, i) => ({ ...it, n: String(i + 1).padStart(2, '0') }));
+    return [...featured, REEL_MORE];
   }, []);
+  const projectCount = items.length - 1; // the More card isn't a numbered project
 
   React.useEffect(() => {
     if (isMobile) return;
@@ -134,7 +177,7 @@ const Reel = ({ onNavigate }) => {
     }}>
       <div>
         <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 500, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.5)', margin: 0 }}>
-          <span style={{ color: '#D45A1B' }}>●</span>&nbsp;&nbsp;Selected Work · 01 — {String(items.length).padStart(2, '0')}
+          <span style={{ color: '#D45A1B' }}>●</span>&nbsp;&nbsp;Selected Work · 01 — {String(projectCount).padStart(2, '0')}
         </p>
         <h2 style={{ fontFamily: 'var(--ff-serif)', fontSize: isMobile ? 'clamp(34px, 9vw, 44px)' : 'clamp(40px, 5vw, 84px)', lineHeight: 0.98, letterSpacing: '-0.03em', fontWeight: 400, color: '#F2EFE6', margin: '12px 0 0' }}>
           <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.72)' }}>Selected</em> work,<br />both mediums.
@@ -142,7 +185,7 @@ const Reel = ({ onNavigate }) => {
       </div>
       {!isMobile && (
         <div style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.5)', textAlign: 'right' }}>
-          <div><b style={{ color: '#D45A1B', fontWeight: 400 }}>{String(idx).padStart(2, '0')}</b> / {String(items.length).padStart(2, '0')}</div>
+          <div><b style={{ color: '#D45A1B', fontWeight: 400 }}>{String(Math.min(idx, projectCount)).padStart(2, '0')}</b> / {String(projectCount).padStart(2, '0')}</div>
           <div style={{ marginTop: '10px', opacity: 0.6 }}>Scroll to advance</div>
         </div>
       )}

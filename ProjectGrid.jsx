@@ -75,8 +75,8 @@ const ProjectGrid = ({ onNavigate, tweaks = {} }) => {
       }
 
       <div style={{ marginTop: isMobile ? '2rem' : '3rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
-        <p style={{ fontSize: '14px', color: 'rgba(20,33,28,0.5)', margin: 0 }}>Models, drawings, and built work — the physical foundations, 2017–2023.</p>
-        <ArrowLink onClick={() => onNavigate('archive')}>Foundations</ArrowLink>
+        <p style={{ fontSize: '14px', color: 'rgba(20,33,28,0.5)', margin: 0 }}>Mini studies, foundations, and playable experiments — the full index.</p>
+        <ArrowLink onClick={() => onNavigate('work')}>More projects</ArrowLink>
       </div>
     </section>
   );

@@ -558,7 +558,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 6rem' }}>
       {/* Back link */}
       <button
-        onClick={() => onNavigate('archive')}
+        onClick={() => onNavigate('work')}
         style={{
           background: 'none', border: 'none', cursor: 'pointer', padding: 0,
           display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
@@ -568,7 +568,7 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
           ...fade(0),
         }}
       >
-        <span>←</span> Back to archive
+        <span>←</span> Back to work
       </button>
 
       {/* Hero tile */}
