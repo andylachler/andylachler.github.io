@@ -12,9 +12,12 @@ const PROJECT_DATA = {
       'Designed the core ranking surface around a Fit gauge, a stacked-bar cost visualization, and a reliability sparkline. Every number the product shows has its inputs one click away.',
     ],
     insights: [
-      { label: 'Trust is a UI problem', body: 'Dealer distrust wasn\u2019t ideological \u2014 it was interface. Every participant described moments where a dealer website felt like a trap door. The design response was to make math visible and reversible.' },
-      { label: 'Decisions outrun data', body: 'Buyers don\u2019t read spec sheets. They scan for a shape they recognize. That pushed the design toward a single primary metric per screen \u2014 Fit, Offer, Deal Score \u2014 with inputs available but not center-stage.' },
-      { label: 'Selling is shopping', body: 'People who sell a car are usually buying a different one. Keeping the Sell flow inside the same visual language as Browse wasn\u2019t cosmetic \u2014 it made the next step legible.' },
+      { label: 'Trust is a UI problem', body: 'Dealer distrust wasn\u2019t ideological \u2014 it was interface. Every participant described moments where a dealer website felt like a trap door. The design response was to make math visible and reversible.',
+        screen: 'https://autoease-prototype.vercel.app/price-check/', screenLabel: 'Price Check \u2014 the math, visible' },
+      { label: 'Decisions outrun data', body: 'Buyers don\u2019t read spec sheets. They scan for a shape they recognize. That pushed the design toward a single primary metric per screen \u2014 Fit, Offer, Deal Score \u2014 with inputs available but not center-stage.',
+        screen: 'https://autoease-prototype.vercel.app/results/', screenLabel: 'Results \u2014 one number per car' },
+      { label: 'Selling is shopping', body: 'People who sell a car are usually buying a different one. Keeping the Sell flow inside the same visual language as Browse wasn\u2019t cosmetic \u2014 it made the next step legible.',
+        screen: 'https://autoease-prototype.vercel.app/sell/', screenLabel: 'Sell \u2014 same grammar as Browse' },
     ],
     designSystem: [
       { label: 'Forest-deep palette', body: 'A single surface color anchors the dark pages. Amber is reserved for primary actions and live values. Sage carries secondary meaning. Three levels, not fifteen.' },
@@ -23,9 +26,9 @@ const PROJECT_DATA = {
       { label: 'Data-viz primitives', body: 'Three components carry the viz load \u2014 Gauge (SVG stroke-dasharray ring), StackedBar (segmented horizontal with legend), Sparkline (quadratic-midpoint smooth curves). Shared color tokens so a deduction bar on the Offer page matches a cost segment on the Result page.' },
     ],
     influences: [
-      { label: 'Robinhood', body: 'For the numeric-first visual grammar. Big numbers, small chrome, deltas colored but not shouted. The way Robinhood treats a stock price is the way AutoEase treats a car price.' },
+      { label: 'The automotive press', body: 'The Drive, MotorTrend, CarBuzz, Car and Driver \u2014 the information side of the industry. AutoEase sits with the publications, not the dealerships: it exists to support the buyer, not to make money for the seller.' },
       { label: 'Consumer Reports', body: 'For the reliability voice. Understated, evidence-linked, willing to tell the user a car is a bad idea.' },
-      { label: 'Editorial magazines', body: 'For the news surface \u2014 structured kind labels, restrained typography, and the courage to have whitespace.' },
+      { label: 'The AutoFocus channel', body: 'For the verdict format. Plain-spoken, owner-minded reviews that end with a recommendation you can act on \u2014 the tone AutoEase aims for in its Fit and Deal scores.' },
     ],
     outcome: 'Prototype complete. Browse flow, guided Q&A with Fit ranking, Sell flow with instant offer and transparent deductions, Price Check flow with verdict scoring \u2014 all in a single Next.js build. Used as a portfolio-facing exploration of consumer-finance UI patterns applied to a non-finance domain.',
     credits: 'Independent project. Research, product design, interaction design, and prototype build: Andreas L\u00e4chler.',
@@ -36,12 +39,13 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'Portfolio prototype' },
     ],
     tileBg: '#1A2520', imageIndex: 6,
-    // The embed is the INTERACTIVE prototype (all four flows) — not the v2
-    // wireframe canvas. The wireframe board (autoease-v2/) informed the v2
-    // design language only; it stays reachable as a reference link, never as
-    // the embedded flow. (Reverted July 2026 after the canvas mistakenly
-    // replaced the prototype here.)
-    interactiveUrl: 'autoease/',
+    // The embed is the INTERACTIVE prototype (all four flows) — never the v2
+    // wireframe canvas (that board informs design language only). It points at
+    // the Vercel deployment: the local autoease/ export is a STALE build (old
+    // route structure + an /api/ call that can't run statically), which is
+    // what broke the embed in July 2026. Don't point interactiveUrl back at
+    // the local folder unless a fresh static export replaces it.
+    interactiveUrl: 'https://autoease-prototype.vercel.app/',
     interactiveNote: 'The interactive prototype, embedded live — Browse, Answers, Sell, and Price Check. The v2 design-language board that informs the redesign is available as a reference below.',
     interactiveAltUrl: 'autoease-v2/',
     interactiveAltLabel: 'View the v2 design-language board ↗',
@@ -124,6 +128,7 @@ const PROJECT_DATA = {
     title: 'Ella',
     org: 'Arquitectonica', year: '2023', role: 'Architecture',
     bg: '#D45A1B',
+    bookLabel: 'Concept presentation · Arquitectonica', bookCols: 2,
     lede: 'A 95-unit condo on a long, narrow lot in Miami Beach. The design problem was what to do with the site\u2019s ground plane — and with the cross-block paseo the zoning required.',
     body: 'Ella sits on a skinny lot on Abbott Avenue in Miami Beach, pinned between two streets with a paseo cutting across the north edge. The brief asked for ground-floor retail, parking, and 95 residences, with the base elevated to meet floodplain requirements. The design response is a frame-patterned facade that reads lighter as it rises, and an arcade-and-paseo base that keeps an elevated building walkable at street level.',
     process: [
@@ -358,9 +363,37 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
             gap: isMobile ? '1.25rem' : '2rem',
           }}>
             {project.insights.map((item, i) => (
-              <div key={i} style={{ padding: isMobile ? '1.25rem' : '1.5rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)' }}>
+              <div key={i} style={{ padding: isMobile ? '1.25rem' : '1.5rem', background: 'rgba(20,33,28,0.025)', borderRadius: '6px', border: '0.5px solid rgba(20,33,28,0.06)', display: 'flex', flexDirection: 'column' }}>
                 <p style={{ fontSize: '15px', fontWeight: 500, color: '#14211C', margin: '0 0 0.5rem', letterSpacing: '-0.01em' }}>{item.label}</p>
                 <p style={{ fontSize: '14px', lineHeight: 1.7, color: 'rgba(20,33,28,0.7)', margin: 0 }}>{item.body}</p>
+                {/* Phone view — the app screen that answers this insight.
+                    Live page in a bezel, scaled to fit; non-interactive
+                    (pointerEvents none) so it reads as a screenshot. */}
+                {item.screen && (
+                  <div style={{ marginTop: '1.25rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
+                    <div style={{
+                      width: '240px', padding: '8px', flexShrink: 0,
+                      background: '#0B1513', borderRadius: '34px',
+                      border: '1px solid rgba(20,33,28,0.2)',
+                      boxShadow: '0 12px 32px rgba(20,33,28,0.18), inset 0px 1px 0px 0px rgba(255,255,255,0.08)',
+                    }}>
+                      <div style={{ borderRadius: '26px', overflow: 'hidden', background: '#1A2520', height: `${Math.round(224 * 852 / 393)}px`, position: 'relative' }}>
+                        <iframe
+                          src={item.screen} title={`${item.label} — app view`} loading="lazy"
+                          scrolling="no" tabIndex={-1} aria-hidden="true"
+                          style={{
+                            width: '393px', height: '852px', border: 0,
+                            transformOrigin: 'top left', transform: `scale(${224 / 393})`,
+                            pointerEvents: 'none', display: 'block',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    {item.screenLabel && (
+                      <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: 0, textAlign: 'center' }}>{item.screenLabel}</p>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>

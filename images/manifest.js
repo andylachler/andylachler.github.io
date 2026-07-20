@@ -8,6 +8,7 @@ window.IMAGE_MANIFEST = {
     "tile": "images/autoease/tile.jpg"
   },
   "bethlehem-culinary": {
+    "hero": "images/bethlehem-culinary/hero.jpg",
     "tile": "images/bethlehem-culinary/tile.jpg",
     "gallery": [
       {
@@ -72,6 +73,59 @@ window.IMAGE_MANIFEST = {
       }
     ]
   },
+  "brickell": {
+    "hero": "images/brickell/hero.jpg",
+    "gallery": [
+      {
+        "src": "images/brickell/01.jpg",
+        "caption": "Midtown Central tower render — the residential towers over the park."
+      },
+      {
+        "src": "images/brickell/02.jpg",
+        "caption": "Tower view along the avenue."
+      },
+      {
+        "src": "images/brickell/03.jpg",
+        "caption": "The towers from the masterplan park."
+      },
+      {
+        "src": "images/brickell/04.jpg",
+        "caption": "Evening view across the plazas."
+      },
+      {
+        "src": "images/brickell/05.jpg",
+        "caption": "Midtown Park masterplan — towers, plazas, shopping, and office parcels."
+      },
+      {
+        "src": "images/brickell/06.jpg",
+        "caption": "Plazas and parks at grade."
+      },
+      {
+        "src": "images/brickell/07.jpg",
+        "caption": "Retail street through the masterplan."
+      },
+      {
+        "src": "images/brickell/08.jpg",
+        "caption": "Office parcels along the park."
+      },
+      {
+        "src": "images/brickell/09.jpg",
+        "caption": "Street elevation — progress set."
+      },
+      {
+        "src": "images/brickell/10.jpg",
+        "caption": "Street elevation — progress set."
+      },
+      {
+        "src": "images/brickell/11.jpg",
+        "caption": "Street elevation — progress set."
+      },
+      {
+        "src": "images/brickell/12.jpg",
+        "caption": "Street elevation — progress set."
+      }
+    ]
+  },
   "craft": {
     "gallery": [
       {
@@ -99,13 +153,7 @@ window.IMAGE_MANIFEST = {
         "src": "images/craft/08.jpg"
       },
       {
-        "src": "images/craft/09.jpg"
-      },
-      {
         "src": "images/craft/10.jpg"
-      },
-      {
-        "src": "images/craft/11.jpg"
       },
       {
         "src": "images/craft/12.jpg"
@@ -175,7 +223,76 @@ window.IMAGE_MANIFEST = {
       }
     ]
   },
+  "ella": {
+    "hero": "images/ella/hero.jpg",
+    "gallery": [
+      {
+        "src": "images/ella/01.jpg",
+        "caption": "Ella from Abbott Avenue — the frame-patterned facade reading lighter as it rises."
+      },
+      {
+        "src": "images/ella/02.jpg",
+        "caption": "Street corner — arcade base under the elevated ground plane."
+      },
+      {
+        "src": "images/ella/03.jpg",
+        "caption": "The paseo edge — cross-block passage the zoning required, kept walkable."
+      },
+      {
+        "src": "images/ella/04.jpg",
+        "caption": "Aerial — the long narrow bar between two streets, pool deck above the podium."
+      }
+    ],
+    "book": [
+      {
+        "src": "images/ella/book-01.jpg"
+      },
+      {
+        "src": "images/ella/book-02.jpg"
+      },
+      {
+        "src": "images/ella/book-03.jpg"
+      },
+      {
+        "src": "images/ella/book-04.jpg"
+      },
+      {
+        "src": "images/ella/book-05.jpg"
+      },
+      {
+        "src": "images/ella/book-06.jpg"
+      },
+      {
+        "src": "images/ella/book-07.jpg"
+      },
+      {
+        "src": "images/ella/book-08.jpg"
+      },
+      {
+        "src": "images/ella/book-09.jpg"
+      },
+      {
+        "src": "images/ella/book-10.jpg"
+      },
+      {
+        "src": "images/ella/book-11.jpg"
+      },
+      {
+        "src": "images/ella/book-12.jpg"
+      },
+      {
+        "src": "images/ella/book-13.jpg"
+      },
+      {
+        "src": "images/ella/book-14.jpg"
+      },
+      {
+        "src": "images/ella/book-15.jpg"
+      }
+    ]
+  },
   "exhibition-trailer": {
+    "hero": "images/exhibition-trailer/hero.jpg",
     "tile": "images/exhibition-trailer/tile.jpg",
     "gallery": [
       {
@@ -223,6 +340,38 @@ window.IMAGE_MANIFEST = {
         "src": "images/exhibition-trailer/11.mp4",
         "video": true,
         "caption": "Animation."
+      },
+      {
+        "src": "images/exhibition-trailer/12.jpg",
+        "caption": "Front approach — the MiiR wordmark in the recycled-timber skin."
+      },
+      {
+        "src": "images/exhibition-trailer/13.jpg",
+        "caption": "Deck and entry — fold-out face open on site."
+      },
+      {
+        "src": "images/exhibition-trailer/14.jpg",
+        "caption": "Transport configuration, three-quarter view."
+      },
+      {
+        "src": "images/exhibition-trailer/15.jpg",
+        "caption": "Night, rear quarter — the enclosure as a lantern."
+      },
+      {
+        "src": "images/exhibition-trailer/16.jpg",
+        "caption": "Folded for transport — deck stowed into the face."
+      },
+      {
+        "src": "images/exhibition-trailer/17.jpg",
+        "caption": "Interior — exhibition kitchen wall and skylight."
+      },
+      {
+        "src": "images/exhibition-trailer/18.jpg",
+        "caption": "Interior — display shelving under the moon-roof."
+      },
+      {
+        "src": "images/exhibition-trailer/19.jpg",
+        "caption": "Interior — corner exhibition surface."
       }
     ],
     "book": [
@@ -258,6 +407,13 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "fluxing": {
+    "hero": "images/fluxing/hero.jpg",
+    "gallery": [
+      {
+        "src": "images/fluxing/01.jpg",
+        "caption": "The field station from above — the timber vault bridging Newtown Creek’s restored wetland edge."
+      }
+    ],
     "book": [
       {
         "src": "images/fluxing/book-01.jpg",
@@ -383,6 +539,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "singular-flow": {
+    "hero": "images/singular-flow/hero.jpg",
     "tile": "images/singular-flow/tile.jpg",
     "book": [
       {
@@ -396,6 +553,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "unit-multiplication": {
+    "hero": "images/unit-multiplication/hero.jpg",
     "tile": "images/unit-multiplication/tile.jpg",
     "gallery": [
       {

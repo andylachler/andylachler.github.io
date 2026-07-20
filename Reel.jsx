@@ -29,8 +29,8 @@ const ReelMoreCard = ({ item, onNavigate, isMobile, grid }) => {
       onMouseLeave={() => setHov(false)}
       style={{
         position: 'relative', flex: '0 0 auto',
-        width: grid ? '100%' : (isMobile ? '100%' : 'min(86vh, 660px)'),
-        minWidth: grid ? 0 : (isMobile ? 0 : '440px'),
+        width: grid ? '100%' : (isMobile ? '100%' : 'min(72vh, 640px)'),
+        minWidth: grid ? 0 : (isMobile ? 0 : '420px'),
         aspectRatio: isMobile && !grid ? '3 / 4' : '4 / 3',
         background: 'linear-gradient(160deg, #16261F 0%, #0B1513 70%)',
         border: '1px dashed rgba(242,239,230,0.22)',
@@ -61,7 +61,10 @@ const ReelMoreCard = ({ item, onNavigate, isMobile, grid }) => {
 
 const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
   const [hov, setHov] = React.useState(false);
-  const img = item.img || (((window.IMAGE_MANIFEST || {})[item.id] || {}).tile);
+  // Card image: explicit override → tile → hero. Never a book page (rule:
+  // card/hero imagery always comes from images, not PDF pages).
+  const mEntry = (window.IMAGE_MANIFEST || {})[item.id] || {};
+  const img = item.img || mEntry.tile || mEntry.hero;
   if (item.more) return <ReelMoreCard item={item} onNavigate={onNavigate} isMobile={isMobile} grid={grid} />;
   return (
     <article
@@ -70,8 +73,8 @@ const ReelCard = ({ item, onNavigate, isMobile, grid }) => {
       onMouseLeave={() => setHov(false)}
       style={{
         position: 'relative', flex: '0 0 auto',
-        width: grid ? '100%' : (isMobile ? '100%' : 'min(86vh, 660px)'),
-        minWidth: grid ? 0 : (isMobile ? 0 : '440px'),
+        width: grid ? '100%' : (isMobile ? '100%' : 'min(72vh, 640px)'),
+        minWidth: grid ? 0 : (isMobile ? 0 : '420px'),
         aspectRatio: isMobile && !grid ? '3 / 4' : '4 / 3',
         background: img ? '#0B1513' : 'linear-gradient(160deg, #16261F 0%, #0B1513 70%)',
         border: '1px solid rgba(242,239,230,0.08)',
@@ -152,7 +155,7 @@ const Reel = ({ onNavigate }) => {
       const total = host.offsetHeight - window.innerHeight;
       const prog = Math.max(0, Math.min(1, -rect.top / (total || 1)));
       const distance = Math.max(0, track.scrollWidth - window.innerWidth + 80);
-      track.style.transform = `translate(${-prog * distance}px, -50%)`;
+      track.style.transform = `translateX(${-prog * distance}px)`;
       setIdx(Math.max(1, Math.min(items.length, Math.floor(prog * items.length) + 1)));
     };
     size(); update();
@@ -204,8 +207,12 @@ const Reel = ({ onNavigate }) => {
     <div ref={hostRef} id="home-reel" style={{ position: 'relative', background: '#14211C' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
         {head}
+        {/* Track sits on a fixed offset BELOW the header block instead of
+            vertically centered — centering pushed tall cards up underneath
+            the section title and the scroll counter (July 2026 legibility
+            fix). clamp keeps a comfortable margin on short viewports. */}
         <div ref={trackRef} style={{
-          position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
+          position: 'absolute', top: 'clamp(calc(160px + 10vw), 30vh, 360px)', left: 0,
           display: 'flex', gap: '32px', padding: '0 min(12vw, 160px)',
           willChange: 'transform',
         }}>

@@ -46,7 +46,11 @@ for (const dir of fs.readdirSync(IMAGES, { withFileTypes: true })) {
     const isVid = VID.test(f);
     if (!EXT.test(f) && !isVid) continue;
     const rel = `images/${id}/${f}`;
-    const base = f.replace(EXT, '').replace(VID, '');
+    let base = f.replace(EXT, '').replace(VID, '');
+    // HERO / Hero / TILE etc. — Andy labels hero images "HERO" in the sources;
+    // accept any casing (and stray trailing spaces) for the special names.
+    if (/^\s*hero\s*$/i.test(base)) base = 'hero';
+    if (/^\s*tile\s*$/i.test(base)) base = 'tile';
     const { size } = fs.statSync(path.join(folder, f));
     if (size > (isVid ? 60 * 1024 * 1024 : SIZE_WARN)) warnings.push(`${rel} is ${(size / 1024 / 1024).toFixed(1)}MB — compress it`);
 

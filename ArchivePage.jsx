@@ -16,7 +16,7 @@ const ARCHIVE_ITEMS = [
   { id: 'mesa-verde', title: 'Mesa Verde', year: '2021', org: 'Pratt Institute', type: 'Graduate CAP studio', desc: 'A Waste-to-Energy plant and nightclub on the Anable Basin in Long Island City. Concrete paraboloid "mesas" cluster out of an existing warehouse and organize the program where their bases intersect.', bg: '#D45A1B', imageIndex: 2, silhouette: 'mesa-verde', featured: true },
   { id: 'elevate-ravenswood', title: 'Elevate Ravenswood', year: '2021', org: 'Pratt Institute', type: 'Graduate studio', desc: 'A mixed-use sports, education, and community-health building for the Ravenswood Community Land Trust. Mass timber, Vierendeel trusses, and a sunken basketball arena programmed to stay visible from the street.', bg: '#3D5448', imageIndex: 3, featured: true },
   { id: 'unit-multiplication', title: 'Unit Multiplication', year: '2018', org: 'Lehigh University', type: 'Craft — paper model', desc: 'Parametric paper architecture. A single folded unit, multiplied by brass fasteners into a flexible planar form. Density, curvature, and transparency emerge from the joint pattern rather than from the unit itself. With Prof. Hyun-Tae Jung.', bg: '#14211C', imageIndex: 4, featured: true },
-  { id: 'brickell', title: 'Brickell Residential', year: '2023', org: 'Arquitectonica', type: 'Professional — schematic design', desc: 'A 32-unit mass timber multifamily building on a constrained infill lot in Brickell, Miami. Led schematic design and consultant coordination — long timber spans opened the floor plates and constrained the facade module.', bg: '#14211C', imageIndex: 4, featured: true },
+  { id: 'brickell', title: 'Midtown Walk', year: '2024', org: 'Arquitectonica', type: 'Professional — design documentation', desc: 'Two residential towers over a retail podium at 3000 NE 1st Ave, part of the Midtown Park masterplan in Miami. Studio-to-3BR tower plates, level-by-level podium documentation, and street elevations, iterated against the unit matrix and Miami 21 zoning.', bg: '#14211C', imageIndex: 4, featured: true },
 
   // ── Playable ──────────────────────────────────────────────────────────
   // Unity / WebGL experiments — self-initiated. Architecture-adjacent:
@@ -59,21 +59,23 @@ const ARCHIVE_DATA = {
     next: 'unit-multiplication',
   },
   'brickell': {
-    title: 'Brickell Residential',
-    org: 'Arquitectonica', year: '2023', role: 'Architecture — schematic design',
+    title: 'Midtown Walk',
+    org: 'Arquitectonica', year: '2024', role: 'Architecture — design documentation',
     bg: '#14211C', tileBg: '#14211C', imageIndex: 4,
-    lede: '32-unit multifamily in Brickell. Mass timber structure, constrained lot, ground-floor retail.',
-    body: 'Led schematic design and consultant coordination for a 32-unit residential building on a constrained infill lot in Miami\'s Brickell neighborhood. Mass timber structure was the client\'s requirement — the design problem was making it work within a tight lot footprint and local zoning.',
+    lede: 'Two residential towers over a retail podium at 3000 NE 1st Avenue, in Miami’s Midtown. Part of the Midtown Park masterplan — towers, plazas, shopping, and office parcels knitted into a walkable district.',
+    body: 'A two-tower multifamily development on the block between N. Miami Avenue and NE 31st Street, developed at Arquitectonica as part of the larger Midtown Park masterplan. Each tower carries its own typical residential plate — unit mixes running from studios and junior one-bedrooms through three-bedrooms — over a shared podium of parking levels wrapped with retail at grade. The drawing set is where the project actually lived: site and zoning diagrams, level-by-level podium plans, tower plates, and street elevations, iterated against the developer’s unit matrix and Miami 21 zoning.',
     process: [
-      'The structural system drove everything. Mass timber spans are long, which gave us open floor plates but constrained the facade module. Most of the design work was resolving that constraint.',
-      'Ground-floor retail required coordination with a separate tenant buildout team. Designed the base as a neutral frame.',
+      'The podium is the hard problem — stacking the parking count inside the allowable envelope while keeping the ground floor retail-active on the avenue. A large share of the set is level-by-level podium plans reconciling ramps, cores, and liner depths.',
+      'Tower plates were driven by the unit matrix: studio through 3BR mixes per level, with the two towers carrying different plate geometries on a shared podium grid.',
+      'Documented as a progress set — conceptual numbers flagged for refinement as structure and MEP came aboard — which meant drawing for coordination, not just presentation.',
     ],
-    outcome: 'Schematic design complete. Handed off to design development team.',
-    credits: 'Arquitectonica. Design: Andreas Lächler. Principal: Bernardo Fort-Brescia.',
+    outcome: 'Progress set issued July 2024. Development ongoing.',
+    credits: 'Arquitectonica. Team member: Andreas Lächler. Masterplan renderings courtesy of the Midtown Park development.',
     details: [
-      { label: 'Program', value: '32-unit residential' },
-      { label: 'Location', value: 'Brickell, Miami' },
-      { label: 'Structure', value: 'Mass timber' },
+      { label: 'Program', value: 'Two residential towers + retail podium' },
+      { label: 'Location', value: '3000 NE 1st Ave, Midtown Miami' },
+      { label: 'Masterplan', value: 'Midtown Park' },
+      { label: 'Year', value: '2023–24' },
     ],
     next: 'fluxing',
   },
