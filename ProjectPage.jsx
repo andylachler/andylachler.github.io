@@ -36,12 +36,15 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'Portfolio prototype' },
     ],
     tileBg: '#1A2520', imageIndex: 6,
-    // v2 design (July 2026): Home & Guided Search, hosted locally. The complete
-    // v1 prototype (all four flows) stays reachable via interactiveAltUrl.
-    interactiveUrl: 'autoease-v2/',
-    interactiveNote: 'The v2 redesign of the Home screen and guided search flow, embedded live. The complete v1 prototype — Browse, Answers, Sell, and Price Check — is still available full-screen below.',
-    interactiveAltUrl: 'https://autoease-prototype.vercel.app/',
-    interactiveAltLabel: 'Open the full v1 prototype ↗',
+    // The embed is the INTERACTIVE prototype (all four flows) — not the v2
+    // wireframe canvas. The wireframe board (autoease-v2/) informed the v2
+    // design language only; it stays reachable as a reference link, never as
+    // the embedded flow. (Reverted July 2026 after the canvas mistakenly
+    // replaced the prototype here.)
+    interactiveUrl: 'autoease/',
+    interactiveNote: 'The interactive prototype, embedded live — Browse, Answers, Sell, and Price Check. The v2 design-language board that informs the redesign is available as a reference below.',
+    interactiveAltUrl: 'autoease-v2/',
+    interactiveAltLabel: 'View the v2 design-language board ↗',
     next: 'feasibility',
   },
   'feasibility': {

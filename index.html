@@ -304,6 +304,19 @@ const TweaksPanel = ({ tweaks, setTweaks, visible }) => {
 };
 
 // ── App ───────────────────────────────────────────────────────────────────
+// Routing: hash-based history (#/page or #/page/project-id) layered over the
+// state-based SPA. Every navigate() pushes a history entry, and popstate
+// restores state — so the browser back button walks on-site navigation
+// instead of leaving the website. localStorage stays as the fresh-visit
+// fallback when there's no hash.
+const VALID_PAGES = ['home', 'work', 'project', 'archive', 'archive-project', 'about'];
+const parseHash = () => {
+  const m = (window.location.hash || '').match(/^#\/([\w-]+)(?:\/([\w-]+))?/);
+  if (!m || !VALID_PAGES.includes(m[1])) return null;
+  return { page: m[1], id: m[2] || null };
+};
+const hashFor = (p, id) => '#/' + p + (id ? '/' + id : '');
+
 const App = () => {
   const loadPage = () => { try { return localStorage.getItem('lachler_page') || 'home'; } catch { return 'home'; } };
   const loadProject = () => { try { return localStorage.getItem('lachler_project') || 'feasibility'; } catch { return 'feasibility'; } };
@@ -312,8 +325,9 @@ const App = () => {
     catch { return TWEAK_DEFAULTS; }
   };
 
-  const [page, setPage] = React.useState(loadPage);
-  const [projectId, setProjectId] = React.useState(loadProject);
+  const initial = parseHash(); // deep link / reload beats localStorage
+  const [page, setPage] = React.useState(initial ? initial.page : loadPage);
+  const [projectId, setProjectId] = React.useState((initial && initial.id) || loadProject);
   const [pageKey, setPageKey] = React.useState(0);
   const [tweaks, setTweaks] = React.useState(loadTweaks);
   const [tweaksVisible, setTweaksVisible] = React.useState(false);
@@ -328,6 +342,28 @@ const App = () => {
     return () => window.removeEventListener('message', handler);
   }, []);
 
+  // Seed the first history entry with a hash, then mirror back/forward into
+  // React state. popstate must NOT push a new entry — it only restores.
+  React.useEffect(() => {
+    if (!parseHash()) {
+      window.history.replaceState(null, '', hashFor(page, (page === 'project' || page === 'archive-project') ? projectId : null));
+    }
+    const onPop = () => {
+      const h = parseHash();
+      if (!h) return;
+      if (h.id) {
+        setProjectId(h.id);
+        try { localStorage.setItem('lachler_project', h.id); } catch {}
+      }
+      setPage(h.page);
+      setPageKey(k => k + 1);
+      try { localStorage.setItem('lachler_page', h.page); } catch {}
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
   const navigate = (p, id) => {
     if ((p === 'project' || p === 'archive-project') && id) {
       setProjectId(id);
@@ -336,6 +372,7 @@ const App = () => {
     setPage(p);
     setPageKey(k => k + 1);
     try { localStorage.setItem('lachler_page', p); } catch {}
+    window.history.pushState(null, '', hashFor(p, (p === 'project' || p === 'archive-project') ? (id || projectId) : null));
     window.scrollTo({ top: 0, behavior: tweaks.motionLevel === 'none' ? 'auto' : 'smooth' });
   };
 
