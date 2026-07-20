@@ -2,14 +2,15 @@
 // Add/remove files in images/<project-id>/ and re-run the script.
 window.IMAGE_MANIFEST = {
   "about": {
-    "hero": "images/about/hero.jpg"
+    "hero": "images/about/hero.jpg",
+    "tile": "images/about/hero.jpg"
   },
   "autoease": {
     "tile": "images/autoease/tile.jpg"
   },
   "bethlehem-culinary": {
     "hero": "images/bethlehem-culinary/hero.jpg",
-    "tile": "images/bethlehem-culinary/tile.jpg",
+    "tile": "images/bethlehem-culinary/hero.jpg",
     "gallery": [
       {
         "src": "images/bethlehem-culinary/01.jpg"
@@ -75,6 +76,7 @@ window.IMAGE_MANIFEST = {
   },
   "brickell": {
     "hero": "images/brickell/hero.jpg",
+    "tile": "images/brickell/hero.jpg",
     "gallery": [
       {
         "src": "images/brickell/01.jpg",
@@ -225,6 +227,7 @@ window.IMAGE_MANIFEST = {
   },
   "ella": {
     "hero": "images/ella/hero.jpg",
+    "tile": "images/ella/hero.jpg",
     "gallery": [
       {
         "src": "images/ella/01.jpg",
@@ -293,7 +296,7 @@ window.IMAGE_MANIFEST = {
   },
   "exhibition-trailer": {
     "hero": "images/exhibition-trailer/hero.jpg",
-    "tile": "images/exhibition-trailer/tile.jpg",
+    "tile": "images/exhibition-trailer/hero.jpg",
     "gallery": [
       {
         "src": "images/exhibition-trailer/01.jpg",
@@ -408,6 +411,7 @@ window.IMAGE_MANIFEST = {
   },
   "fluxing": {
     "hero": "images/fluxing/hero.jpg",
+    "tile": "images/fluxing/hero.jpg",
     "gallery": [
       {
         "src": "images/fluxing/01.jpg",
@@ -473,7 +477,7 @@ window.IMAGE_MANIFEST = {
   },
   "one-room-schoolhouse": {
     "hero": "images/one-room-schoolhouse/hero.jpg",
-    "tile": "images/one-room-schoolhouse/tile.jpg",
+    "tile": "images/one-room-schoolhouse/hero.jpg",
     "gallery": [
       {
         "src": "images/one-room-schoolhouse/01.jpg"
@@ -540,7 +544,7 @@ window.IMAGE_MANIFEST = {
   },
   "singular-flow": {
     "hero": "images/singular-flow/hero.jpg",
-    "tile": "images/singular-flow/tile.jpg",
+    "tile": "images/singular-flow/hero.jpg",
     "book": [
       {
         "src": "images/singular-flow/book-01.jpg",
@@ -554,7 +558,7 @@ window.IMAGE_MANIFEST = {
   },
   "unit-multiplication": {
     "hero": "images/unit-multiplication/hero.jpg",
-    "tile": "images/unit-multiplication/tile.jpg",
+    "tile": "images/unit-multiplication/hero.jpg",
     "gallery": [
       {
         "src": "images/unit-multiplication/01.jpg"

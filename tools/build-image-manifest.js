@@ -60,6 +60,11 @@ for (const dir of fs.readdirSync(IMAGES, { withFileTypes: true })) {
     else if (/^book-\d+$/.test(base)) book.push({ n: parseInt(base.slice(5), 10), src: rel, caption: captions[base] || captions[f] || null });
     else warnings.push(`${rel} ignored — name it tile.*, hero.*, a number (01.jpg), or book-NN.jpg`);
   }
+  // Site rule (July 2026): the HERO image is also the tile image. Wherever a
+  // hero exists it drives both surfaces; a tile.* file only matters for
+  // projects that have no hero labeled.
+  if (entry.hero) entry.tile = entry.hero;
+
   gallery.sort((a, b) => a.n - b.n);
   if (gallery.length) entry.gallery = gallery.map(({ src, caption, video }) => ({ src, ...(video ? { video: true } : {}), ...(caption ? { caption } : {}) }));
   book.sort((a, b) => a.n - b.n);
