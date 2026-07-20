@@ -88,6 +88,33 @@ window.IMAGE_MANIFEST = {
       },
       {
         "src": "images/craft/05.jpg"
+      },
+      {
+        "src": "images/craft/06.jpg"
+      },
+      {
+        "src": "images/craft/07.jpg"
+      },
+      {
+        "src": "images/craft/08.jpg"
+      },
+      {
+        "src": "images/craft/09.jpg"
+      },
+      {
+        "src": "images/craft/10.jpg"
+      },
+      {
+        "src": "images/craft/11.jpg"
+      },
+      {
+        "src": "images/craft/12.jpg"
+      },
+      {
+        "src": "images/craft/13.jpg"
+      },
+      {
+        "src": "images/craft/14.jpg"
       }
     ]
   },

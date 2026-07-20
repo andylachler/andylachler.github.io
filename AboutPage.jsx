@@ -74,7 +74,7 @@ const AboutPage = () => {
         <div style={{ marginTop: isMobile ? '3.5rem' : '5rem', paddingTop: '2.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.75rem' }}>Craft</p>
           <p style={{ fontSize: '15px', lineHeight: 1.65, color: 'rgba(20,33,28,0.65)', marginBottom: '1.75rem', maxWidth: '720px' }}>
-            Prototyping doesn&rsquo;t stop at the screen. Laser-cut chipboard, folded paper, layered reliefs — made by hand, photographed as built.
+            Prototyping doesn&rsquo;t stop at the screen. Folded paper and brass fasteners, laser-cut chipboard, basswood and acrylic, 3D-printed studies, layered reliefs — made by hand across a decade of projects, photographed as built.
           </p>
           <div style={{
             display: 'grid',
