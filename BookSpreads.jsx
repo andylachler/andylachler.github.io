@@ -96,8 +96,12 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
         ))}
       </div>
 
-      {/* Book modal */}
-      {open && (
+      {/* Book modal — rendered through a PORTAL to <body>. The page wrapper
+          (.page-enter) animates with a transform, and a transformed ancestor
+          becomes the containing block for position:fixed — which made this
+          modal size itself against the full page height instead of the
+          viewport. Portaling out of the wrapper keeps it truly fullscreen. */}
+      {open && ReactDOM.createPortal(
         <div
           onClick={() => setOpenIdx(null)}
           onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
@@ -175,7 +179,8 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
               </span>
             </p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
