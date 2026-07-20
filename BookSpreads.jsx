@@ -111,7 +111,7 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
             position: 'fixed', inset: 0, zIndex: 2000,
             background: 'rgba(12,16,14,0.95)',
             display: 'flex', flexDirection: 'column',
-            padding: isMobile ? '3.25rem 0 0.75rem' : '3.25rem 1rem 1rem',
+            padding: isMobile ? '2.75rem 0 0.25rem' : '2.75rem 0.75rem 0.25rem',
           }}
         >
           {/* Top bar: counter left, close right */}
@@ -128,16 +128,16 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
             </button>
           </div>
 
-          {/* Page + arrows */}
-          <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', gap: isMobile ? '0.5rem' : '1rem' }}>
-            {!isMobile && (
-              <button aria-label="Previous page" onClick={(e) => { e.stopPropagation(); flip(-1); }} style={arrowStyle(openIdx === 0)}>←</button>
-            )}
+          {/* Page area — the page scales to fill the ENTIRE remaining window
+              (object-fit: contain against a stretched box), so it renders as
+              large as the browser allows. Arrows float over the page area
+              instead of reserving side columns. */}
+          <div style={{ flex: 1, minHeight: 0, position: 'relative', display: 'flex' }}>
             <div
               onClick={(e) => e.stopPropagation()}
               style={zoomed
                 ? { flex: 1, alignSelf: 'stretch', overflow: 'auto', cursor: 'zoom-out', WebkitOverflowScrolling: 'touch' }
-                : { flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'default' }}
+                : { flex: 1, alignSelf: 'stretch', minWidth: 0, minHeight: 0, display: 'flex', cursor: 'default' }}
             >
               <img
                 key={openIdx}
@@ -146,27 +146,33 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
                 onClick={() => setZoomed(z => !z)}
                 style={zoomed
                   ? { width: '1600px', maxWidth: 'none', height: 'auto', margin: 'auto', display: 'block', cursor: 'zoom-out' }
-                  : { maxWidth: '100%', maxHeight: isMobile ? '68vh' : '76vh', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block', borderRadius: '4px', cursor: 'zoom-in', boxShadow: '0 24px 80px rgba(0,0,0,0.5)' }}
+                  : { width: '100%', height: '100%', objectFit: 'contain', display: 'block', cursor: 'zoom-in', filter: 'drop-shadow(0 18px 48px rgba(0,0,0,0.45))' }}
               />
             </div>
             {!isMobile && (
-              <button aria-label="Next page" onClick={(e) => { e.stopPropagation(); flip(1); }} style={arrowStyle(openIdx === pages.length - 1)}>→</button>
+              <>
+                <button aria-label="Previous page" onClick={(e) => { e.stopPropagation(); flip(-1); }}
+                  style={{ ...arrowStyle(openIdx === 0), position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }}>←</button>
+                <button aria-label="Next page" onClick={(e) => { e.stopPropagation(); flip(1); }}
+                  style={{ ...arrowStyle(openIdx === pages.length - 1), position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)' }}>→</button>
+              </>
             )}
           </div>
 
-          {/* Footer: mobile arrows + caption + hint */}
-          <div onClick={(e) => e.stopPropagation()} style={{ cursor: 'default', paddingTop: '0.75rem' }}>
+          {/* Footer: one compact line (caption + controls hint); mobile keeps
+              its arrow pair. Kept minimal so the page area gets the height. */}
+          <div onClick={(e) => e.stopPropagation()} style={{ cursor: 'default', paddingTop: '0.4rem' }}>
             {isMobile && (
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.25rem', marginBottom: '0.6rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.25rem', marginBottom: '0.4rem' }}>
                 <button aria-label="Previous page" onClick={() => flip(-1)} style={arrowStyle(openIdx === 0)}>←</button>
                 <button aria-label="Next page" onClick={() => flip(1)} style={arrowStyle(openIdx === pages.length - 1)}>→</button>
               </div>
             )}
-            {page.caption && (
-              <p style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(242,239,230,0.65)', margin: '0 auto', maxWidth: '80ch', textAlign: 'center', padding: '0 1rem' }}>{page.caption}</p>
-            )}
-            <p style={{ fontSize: '10px', fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.35)', margin: '0.5rem auto 0', textAlign: 'center' }}>
-              {isMobile ? 'Swipe to flip · tap page to zoom' : '← → to flip · click page to zoom'}
+            <p style={{ fontSize: '11px', lineHeight: 1.5, color: 'rgba(242,239,230,0.55)', margin: '0 auto', maxWidth: '110ch', textAlign: 'center', padding: '0 1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {page.caption ? `${page.caption}  ·  ` : ''}
+              <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.35)' }}>
+                {isMobile ? 'Swipe to flip · tap to zoom' : '← → to flip · click page to zoom'}
+              </span>
             </p>
           </div>
         </div>

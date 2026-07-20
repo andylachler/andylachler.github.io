@@ -310,7 +310,11 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
         </div>
       </div>
 
-      {/* Interactive embed OR tile pair — full content width */}
+      {/* Interactive embed OR tile pair — full content width.
+          The decorative DetailBlock pair is a legacy fallback from before
+          projects had real imagery: it only renders when a project has NO
+          media at all (no hero/tile, gallery, or book pages). Projects with
+          real content (e.g. Ella) skip it. */}
       {project.interactiveUrl ? (
         <div style={{ ...fade(180), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '1.5rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '0.5rem' }}>Try it out</p>
@@ -328,7 +332,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
             </p>
           )}
         </div>
-      ) : (
+      ) : !((m => m.hero || m.tile || (m.gallery || []).length || (m.book || []).length)((window.IMAGE_MANIFEST || {})[projectId] || {})) ? (
         <div style={{
           ...fade(180),
           display: 'grid',
@@ -343,7 +347,7 @@ const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
             <DetailBlock imageIndex={(project.imageIndex + 2) % 7} bg={['#3D5448','#14211C','#E8E4D5','#D45A1B','#3D5448','#14211C','#3D5448'][project.imageIndex]} hovered={false} />
           </div>
         </div>
-      )}
+      ) : null}
 
       {/* Process */}
       <div style={{ ...fade(220), maxWidth: '820px', marginBottom: isMobile ? '3rem' : '4rem' }}>
