@@ -1,10 +1,13 @@
 // ProjectGrid.jsx
-// The featured four. Site search, Zoning chat, and Comps analysis are component
-// stories linked from the Feasibility platform case study. Brickell lives in
-// Foundations (ArchivePage) as of the July 2026 structure pass.
+// The featured five (July 2026 restructure): the AutoEase full product study
+// leads, the Algoma work is shown as two focused showcases (component catalog
+// + report logic) instead of the retired Feasibility platform case study,
+// then Exhibition Trailer and Ella. Site search, Zoning chat, and Comps
+// analysis remain as mini studies on the Work page.
 const PROJECTS = [
-  { id: 'autoease', title: 'AutoEase', org: 'Independent', year: '2026', role: 'Product Design — consumer car-buying prototype', bg: '#1A2520', featured: true, imageIndex: 6 },
-  { id: 'feasibility', title: 'Feasibility platform', org: 'Algoma', year: '2024', role: 'Product Lead — AI-powered B2B SaaS platform', bg: '#3D5448', featured: true, imageIndex: 0 },
+  { id: 'autoease', title: 'Full product study', org: 'AutoEase — Independent', year: '2026', role: 'Product Design — idea to working prototype', bg: '#1A2520', featured: true, imageIndex: 6 },
+  { id: 'wireframe-components', title: 'Wireframe component work', org: 'Algoma', year: '2025–26', role: 'Product Design — platform component catalog', bg: '#14211C', featured: true, imageIndex: 3 },
+  { id: 'platform-reports', title: 'Platform driven reports', org: 'Algoma', year: '2026', role: 'Product Logic — self-service yield presentations', bg: '#3D5448', featured: true, imageIndex: 0 },
   { id: 'exhibition-trailer', title: 'Exhibition Trailer', org: 'Independent', year: '2022', role: 'Physical prototyping — modular off-grid pop-up', bg: '#3D5448', featured: true, imageIndex: 1 },
   { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: true, imageIndex: 2 },
 ];

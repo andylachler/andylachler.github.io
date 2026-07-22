@@ -1,9 +1,13 @@
 // ProjectPage.jsx — Full case study template
 const PROJECT_DATA = {
   'autoease': {
-    title: 'AutoEase',
-    org: 'Independent', year: '2026', role: 'Product Design',
+    title: 'Full product study',
+    org: 'AutoEase — Independent', year: '2026', role: 'Product Design',
     bg: '#1A2520',
+    // Custom end-to-end study layout (July 2026) — FullProductStudyPage.jsx
+    // renders instead of the standard template. Data below kept for cards,
+    // silhouettes, and the Next rail.
+    customPage: 'FullProductStudyPage',
     lede: 'Buying a used car is one of the largest consumer purchases people make, and one of the most distrusted interfaces they touch. AutoEase is a prototype that treats it like a financial decision, not a sales funnel.',
     body: 'AutoEase is a self-directed research and design prototype exploring what a consumer car-buying tool looks like when it\u2019s shaped around transparency rather than lead capture. Built as a Next.js application with a full question flow, vehicle detail pages, Sell and Price Check side-flows, and a data-viz system that keeps the math visible at every step.',
     process: [
@@ -49,65 +53,41 @@ const PROJECT_DATA = {
     interactiveNote: 'The interactive prototype, embedded live — Browse, Answers, Sell, and Price Check. The v2 design-language board that informs the redesign is available as a reference below.',
     interactiveAltUrl: 'autoease-v2/',
     interactiveAltLabel: 'View the v2 design-language board ↗',
-    next: 'feasibility',
+    next: 'wireframe-components',
   },
-  'feasibility': {
-    title: 'Feasibility platform',
-    org: 'Algoma', year: '2024\u2013', role: 'Product Lead',
-    bg: '#3D5448',
-    lede: 'Algoma evaluates what a development site can become. As Product Lead, I design the surfaces where that question gets answered \u2014 from first site summary through zoning analysis, capacity modeling, and the handoff into schematic design.',
-    body: 'I joined at the start of V.02 and have led the platform\u2019s design language, feature set, and brand system since. The work spans four connected arcs \u2014 product design, data and AI intelligence, brand and GTM, and the architecture practice that keeps feeding the product real problems to solve. Each arc teaches the next: feasibility studies surface what the software should actually do, the software changes how we deliver architecture, and the brand carries the whole thing to market.',
-    insights: [
-      { label: 'Phase-based project framing', body: 'Design partners kept asking "where is this site in our pipeline?" \u2014 acquisition, feasibility, or active design. That question became the product\u2019s primary organizing metaphor. Sites are treated as things that move through phases rather than static records, and each phase has its own surface in service of that motion.' },
-      { label: 'One flow, two typologies', body: 'Early prototypes split single-family and multi-family capacity into separate tools. Interviews showed the opposite pattern \u2014 developers compared typologies on the same site within the same conversation with their LPs. We unified the flow, and the shared surface now carries both analyses with a single switch.' },
-      { label: 'AI with visible uncertainty', body: 'The zoning analysis feature runs language models over the underlying code text. The UX challenge was surfacing model confidence without overpromising. The answer pattern cites code sections inline, flags ambiguity rather than hiding it, and pushes the user toward verification rather than blind trust. Three model tiers were tested in parallel to tune the threshold for when to defer.' },
-      { label: 'Map as theme, not hero', body: 'Feasibility tools love maps, but the comps workflow is a judgment workflow, not a map workflow. The decision was to demote the map from primary surface to secondary view and lead with a table tuned for underwriter scan patterns. Map became a theme across the product \u2014 a consistent visual layer \u2014 not a centerpiece.' },
-    ],
-    insightsLabel: 'Key design decisions',
-    process: [
-      'Every non-trivial feature ships through the same loop \u2014 sketch, interactive prototype in Figma, walk three or four design partners through it, rebuild, then hand off to engineering. By the time something lands in the codebase, the people it\u2019s being built for have already pushed back on it at least twice.',
-      'Customer and design-partner interviews run on a weekly cadence. Patterns that surface in three conversations become backlog candidates; the ones that show up in one stay in the notes. A Posthog dashboard tells us whether what shipped actually gets used \u2014 the interviews tell us why.',
-      'The architecture practice runs in parallel, not separately. Feasibility studies for live development projects become stress tests for the platform: if the tool makes a real study faster, it\u2019s solving a real problem. If it doesn\u2019t, the feature changes.',
-    ],
-    designSystem: [
-      { label: 'Product design', body: 'End-to-end design for the V.02 platform \u2014 site summary, capacity studies, comps, exports, onboarding, billing, help content, and the presentation surfaces developers use to pitch their LPs.' },
-      { label: 'Data & AI intelligence', body: 'Shaped the AI zoning analysis, GIS data layers, state-level legislative overlays, and the 3D model hosting backbone. The work runs from research and legislation reading through to the final user-facing surface.' },
-      { label: 'Brand & GTM', body: 'Rebuilt the marketing site, ran the brand system refresh live across site and platform, designed campaigns and conference collateral (IBS, RETCON, IMN), and set up the analytics dashboards that tell us whether any of it is working.' },
-      { label: 'Architecture practice', body: 'Lead architect on several of the studio\u2019s active residential and industrial feasibility projects. The platform gets better because the practice keeps finding edge cases it has to solve.' },
-    ],
-    designSystemLabel: 'Four connected arcs',
-    componentStories: [
-      {
-        id: 'zoning-chat',
-        title: 'Zoning chat',
-        blurb: 'How a legal document became a conversation. The citation pattern, uncertainty states, and response format \u2014 developed step by step until developers could trust what they were reading.',
-      },
-      {
-        id: 'comps',
-        title: 'Comps analysis',
-        blurb: 'From map-first to table-first. How underwriter scan patterns reshaped the comps surface across iterations \u2014 judgment support, not fake automation.',
-      },
-      {
-        id: 'site-search',
-        title: 'Site search',
-        blurb: 'Search for people who don\'t yet know what they\'re looking for. Filters derived from the decision space developers actually navigate, not bolted on.',
-      },
-    ],
-    componentStoriesLabel: 'Component stories',
-    componentStoriesIntro: 'The platform grew component by component. Each story walks one surface from first sketch toward its shipped state \u2014 the step-by-step UX decisions, shown as process, not demos.',
-    outcome: 'V.02 platform shipped September 2025 \u2014 site summary, capacity, comps, and exports. AI zoning analysis and legislative data overlays shipped through late 2025. Marketing system overhaul live April 2026. Weekly research\u2192design\u2192ship cadence continues. Component development is shown as step-by-step stories above; client-specific data and unreleased surfaces stay out of view.',
-    credits: 'Algoma. Product Lead, brand, and design system: Andreas L\u00e4chler. Built with the Algoma engineering and leadership team.',
+  // The two Algoma showcases (July 2026) — native rebuilds of the standalone
+  // case studies, rebranded into the lachler.com design language. They
+  // replace the retired Feasibility platform case study as the Algoma work.
+  'wireframe-components': {
+    title: 'Wireframe component work',
+    org: 'Algoma', year: '2025–26', role: 'Product Design',
+    bg: '#14211C',
+    customPage: 'WireframeComponentsPage',
+    lede: 'A running catalog of Algoma platform component designs — each series a working prototype, browsable state by state, with the reasoning documented next to it.',
     details: [
-      { label: 'Role', value: 'Product Lead' },
-      { label: 'Timeframe', value: 'Dec 2024 \u2013 present' },
-      { label: 'Scope', value: 'Product \u00b7 data/AI \u00b7 brand \u00b7 architecture' },
-      { label: 'Methods', value: 'Design-partner interviews \u00b7 Figma prototyping \u00b7 Posthog' },
-      { label: 'Status', value: 'Active \u00b7 V.02 shipped 09/2025' },
+      { label: 'Scope', value: 'UI components · States · Interaction' },
+      { label: 'Series', value: 'Chat · Rendering · Intake · Zoning report' },
+      { label: 'Status', value: 'Living catalog' },
+    ],
+    tileBg: '#14211C', imageIndex: 3,
+    next: 'platform-reports',
+  },
+  'platform-reports': {
+    title: 'Platform driven reports',
+    org: 'Algoma', year: '2026', role: 'Product Logic',
+    bg: '#3D5448',
+    customPage: 'PlatformReportsPage',
+    lede: 'From manual packaging to self-service yield presentations — the product logic behind exporting a meeting-ready presentation directly from the platform.',
+    details: [
+      { label: 'Scope', value: 'Presentation export · Report engine' },
+      { label: 'Type', value: 'Product logic study' },
+      { label: 'Status', value: 'Framework in refinement' },
     ],
     tileBg: '#3D5448', imageIndex: 0,
-    next: 'ella',
+    next: 'exhibition-trailer',
   },
-  // Component stories — linked from the Feasibility platform case study.
+  // 'feasibility' retired July 2026 — replaced by the two showcases above.
+  // Component stories — mini studies of individual Algoma surfaces.
   'site-search': {
     title: 'Site search',
     org: 'Algoma', year: '2024', role: 'Product Design',
@@ -148,7 +128,7 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'CD 90% \u00b7 Complete 2026' },
     ],
     tileBg: '#D45A1B', imageIndex: 2,
-    next: 'exhibition-trailer',
+    next: 'autoease',
   },
   'zoning-chat': {
     title: 'Zoning chat',
@@ -197,7 +177,7 @@ const PROJECT_DATA = {
       { label: 'Year', value: '2022' },
     ],
     tileBg: '#3D5448', imageIndex: 1,
-    next: 'autoease',
+    next: 'ella',
   },
   'comps': {
     title: 'Comps analysis',
@@ -213,7 +193,7 @@ const PROJECT_DATA = {
     credits: 'Algoma. Product design: Andreas Lächler.',
     details: [{ label: 'Scope', value: 'Data visualization' }, { label: 'Type', value: 'Analytics surface' }, { label: 'Status', value: 'Shipped' }],
     tileBg: '#3D5448', imageIndex: 5,
-    next: 'feasibility',
+    next: 'site-search',
   },
 };
 window.PROJECT_DATA = PROJECT_DATA;
@@ -224,8 +204,13 @@ const DetailBlock = ({ imageIndex, bg, hovered }) => (
   </div>
 );
 
-const ProjectPage = ({ projectId = 'feasibility', onNavigate }) => {
-  const project = PROJECT_DATA[projectId] || PROJECT_DATA['feasibility'];
+const ProjectPage = ({ projectId = 'autoease', onNavigate }) => {
+  // 'feasibility' retired — old links and stored state fall back to autoease.
+  const project = PROJECT_DATA[projectId] || PROJECT_DATA['autoease'];
+  // Custom case-study layouts (Full product study, the two Algoma showcases)
+  // render their own page component instead of the standard template.
+  const CustomPage = project.customPage && window[project.customPage];
+  if (CustomPage) return <CustomPage projectId={projectId} onNavigate={onNavigate} />;
   const nextProject = project.next ? PROJECT_DATA[project.next] : null;
   const gallery = ((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || [];
   const [heroHov, setHeroHov] = React.useState(false);

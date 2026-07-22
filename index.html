@@ -55,6 +55,7 @@ button, a { font-family: inherit; }
 <div id="root"></div>
 
 <script src="images/manifest.js"></script>
+<script src="wireframes-data.js"></script>
 <script type="text/babel" src="Gate.jsx"></script>
 <script type="text/babel" src="Loader.jsx"></script>
 <script type="text/babel" src="Cursor.jsx"></script>
@@ -69,6 +70,10 @@ button, a { font-family: inherit; }
 <script type="text/babel" src="TryItOut.jsx"></script>
 <script type="text/babel" src="BookSpreads.jsx"></script>
 <script type="text/babel" src="ProjectPage.jsx"></script>
+<script type="text/babel" src="StudyKit.jsx"></script>
+<script type="text/babel" src="FullProductStudyPage.jsx"></script>
+<script type="text/babel" src="WireframeComponentsPage.jsx"></script>
+<script type="text/babel" src="PlatformReportsPage.jsx"></script>
 <script type="text/babel" src="ArchivePage.jsx"></script>
 <script type="text/babel" src="AboutPage.jsx"></script>
 
@@ -106,8 +111,8 @@ const WorkPage = ({ onNavigate }) => {
   const isMobile = (window.useIsMobile || (() => false))(768);
   const sections = [
     { org: 'Independent', period: '2022–2026', projects: ['autoease','exhibition-trailer'] },
-    { org: 'Algoma — Product', period: '2024–present', projects: ['feasibility','zoning-chat','comps','site-search'],
-      note: 'The platform case study, followed by mini studies — individual components taken from first sketch toward shipped, one story per surface.' },
+    { org: 'Algoma — Product', period: '2024–present', projects: ['wireframe-components','platform-reports','zoning-chat','comps','site-search'],
+      note: 'Two showcases of the product work — the component catalog and the reporting logic — followed by mini studies of individual surfaces, one story per surface.' },
     { org: 'Arquitectonica — Architecture', period: '2022–2024', projects: ['ella','brickell'] },
     { org: 'Foundations — Pratt', period: '2019–2022', projects: ['fluxing','pastoral-urbanity','mesa-verde','elevate-ravenswood','dissection'],
       note: 'Learning to think with my hands — graduate work shown for what it is: model making, material studies, and physical craft.' },
@@ -322,7 +327,14 @@ const hashFor = (p, id) => '#/' + p + (id ? '/' + id : '');
 
 const App = () => {
   const loadPage = () => { try { return localStorage.getItem('lachler_page') || 'home'; } catch { return 'home'; } };
-  const loadProject = () => { try { return localStorage.getItem('lachler_project') || 'feasibility'; } catch { return 'feasibility'; } };
+  const loadProject = () => {
+    // 'feasibility' retired July 2026 — stored state from before the
+    // restructure falls back to the full product study.
+    try {
+      const p = localStorage.getItem('lachler_project') || 'autoease';
+      return p === 'feasibility' ? 'autoease' : p;
+    } catch { return 'autoease'; }
+  };
   const loadTweaks = () => {
     try { return { ...TWEAK_DEFAULTS, ...JSON.parse(localStorage.getItem('lachler_tweaks') || '{}') }; }
     catch { return TWEAK_DEFAULTS; }
