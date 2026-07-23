@@ -68,7 +68,7 @@ sect(48, 130, W-96, 190, 'Home — the identity layer')
 card(80, 176, 560, 118, 'Hero', 'the thesis', ['“A product designer trained as an architect.”'], change='tagline/positioning under review — tabled')
 card(680, 176, 900, 118, 'Selected-work reel — five cards + More', 'range at a glance',
      ['01 Full product study · 02 Wireframe component work · 03 Platform driven', 'reports · 04 Exhibition Trailer · 05 Ella · → More projects'],
-     change='✓ restructured July 22 (done)')
+     change='✓ scroll-hijack retired — prev/next buttons; page scrolls free; ScrollRail removed')
 card(1620, 176, 560, 118, 'Nav + dropdowns', 'wayfinding', ['Work · About · project deep-links'], change='✓ derives from PROJECTS — no edit needed')
 
 # ---------- WORK / project layer ----------
@@ -94,14 +94,14 @@ card(760, 820, cw, 150, 'Feasibility platform — RETIRED', 'was: shipped B2B Sa
      ['July 22: replaced by the two Algoma showcases.', 'Old links + stored state fall back to Full product study.'], ghost=True)
 note(80, 1030, ['Reel order = the story order: the full arc first, then the two ways it shows up at work,', 'then physical proof, then built scale. Minis stay on the Work index.'])
 parts.append(f'<circle cx="86" cy="1080" r="3.5" fill="{ORANGE}"/>')
-parts.append(f'<text x="96" y="1084" font-size="12" font-weight="600" fill="{ORANGE}">Work page — Algoma section now: wireframe-components · platform-reports · zoning-chat · comps · site-search</text>')
+parts.append(f'<text x="96" y="1084" font-size="12" font-weight="600" fill="{ORANGE}">Mini studies (zoning-chat · comps · site-search) REMOVED July 22 evening pass — the two showcases carry the Algoma story alone.</text>')
 note(80, 1112, ['Custom study pages share StudyKit.jsx (hero · carousel · impact cards · tail) — one grammar, three stories.'], color=ORANGE)
 
 # ---------- WORK INDEX ----------
 sect(1458, 360, 754, 800, 'Work index — one page, all sections')
 rows = [
     ('INDEPENDENT · 2022–2026', ['Full product study', 'Exhibition Trailer']),
-    ('ALGOMA — PRODUCT · 2024–', ['Wireframe component work', 'Platform driven reports', 'Zoning chat', 'Comps', 'Site search']),
+    ('ALGOMA — PRODUCT · 2024–', ['Wireframe component work', 'Platform driven reports']),
     ('ARQUITECTONICA · 2022–24', ['Ella', 'Brickell']),
     ('FOUNDATIONS — PRATT', ['Fluxing', 'Pastoral Urbanity', 'Mesa Verde', 'Elevate Ravenswood', 'Dissection']),
     ('FOUNDATIONS — LEHIGH', ['Unit Multiplication', 'Singular + Flow', 'Riverfront', 'Culinary', 'Schoolhouse']),
@@ -124,7 +124,7 @@ note(1490, cy+46, ['Ball Game still NOT playable — fix the Unity WebGL export 
 py = H-110
 parts.append(f'<rect x="48" y="{py}" width="{W-96}" height="76" rx="10" fill="{INK}"/>')
 parts.append(f'<text x="70" y="{py+28}" font-size="12" font-weight="700" letter-spacing="2" fill="{CREAM}">STATUS — JULY 22, 2026</text>')
-parts.append(f'<text x="70" y="{py+54}" font-size="13.5" fill="rgba(242,239,230,0.85)">DONE: reel of 5 · Full product study custom page · both Algoma showcases rebuilt native + rebranded · feasibility retired w/ fallbacks · next-chain rewired      TO DO: Ella + Trailer imagery · tile images for the two showcases · Algoma confidentiality check · Ball Game export · Notion embed re-upload</text>')
+parts.append(f'<text x="70" y="{py+54}" font-size="13.5" fill="rgba(242,239,230,0.85)">DONE: reel of 5 w/ buttons (no hijack) · custom study pages · minis removed · Next-card bug fixed · market comparison configurator-style · persona spectrum · real lowfi sketch · Ella status current      TO DO: drop CX-5 + Camry photos into prototype/public/vehicles · tile images for showcases · confidentiality check · Ball Game export · Notion embed re-upload</text>')
 
 svg = f'''<svg viewBox="0 0 {W} {H}" width="{W}" height="{H}" xmlns="http://www.w3.org/2000/svg" font-family="Inter, -apple-system, system-ui, sans-serif" role="img">
 <title>lachler.com site structure map</title>

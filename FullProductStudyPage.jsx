@@ -4,16 +4,18 @@
 // prototype. Research content sources from autoease/Case Study/ (2026
 // re-synthesis); hi-fi comps are live screens of the Vercel prototype.
 
-// ── 02 · Market scan — services × features ────────────────────────────────
-// hl: the capability that appeals and feeds the AutoEase featureset.
-const FPS_MARKET_COLS = ['Upfront pricing', 'Ownership cost data', 'History & reliability', 'Editorial & reviews', 'No-contact browsing'];
-const FPS_MARKET_ROWS = [
-  { s: 'Edmunds', cells: [['Fair-price ranges', false], ['True Cost to Own®', true], ['Via partner reports', false], ['Deep editorial bench', true], ['Lead-gen forms gate contact', false]] },
-  { s: 'CarMax', cells: [['Fixed, no-haggle price', true], ['—', false], ['AutoCheck included', false], ['—', false], ['Retail flow, account required', false]] },
-  { s: 'KBB', cells: [['Price benchmark standard', true], ['5-Year Cost to Own', true], ['—', false], ['Expert + owner reviews', false], ['Browsing open, buying referred', false]] },
-  { s: 'Auto Trader', cells: [['Varies by dealer listing', false], ['—', false], ['Report upsell', false], ['Some editorial', false], ['Contact pushed early', false]] },
-  { s: 'Carvana', cells: [['Fixed price, end-to-end online', true], ['—', false], ['Free history on listings', true], ['—', false], ['Fully self-serve until checkout', true]] },
-  { s: 'eBay Motors', cells: [['Auction — price found at close', false], ['—', false], ['Seller-provided', false], ['—', false], ['Anonymous until bid', false]] },
+// ── 02 · Market scan — configurator-style feature comparison ──────────────
+// Services read as columns (like trims on a configurator, or tiers on a
+// pricing page); AutoEase sits at the end as the highlighted "tier" that
+// combines the capabilities worth keeping. 2 = full, 1 = partial, 0 = none.
+const FPS_MARKET_SERVICES = ['Edmunds', 'CarMax', 'KBB', 'Auto Trader', 'Carvana', 'eBay Motors'];
+const FPS_MARKET_FEATURES = [
+  { f: 'Upfront, fixed pricing',      v: [1, 2, 1, 0, 2, 0], note: 'CarMax and Carvana: the price on screen is the price. Edmunds/KBB publish benchmarks, not prices.' },
+  { f: '5-year ownership cost',       v: [2, 0, 2, 0, 0, 0], note: 'Edmunds True Cost to Own® and KBB 5-Year Cost to Own — the two that treat a car as a financial decision.' },
+  { f: 'History & reliability',       v: [1, 2, 0, 1, 2, 1], note: 'CarMax and Carvana include reports free; elsewhere it’s an upsell or seller-provided.' },
+  { f: 'Unbiased reviews',            v: [2, 0, 2, 1, 0, 0], note: 'Edmunds and KBB carry real editorial benches; marketplaces don’t review what they sell.' },
+  { f: 'Side-by-side comparison',     v: [1, 1, 1, 1, 0, 0], note: 'Exists everywhere in some form — nowhere as a first-class decision tool.' },
+  { f: 'No-contact browsing',         v: [0, 1, 1, 0, 2, 2], note: 'Carvana is self-serve until checkout; eBay is anonymous until you bid. Lead-gen sites gate on contact info.' },
 ];
 
 // ── 03 · Assumptions carried into the featureset ──────────────────────────
@@ -26,16 +28,59 @@ const FPS_PERSONAS = [
   { name: 'John — the Fixed-Price Traditionalist', body: 'Hates haggling more than he hates paying a premium. Named CarMax and Tesla unprompted — the price on the screen is the price. AutoEase wins him by never making price a negotiation.' },
   { name: 'Emma — the Delegating Optimizer', body: 'Wants a confident answer, not a research project. Will happily hand the decision to a tool she trusts. AutoEase wins her with one defensible number per car and a short path to done.' },
 ];
-const FPS_MATRIX = [
-  ['Wants more data', 2, 1, 0],
-  ['Wants fewer decisions', 0, 1, 2],
+// Spectrum data: each dimension is a Low → High track; the three personas
+// sit at their position along it (0 low · 1 mid · 2 high).
+const FPS_SPECTRUM = [
+  ['Appetite for raw data', 2, 1, 0],
+  ['Wants the decision made for them', 0, 1, 2],
   ['Will do the research themselves', 2, 1, 0],
-  ['Sensitive to sales pressure', 1, 2, 2],
+  ['Sensitivity to sales pressure', 1, 2, 2],
   ['Monthly-cost mindset', 2, 1, 1],
   ['Fixed-price mindset', 1, 2, 2],
-  ['Trusts brand reputation', 1, 2, 2],
-  ['Trusts third-party data', 2, 2, 2],
+  ['Trust in brand reputation', 1, 2, 2],
+  ['Trust in third-party data', 2, 2, 2],
 ];
+const FPS_PERSONA_KEYS = [
+  { k: 'A', name: 'Alex', color: '#3D5448' },
+  { k: 'J', name: 'John', color: '#D45A1B' },
+  { k: 'E', name: 'Emma', color: '#14211C' },
+];
+
+// One dimension row: label + track with dodged persona markers.
+const SpectrumRow = ({ dim, values, isMobile }) => {
+  // group markers that share a position so they fan out instead of stacking
+  const groups = {};
+  values.forEach((v, i) => { (groups[v] = groups[v] || []).push(i); });
+  const posPct = [8, 50, 92];
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? '0.5rem' : '2rem', alignItems: 'center', padding: '0.85rem 0', borderBottom: '0.5px solid rgba(20,33,28,0.07)' }}>
+      <span style={{ fontSize: '13.5px', fontWeight: 500, color: ST.ink }}>{dim}</span>
+      <div style={{ position: 'relative', height: '30px' }}>
+        <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '1px', background: 'rgba(20,33,28,0.15)' }} />
+        {[0, 1, 2].map(p => (
+          <div key={p} style={{ position: 'absolute', top: '50%', left: `${posPct[p]}%`, width: '1px', height: '7px', transform: 'translate(-0.5px, -50%)', background: 'rgba(20,33,28,0.2)' }} />
+        ))}
+        {values.map((v, i) => {
+          const group = groups[v];
+          const gi = group.indexOf(i);
+          const dodge = (gi - (group.length - 1) / 2) * 24;
+          const p = FPS_PERSONA_KEYS[i];
+          return (
+            <span key={i} title={`${p.name} — ${['low', 'mid', 'high'][v]}`} style={{
+              position: 'absolute', top: '50%', left: `calc(${posPct[v]}% + ${dodge}px)`,
+              transform: 'translate(-50%, -50%)',
+              width: '22px', height: '22px', borderRadius: '50%',
+              background: p.color, color: '#F2EFE6',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 500,
+              border: '1.5px solid #F2EFE6', boxShadow: '0 1px 3px rgba(20,33,28,0.2)',
+            }}>{p.k}</span>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 // ── 05 · Feature prioritization, ranked by evidence ───────────────────────
 const FPS_PRIORITIES = [
@@ -60,38 +105,11 @@ const FPS_TONE = [
   { bg: 'rgba(61,84,72,0.13)', fg: '#3D5448', b: 'rgba(61,84,72,0.3)' },      // 2 — strong
 ];
 
-// ── 06 · Lowfi wireframes — native linework strip ─────────────────────────
-const FPS_LOWFI = [
-  { t: 'Welcome', rows: [[0.55, 0.1], [0.8, 0.34], [0.8, 0.08], [0.5, 0.08]], cta: true },
-  { t: 'Home hub', rows: [[0.85, 0.16], [0.85, 0.16], [0.85, 0.16], [0.85, 0.16]], cta: false },
-  { t: 'Guided Q&A', rows: [[0.7, 0.08], [0.85, 0.12], [0.85, 0.12], [0.85, 0.12]], cta: true },
-  { t: 'Results', rows: [[0.6, 0.08], [0.85, 0.22], [0.85, 0.22], [0.85, 0.22]], cta: false },
-  { t: 'Vehicle detail', rows: [[0.85, 0.3], [0.6, 0.08], [0.85, 0.14], [0.85, 0.14]], cta: true },
-  { t: 'Price check', rows: [[0.7, 0.1], [0.5, 0.24], [0.85, 0.1], [0.85, 0.1]], cta: true },
-];
-
-const LowfiPhone = ({ frame }) => {
-  const W = 120, H = 240, pad = 10;
-  let y = 18;
-  const rects = frame.rows.map(([w, h]) => {
-    const r = { x: pad, y, w: (W - pad * 2) * w, h: (H - 60) * h };
-    y += (H - 60) * h + 8;
-    return r;
-  });
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
-      <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ maxWidth: '100%' }} aria-label={`Lowfi sketch — ${frame.t}`}>
-        <rect x="1.5" y="1.5" width={W - 3} height={H - 3} rx="14" fill="none" stroke="rgba(20,33,28,0.55)" strokeWidth="1.5" />
-        <line x1={W / 2 - 12} y1="9" x2={W / 2 + 12} y2="9" stroke="rgba(20,33,28,0.35)" strokeWidth="1.5" strokeLinecap="round" />
-        {rects.map((r, i) => (
-          <rect key={i} x={r.x} y={r.y} width={r.w} height={r.h} rx="2.5" fill="none" stroke="rgba(20,33,28,0.4)" strokeWidth="1" strokeDasharray={i % 2 ? 'none' : '3 2.5'} />
-        ))}
-        {frame.cta && <rect x={pad} y={H - 30} width={W - pad * 2} height="16" rx="8" fill="rgba(212,90,27,0.25)" stroke="#D45A1B" strokeWidth="1" />}
-      </svg>
-      <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.45)' }}>{frame.t}</span>
-    </div>
-  );
-};
+// ── 06 · Lowfi wireframes — Andy's actual sketch ──────────────────────────
+// The real thing, from image-sources/AutoEase/Image 1.png (copied to
+// images/autoease/sketch-lowfi.png — intentionally outside the manifest's
+// naming scheme so it never lands in the gallery).
+const FPS_SKETCH = 'images/autoease/sketch-lowfi.png';
 
 // ── 07 · Hi-fi — live prototype screens in phone bezels ───────────────────
 const FPS_HIFI = [
@@ -156,31 +174,49 @@ const FullProductStudyPage = ({ onNavigate }) => {
         <StudyLead>The thesis: a neutral intelligence layer between buyers and the industry — fixed pricing, full vehicle history, five-year true cost, and unbiased reviews, all before a salesperson ever gets your phone number. Not another marketplace; the information side of the transaction, built to support the buyer rather than monetize the lead.</StudyLead>
       </StudySection>
 
-      {/* 02 Market scan */}
+      {/* 02 Market scan — configurator-style comparison, AutoEase as the
+          highlighted tier that combines what's worth keeping. */}
       <StudySection>
         <StudyLabel n="02">Test this</StudyLabel>
         <StudyH2>What is available on the market now?</StudyH2>
-        <StudyLead>Here are the services consumers actually use today and how their features stack up. The highlighted cells are the capabilities that appeal — the ones I judged genuinely helpful to buyers, and carried into the featureset.</StudyLead>
-        <div style={{ overflowX: 'auto', marginTop: '2rem', border: '0.5px solid rgba(20,33,28,0.12)', borderRadius: '10px', background: '#FFFFFF' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '760px' }}>
+        <StudyLead>Here are the services consumers actually use today, compared the way a configurator compares trims — feature by feature. No single incumbent covers the whole decision; AutoEase is specified as the tier that does.</StudyLead>
+        <div style={{ overflowX: 'auto', marginTop: '2rem' }}>
+          <table style={{ borderCollapse: 'separate', borderSpacing: 0, minWidth: '900px', width: '100%', background: '#FFFFFF', border: '0.5px solid rgba(20,33,28,0.12)', borderRadius: '10px', overflow: 'hidden' }}>
             <thead>
               <tr>
-                <th style={th}>Service</th>
-                {FPS_MARKET_COLS.map(c => <th key={c} style={th}>{c}</th>)}
+                <th style={{ ...th, width: '220px' }}>Feature</th>
+                {FPS_MARKET_SERVICES.map(s => (
+                  <th key={s} style={{ ...th, textAlign: 'center' }}>{s}</th>
+                ))}
+                <th style={{ ...th, textAlign: 'center', background: '#14211C', color: '#F2EFE6', borderBottom: 'none' }}>
+                  <span style={{ display: 'block', color: ST.accent, fontSize: '9px', letterSpacing: '0.18em', marginBottom: '3px' }}>The featureset</span>
+                  AutoEase
+                </th>
               </tr>
             </thead>
             <tbody>
-              {FPS_MARKET_ROWS.map((r, ri) => (
+              {FPS_MARKET_FEATURES.map((row, ri) => (
                 <tr key={ri}>
-                  <td style={{ ...td, fontWeight: 500, color: ST.ink, whiteSpace: 'nowrap' }}>{r.s}</td>
-                  {r.cells.map(([txt, hl], ci) => (
-                    <td key={ci} style={{ ...td, background: hl ? FPS_TONE[2].bg : 'transparent', color: hl ? FPS_TONE[2].fg : td.color, fontWeight: hl ? 500 : 400 }}>{txt}</td>
+                  <td style={{ ...td, fontWeight: 500, color: ST.ink }}>
+                    {row.f}
+                    <span style={{ display: 'block', fontSize: '11px', fontWeight: 400, color: 'rgba(20,33,28,0.45)', lineHeight: 1.5, marginTop: '3px' }}>{row.note}</span>
+                  </td>
+                  {row.v.map((v, ci) => (
+                    <td key={ci} style={{ ...td, textAlign: 'center', fontSize: '15px', color: v === 2 ? ST.forest : v === 1 ? '#8A6414' : 'rgba(20,33,28,0.25)' }}>
+                      {v === 2 ? '✓' : v === 1 ? '◐' : '—'}
+                    </td>
                   ))}
+                  <td style={{ ...td, textAlign: 'center', background: 'rgba(61,84,72,0.1)', borderLeft: `2px solid ${ST.forest}` }}>
+                    <span style={{ display: 'inline-flex', width: '22px', height: '22px', borderRadius: '50%', background: ST.forest, color: '#F2EFE6', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>✓</span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10.5px', letterSpacing: '0.08em', color: ST.faint, margin: '0.9rem 0 0' }}>
+          <span style={{ color: ST.forest }}>✓</span> full support&ensp;·&ensp;<span style={{ color: '#8A6414' }}>◐</span> partial / paywalled&ensp;·&ensp;<span>—</span> not offered
+        </p>
       </StudySection>
 
       {/* 03 User assumptions */}
@@ -209,27 +245,34 @@ const FullProductStudyPage = ({ onNavigate }) => {
             </div>
           ))}
         </div>
-        <div style={{ overflowX: 'auto', marginTop: '1.5rem', border: '0.5px solid rgba(20,33,28,0.12)', borderRadius: '10px', background: '#FFFFFF' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '640px' }}>
-            <thead>
-              <tr>
-                <th style={th}>How the personas trade off</th>
-                {['Alex', 'John', 'Emma'].map(n => <th key={n} style={{ ...th, textAlign: 'center' }}>{n}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {FPS_MATRIX.map(([dim, a, j, e], ri) => (
-                <tr key={ri}>
-                  <td style={{ ...td, fontWeight: 500, color: ST.ink }}>{dim}</td>
-                  {[a, j, e].map((v, ci) => (
-                    <td key={ci} style={{ ...td, background: FPS_TONE[v].bg, color: FPS_TONE[v].fg, textAlign: 'center', fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.08em', fontWeight: 500 }}>
-                      {v === 2 ? 'Strong' : v === 1 ? 'Partial' : 'Low'}
-                    </td>
-                  ))}
-                </tr>
+        {/* Persona trade-offs — spectrum tracks instead of a colored matrix:
+            each dimension is a Low→High axis and the three personas sit on
+            it, so convergence and divergence read at a glance. */}
+        <div style={{ marginTop: '1.5rem', background: ST.cardBg, border: ST.cardBorder, borderRadius: '10px', padding: isMobile ? '1.25rem' : '1.75rem 2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '0.75rem' }}>
+            <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: ST.faint, margin: 0 }}>How the personas trade off</p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {FPS_PERSONA_KEYS.map(p => (
+                <span key={p.k} style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '12px', color: 'rgba(20,33,28,0.65)' }}>
+                  <span style={{ width: '16px', height: '16px', borderRadius: '50%', background: p.color, color: '#F2EFE6', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--ff-mono)', fontSize: '9px' }}>{p.k}</span>
+                  {p.name}
+                </span>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </div>
+          {!isMobile && (
+            <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: '2rem', marginBottom: '0.25rem' }}>
+              <span />
+              <div style={{ position: 'relative', height: '14px', fontFamily: 'var(--ff-mono)', fontSize: '9.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)' }}>
+                <span style={{ position: 'absolute', left: '8%', transform: 'translateX(-50%)' }}>Low</span>
+                <span style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>Mid</span>
+                <span style={{ position: 'absolute', left: '92%', transform: 'translateX(-50%)' }}>High</span>
+              </div>
+            </div>
+          )}
+          {FPS_SPECTRUM.map(([dim, a, j, e], i) => (
+            <SpectrumRow key={i} dim={dim} values={[a, j, e]} isMobile={isMobile} />
+          ))}
         </div>
         <StudyMuted>The three personas converge on transparency, third-party trust, and a no-pressure flow. They diverge on how much control they want over the decision — a healthy AutoEase lets Alex dig, lets John skip, and lets Emma delegate, without forcing any of them down a single funnel.</StudyMuted>
       </StudySection>
@@ -256,10 +299,11 @@ const FullProductStudyPage = ({ onNavigate }) => {
       <StudySection>
         <StudyLabel n="06">Lowfi wireframes</StudyLabel>
         <StudyH2>Sketching the basic operations and flow</StudyH2>
-        <StudyLead>Sketched out the basic operations of the app and how a user would move through it — four entry points (Browse, guided Q&A, Sell, Price Check) resolving distinct intents, with the home screen as a hub rather than a funnel.</StudyLead>
-        <div style={{ display: 'flex', gap: isMobile ? '1.5rem' : '2.5rem', flexWrap: 'wrap', justifyContent: isMobile ? 'center' : 'flex-start', marginTop: '2.25rem', padding: '2rem', background: ST.cardBg, border: ST.cardBorder, borderRadius: '10px' }}>
-          {FPS_LOWFI.map((f, i) => <LowfiPhone key={i} frame={f} />)}
-        </div>
+        <StudyLead>Sketched out the basic operations of the app and how a user would move through it — four entry points (Browse, guided Q&A, Sell, Price Check) resolving distinct intents, with the home screen as a hub rather than a funnel. This is the actual sketch the app grew from.</StudyLead>
+        <figure style={{ margin: '2.25rem 0 0', padding: isMobile ? '1.25rem' : '2rem', background: '#FFFFFF', border: '0.5px solid rgba(20,33,28,0.12)', borderRadius: '10px' }}>
+          <img src={FPS_SKETCH} alt="AutoEase lowfi wireframe sketch — screen flow from welcome through home, vehicle results, detail, and options pages" loading="lazy" style={{ width: '100%', display: 'block' }} />
+          <figcaption style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.45)', marginTop: '1rem', textAlign: 'center' }}>Original flow sketch — welcome · home · results · detail · options</figcaption>
+        </figure>
       </StudySection>
 
       {/* 07 Hifi */}

@@ -87,23 +87,6 @@ const PROJECT_DATA = {
     next: 'exhibition-trailer',
   },
   // 'feasibility' retired July 2026 — replaced by the two showcases above.
-  // Component stories — mini studies of individual Algoma surfaces.
-  'site-search': {
-    title: 'Site search',
-    org: 'Algoma', year: '2024', role: 'Product Design',
-    bg: '#14211C',
-    lede: 'How do you search for a development site when you don\'t yet know what you\'re looking for?',
-    body: 'The site search surface combines map-based exploration with filter logic tuned for real estate feasibility — lot size, zoning, ownership structure, recent sales. The challenge is designing a system that surfaces signal without requiring the user to already know what the signal is.',
-    process: [
-      'Started by mapping the decision space developers actually navigate before a site gets shortlisted. Filters are a consequence of that, not a starting point.',
-      'The interface needed to work both as an active search tool and as a passive discovery surface for exploratory sessions.',
-    ],
-    outcome: 'Shipped as part of the Algoma platform. Details anonymized.',
-    credits: 'Algoma. Product design: Andreas Lächler.',
-    details: [{ label: 'Scope', value: 'Search + map interface' }, { label: 'Type', value: 'Data-dense UI' }, { label: 'Status', value: 'Shipped' }],
-    tileBg: '#14211C', imageIndex: 1,
-    next: 'zoning-chat',
-  },
   'ella': {
     title: 'Ella',
     org: 'Arquitectonica', year: '2023', role: 'Architecture',
@@ -116,7 +99,7 @@ const PROJECT_DATA = {
       'The facade is a field of frame-like openings tuned to vary in size as they climb. Darker background, lighter frames \u2014 the white reads as figure, not ground. A small inversion that makes a tall building feel lighter than it is.',
       'The podium uses varying thicknesses of linear metal tubing to screen the garage without making a blank wall. The rhythm accentuates the tall columns rising out of the base and gives the ground-floor activation something to work against.',
     ],
-    outcome: 'CD 90%. Entitlements approved 2023. Completion scheduled 2026.',
+    outcome: 'Entitlements approved 2023; construction documents completed 2024. The building is now under construction, completing in 2026.',
     credits: 'Arquitectonica. Project team: Raymond Fort, Ilon Kielson, Andreas L\u00e4chler, Kelsey Mallot, Ulysses Hernandez, Dolton Reading, EJ Kaufman, Jimmy Bullis, Monserrat Cardenas. Owner: Boschetti Group and Constellation Group.',
     details: [
       { label: 'Program', value: 'Multifamily condo + retail' },
@@ -125,28 +108,11 @@ const PROJECT_DATA = {
       { label: 'Total GSF', value: '186,480' },
       { label: 'Retail', value: '11,356 SF' },
       { label: 'Parking', value: '91 spaces' },
-      { label: 'Status', value: 'CD 90% \u00b7 Complete 2026' },
+      { label: 'Status', value: 'Under construction \u00b7 Complete 2026' },
     ],
     tileBg: '#D45A1B', imageIndex: 2,
     next: 'autoease',
   },
-  'zoning-chat': {
-    title: 'Zoning chat',
-    org: 'Algoma', year: '2024', role: 'Product Design',
-    bg: '#E8E4D5',
-    lede: 'Zoning is effectively a legal document. The question was whether a conversational interface could make it navigable.',
-    body: 'Designed the conversational UI for Algoma\'s zoning analysis surface — a chat interface that lets developers ask plain-language questions about what a site allows, and get structured, citable answers drawn from the underlying zoning code.',
-    process: [
-      'The hardest part isn\'t the conversation — it\'s the response format. Developers need to trust what they\'re reading. Designed a structured citation pattern that keeps the AI answer grounded in the actual code text.',
-      'Worked closely with the engineering team on the interaction model: what happens on ambiguity, how the system surfaces uncertainty, when to push back.',
-    ],
-    outcome: 'Shipped. In active use.',
-    credits: 'Algoma. Product design: Andreas Lächler.',
-    details: [{ label: 'Scope', value: 'Conversational UI' }, { label: 'Type', value: 'AI interface' }, { label: 'Status', value: 'Shipped' }],
-    tileBg: '#E8E4D5', imageIndex: 3,
-    next: 'comps',
-  },
-  // 'brickell' moved to Foundations (ARCHIVE_DATA in ArchivePage.jsx) — July 2026 structure pass.
   'exhibition-trailer': {
     title: 'Exhibition Trailer',
     org: 'Independent', year: '2022', role: 'Design \u2014 mobile pop-up',
@@ -178,22 +144,6 @@ const PROJECT_DATA = {
     ],
     tileBg: '#3D5448', imageIndex: 1,
     next: 'ella',
-  },
-  'comps': {
-    title: 'Comps analysis',
-    org: 'Algoma', year: '2024', role: 'Product Design',
-    bg: '#3D5448',
-    lede: 'Real estate comps are tables of numbers. The design question was what to do with them.',
-    body: 'Designed the comparable sales analysis surface for Algoma — the part of the platform where developers understand what similar sites have sold for and what that means for their underwriting.',
-    process: [
-      'Started with the underwriter\'s actual workflow. Comps analysis is a judgment call, not a calculation — the interface needed to support that judgment rather than pretend to automate it.',
-      'Explored multiple approaches to data density. Ended up with a table-first layout with a secondary map view, rather than trying to make the map primary.',
-    ],
-    outcome: 'Shipped as part of the Algoma platform.',
-    credits: 'Algoma. Product design: Andreas Lächler.',
-    details: [{ label: 'Scope', value: 'Data visualization' }, { label: 'Type', value: 'Analytics surface' }, { label: 'Status', value: 'Shipped' }],
-    tileBg: '#3D5448', imageIndex: 5,
-    next: 'site-search',
   },
 };
 window.PROJECT_DATA = PROJECT_DATA;
@@ -596,8 +546,9 @@ const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
   const textC = light ? '#14211C' : '#F2EFE6';
   const mutedC = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.5)';
 
-  // Find this project's own id in PROJECT_DATA so we navigate to the *next* project.
-  const targetId = project.next || Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project);
+  // `project` IS the previewed next project — navigate to it, not to ITS
+  // next (the old `project.next ||` fallback skipped one project ahead).
+  const targetId = Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project);
 
   return (
     <div

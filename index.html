@@ -111,8 +111,8 @@ const WorkPage = ({ onNavigate }) => {
   const isMobile = (window.useIsMobile || (() => false))(768);
   const sections = [
     { org: 'Independent', period: '2022–2026', projects: ['autoease','exhibition-trailer'] },
-    { org: 'Algoma — Product', period: '2024–present', projects: ['wireframe-components','platform-reports','zoning-chat','comps','site-search'],
-      note: 'Two showcases of the product work — the component catalog and the reporting logic — followed by mini studies of individual surfaces, one story per surface.' },
+    { org: 'Algoma — Product', period: '2024–present', projects: ['wireframe-components','platform-reports'],
+      note: 'Two showcases of the product work — the component catalog and the reporting logic behind self-service exports.' },
     { org: 'Arquitectonica — Architecture', period: '2022–2024', projects: ['ella','brickell'] },
     { org: 'Foundations — Pratt', period: '2019–2022', projects: ['fluxing','pastoral-urbanity','mesa-verde','elevate-ravenswood','dissection'],
       note: 'Learning to think with my hands — graduate work shown for what it is: model making, material studies, and physical craft.' },
@@ -241,7 +241,8 @@ const HomePage = ({ onNavigate, tweaks }) => {
   const showScroll = tweaks.workDisplay !== 'grid';
   return (
     <>
-      {window.ScrollRail && <ScrollRail />}
+      {/* ScrollRail retired from home (July 22) — the reel's own counter is
+          the single progress indicator; the page scrolls independently. */}
       <Hero onNavigate={onNavigate} tweaks={tweaks} />
       {showScroll
         ? (window.Reel ? <Reel onNavigate={onNavigate} /> : <ScrollWork onNavigate={onNavigate} tweaks={tweaks} />)
