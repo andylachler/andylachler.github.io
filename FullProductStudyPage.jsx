@@ -82,21 +82,55 @@ const SpectrumRow = ({ dim, values, isMobile }) => {
   );
 };
 
-// ── 05 · Feature prioritization, ranked by evidence ───────────────────────
-const FPS_PRIORITIES = [
-  { tier: 2, f: 'Transparent, upfront pricing', ev: '8 of 9 participants, unprompted' },
-  { tier: 2, f: 'Side-by-side comparison tool', ev: '6 of 9 participants' },
-  { tier: 2, f: '5-year cost of ownership estimate', ev: '6 of 9 participants' },
-  { tier: 2, f: 'Vehicle history + reliability score', ev: '6 of 9 participants' },
-  { tier: 2, f: 'Independent / user reviews', ev: '5 of 9 participants' },
-  { tier: 1, f: 'No-contact / anonymous browsing', ev: '5 of 9 — medium-high' },
-  { tier: 1, f: 'Financing calculator (monthly view)', ev: '4 of 9 — medium' },
-  { tier: 1, f: 'Insurance estimator', ev: '3 of 9 — medium' },
-  { tier: 1, f: 'Location-specific inventory filtering', ev: '2 of 9 — but acute where it hit' },
-  { tier: 0, f: 'Online transaction processing as a headline', ev: 'Users still want to see the car first' },
-  { tier: 0, f: 'Personalized recommendations', ev: 'Nobody asked — they asked for better filters' },
-  { tier: 0, f: 'Visual / interactive car tours', ev: 'Never prioritized over the cost problem' },
+// ── 05 · Feature prioritization — evidence chart ──────────────────────────
+// One dot per interview participant (9 total): filled = the feature came up.
+// Cut tier carries reasons instead of counts — those weren't outvoted, they
+// were dropped on the evidence.
+const FPS_TIERS = [
+  { name: 'Core — built now', tone: 2, items: [
+    { f: 'Transparent, upfront pricing', n: 8, ev: 'Raised unprompted in nearly every interview' },
+    { f: 'Side-by-side comparison tool', n: 6, ev: 'The decision is always between cars, never about one' },
+    { f: '5-year cost of ownership estimate', n: 6, ev: 'Sticker price isn’t the number that matters' },
+    { f: 'Vehicle history + reliability score', n: 6, ev: 'The single biggest trust checkpoint' },
+    { f: 'Independent / user reviews', n: 5, ev: 'Verdicts with no dealership incentive' },
+  ]},
+  { name: 'Later — earned consideration', tone: 1, items: [
+    { f: 'No-contact / anonymous browsing', n: 5, ev: 'Strong signal, but a stance more than a feature' },
+    { f: 'Financing calculator (monthly view)', n: 4, ev: 'Monthly-cost mindset, mostly Alex’s cohort' },
+    { f: 'Insurance estimator', n: 3, ev: 'Adjacent cost — belongs inside the 5-year number' },
+    { f: 'Location-specific inventory filtering', n: 2, ev: 'Rare, but acute where it hit — Emma was blocked on it' },
+  ]},
+  { name: 'Cut — deliberately dropped', tone: 0, items: [
+    { f: 'Online transaction processing as a headline', ev: 'Users still want to see the car in person first' },
+    { f: 'Personalized recommendations', ev: 'Nobody asked — they asked for better filters' },
+    { f: 'Visual / interactive car tours', ev: 'Never prioritized over the cost-transparency problem' },
+  ]},
 ];
+
+// Nine-dot evidence strip — one dot per participant.
+const EvidenceDots = ({ n, tone }) => (
+  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+    {Array.from({ length: 9 }, (_, i) => (
+      <span key={i} style={{
+        width: '9px', height: '9px', borderRadius: '50%',
+        background: i < n ? FPS_TONE[tone].fg : 'rgba(20,33,28,0.1)',
+        border: i < n ? 'none' : '0.5px solid rgba(20,33,28,0.15)',
+      }} />
+    ))}
+    <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: FPS_TONE[tone].fg, marginLeft: '7px', fontWeight: 500 }}>{n}/9</span>
+  </span>
+);
+
+// Harvey ball — full / half / empty circle, far easier to scan than glyphs.
+const Harvey = ({ v, size = 15 }) => {
+  const color = v === 2 ? '#3D5448' : v === 1 ? '#B0801F' : 'rgba(20,33,28,0.22)';
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" aria-label={v === 2 ? 'Full support' : v === 1 ? 'Partial support' : 'Not offered'} style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+      <circle cx="8" cy="8" r="6.4" fill={v === 2 ? color : 'none'} stroke={color} strokeWidth="1.6" />
+      {v === 1 && <path d="M 8 1.6 A 6.4 6.4 0 0 1 8 14.4 Z" fill={color} />}
+    </svg>
+  );
+};
 
 // Traffic-light tones tuned to the palette.
 const FPS_TONE = [
@@ -202,8 +236,8 @@ const FullProductStudyPage = ({ onNavigate }) => {
                     <span style={{ display: 'block', fontSize: '11px', fontWeight: 400, color: 'rgba(20,33,28,0.45)', lineHeight: 1.5, marginTop: '3px' }}>{row.note}</span>
                   </td>
                   {row.v.map((v, ci) => (
-                    <td key={ci} style={{ ...td, textAlign: 'center', fontSize: '15px', color: v === 2 ? ST.forest : v === 1 ? '#8A6414' : 'rgba(20,33,28,0.25)' }}>
-                      {v === 2 ? '✓' : v === 1 ? '◐' : '—'}
+                    <td key={ci} style={{ ...td, textAlign: 'center' }}>
+                      <Harvey v={v} />
                     </td>
                   ))}
                   <td style={{ ...td, textAlign: 'center', background: 'rgba(61,84,72,0.1)', borderLeft: `2px solid ${ST.forest}` }}>
@@ -214,8 +248,8 @@ const FullProductStudyPage = ({ onNavigate }) => {
             </tbody>
           </table>
         </div>
-        <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10.5px', letterSpacing: '0.08em', color: ST.faint, margin: '0.9rem 0 0' }}>
-          <span style={{ color: ST.forest }}>✓</span> full support&ensp;·&ensp;<span style={{ color: '#8A6414' }}>◐</span> partial / paywalled&ensp;·&ensp;<span>—</span> not offered
+        <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10.5px', letterSpacing: '0.08em', color: ST.faint, margin: '0.9rem 0 0', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <Harvey v={2} size={13} /> full support&ensp;·&ensp;<Harvey v={1} size={13} /> partial / paywalled&ensp;·&ensp;<Harvey v={0} size={13} /> not offered
         </p>
       </StudySection>
 
@@ -281,15 +315,20 @@ const FullProductStudyPage = ({ onNavigate }) => {
       <StudySection>
         <StudyLabel n="05">Data-driven analysis</StudyLabel>
         <StudyH2>The feature set, ranked by evidence</StudyH2>
-        <StudyLead>Based on the interviews and how participants actually approach looking for a car, each candidate feature is held to its evidence — built now, considered, or deliberately cut.</StudyLead>
-        <div style={{ display: 'grid', gap: '0.5rem', marginTop: '2rem', maxWidth: '900px' }}>
-          {FPS_PRIORITIES.map((p, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1.4fr) minmax(0, 1fr) 90px', gap: isMobile ? '0.25rem' : '1rem', alignItems: 'center', background: FPS_TONE[p.tier].bg, border: `0.5px solid ${FPS_TONE[p.tier].b}`, borderRadius: '8px', padding: '0.75rem 1.1rem' }}>
-              <span style={{ fontSize: '13.5px', fontWeight: 500, color: ST.ink }}>{p.f}</span>
-              <span style={{ fontSize: '12.5px', color: 'rgba(20,33,28,0.55)' }}>{p.ev}</span>
-              <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500, color: FPS_TONE[p.tier].fg, textAlign: isMobile ? 'left' : 'right' }}>
-                {p.tier === 2 ? 'Core' : p.tier === 1 ? 'Later' : 'Cut'}
-              </span>
+        <StudyLead>Based on the interviews and how participants actually approach looking for a car, each candidate feature is held to its evidence — one dot per participant who raised it. Built now, considered, or deliberately cut.</StudyLead>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(340px, 1fr))', gap: '1.25rem', marginTop: '2rem', alignItems: 'start' }}>
+          {FPS_TIERS.map((tier, ti) => (
+            <div key={ti} style={{ background: ST.cardBg, border: ST.cardBorder, borderTop: `2px solid ${FPS_TONE[tier.tone].fg}`, borderRadius: '10px', padding: '1.4rem 1.5rem' }}>
+              <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10.5px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: FPS_TONE[tier.tone].fg, margin: '0 0 1.1rem' }}>{tier.name}</p>
+              {tier.items.map((p, i) => (
+                <div key={i} style={{ padding: '0.8rem 0', borderTop: i ? '0.5px solid rgba(20,33,28,0.07)' : 'none' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '13.5px', fontWeight: 500, color: tier.tone === 0 ? 'rgba(20,33,28,0.55)' : ST.ink, textDecoration: tier.tone === 0 ? 'line-through' : 'none', textDecorationColor: 'rgba(156,53,39,0.5)' }}>{p.f}</span>
+                    {p.n != null && <EvidenceDots n={p.n} tone={tier.tone} />}
+                  </div>
+                  <p style={{ fontSize: '12.5px', lineHeight: 1.55, color: 'rgba(20,33,28,0.5)', margin: '0.35rem 0 0' }}>{p.ev}</p>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -311,7 +350,9 @@ const FullProductStudyPage = ({ onNavigate }) => {
         <StudyLabel n="07">Hi-fi wireframes</StudyLabel>
         <StudyH2>From sketch to high-fidelity screens</StudyH2>
         <StudyLead>The sketches became high-fidelity comps in the AutoEase brand system — forest-deep surfaces, amber reserved for the highest-stakes value on each screen, and money rendered in a dedicated numeric scale. Shown here as live screens from the built prototype.</StudyLead>
-        <div style={{ display: 'flex', gap: isMobile ? '1.5rem' : '2rem', flexWrap: 'wrap', justifyContent: isMobile ? 'center' : 'flex-start', marginTop: '2.25rem' }}>
+        {/* Grid spans the full content width — columns distribute so the
+            strip matches the page measure instead of hugging the left. */}
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(210px, 1fr))' : 'repeat(4, 1fr)', justifyItems: 'center', rowGap: '2rem', marginTop: '2.25rem' }}>
           {FPS_HIFI.map((s, i) => <HifiPhone key={i} shot={s} />)}
         </div>
       </StudySection>
