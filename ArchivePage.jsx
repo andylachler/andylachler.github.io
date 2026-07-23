@@ -632,10 +632,10 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
             }} />
           )}
           <div style={{ position: 'absolute', inset: 0, padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ fontSize: '12px', fontWeight: 600, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.6rem' }}>
+            <p style={{ fontSize: '12px', fontWeight: 600, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.6rem', textShadow: heroPhoto ? '0 1px 10px rgba(11,21,19,0.5)' : 'none' }}>
               {project.org} · {project.year} · {project.role}
             </p>
-            <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(32px, 4.2vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.04, color: heroText, margin: 0 }}>
+            <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: 'clamp(32px, 4.2vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.04, color: heroText, margin: 0, textShadow: heroPhoto ? '0 1px 2px rgba(11,21,19,0.5), 0 2px 22px rgba(11,21,19,0.45)' : 'none' }}>
               {project.title}
             </h1>
           </div>

@@ -209,24 +209,23 @@ const SILHOUETTES = {
   ),
 };
 
-// HeroGlass — "liquid glass" legibility strip for hero banners. A frosted
-// blur anchored to the bottom of the banner that fades out above the title
-// (mask gradient), with a light dark tint so cream text always clears the
-// imagery. Shared by ProjectPage and ArchiveProjectPage heroes.
-// `light`: cream-tinted frost for flat light banners that keep ink text;
-// default is the dark tint that pairs with cream text (all photo heroes).
+// HeroGlass — bottom legibility scrim for hero banners. As of July 2026 v2
+// this is a soft, eased gradient (NO backdrop-blur — the old 18px frost fogged
+// the lower half of every banner). Darkening is concentrated in the bottom
+// band where the title sits and fades to fully clear by ~66%, so the image
+// itself reads crisp; hero titles carry a text-shadow for the rest of the
+// legibility. Shared by ProjectPage, ArchiveProjectPage, and the StudyHero
+// image banner. `light`: cream scrim for flat light banners that keep ink
+// text; default is the dark scrim that pairs with cream text (all photo heroes).
 const HeroGlass = ({ light = false }) => {
-  const mask = 'linear-gradient(to top, black 0%, black 38%, rgba(0,0,0,0.4) 70%, transparent 100%)';
+  const stops = light
+    ? 'rgba(242,239,230,0.80) 0%, rgba(242,239,230,0.46) 20%, rgba(242,239,230,0.18) 38%, rgba(242,239,230,0.05) 52%, transparent 66%'
+    : 'rgba(11,21,19,0.72) 0%, rgba(11,21,19,0.42) 20%, rgba(11,21,19,0.16) 38%, rgba(11,21,19,0.04) 52%, transparent 66%';
   return (
     <div aria-hidden="true" style={{
-      position: 'absolute', left: 0, right: 0, bottom: 0, height: '55%',
+      position: 'absolute', left: 0, right: 0, bottom: 0, height: '72%',
       pointerEvents: 'none',
-      backdropFilter: 'blur(18px) saturate(1.15)',
-      WebkitBackdropFilter: 'blur(18px) saturate(1.15)',
-      maskImage: mask, WebkitMaskImage: mask,
-      background: light
-        ? 'linear-gradient(to top, rgba(242,239,230,0.55) 0%, rgba(242,239,230,0.18) 55%, transparent 100%)'
-        : 'linear-gradient(to top, rgba(11,21,19,0.42) 0%, rgba(11,21,19,0.14) 55%, transparent 100%)',
+      background: `linear-gradient(to top, ${stops})`,
     }} />
   );
 };

@@ -205,10 +205,10 @@ const ProjectPage = ({ projectId = 'autoease', onNavigate }) => {
               the title (July 2026, replaces the plain dark gradient). */}
           {window.HeroGlass && <HeroGlass light={light && !heroPhoto} />}
           <div style={{ position: 'absolute', inset: 0, padding: heroPad, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem' }}>
+            <p style={{ fontSize: '10px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.5rem', textShadow: heroPhoto ? '0 1px 10px rgba(11,21,19,0.5)' : 'none' }}>
               {project.org} · {project.year} · {project.role}
             </p>
-            <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: isMobile ? 'clamp(28px, 7.5vw, 38px)' : 'clamp(32px, 4.2vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.04, color: heroText, margin: 0 }}>
+            <h1 style={{ fontFamily: 'var(--ff-serif)', fontSize: isMobile ? 'clamp(28px, 7.5vw, 38px)' : 'clamp(32px, 4.2vw, 52px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.04, color: heroText, margin: 0, textShadow: heroPhoto ? '0 1px 2px rgba(11,21,19,0.5), 0 2px 22px rgba(11,21,19,0.45)' : 'none' }}>
               {project.title}
             </h1>
           </div>

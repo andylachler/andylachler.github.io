@@ -78,31 +78,67 @@ const StudySection = ({ children, style = {}, first = false }) => (
 );
 
 // ── Hero — dark cover tile, matches ProjectPage grammar ───────────────────
-const StudyHero = ({ eyebrow, title, titleEm, sub, meta = [], bg = '#14211C', isMobile }) => (
-  <div style={{ background: bg, borderRadius: '10px', padding: isMobile ? '2.5rem 1.5rem' : 'clamp(3rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 4rem)', marginBottom: isMobile ? '2.5rem' : '4rem', position: 'relative', overflow: 'hidden' }}>
-    <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(242,239,230,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(242,239,230,0.025) 1px,transparent 1px)', backgroundSize: '48px 48px', pointerEvents: 'none' }} />
-    <div style={{ position: 'relative' }}>
-      {eyebrow && (
-        <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: ST.accent, margin: '0 0 1.5rem', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span aria-hidden="true" style={{ width: '32px', height: '1px', background: ST.accent, display: 'inline-block' }} />{eyebrow}
-        </p>
-      )}
-      <h1 style={{ fontFamily: 'var(--ff-serif)', fontWeight: 400, fontSize: isMobile ? 'clamp(30px, 8vw, 42px)' : 'clamp(38px, 4.6vw, 60px)', lineHeight: 1.05, letterSpacing: '-0.03em', color: ST.cream, margin: 0, maxWidth: '900px' }}>
-        {title}{titleEm && <> <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.75)' }}>{titleEm}</em></>}
-      </h1>
-      {sub && <p style={{ marginTop: '1.5rem', maxWidth: '640px', fontSize: '16px', lineHeight: 1.7, color: 'rgba(242,239,230,0.72)' }}>{sub}</p>}
-      {meta.length > 0 && (
-        <div style={{ marginTop: '2.5rem', display: 'flex', gap: '2.5rem', flexWrap: 'wrap' }}>
-          {meta.map((m, i) => (
-            <div key={i} style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'rgba(242,239,230,0.5)' }}>
-              <b style={{ display: 'block', color: ST.cream, fontWeight: 500, marginBottom: '4px', letterSpacing: '0.06em', textTransform: 'uppercase', fontSize: '10px' }}>{m.label}</b>{m.value}
-            </div>
-          ))}
+const StudyHero = ({ eyebrow, title, titleEm, sub, meta = [], bg = '#14211C', image, isMobile }) => {
+  // Image mode (July 2026) — matches the ProjectPage grammar: a photo banner
+  // with the eyebrow + title overlaid at the bottom, and the summary + meta
+  // moved BELOW the banner onto the page surface. Falls back to the flat dark
+  // cover tile when no image is supplied (other study pages are unchanged).
+  if (image) {
+    const shadow = '0 1px 2px rgba(11,21,19,0.5), 0 2px 22px rgba(11,21,19,0.45)';
+    return (
+      <div style={{ marginBottom: isMobile ? '2.5rem' : '4rem' }}>
+        <div style={{ background: bg, borderRadius: '10px', height: isMobile ? 'clamp(220px, 55vw, 320px)' : 'clamp(280px, 32vw, 420px)', position: 'relative', overflow: 'hidden' }}>
+          <img src={image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 32%' }} />
+          {window.HeroGlass && <HeroGlass />}
+          <div style={{ position: 'absolute', inset: 0, padding: isMobile ? '1.25rem' : '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+            {eyebrow && (
+              <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(242,239,230,0.82)', margin: '0 0 0.6rem', textShadow: shadow }}>{eyebrow}</p>
+            )}
+            <h1 style={{ fontFamily: 'var(--ff-serif)', fontWeight: 400, fontSize: isMobile ? 'clamp(28px, 7.5vw, 40px)' : 'clamp(34px, 4.2vw, 54px)', lineHeight: 1.04, letterSpacing: '-0.03em', color: ST.cream, margin: 0, maxWidth: '900px', textShadow: shadow }}>
+              {title}{titleEm && <> <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.82)' }}>{titleEm}</em></>}
+            </h1>
+          </div>
         </div>
-      )}
+        {sub && <p style={{ fontSize: isMobile ? '17px' : 'clamp(18px, 1.8vw, 22px)', lineHeight: 1.6, color: ST.ink, maxWidth: '820px', margin: isMobile ? '2rem 0 0' : '2.75rem 0 0' }}>{sub}</p>}
+        {meta.length > 0 && (
+          <div style={{ display: 'flex', gap: isMobile ? '1.75rem' : '3rem', flexWrap: 'wrap', marginTop: '1.75rem', paddingTop: '1.5rem', borderTop: ST.rule }}>
+            {meta.map((m, i) => (
+              <div key={i}>
+                <b style={{ display: 'block', fontFamily: 'var(--ff-mono)', color: ST.faint, fontWeight: 500, marginBottom: '5px', letterSpacing: '0.12em', textTransform: 'uppercase', fontSize: '10px' }}>{m.label}</b>
+                <span style={{ fontSize: '13px', color: ST.ink }}>{m.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+  return (
+    <div style={{ background: bg, borderRadius: '10px', padding: isMobile ? '2.5rem 1.5rem' : 'clamp(3rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 4rem)', marginBottom: isMobile ? '2.5rem' : '4rem', position: 'relative', overflow: 'hidden' }}>
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(242,239,230,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(242,239,230,0.025) 1px,transparent 1px)', backgroundSize: '48px 48px', pointerEvents: 'none' }} />
+      <div style={{ position: 'relative' }}>
+        {eyebrow && (
+          <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: ST.accent, margin: '0 0 1.5rem', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span aria-hidden="true" style={{ width: '32px', height: '1px', background: ST.accent, display: 'inline-block' }} />{eyebrow}
+          </p>
+        )}
+        <h1 style={{ fontFamily: 'var(--ff-serif)', fontWeight: 400, fontSize: isMobile ? 'clamp(30px, 8vw, 42px)' : 'clamp(38px, 4.6vw, 60px)', lineHeight: 1.05, letterSpacing: '-0.03em', color: ST.cream, margin: 0, maxWidth: '900px' }}>
+          {title}{titleEm && <> <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.75)' }}>{titleEm}</em></>}
+        </h1>
+        {sub && <p style={{ marginTop: '1.5rem', maxWidth: '640px', fontSize: '16px', lineHeight: 1.7, color: 'rgba(242,239,230,0.72)' }}>{sub}</p>}
+        {meta.length > 0 && (
+          <div style={{ marginTop: '2.5rem', display: 'flex', gap: '2.5rem', flexWrap: 'wrap' }}>
+            {meta.map((m, i) => (
+              <div key={i} style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'rgba(242,239,230,0.5)' }}>
+                <b style={{ display: 'block', color: ST.cream, fontWeight: 500, marginBottom: '4px', letterSpacing: '0.06em', textTransform: 'uppercase', fontSize: '10px' }}>{m.label}</b>{m.value}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ── Carousel — lachler chrome around preserved prototype slides ───────────
 const StudyCarousel = ({ title, slides }) => {

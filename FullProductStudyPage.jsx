@@ -183,6 +183,7 @@ const FullProductStudyPage = ({ onNavigate }) => {
       <StudyHero
         isMobile={isMobile}
         bg="#1A2520"
+        image="images/autoease/study-hero.jpg"
         eyebrow="Case study · Full product study · AutoEase"
         title="One product, end to end — from a question to a"
         titleEm="working prototype"
