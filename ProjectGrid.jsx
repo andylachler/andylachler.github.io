@@ -6,8 +6,8 @@
 // analysis remain as mini studies on the Work page.
 const PROJECTS = [
   { id: 'autoease', title: 'Full product study', org: 'AutoEase — Independent', year: '2026', role: 'Product Design — idea to working prototype', bg: '#1A2520', featured: true, imageIndex: 6 },
-  { id: 'wireframe-components', title: 'Wireframe component work', org: 'Algoma', year: '2025–26', role: 'Product Design — platform component catalog', bg: '#14211C', featured: true, imageIndex: 3 },
-  { id: 'platform-reports', title: 'Platform driven reports', org: 'Algoma', year: '2026', role: 'Product Logic — self-service yield presentations', bg: '#3D5448', featured: true, imageIndex: 0 },
+  { id: 'wireframe-components', title: 'Wireframe component work', org: 'Algoma', year: '2025–26', role: 'Product Design — platform component catalog', bg: '#14211C', featured: true, imageIndex: 3, silhouette: 'wireframe-components' },
+  { id: 'platform-reports', title: 'Platform driven reports', org: 'Algoma', year: '2026', role: 'Product Logic — self-service yield presentations', bg: '#3D5448', featured: true, imageIndex: 0, silhouette: 'platform-reports' },
   { id: 'exhibition-trailer', title: 'Exhibition Trailer', org: 'Independent', year: '2022', role: 'Physical prototyping — modular off-grid pop-up', bg: '#3D5448', featured: true, imageIndex: 1 },
   { id: 'ella', title: 'Ella', org: 'Arquitectonica', year: '2023', role: 'Architecture — 95-unit condo, Miami Beach', bg: '#D45A1B', featured: true, imageIndex: 2 },
 ];

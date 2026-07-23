@@ -143,17 +143,33 @@ const StudyCarousel = ({ title, slides }) => {
     requestAnimationFrame(() => setIdx(Math.round(vp.scrollLeft / vp.clientWidth)));
   };
 
-  const btn = (disabled) => ({
-    width: '36px', height: '36px', borderRadius: '50%', border: '0.5px solid rgba(20,33,28,0.25)',
-    background: 'transparent', cursor: disabled ? 'default' : 'pointer', opacity: disabled ? 0.3 : 1,
-    display: 'flex', alignItems: 'center', justifyContent: 'center', color: ST.ink, transition: 'all 150ms',
-  });
+  // Prev/next — same circular button grammar as the home reel.
+  const CarBtn = ({ dir, disabled }) => (
+    <button
+      aria-label={dir > 0 ? 'Next state' : 'Previous state'}
+      onClick={() => go(idx + dir)}
+      disabled={disabled}
+      style={{
+        width: '38px', height: '38px', borderRadius: '50%',
+        border: '1px solid rgba(20,33,28,0.25)', background: 'transparent',
+        color: ST.ink, fontSize: '15px', cursor: disabled ? 'default' : 'pointer',
+        opacity: disabled ? 0.3 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        transition: 'opacity 180ms, border-color 180ms, background 180ms',
+      }}
+      onMouseEnter={e => { if (!disabled) { e.currentTarget.style.borderColor = ST.accent; e.currentTarget.style.background = 'rgba(212,90,27,0.08)'; } }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(20,33,28,0.25)'; e.currentTarget.style.background = 'transparent'; }}
+    >{dir > 0 ? '→' : '←'}</button>
+  );
 
   return (
     <div style={{ marginTop: '2.25rem', background: '#FFFFFF', border: '0.5px solid rgba(20,33,28,0.14)', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem', borderBottom: ST.rule }}>
-        <span style={{ fontSize: '13.5px', fontWeight: 500, color: ST.ink }}>{title}</span>
-        <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: ST.faint }}>{idx + 1} / {slides.length}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '0.9rem 1.5rem', borderBottom: ST.rule, background: 'rgba(20,33,28,0.015)' }}>
+        <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.55)' }}>
+          <span style={{ color: ST.accent }}>●</span>&nbsp;&nbsp;{title}
+        </span>
+        <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.1em', color: ST.faint, flexShrink: 0 }}>
+          <b style={{ color: ST.accent, fontWeight: 400 }}>{String(idx + 1).padStart(2, '0')}</b> / {String(slides.length).padStart(2, '0')}
+        </span>
       </div>
       <div className="st-viewport" ref={vpRef} onScroll={onScroll}>
         {slides.map((sl, i) => (
@@ -165,17 +181,21 @@ const StudyCarousel = ({ title, slides }) => {
             {sl.stage && sl.stage.length > 60 ? (
               <div className="st-stage" dangerouslySetInnerHTML={{ __html: sl.stage }} />
             ) : (
+              /* Stage empty in the source mockup — Andy drops raw HTML into
+                 the slide-stage there, then tools/extract-wireframe-slides.py
+                 regenerates wireframes-data.js and the state appears here. */
               <div className="st-stage">
-                <div style={{ border: '1px dashed rgba(20,33,28,0.2)', borderRadius: '10px', padding: '2.5rem 3rem', fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: ST.faint }}>
-                  State mock — in progress
+                <div style={{ border: '1px dashed rgba(20,33,28,0.2)', borderRadius: '10px', padding: '2.5rem 3rem', textAlign: 'center' }}>
+                  <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: ST.faint, margin: 0 }}>State mock — in progress</p>
+                  <p style={{ fontSize: '12px', color: 'rgba(20,33,28,0.35)', margin: '0.6rem 0 0' }}>Component HTML lands here once the state is mocked.</p>
                 </div>
               </div>
             )}
           </div>
         ))}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.8rem 1.5rem', borderTop: ST.rule }}>
-        <button aria-label="Previous state" style={btn(idx === 0)} onClick={() => go(idx - 1)} disabled={idx === 0}>←</button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.8rem 1.5rem', borderTop: ST.rule, background: 'rgba(20,33,28,0.015)' }}>
+        <CarBtn dir={-1} disabled={idx === 0} />
         <div style={{ display: 'flex', gap: '8px' }}>
           {slides.map((_, i) => (
             <button key={i} aria-label={`Go to state ${i + 1}`} onClick={() => go(i)} style={{
@@ -185,7 +205,7 @@ const StudyCarousel = ({ title, slides }) => {
             }} />
           ))}
         </div>
-        <button aria-label="Next state" style={btn(idx === slides.length - 1)} onClick={() => go(idx + 1)} disabled={idx === slides.length - 1}>→</button>
+        <CarBtn dir={1} disabled={idx === slides.length - 1} />
       </div>
     </div>
   );

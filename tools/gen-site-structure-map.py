@@ -124,7 +124,7 @@ note(1490, cy+46, ['Ball Game still NOT playable — fix the Unity WebGL export 
 py = H-110
 parts.append(f'<rect x="48" y="{py}" width="{W-96}" height="76" rx="10" fill="{INK}"/>')
 parts.append(f'<text x="70" y="{py+28}" font-size="12" font-weight="700" letter-spacing="2" fill="{CREAM}">STATUS — JULY 22, 2026</text>')
-parts.append(f'<text x="70" y="{py+54}" font-size="13.5" fill="rgba(242,239,230,0.85)">DONE: reel of 5 w/ buttons (no hijack) · custom study pages · minis removed · Next-card bug fixed · market comparison configurator-style · persona spectrum · real lowfi sketch · Ella status current      TO DO: drop CX-5 + Camry photos into prototype/public/vehicles · tile images for showcases · confidentiality check · Ball Game export · Notion embed re-upload</text>')
+parts.append(f'<text x="70" y="{py+54}" font-size="13.5" fill="rgba(242,239,230,0.85)">DONE: reel of 5 w/ buttons · custom study pages · minis removed · Next-card fixed · configurator comparison + persona spectrum · real lowfi sketch · UI-linework silhouettes for both showcases · carousel chrome on-language · extract pipeline scripted      TO DO: Andy fills Series 1 states 02–04 (drop HTML → run extract script) · CX-5 + Camry photos · confidentiality check · Ball Game export · Notion embed re-upload</text>')
 
 svg = f'''<svg viewBox="0 0 {W} {H}" width="{W}" height="{H}" xmlns="http://www.w3.org/2000/svg" font-family="Inter, -apple-system, system-ui, sans-serif" role="img">
 <title>lachler.com site structure map</title>

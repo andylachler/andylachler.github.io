@@ -93,6 +93,120 @@ const SILHOUETTES = {
       </g>
     </svg>
   ),
+
+  // Wireframe component work — UI linework: the in-site chat panel on the
+  // right (bubbles, tracked-action pill, input bar) with two component
+  // cards on the left, dash-connected. Reads as "components feeding a
+  // surface" — the catalog's whole premise. The user-facing action elements
+  // (user bubble, tracked-action pill, send) carry Algoma's signature
+  // aquamarine→blue marketing gradient (algoma-brand-complete.html) so the
+  // tile reads as Algoma work at a glance.
+  'wireframe-components': (stroke, hovered, variant = 'tile') => (
+    <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%',
+        opacity: variant === 'hero' ? (hovered ? 0.55 : 0.4) : (hovered ? 0.85 : 0.7),
+        transition: 'opacity 350ms ease-out', pointerEvents: 'none' }}>
+      <defs>
+        <linearGradient id="alg-grad-wfc" x1="0" y1="0" x2="1" y2="0.35">
+          <stop offset="0" stopColor="#03F3A3" /><stop offset="1" stopColor="#1EA5E1" />
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke={stroke} strokeWidth={variant === 'hero' ? 1.4 : 2}
+        strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke">
+        {/* Chat panel shell + header */}
+        <rect x="212" y="28" width="158" height="204" rx="10" />
+        <path d="M 212 56 H 370" />
+        <circle cx="230" cy="42" r="6" />
+        <path d="M 244 42 H 300" />
+        {/* Agent bubble (left) */}
+        <path d="M 226 74 H 320 Q 328 74 328 82 V 96 Q 328 104 320 104 H 234 Q 226 104 226 96 Z" />
+        <path d="M 236 86 H 300 M 236 94 H 280" />
+        {/* Component card 1 — list rows */}
+        <rect x="30" y="46" width="148" height="78" rx="8" />
+        <path d="M 30 68 H 178" />
+        <path d="M 42 58 H 110" />
+        <path d="M 42 84 H 166 M 42 98 H 146 M 42 112 H 158" />
+        {/* Component card 2 — tile grid */}
+        <rect x="30" y="140" width="148" height="74" rx="8" />
+        <rect x="42" y="152" width="28" height="22" rx="3" />
+        <rect x="78" y="152" width="28" height="22" rx="3" />
+        <rect x="114" y="152" width="28" height="22" rx="3" />
+        <path d="M 42 188 H 130 M 42 200 H 106" />
+        {/* Dashed hand-off into the panel — marketing dashed-frame motif */}
+        <path d="M 178 85 C 196 85 200 90 212 96" strokeDasharray="4 5" />
+        <path d="M 178 177 C 196 177 200 172 212 166" strokeDasharray="4 5" />
+      </g>
+      {/* Algoma gradient accents — user actions */}
+      <g fill="none" stroke="url(#alg-grad-wfc)" strokeWidth={variant === 'hero' ? 1.6 : 2.2}
+        strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke">
+        {/* gradient hairline across the panel top — the marketing top rule */}
+        <path d="M 222 28 H 360" />
+        {/* User bubble (right) */}
+        <path d="M 272 118 H 348 Q 356 118 356 126 V 134 Q 356 142 348 142 H 280 Q 272 142 272 134 Z" />
+        <path d="M 284 130 H 340" />
+        {/* Tracked-action pill */}
+        <rect x="226" y="154" width="108" height="20" rx="10" />
+        <circle cx="238" cy="164" r="5" />
+        <path d="M 250 164 H 320" />
+        {/* Input bar + send */}
+        <rect x="226" y="196" width="112" height="22" rx="11" stroke={stroke} strokeWidth={variant === 'hero' ? 1.4 : 2} />
+        <circle cx="352" cy="207" r="11" />
+        <path d="M 347 207 H 357 M 353 203 L 357 207 L 353 211" />
+      </g>
+    </svg>
+  ),
+
+  // Platform driven reports — the case study's own logic drawn as linework:
+  // two tracks (platform + manual) converging into a presentation sheet
+  // with data layers, with the export tick underneath. The convergence and
+  // export path carry Algoma's aquamarine→blue marketing gradient; the map
+  // block is a dashed drop-frame, echoing the IG report-export creative.
+  'platform-reports': (stroke, hovered, variant = 'tile') => (
+    <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%',
+        opacity: variant === 'hero' ? (hovered ? 0.55 : 0.4) : (hovered ? 0.85 : 0.7),
+        transition: 'opacity 350ms ease-out', pointerEvents: 'none' }}>
+      <defs>
+        <linearGradient id="alg-grad-pr" x1="0" y1="0" x2="1" y2="0.35">
+          <stop offset="0" stopColor="#03F3A3" /><stop offset="1" stopColor="#1EA5E1" />
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke={stroke} strokeWidth={variant === 'hero' ? 1.4 : 2}
+        strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke">
+        {/* Track box — platform (left) */}
+        <rect x="42" y="26" width="120" height="58" rx="8" />
+        <path d="M 54 42 H 122 M 54 54 H 148 M 54 66 H 136" />
+        {/* Track box — manual (right) */}
+        <rect x="238" y="26" width="120" height="58" rx="8" />
+        <path d="M 250 42 H 318 M 250 54 H 344 M 250 66 H 332" />
+        {/* Presentation sheet */}
+        <rect x="128" y="138" width="144" height="96" rx="8" />
+        <path d="M 128 158 H 272" />
+        <circle cx="141" cy="148" r="4" />
+        <path d="M 152 148 H 216" />
+        {/* Map block — dashed drop-frame (marketing motif) + horizon */}
+        <rect x="140" y="168" width="56" height="54" rx="4" strokeDasharray="4 4" />
+        <path d="M 140 206 L 158 188 L 168 198 L 182 182 L 196 196" />
+        {/* Bar chart */}
+        <path d="M 210 222 V 196 M 226 222 V 182 M 242 222 V 204 M 258 222 V 172" />
+      </g>
+      {/* Algoma gradient accents — the automated path */}
+      <g fill="none" stroke="url(#alg-grad-pr)" strokeWidth={variant === 'hero' ? 1.6 : 2.2}
+        strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke">
+        {/* gradient hairlines across the track tops — the marketing top rule */}
+        <path d="M 52 26 H 152 M 248 26 H 348" />
+        {/* Converging arrows */}
+        <path d="M 102 84 C 102 112 200 100 200 128" />
+        <path d="M 298 84 C 298 112 200 100 200 128" />
+        <path d="M 193 121 L 200 131 L 207 121" />
+        {/* Export tick — one click out */}
+        <path d="M 286 186 H 316 M 308 178 L 316 186 L 308 194" />
+        <path d="M 322 186 H 342" strokeDasharray="4 5" />
+      </g>
+    </svg>
+  ),
 };
 
 // SVG architectural placeholder patterns

@@ -69,7 +69,7 @@ const PROJECT_DATA = {
       { label: 'Series', value: 'Chat · Rendering · Intake · Zoning report' },
       { label: 'Status', value: 'Living catalog' },
     ],
-    tileBg: '#14211C', imageIndex: 3,
+    tileBg: '#14211C', imageIndex: 3, silhouette: 'wireframe-components',
     next: 'platform-reports',
   },
   'platform-reports': {
@@ -83,7 +83,7 @@ const PROJECT_DATA = {
       { label: 'Type', value: 'Product logic study' },
       { label: 'Status', value: 'Framework in refinement' },
     ],
-    tileBg: '#3D5448', imageIndex: 0,
+    tileBg: '#3D5448', imageIndex: 0, silhouette: 'platform-reports',
     next: 'exhibition-trailer',
   },
   // 'feasibility' retired July 2026 — replaced by the two showcases above.
@@ -565,7 +565,7 @@ const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
         border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
       }}
     >
-      <ProjectVisual projectId={Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project)} bg={project.tileBg} index={project.imageIndex} hovered={hov} />
+      <ProjectVisual projectId={Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project)} bg={project.tileBg} index={project.imageIndex} hovered={hov} silhouette={project.silhouette} />
       <div style={{
         position: 'absolute', inset: 0,
         padding: isMobile ? '1.25rem' : '2rem',
