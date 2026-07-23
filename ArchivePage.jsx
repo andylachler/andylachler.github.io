@@ -22,9 +22,10 @@ const ARCHIVE_ITEMS = [
   // Unity / WebGL experiments — self-initiated. Architecture-adjacent:
   // terrain, environment, physics, real-time lighting. Each project page
   // offers a "Play in browser" button that lazy-loads the Unity canvas.
-  // 'ground-is-lava' removed from the grid July 2026 (structure pass) — detail
-  // data retained below; restore by re-adding an item here.
-  { id: 'ball-game', title: 'Ball Game', year: '2024', org: 'Self-initiated', type: 'Unity / WebGL', desc: 'A small interactive ball-and-environment piece. Outdoor scene, camera rig, and physics-driven movement. Built as a scripting + prefab sandbox.', bg: '#14211C', imageIndex: 0, section: 'playable' },
+  // 'ground-is-lava' removed from the grid July 2026 (structure pass); 'ball-game'
+  // pulled Jul 22 2026 (WebGL export unfinished — not worth hosting yet). Detail
+  // data for both retained below; restore by re-adding an item here. With no
+  // items left, the Playable section auto-hides.
 
   // ── Also ───────────────────────────────────────────────────────────────
   { id: 'bethlehem-riverfront', title: 'Bethlehem Riverfront', year: '2017', org: 'Lehigh University', type: 'Craft — physical model', desc: 'A park and small museum on the south bank of the Lehigh, stitched into the existing bike-and-running trail network.', bg: '#14211C', imageIndex: 5 },

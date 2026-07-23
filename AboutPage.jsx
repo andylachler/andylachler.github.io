@@ -48,7 +48,7 @@ const AboutPage = () => {
           )}
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Contact</p>
           <div style={{ borderTop: '0.5px solid rgba(20,33,28,0.1)', marginBottom: '2.5rem' }}>
-            <ContactRow label="Email" value="andy@lachler.com" link />
+            <ContactRow label="Email" value="alachler@gmail.com" link />
             <ContactRow label="Location" value="New York, NY" />
             <ContactRow label="Currently" value="Algoma — Product Lead" />
           </div>

@@ -206,6 +206,8 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "elevate-ravenswood": {
+    "hero": "images/elevate-ravenswood/hero.jpg",
+    "tile": "images/elevate-ravenswood/hero.jpg",
     "book": [
       {
         "src": "images/elevate-ravenswood/book-01.jpg",
