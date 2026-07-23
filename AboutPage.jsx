@@ -25,7 +25,7 @@ const AboutPage = () => {
         <div>
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.25rem' }}>Practice</p>
           <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', marginBottom: '1.25rem' }}>
-            As Product Lead at Algoma, I drive the platform end-to-end: wireframing and shipping features, designing AI-powered zoning and market-intelligence tools, integrating GIS and regulatory data, and shaping the brand and go-to-market system. I partner closely with engineering and learn directly from users through design-partner interviews and customer research.
+            As Product Lead at Algoma, I drive the platform end-to-end: wireframing and shipping features, designing AI-powered zoning and market-intelligence tools, researching and specifying the GIS and regulatory data layers our engineers integrate, and leading the design of our marketing-site relaunch. I partner closely with engineering and learn directly from users through design-partner interviews and customer research.
           </p>
           <p style={{ fontSize: '16px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(20,33,28,0.75)', marginBottom: '1.25rem' }}>
             Before Algoma, I was an Associate Designer at Arquitectonica on large-scale multifamily projects, where I helped introduce AI-driven visualization and computational workflows. Earlier work at boutique firms grounded me in the full arc of design, from concept through schematic development.
