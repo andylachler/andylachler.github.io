@@ -553,11 +553,14 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
   });
 
   const light = project.tileBg === '#F2EFE6' || project.tileBg === '#E8E4D5';
-  const heroText = light ? '#14211C' : '#F2EFE6';
+  // Photo heroes always take cream text over the HeroGlass strip — the
+  // tileBg-based ink/cream split only applies to flat linework banners.
+  const heroPhoto = !!(((window.IMAGE_MANIFEST || {})[projectId] || {}).hero || ((window.IMAGE_MANIFEST || {})[projectId] || {}).tile);
+  const heroText = heroPhoto ? '#F2EFE6' : (light ? '#14211C' : '#F2EFE6');
   // Eyebrow on dark tiles: cream at high opacity. Linework has been dialed
   // back to ~0.35, so a cream eyebrow with a slight weight + size bump reads
   // cleanly over it without fighting the title for attention.
-  const heroMuted = light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.9)';
+  const heroMuted = heroPhoto ? 'rgba(242,239,230,0.8)' : (light ? 'rgba(20,33,28,0.5)' : 'rgba(242,239,230,0.9)');
 
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 6rem' }}>
@@ -616,15 +619,17 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
               subtle; the archive grid tile (default `variant="tile"`) uses
               the heavier treatment. */}
           {window.ProjectVisual && <ProjectVisual projectId={projectId} kind="hero" bg={project.tileBg} index={project.imageIndex} hovered={heroHov} silhouette={project.silhouette} variant="hero" />}
-          {(((window.IMAGE_MANIFEST || {})[projectId] || {}).hero || ((window.IMAGE_MANIFEST || {})[projectId] || {}).tile) && (
-            <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(12,16,14,0.62) 0%, rgba(12,16,14,0.18) 38%, transparent 60%)' }} />
+          {/* Liquid-glass legibility strip — frosted blur fading out above
+              the title (July 2026, replaces the plain dark gradient). */}
+          {window.HeroGlass && <HeroGlass light={light && !heroPhoto} />}
+          {!heroPhoto && (
+            <div style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none',
+              background: light
+                ? 'linear-gradient(rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.06) 50%, rgba(0,0,0,0) 100%)'
+                : 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%)',
+            }} />
           )}
-          <div style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none',
-            background: light
-              ? 'linear-gradient(rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.06) 50%, rgba(0,0,0,0) 100%)'
-              : 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%)',
-          }} />
           <div style={{ position: 'absolute', inset: 0, padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <p style={{ fontSize: '12px', fontWeight: 600, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: heroMuted, margin: '0 0 0.6rem' }}>
               {project.org} · {project.year} · {project.role}

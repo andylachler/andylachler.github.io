@@ -209,6 +209,29 @@ const SILHOUETTES = {
   ),
 };
 
+// HeroGlass — "liquid glass" legibility strip for hero banners. A frosted
+// blur anchored to the bottom of the banner that fades out above the title
+// (mask gradient), with a light dark tint so cream text always clears the
+// imagery. Shared by ProjectPage and ArchiveProjectPage heroes.
+// `light`: cream-tinted frost for flat light banners that keep ink text;
+// default is the dark tint that pairs with cream text (all photo heroes).
+const HeroGlass = ({ light = false }) => {
+  const mask = 'linear-gradient(to top, black 0%, black 38%, rgba(0,0,0,0.4) 70%, transparent 100%)';
+  return (
+    <div aria-hidden="true" style={{
+      position: 'absolute', left: 0, right: 0, bottom: 0, height: '55%',
+      pointerEvents: 'none',
+      backdropFilter: 'blur(18px) saturate(1.15)',
+      WebkitBackdropFilter: 'blur(18px) saturate(1.15)',
+      maskImage: mask, WebkitMaskImage: mask,
+      background: light
+        ? 'linear-gradient(to top, rgba(242,239,230,0.55) 0%, rgba(242,239,230,0.18) 55%, transparent 100%)'
+        : 'linear-gradient(to top, rgba(11,21,19,0.42) 0%, rgba(11,21,19,0.14) 55%, transparent 100%)',
+    }} />
+  );
+};
+window.HeroGlass = HeroGlass;
+
 // SVG architectural placeholder patterns
 const TilePlaceholder = ({ bg, index, hovered, silhouette, variant = 'tile' }) => {
   // If a named silhouette is supplied, it wins — used for archive tiles
