@@ -29,8 +29,14 @@ const HeroBg = () => {
 
     const CREAM = [242, 239, 230];
     const ORANGE = [212, 90, 27];
-    const BUCKETS = 14;      // alpha quantization levels
-    const MAX_ALPHA = 0.75;
+    // ── Visibility knobs (tuned up July 27, 2026 — the field read as noise) ──
+    // Resting alpha now spans 0.13–0.33 instead of 0.07–0.18. Paired with the
+    // canvas opacity lift below (0.55 → 0.85) that's roughly 2.5× the effective
+    // contrast against the forest ground. BUCKETS raised because the old 14
+    // levels were spread across a 0.75 range the dots never reached — at rest
+    // only three of them were ever used, which is what made the wave band.
+    const BUCKETS = 18;      // alpha quantization levels
+    const MAX_ALPHA = 0.90;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
@@ -71,10 +77,10 @@ const HeroBg = () => {
         const x = dots.x[k], y = dots.y[k];
         const dx = x - mx, dy = y - my;
         const d2 = dx * dx + dy * dy;
-        const ripple = d2 < 48400 ? 1 - Math.sqrt(d2) / 220 : 0; // 220px radius
+        const ripple = d2 < 67600 ? 1 - Math.sqrt(d2) / 260 : 0; // 260px radius
         const wave = Math.sin((x + y) * 0.012 + t) * 0.5 + 0.5;
-        const size = 0.4 + wave * 0.9 + ripple * 2.2;
-        const alpha = 0.07 + wave * 0.11 + ripple * 0.5;
+        const size = 0.55 + wave * 1.15 + ripple * 2.6;
+        const alpha = 0.13 + wave * 0.20 + ripple * 0.55;
         const bi = Math.min(BUCKETS - 1, (alpha / MAX_ALPHA * BUCKETS) | 0);
         buckets[ripple > 0.12 ? BUCKETS + bi : bi].push(x, y, size);
       }
@@ -95,7 +101,7 @@ const HeroBg = () => {
     };
 
     const loop = () => {
-      s.t += 0.008;
+      s.t += 0.011;   // ~13s wave period → ~9.5s; motion reads without fidgeting
       drawFrame();
       s.raf = requestAnimationFrame(loop);
     };
@@ -146,7 +152,7 @@ const HeroBg = () => {
         position: 'absolute', inset: 0,
         width: '100%', height: '100%',
         display: 'block',
-        opacity: 0.55,
+        opacity: 0.85,
       }}
     />
   );
