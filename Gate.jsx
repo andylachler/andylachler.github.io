@@ -1,9 +1,12 @@
 // Gate.jsx — client-side password gate.
 //
-// NOT real security: anyone with devtools can bypass this. The password is stored
-// as a SHA-256 hash so it isn't literally readable in source, but a determined
-// visitor can skip the check. This is enough to keep the site out of Google and
-// away from casual link-sharers while the portfolio is a work in progress.
+// NOT real security, and specifically NOT a defence against search engines or a
+// determined visitor. Every file (index.html, the .jsx sources, wireframes-data.js,
+// images/) is already downloaded before this component runs — the gate hides the
+// *rendering*, never the *bytes*. Anyone with devtools walks around it. It keeps
+// out casual link-sharers, nothing more. Real protection needs auth at the edge
+// (Cloudflare Access) so content is never served in the first place.
+// Staying out of Google is handled separately, by the noindex tag in index.html.
 //
 // To change the password: compute sha256(newPassword) and replace GATE_HASH below.
 //   In a terminal:  printf '%s' 'yourPassword' | openssl dgst -sha256
@@ -12,6 +15,31 @@
 const GATE_HASH = 'd4a33d5b78bccebe3f16843dc30e6c0f73b4eb6efb4e7114ddfebde7fa2c9954';
 const GATE_KEY  = 'lachler_gate_v1';
 
+// How long an unlock survives:
+//   'session' — until the tab is closed. New tab or new visit re-prompts;
+//               an accidental refresh mid-browse does not. (default)
+//   'none'    — never remembered. Every page load re-prompts, refresh included.
+//   'forever' — the old behaviour: remembered until the visitor clears site data.
+const GATE_MEMORY = 'session';
+
+const gateStore = () => (GATE_MEMORY === 'session' ? sessionStorage : localStorage);
+
+function gateIsUnlocked() {
+  if (GATE_MEMORY === 'none') return false;
+  try { return gateStore().getItem(GATE_KEY) === '1'; } catch { return false; }
+}
+
+function gateRemember() {
+  if (GATE_MEMORY === 'none') return;
+  try { gateStore().setItem(GATE_KEY, '1'); } catch {}
+}
+
+// Anyone who unlocked under the old 'forever' behaviour still carries a
+// localStorage flag that would silently let them straight back in. Drop it.
+if (GATE_MEMORY !== 'forever') {
+  try { localStorage.removeItem(GATE_KEY); } catch {}
+}
+
 async function sha256Hex(str) {
   const data = new TextEncoder().encode(str);
   const buf  = await crypto.subtle.digest('SHA-256', data);
@@ -19,9 +47,7 @@ async function sha256Hex(str) {
 }
 
 const Gate = ({ children }) => {
-  const [unlocked, setUnlocked] = React.useState(() => {
-    try { return localStorage.getItem(GATE_KEY) === '1'; } catch { return false; }
-  });
+  const [unlocked, setUnlocked] = React.useState(gateIsUnlocked);
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState(false);
   const [shake, setShake] = React.useState(false);
@@ -42,7 +68,7 @@ const Gate = ({ children }) => {
     setBusy(true);
     const h = await sha256Hex(value);
     if (h === GATE_HASH) {
-      try { localStorage.setItem(GATE_KEY, '1'); } catch {}
+      gateRemember();
       setUnlocked(true);
     } else {
       setError(true);
