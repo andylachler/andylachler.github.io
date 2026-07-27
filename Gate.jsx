@@ -8,6 +8,18 @@
 // (Cloudflare Access) so content is never served in the first place.
 // Staying out of Google is handled separately, by the noindex tag in index.html.
 //
+// Styling (July 27, 2026): rebuilt to the v4 design language so the gate reads as
+// the site's front door rather than a bolted-on interstitial. It borrows the home
+// hero's grammar — same #14211C ground, mono eyebrow, Instrument Serif display
+// with an italic accent word, 540px body measure, hairline-underline input, and
+// the HeroArrow text CTA instead of a filled button. The old glassmorphism card
+// (backdrop-blur, 20px radius, drop shadow) appeared nowhere else on the site.
+//
+// Deliberately NO HeroBg dot field here, though the hero has one. The field's
+// ripple tracks the cursor, and on a screen whose only job is a text input that
+// pulls the eye away from the thing you are trying to type into. Flat ground,
+// type only. The dot field starts on the other side of the password.
+//
 // To change the password: compute sha256(newPassword) and replace GATE_HASH below.
 //   In a terminal:  printf '%s' 'yourPassword' | openssl dgst -sha256
 //
@@ -46,13 +58,44 @@ async function sha256Hex(str) {
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// Mirrors HeroArrow (Hero.jsx) but adds a disabled state. Kept local so the gate
+// has no load-order dependency on Hero.jsx — it is the first thing rendered.
+const GateArrow = ({ children, disabled }) => {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <button
+      type="submit"
+      disabled={disabled}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        background: 'none', border: 'none', padding: 0,
+        display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+        fontSize: '15px', fontWeight: 500,
+        fontFamily: "'Inter', system-ui, sans-serif",
+        color: disabled ? 'rgba(242,239,230,0.3)' : (hov ? '#D45A1B' : '#F2EFE6'),
+        cursor: disabled ? 'default' : 'pointer',
+        transition: 'color 150ms',
+      }}>
+      {children}
+      <span style={{
+        display: 'inline-block', transition: 'transform 150ms',
+        transform: (hov && !disabled) ? 'translateX(4px)' : 'none',
+      }}>→</span>
+    </button>
+  );
+};
+
 const Gate = ({ children }) => {
   const [unlocked, setUnlocked] = React.useState(gateIsUnlocked);
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState(false);
   const [shake, setShake] = React.useState(false);
   const [busy,  setBusy]  = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
   const inputRef = React.useRef(null);
+
+  React.useEffect(() => { requestAnimationFrame(() => setMounted(true)); }, []);
 
   React.useEffect(() => {
     if (!unlocked) {
@@ -83,16 +126,21 @@ const Gate = ({ children }) => {
 
   if (unlocked) return children;
 
+  // Same staggered entrance as the home hero (Hero.jsx `fade`).
+  const fade = (delay, dist = 18) => ({
+    opacity: mounted ? 1 : 0,
+    transform: mounted ? 'translateY(0)' : `translateY(${dist}px)`,
+    transition: `opacity 700ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform 700ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+  });
+
   return (
     <div style={{
-      position: 'fixed', inset: 0,
+      position: 'fixed', inset: 0, zIndex: 9999,
       background: '#14211C',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '2rem',
+      overflow: 'hidden',
+      display: 'flex', flexDirection: 'column', justifyContent: 'center',
+      padding: 'clamp(1.5rem, 6vw, 2.5rem)',
       fontFamily: "'Inter', system-ui, sans-serif",
-      zIndex: 9999,
-      // Subtle vignette so the card has something to sit against
-      backgroundImage: 'radial-gradient(ellipse at center, rgba(61,84,72,0.35) 0%, rgba(20,33,28,0) 70%)',
     }}>
       <style>{`
         @keyframes gate-shake {
@@ -103,102 +151,81 @@ const Gate = ({ children }) => {
           80% { transform: translateX(4px); }
         }
         .gate-shake { animation: gate-shake 420ms cubic-bezier(0.36,0.07,0.19,0.97); }
-        .gate-input::placeholder { color: rgba(242,239,230,0.32); }
-        .gate-input:focus { outline: none; border-color: rgba(242,239,230,0.4) !important; background: rgba(20,33,28,0.45) !important; }
-        .gate-submit:hover:not(:disabled) { box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 6px 20px rgba(212,90,27,0.4); }
+        .gate-input::placeholder { color: rgba(242,239,230,0.28); }
+        .gate-input:focus { outline: none; border-bottom-color: rgba(242,239,230,0.55) !important; }
       `}</style>
 
       <form
         onSubmit={submit}
         className={shake ? 'gate-shake' : ''}
-        style={{
-          width: '100%', maxWidth: '420px',
-          background: 'rgba(242,239,230,0.06)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(242,239,230,0.12)',
-          borderRadius: '20px',
-          padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)',
-        }}
+        style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1400px', margin: '0 auto' }}
       >
         <p style={{
-          fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em',
-          textTransform: 'uppercase', color: 'rgba(242,239,230,0.4)',
-          margin: '0 0 1.25rem',
-        }}>Private preview</p>
+          ...fade(200),
+          fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)',
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: 'rgba(242,239,230,0.45)', margin: '0 0 2rem',
+        }}>Private</p>
 
         <h1 style={{
-          fontSize: '26px', fontWeight: 500, letterSpacing: '-0.015em',
-          color: '#F2EFE6', margin: '0 0 0.6rem', lineHeight: 1.2,
-        }}>Not quite ready</h1>
+          ...fade(350),
+          fontFamily: 'var(--ff-serif)',
+          fontSize: 'clamp(40px, 7vw, 76px)',
+          fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.02,
+          color: '#F2EFE6', margin: '0 0 1.75rem',
+        }}>
+          By <em style={{ fontStyle: 'italic', color: 'rgba(242,239,230,0.72)' }}>invitation</em>
+        </h1>
 
         <p style={{
-          fontSize: '15px', color: 'rgba(242,239,230,0.6)',
-          lineHeight: 1.55, margin: '0 0 2rem',
+          ...fade(500),
+          fontSize: 'clamp(16px, 2vw, 18px)', fontWeight: 400, lineHeight: 1.65,
+          color: 'rgba(242,239,230,0.6)', maxWidth: '540px', margin: '0 0 3rem',
         }}>
-          This portfolio is still in progress. If you have the password, come on in.
+          This portfolio isn't public. If you have the password, come on in.
         </p>
 
-        <input
-          ref={inputRef}
-          type="password"
-          placeholder="Password"
-          value={value}
-          onChange={e => { setValue(e.target.value); if (error) setError(false); }}
-          className="gate-input"
-          autoComplete="off"
-          spellCheck={false}
-          style={{
-            width: '100%',
-            background: 'rgba(20,33,28,0.35)',
-            border: '1px solid ' + (error ? 'rgba(212,90,27,0.55)' : 'rgba(242,239,230,0.15)'),
-            borderRadius: '10px',
-            padding: '12px 14px',
-            fontSize: '15px',
-            color: '#F2EFE6',
-            fontFamily: "'Inter', system-ui, sans-serif",
-            transition: 'border-color 150ms, background 150ms',
-            marginBottom: error ? '0.5rem' : '1.25rem',
-            boxSizing: 'border-box',
-          }}
-        />
+        <div style={{ ...fade(620), maxWidth: '380px' }}>
+          <input
+            ref={inputRef}
+            type="password"
+            placeholder="Password"
+            value={value}
+            onChange={e => { setValue(e.target.value); if (error) setError(false); }}
+            className="gate-input"
+            autoComplete="off"
+            spellCheck={false}
+            style={{
+              width: '100%',
+              background: 'none',
+              border: 'none',
+              borderBottom: '1px solid ' + (error ? 'rgba(212,90,27,0.7)' : 'rgba(242,239,230,0.25)'),
+              borderRadius: 0,
+              padding: '0 0 12px',
+              fontSize: '17px',
+              color: '#F2EFE6',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              transition: 'border-color 200ms',
+              boxSizing: 'border-box',
+            }}
+          />
 
-        {error && (
-          <p style={{
-            fontSize: '12px', color: 'rgba(212,90,27,0.9)',
-            margin: '0 0 1rem',
-          }}>That's not it — try again.</p>
-        )}
-
-        <button
-          type="submit"
-          disabled={busy || !value}
-          className="gate-submit"
-          style={{
-            width: '100%', position: 'relative', overflow: 'hidden',
-            background: '#D45A1B',
-            border: '1px solid rgba(255,255,255,0.20)',
-            borderRadius: '10px',
-            padding: '12px 16px',
-            fontSize: '14px', fontWeight: 500,
-            color: '#F2EFE6',
-            fontFamily: "'Inter', system-ui, sans-serif",
-            cursor: (busy || !value) ? 'default' : 'pointer',
-            opacity: !value ? 0.5 : 1,
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.20), 0 4px 16px rgba(212,90,27,0.3)',
-            transition: 'opacity 150ms, box-shadow 200ms',
-          }}
-        >
-          <span style={{
-            background: 'linear-gradient(rgba(255,255,255,0.20) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)',
-            position: 'absolute', inset: 0, pointerEvents: 'none',
-          }} />
-          <span style={{ position: 'relative', zIndex: 1 }}>Enter →</span>
-        </button>
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            gap: '1.5rem', marginTop: '1.5rem', minHeight: '22px',
+          }}>
+            <GateArrow disabled={busy || !value}>Enter</GateArrow>
+            <span style={{
+              fontSize: '11px', fontFamily: 'var(--ff-mono)',
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+              color: 'rgba(212,90,27,0.95)',
+              opacity: error ? 1 : 0, transition: 'opacity 200ms',
+            }}>Not it — try again</span>
+          </div>
+        </div>
       </form>
     </div>
   );
 };
 
-Object.assign(window, { Gate });
+Object.assign(window, { Gate, GateArrow });
