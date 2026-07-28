@@ -132,16 +132,21 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
             </button>
           </div>
 
-          {/* Page area — the page scales to fill the ENTIRE remaining window
-              (object-fit: contain against a stretched box), so it renders as
-              large as the browser allows. Arrows float over the page area
+          {/* Page area — the page scales to fill the ENTIRE remaining window.
+              The box is position:absolute/inset:0 inside this relative,
+              flex-sized row: a percentage height only resolves against a
+              parent with a DEFINITE height, and in the earlier flex-only
+              version `height: 100%` fell back to auto, so a tall page rendered
+              at full width and got clipped top and bottom. Absolute
+              positioning makes the box definite, and max-width/max-height keep
+              the page's natural aspect ratio. Arrows float over the page area
               instead of reserving side columns. */}
           <div style={{ flex: 1, minHeight: 0, position: 'relative', display: 'flex' }}>
             <div
               onClick={(e) => e.stopPropagation()}
               style={zoomed
-                ? { flex: 1, alignSelf: 'stretch', overflow: 'auto', cursor: 'zoom-out', WebkitOverflowScrolling: 'touch' }
-                : { flex: 1, alignSelf: 'stretch', minWidth: 0, minHeight: 0, display: 'flex', cursor: 'default' }}
+                ? { position: 'absolute', inset: 0, overflow: 'auto', cursor: 'zoom-out', WebkitOverflowScrolling: 'touch' }
+                : { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'default' }}
             >
               <img
                 key={openIdx}
@@ -150,7 +155,7 @@ const BookSpreads = ({ projectId, title, label = 'From the portfolio book', cols
                 onClick={() => setZoomed(z => !z)}
                 style={zoomed
                   ? { width: '1600px', maxWidth: 'none', height: 'auto', margin: 'auto', display: 'block', cursor: 'zoom-out' }
-                  : { width: '100%', height: '100%', objectFit: 'contain', display: 'block', cursor: 'zoom-in', filter: 'drop-shadow(0 18px 48px rgba(0,0,0,0.45))' }}
+                  : { maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', display: 'block', cursor: 'zoom-in', filter: 'drop-shadow(0 18px 48px rgba(0,0,0,0.45))' }}
               />
             </div>
             {!isMobile && (

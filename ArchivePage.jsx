@@ -834,21 +834,26 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         </div>
       </div>
 
-      {/* Next in Foundations */}
+      {/* Next in Foundations — the same preview card the main case studies use
+          (NextProjectCard from ProjectPage.jsx), so Foundations projects get a
+          tile image at the foot instead of a bare text link. archiveId routes
+          the click to 'archive-project'. Falls back to the old text row if
+          ProjectPage hasn't loaded. */}
       {nextProject && (
-        <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem' }}>
-          <div>
-            <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', margin: '0 0 0.35rem' }}>Next in Foundations</p>
-            <p style={{ fontSize: '20px', fontWeight: 500, color: '#14211C', margin: 0, letterSpacing: '-0.01em' }}>{nextProject.title}</p>
-          </div>
-          <button onClick={() => onNavigate('archive-project', project.next)} style={{
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-            fontSize: '14px', fontWeight: 500, color: '#14211C',
-            fontFamily: "'Inter', system-ui, sans-serif",
-            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-          }}>
-            Open <span>→</span>
-          </button>
+        <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem' }}>
+          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', marginBottom: '1.5rem' }}>Next in Foundations</p>
+          {window.NextProjectCard ? (
+            <NextProjectCard project={nextProject} archiveId={project.next} onNavigate={onNavigate} isMobile={isMobile} />
+          ) : (
+            <button onClick={() => onNavigate('archive-project', project.next)} style={{
+              background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+              fontSize: '20px', fontWeight: 500, color: '#14211C',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+            }}>
+              {nextProject.title} <span>→</span>
+            </button>
+          )}
         </div>
       )}
 
