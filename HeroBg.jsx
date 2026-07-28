@@ -35,7 +35,7 @@ const HeroBg = () => {
     // was frame-counted, so the wave ran at whatever the display refresh was —
     // fine at 60Hz, but exactly double speed on a 120Hz ProMotion iPhone. That
     // only started mattering when touch devices began animating.
-    const WAVE_PERIOD = 6;                            // seconds per full cycle
+    const WAVE_PERIOD = 4;                            // seconds per full cycle
     const RATE = (2 * Math.PI) / WAVE_PERIOD;
 
     const CREAM = [242, 239, 230];
