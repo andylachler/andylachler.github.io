@@ -137,9 +137,14 @@ const Gate = ({ children }) => {
     <div style={{
       position: 'fixed', inset: 0, zIndex: 9999,
       background: '#14211C',
-      overflow: 'hidden',
-      display: 'flex', flexDirection: 'column', justifyContent: 'center',
-      padding: 'clamp(1.5rem, 6vw, 2.5rem)',
+      // overflowY + `margin: auto` on the form (rather than justifyContent:
+      // center) so the card still centres when there's room but SCROLLS when
+      // there isn't. A centred flex child overflows equally in both directions
+      // and clips off the top of the scroll container — on a landscape phone
+      // (~390px tall) that put the password input off-screen and unreachable.
+      overflowY: 'auto',
+      display: 'flex', flexDirection: 'column',
+      padding: 'clamp(2rem, 8vh, 4rem) clamp(1.5rem, 6vw, 2.5rem)',
       fontFamily: "'Inter', system-ui, sans-serif",
     }}>
       <style>{`
@@ -158,7 +163,7 @@ const Gate = ({ children }) => {
       <form
         onSubmit={submit}
         className={shake ? 'gate-shake' : ''}
-        style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1400px', margin: '0 auto' }}
+        style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1400px', margin: 'auto' }}
       >
         <p style={{
           ...fade(200),

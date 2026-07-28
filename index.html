@@ -34,6 +34,29 @@ html { font-family: 'Inter', system-ui, sans-serif; background: #F2EFE6; color: 
 body { min-height: 100vh; }
 button, a { font-family: inherit; }
 
+/* ── Small-screen safety net (July 27, 2026) ──────────────────────────────
+   The layout system is entirely JS (useIsMobile) with no @media queries, so
+   nothing here duplicates component logic — these are the three failure modes
+   that a JS breakpoint can't catch.
+
+   1. Replaced media: an <img> without an explicit width renders at its
+      intrinsic pixel size and pushes the page wider than the viewport. A
+      single oversized tile in images/ was enough to give every page a
+      horizontal scroll. There was no global rule for this.
+   2. iOS text inflation: Safari silently up-scales body text in landscape,
+      which reflows measures and breaks the stacking that looks fine in
+      Chrome devtools. This is a common source of "only broken on my phone."
+   3. Long unbroken strings (URLs, filenames) in captions forcing overflow.
+
+   NOTE: iframe and canvas are deliberately EXCLUDED. TryItOut's DesktopFrame
+   renders its iframe at a fixed 1440px design width and transform-scales it to
+   fit; clamping that iframe to 100% would shrink it a second time and break the
+   scale math. HeroBg's canvas is already sized 100%/100% inline. */
+img, svg, video { max-width: 100%; }
+img, video { height: auto; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+p, h1, h2, h3, h4, li, figcaption { overflow-wrap: break-word; }
+
 /* Page transitions — the exit keyframe MUST end at `transform: none`:
    a retained transform (fill-mode both keeps the last keyframe) turns the
    wrapper into a containing block for position:fixed descendants, which
