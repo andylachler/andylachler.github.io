@@ -544,6 +544,9 @@ window.IMAGE_MANIFEST = {
       }
     ]
   },
+  "platform-reports": {
+    "tile": "images/platform-reports/tile.jpg"
+  },
   "singular-flow": {
     "hero": "images/singular-flow/hero.jpg",
     "tile": "images/singular-flow/hero.jpg",
