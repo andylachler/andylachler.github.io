@@ -6,8 +6,12 @@
 //     per frame instead of one per dot (~2,700 on a laptop viewport).
 //   • DPR capped at 1.75; grid step scales up on small screens.
 //   • IntersectionObserver pauses the loop when the hero is offscreen.
-//   • Touch devices and prefers-reduced-motion get a single static frame —
-//     zero animation cost on phones.
+//   • prefers-reduced-motion gets a single static frame.
+//   • Touch devices DO animate (changed July 28, 2026 — they used to get a
+//     static frame). Cost on a phone is far lower than desktop: the 28px grid
+//     step under 640px puts a 390×844 screen at ~450 dots vs ~2,700 on a
+//     laptop. The cursor ripple stays pointer-only — there's no hover on
+//     touch, and hooking it to touchmove would fight the scroll gesture.
 //   • window.__HERO_BG_STATUS = 'running' | 'idle' for the design-lab meter.
 const HeroBg = () => {
   const canvasRef = React.useRef(null);
@@ -25,7 +29,14 @@ const HeroBg = () => {
 
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const animated = !isTouch && !reduced;
+    const animated = !reduced;
+
+    // Wave speed as radians PER SECOND, not per frame. The old `t += 0.011`
+    // was frame-counted, so the wave ran at whatever the display refresh was —
+    // fine at 60Hz, but exactly double speed on a 120Hz ProMotion iPhone. That
+    // only started mattering when touch devices began animating.
+    const WAVE_PERIOD = 6;                            // seconds per full cycle
+    const RATE = (2 * Math.PI) / WAVE_PERIOD;
 
     const CREAM = [242, 239, 230];
     const ORANGE = [212, 90, 27];
@@ -38,10 +49,15 @@ const HeroBg = () => {
     const BUCKETS = 18;      // alpha quantization levels
     const MAX_ALPHA = 0.90;
 
+    // Height of the hero as measured on the last real layout. Used by
+    // onWindowResize below to tell a genuine layout change from URL-bar chrome.
+    let lastW = -1;
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
       s.W = canvas.offsetWidth;
       s.H = canvas.offsetHeight;
+      lastW = s.W;
       canvas.width = s.W * dpr;
       canvas.height = s.H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -100,14 +116,20 @@ const HeroBg = () => {
       }
     };
 
-    const loop = () => {
-      s.t += 0.011;   // ~13s wave period → ~9.5s; motion reads without fidgeting
+    let lastTs = 0;
+    const loop = (ts) => {
+      // Clamped delta: a backgrounded tab returns a huge first frame, which
+      // would jump the wave forward by seconds on resume.
+      const dt = lastTs ? Math.min((ts - lastTs) / 1000, 0.05) : 0;
+      lastTs = ts;
+      s.t += RATE * dt;
       drawFrame();
       s.raf = requestAnimationFrame(loop);
     };
     const start = () => {
       if (s.running || !s.inView || !animated) return;
       s.running = true;
+      lastTs = 0;             // resume cleanly rather than snapping forward
       window.__HERO_BG_STATUS = 'running';
       s.raf = requestAnimationFrame(loop);
     };
@@ -129,18 +151,39 @@ const HeroBg = () => {
     });
     io.observe(canvas);
 
+    // Mobile scroll-divergence fix (July 28, 2026)
+    // ────────────────────────────────────────────
+    // On a phone, scrolling collapses the browser's URL bar. That fires a
+    // window `resize` even though nothing about the page's WIDTH changed.
+    // The old handler called resize() on every one of those, which reset
+    // canvas.width (clearing the bitmap) and rebuilt the whole dot grid from
+    // the top-left origin — mid-scroll. The hero text is bottom-anchored
+    // (justifyContent: flex-end), so text and dot field were re-anchored from
+    // opposite edges on the same frame: they visibly slid in OPPOSITE
+    // directions until the URL-bar transition settled, then moved together.
+    //
+    // Width is the only dimension the grid layout actually depends on (the
+    // step size and column count), so height-only resizes are ignored on
+    // touch. Rotating the device changes width and still triggers a rebuild.
+    const onWindowResize = () => {
+      if (isTouch && canvas.offsetWidth === lastW) return;
+      resize();
+    };
+
     resize();
     window.__HERO_BG_STATUS = 'idle';
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', onWindowResize);
     if (animated) {
-      window.addEventListener('mousemove', onMove);
+      // Pointer-only: no hover on touch, and a touchmove ripple would fight
+      // the scroll gesture.
+      if (!isTouch) window.addEventListener('mousemove', onMove);
       start();
     }
 
     return () => {
       stop();
       io.disconnect();
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onWindowResize);
       window.removeEventListener('mousemove', onMove);
     };
   }, []);

@@ -4,14 +4,36 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
   const isMobile = (window.useIsMobile || (() => false))(768);
   const [mounted, setMounted] = React.useState(false);
 
+  // Entrance vs. early scroll (July 28, 2026)
+  // ────────────────────────────────────────
+  // The staggered entrance runs for ~1.35s (620ms delay + 700ms, and the
+  // headline's RLine mask is 950ms). If the visitor starts scrolling inside
+  // that window — which is most of them on a phone, where the hero fills the
+  // screen and thumb-scrolling is immediate — the text is still travelling
+  // under its own transition while the page scrolls it. Text and dot field
+  // then move at different rates and appear to detach, "linking up" only when
+  // the last transition lands. `settled` ends the entrance the moment the
+  // visitor scrolls, and skips it entirely on a restored mid-page scroll
+  // position, so text and background are always locked together in motion.
+  const [settled, setSettled] = React.useState(false);
+
   React.useEffect(() => {
-    requestAnimationFrame(() => setMounted(true));
+    if (window.scrollY > 4) { setMounted(true); setSettled(true); return; }
+    const onScroll = () => setSettled(true);
+    window.addEventListener('scroll', onScroll, { passive: true, once: true });
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
   }, []);
 
-  const fade = (delay, dist = 18) => ({
+  // Mobile runs a tighter entrance regardless: less time in the window where
+  // an early scroll can collide with it.
+  const DUR = isMobile ? 460 : 700;
+  const fade = (delay, dist = 18) => (settled ? {
+    opacity: 1, transform: 'translateY(0)', transition: 'none',
+  } : {
     opacity: mounted ? 1 : 0,
     transform: mounted ? 'translateY(0)' : `translateY(${dist}px)`,
-    transition: `opacity 700ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform 700ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+    transition: `opacity ${DUR}ms cubic-bezier(0.22,1,0.36,1) ${isMobile ? delay * 0.55 : delay}ms, transform ${DUR}ms cubic-bezier(0.22,1,0.36,1) ${isMobile ? delay * 0.55 : delay}ms`,
   });
 
   // Line-mask reveal (v4 rline): each line slides up from behind an
@@ -20,8 +42,10 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
     <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', ...style }}>
       <span style={{
         display: 'inline-block',
-        transform: mounted ? 'translateY(0)' : 'translateY(112%)',
-        transition: `transform 950ms cubic-bezier(0.2,0.7,0.2,1) ${delay}ms`,
+        transform: (mounted || settled) ? 'translateY(0)' : 'translateY(112%)',
+        transition: settled
+          ? 'none'
+          : `transform ${isMobile ? 620 : 950}ms cubic-bezier(0.2,0.7,0.2,1) ${isMobile ? delay * 0.55 : delay}ms`,
       }}>{children}</span>
     </span>
   );
