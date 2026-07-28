@@ -361,9 +361,15 @@ const ProjectVisual = ({ projectId, kind = 'tile', src, bg, index = 0, hovered, 
   const [loadedSrc, setLoadedSrc] = React.useState(null);
   const [failedSrc, setFailedSrc] = React.useState(null);
   const showImg = url && failedSrc !== url;
+  // A project can register a live component tile instead of shipping a raster
+  // (see WireframeTile.jsx). It layers over TilePlaceholder and under any real
+  // image, so dropping a tile.jpg into the folder still wins — the custom tile
+  // is a richer fallback, not a special case to unpick later.
+  const Custom = (window.CUSTOM_TILES || {})[projectId];
   return (
     <>
       <TilePlaceholder bg={bg} index={index} hovered={hovered} silhouette={silhouette} variant={variant} />
+      {!showImg && Custom && <Custom hovered={hovered} />}
       {showImg && (
         <img
           src={url}
