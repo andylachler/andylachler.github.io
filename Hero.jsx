@@ -4,6 +4,35 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
   const isMobile = (window.useIsMobile || (() => false))(768);
   const [mounted, setMounted] = React.useState(false);
 
+  // Mobile hero height lock (July 28, 2026)
+  // ──────────────────────────────────────
+  // Scrolling on a phone collapses the browser's URL bar, which changes the
+  // hero's computed height mid-scroll. The text is bottom-anchored
+  // (justifyContent: flex-end) while HeroBg's dot grid is laid out from the
+  // TOP-left — so a height change re-anchors the two from opposite edges on
+  // the same frame. That is the "they scroll in separate directions, then
+  // link up" effect: it isn't a scroll desync at all, it's the container
+  // resizing underneath both of them.
+  //
+  // Locking the height to one pixel value measured at mount means it cannot
+  // change during a scroll at all. Only a real width change or a rotation
+  // re-measures. (100svh was meant to do this — it's a static unit — but it
+  // silently drops on browsers that don't support it, and the fallback is a
+  // content-sized box that moves.)
+  const [lockH, setLockH] = React.useState(() =>
+    typeof window !== 'undefined' ? window.innerHeight : 0);
+  React.useEffect(() => {
+    let w = window.innerWidth;
+    const measure = () => setLockH(window.innerHeight);
+    const onResize = () => { if (window.innerWidth !== w) { w = window.innerWidth; measure(); } };
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', measure);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', measure);
+    };
+  }, []);
+
   // Entrance vs. early scroll (July 28, 2026)
   // ────────────────────────────────────────
   // The staggered entrance runs for ~1.35s (620ms delay + 700ms, and the
@@ -57,7 +86,7 @@ const Hero = ({ onNavigate, tweaks = {} }) => {
       // 100vh taller than the visible screen. Mobile also gets top padding so
       // a content stack taller than the viewport pushes DOWN, never up under
       // the fixed nav (was the header/hero overlap bug).
-      minHeight: isMobile ? '100svh' : '100vh',
+      minHeight: isMobile ? `${lockH}px` : '100vh',
       marginTop: '-80px', // pull up behind taller fixed nav
       display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
       padding: isMobile ? '7.5rem 1.25rem 3.5rem' : '0 2.5rem 5rem',

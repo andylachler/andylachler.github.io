@@ -49,15 +49,10 @@ const HeroBg = () => {
     const BUCKETS = 18;      // alpha quantization levels
     const MAX_ALPHA = 0.90;
 
-    // Height of the hero as measured on the last real layout. Used by
-    // onWindowResize below to tell a genuine layout change from URL-bar chrome.
-    let lastW = -1;
-
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
       s.W = canvas.offsetWidth;
       s.H = canvas.offsetHeight;
-      lastW = s.W;
       canvas.width = s.W * dpr;
       canvas.height = s.H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -151,28 +146,24 @@ const HeroBg = () => {
     });
     io.observe(canvas);
 
-    // Mobile scroll-divergence fix (July 28, 2026)
-    // ────────────────────────────────────────────
-    // On a phone, scrolling collapses the browser's URL bar. That fires a
-    // window `resize` even though nothing about the page's WIDTH changed.
-    // The old handler called resize() on every one of those, which reset
-    // canvas.width (clearing the bitmap) and rebuilt the whole dot grid from
-    // the top-left origin — mid-scroll. The hero text is bottom-anchored
-    // (justifyContent: flex-end), so text and dot field were re-anchored from
-    // opposite edges on the same frame: they visibly slid in OPPOSITE
-    // directions until the URL-bar transition settled, then moved together.
+    // Track the CANVAS BOX, not the window (July 28, 2026)
+    // ────────────────────────────────────────────────────
+    // Previously this listened to window `resize`. That's the wrong signal on
+    // a phone: collapsing the URL bar fires resize constantly during a scroll,
+    // and — worse — window resize does NOT fire for every case where the
+    // canvas's own box changes. When the box changed without a rebuild, the
+    // bitmap stayed its old size and the browser STRETCHED it to fit, which
+    // scales the dot field vertically. Against bottom-anchored hero text that
+    // reads exactly like the background sliding independently.
     //
-    // Width is the only dimension the grid layout actually depends on (the
-    // step size and column count), so height-only resizes are ignored on
-    // touch. Rotating the device changes width and still triggers a rebuild.
-    const onWindowResize = () => {
-      if (isTouch && canvas.offsetWidth === lastW) return;
-      resize();
-    };
+    // A ResizeObserver on the canvas fires if and only if its box actually
+    // changed, so the bitmap can never be out of step with it. Paired with the
+    // hero's locked height (Hero.jsx) it simply doesn't fire during a scroll.
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(canvas);
 
     resize();
     window.__HERO_BG_STATUS = 'idle';
-    window.addEventListener('resize', onWindowResize);
     if (animated) {
       // Pointer-only: no hover on touch, and a touchmove ripple would fight
       // the scroll gesture.
@@ -183,7 +174,7 @@ const HeroBg = () => {
     return () => {
       stop();
       io.disconnect();
-      window.removeEventListener('resize', onWindowResize);
+      ro.disconnect();
       window.removeEventListener('mousemove', onMove);
     };
   }, []);
