@@ -567,7 +567,7 @@ const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
         border: light ? '0.5px solid rgba(20,33,28,0.12)' : 'none',
       }}
     >
-      <ProjectVisual projectId={Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project)} bg={project.tileBg} index={project.imageIndex} hovered={hov} silhouette={project.silhouette} />
+      <ProjectVisual projectId={targetId} kind="next" bg={project.tileBg} index={project.imageIndex} hovered={hov} silhouette={project.silhouette} />
       <div style={{
         position: 'absolute', inset: 0,
         padding: isMobile ? '1.25rem' : '2rem',

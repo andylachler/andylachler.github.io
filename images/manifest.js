@@ -545,6 +545,7 @@ window.IMAGE_MANIFEST = {
     ]
   },
   "platform-reports": {
+    "next": "images/platform-reports/next.jpg",
     "tile": "images/platform-reports/tile.jpg"
   },
   "singular-flow": {

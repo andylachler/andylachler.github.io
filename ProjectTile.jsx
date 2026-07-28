@@ -351,7 +351,13 @@ const TilePlaceholder = ({ bg, index, hovered, silhouette, variant = 'tile' }) =
 //   bg/index/hovered/silhouette/variant: passed through to TilePlaceholder
 const ProjectVisual = ({ projectId, kind = 'tile', src, bg, index = 0, hovered, silhouette, variant = 'tile' }) => {
   const m = (window.IMAGE_MANIFEST || {})[projectId] || {};
-  const url = src || (kind === 'hero' ? (m.hero || m.tile) : m[kind]);
+  // hero and next both fall back to tile, so a project only needs a dedicated
+  // file where it actually wants a different crop for that surface.
+  const url = src || (
+    kind === 'hero' ? (m.hero || m.tile) :
+    kind === 'next' ? (m.next || m.tile) :
+    m[kind]
+  );
   const [loadedSrc, setLoadedSrc] = React.useState(null);
   const [failedSrc, setFailedSrc] = React.useState(null);
   const showImg = url && failedSrc !== url;

@@ -5,6 +5,13 @@
 // Convention per folder (images/<project-id>/):
 //   tile.(jpg|jpeg|png|webp|avif)   → grid/carousel/dropdown tile image
 //   hero.(jpg|jpeg|png|webp|avif)   → case-study hero (falls back to tile)
+//   next.(jpg|jpeg|png|webp|avif)   → "next project" preview card at the foot
+//                                     of a case study (falls back to tile).
+//                                     Unlike hero, this NEVER overwrites tile —
+//                                     it exists precisely so a project can show
+//                                     a different, wider crop in the next-up
+//                                     card than it does in the square-ish grid
+//                                     tile.
 //   01.jpg, 02.png, …               → gallery, sorted numerically
 //   book-01.jpg, book-02.jpg, …     → portfolio-book spreads, sorted numerically
 //   captions.json                   → optional: { "01": "Caption text", "book-01": "…", … }
@@ -51,14 +58,16 @@ for (const dir of fs.readdirSync(IMAGES, { withFileTypes: true })) {
     // accept any casing (and stray trailing spaces) for the special names.
     if (/^\s*hero\s*$/i.test(base)) base = 'hero';
     if (/^\s*tile\s*$/i.test(base)) base = 'tile';
+    if (/^\s*next\s*$/i.test(base)) base = 'next';
     const { size } = fs.statSync(path.join(folder, f));
     if (size > (isVid ? 60 * 1024 * 1024 : SIZE_WARN)) warnings.push(`${rel} is ${(size / 1024 / 1024).toFixed(1)}MB — compress it`);
 
     if (base === 'tile') entry.tile = rel;
     else if (base === 'hero') entry.hero = rel;
+    else if (base === 'next') entry.next = rel;
     else if (/^\d+$/.test(base)) gallery.push({ n: parseInt(base, 10), src: rel, video: isVid || undefined, caption: captions[base] || captions[f] || null });
     else if (/^book-\d+$/.test(base)) book.push({ n: parseInt(base.slice(5), 10), src: rel, caption: captions[base] || captions[f] || null });
-    else warnings.push(`${rel} ignored — name it tile.*, hero.*, a number (01.jpg), or book-NN.jpg`);
+    else warnings.push(`${rel} ignored — name it tile.*, hero.*, next.*, a number (01.jpg), or book-NN.jpg`);
   }
   // Site rule (July 2026): the HERO image is also the tile image. Wherever a
   // hero exists it drives both surfaces; a tile.* file only matters for
