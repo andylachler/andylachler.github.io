@@ -111,7 +111,9 @@ const PROJECT_DATA = {
       { label: 'Status', value: 'Under construction \u00b7 Complete 2026' },
     ],
     tileBg: '#D45A1B', imageIndex: 2,
-    next: 'autoease',
+    // Ella hands off to Midtown Walk, which lives in ARCHIVE_DATA — `nextArchive`
+    // routes the Next card to the archive-project view instead of PROJECT_DATA.
+    nextArchive: 'brickell',
   },
   'exhibition-trailer': {
     title: 'Exhibition Trailer',
@@ -132,7 +134,7 @@ const PROJECT_DATA = {
       { label: 'Brand as interior architecture', body: 'The walls carry the company story, the tail-bench frames the visitor photo, the moon-roof adds legibility and light. Branding isn\u2019t wallpaper \u2014 it\u2019s how the volume organizes attention.' },
     ],
     insightsLabel: 'Design decisions',
-    outcome: 'Submitted to the Duggal Junior Designer Design Challenge, summer 2022. Full package: plans, elevations, sections, exploded assembly axon, final renderings, and animations \u2014 shown in the gallery below.',
+    outcome: 'Submitted to the Duggal Junior Designer Design Challenge, summer 2022. Full package: plans, elevations, sections, and the exploded assembly axon in the portfolio pages above; sections, final renderings, and animations in the gallery below.',
     credits: 'Duggal Junior Designer Design Challenge submission. Brand brief: MiiR. Design: Andreas L\u00e4chler.',
     details: [
       { label: 'Scope', value: 'Mobile exhibition + brand enclosure' },
@@ -161,8 +163,13 @@ const ProjectPage = ({ projectId = 'autoease', onNavigate }) => {
   // render their own page component instead of the standard template.
   const CustomPage = project.customPage && window[project.customPage];
   if (CustomPage) return <CustomPage projectId={projectId} onNavigate={onNavigate} />;
-  const nextProject = project.next ? PROJECT_DATA[project.next] : null;
-  const gallery = ((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || [];
+  // The Next card can point at a main-work project (`next` → PROJECT_DATA) or
+  // at a Foundations/archive project (`nextArchive` → ARCHIVE_DATA), which is
+  // how Ella hands off to Midtown Walk.
+  const nextArchiveId = project.nextArchive || null;
+  const nextProject = nextArchiveId
+    ? ((window.ARCHIVE_DATA || {})[nextArchiveId] || null)
+    : (project.next ? PROJECT_DATA[project.next] : null);
   const [heroHov, setHeroHov] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const isMobile = (window.useIsMobile || (() => false))(768);
@@ -426,38 +433,20 @@ const ProjectPage = ({ projectId = 'autoease', onNavigate }) => {
         />
       )}
 
-      {/* Gallery — images from images/<project-id>/ via the manifest.
-          Add numbered files (01.jpg, 02.jpg…) + optional captions.json,
-          rebuild the manifest, and they appear here. No images = no section. */}
-      {gallery.length > 0 && (
-        <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Gallery</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
-            {gallery.map((g, i) => (
-              <figure key={g.src} style={{ margin: 0 }}>
-                {g.video ? (
-                  <video
-                    src={g.src}
-                    controls muted loop playsInline preload="metadata"
-                    style={{ width: '100%', display: 'block', borderRadius: '10px', background: '#14211C' }}
-                  />
-                ) : (
-                <img
-                  src={g.src}
-                  alt={g.caption || `${project.title} — image ${i + 1}`}
-                  loading="lazy"
-                  style={{ width: '100%', display: 'block', borderRadius: '10px' }}
-                />
-                )}
-                {g.caption && (
-                  <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>
-                    {g.caption}
-                  </figcaption>
-                )}
-              </figure>
-            ))}
-          </div>
-        </div>
+      {/* Gallery — shared Gallery component. Images from images/<project-id>/
+          via the manifest: add numbered files (01.jpg, 02.jpg…) + optional
+          captions.json, rebuild the manifest, and they appear here. Two tiles
+          side by side, click to expand into the flip-through viewer. No
+          images = no section. */}
+      {window.Gallery && (
+        <Gallery
+          projectId={projectId}
+          title={project.title}
+          label="Gallery"
+          cols={project.galleryCols || 2}
+          isMobile={isMobile}
+          style={fade(340)}
+        />
       )}
 
       {/* Influences */}
@@ -508,7 +497,7 @@ const ProjectPage = ({ projectId = 'autoease', onNavigate }) => {
       {nextProject && (
         <div style={{ ...fade(460), borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.35)', marginBottom: '1.5rem' }}>Next</p>
-          <NextProjectCard project={nextProject} onNavigate={onNavigate} isMobile={isMobile} />
+          <NextProjectCard project={nextProject} archiveId={nextArchiveId} onNavigate={onNavigate} isMobile={isMobile} />
         </div>
       )}
     </main>
@@ -542,7 +531,7 @@ const ComponentStoryCard = ({ story, onNavigate }) => {
   );
 };
 
-const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
+const NextProjectCard = ({ project, archiveId = null, onNavigate, isMobile = false }) => {
   const [hov, setHov] = React.useState(false);
   const light = project.tileBg === '#F2EFE6' || project.tileBg === '#E8E4D5';
   const textC = light ? '#14211C' : '#F2EFE6';
@@ -550,11 +539,14 @@ const NextProjectCard = ({ project, onNavigate, isMobile = false }) => {
 
   // `project` IS the previewed next project — navigate to it, not to ITS
   // next (the old `project.next ||` fallback skipped one project ahead).
-  const targetId = Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project);
+  // archiveId set = the next project lives in Foundations (ARCHIVE_DATA), so
+  // the route is 'archive-project' rather than 'project'.
+  const targetId = archiveId || Object.keys(PROJECT_DATA).find(k => PROJECT_DATA[k] === project);
+  const route = archiveId ? 'archive-project' : 'project';
 
   return (
     <div
-      onClick={() => onNavigate('project', targetId)}
+      onClick={() => onNavigate(route, targetId)}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{

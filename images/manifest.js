@@ -80,51 +80,51 @@ window.IMAGE_MANIFEST = {
     "gallery": [
       {
         "src": "images/brickell/01.jpg",
-        "caption": "Midtown Central tower render — the residential towers over the park."
+        "caption": "Street elevation — progress set."
       },
       {
         "src": "images/brickell/02.jpg",
-        "caption": "Tower view along the avenue."
+        "caption": "Street elevation — progress set."
       },
       {
         "src": "images/brickell/03.jpg",
-        "caption": "The towers from the masterplan park."
+        "caption": "Street elevation — progress set."
       },
       {
         "src": "images/brickell/04.jpg",
-        "caption": "Evening view across the plazas."
+        "caption": "Street elevation — progress set."
       },
       {
         "src": "images/brickell/05.jpg",
-        "caption": "Midtown Park masterplan — towers, plazas, shopping, and office parcels."
+        "caption": "Midtown Central tower render — the residential towers over the park."
       },
       {
         "src": "images/brickell/06.jpg",
-        "caption": "Plazas and parks at grade."
+        "caption": "Tower view along the avenue."
       },
       {
         "src": "images/brickell/07.jpg",
-        "caption": "Retail street through the masterplan."
+        "caption": "The towers from the masterplan park."
       },
       {
         "src": "images/brickell/08.jpg",
-        "caption": "Office parcels along the park."
+        "caption": "Evening view across the plazas."
       },
       {
         "src": "images/brickell/09.jpg",
-        "caption": "Street elevation — progress set."
+        "caption": "Midtown Park masterplan — towers, plazas, shopping, and office parcels."
       },
       {
         "src": "images/brickell/10.jpg",
-        "caption": "Street elevation — progress set."
+        "caption": "Plazas and parks at grade."
       },
       {
         "src": "images/brickell/11.jpg",
-        "caption": "Street elevation — progress set."
+        "caption": "Retail street through the masterplan."
       },
       {
         "src": "images/brickell/12.jpg",
-        "caption": "Street elevation — progress set."
+        "caption": "Office parcels along the park."
       }
     ]
   },
@@ -302,80 +302,52 @@ window.IMAGE_MANIFEST = {
     "gallery": [
       {
         "src": "images/exhibition-trailer/01.jpg",
-        "caption": "MiiR Exhibition Trailer, deployed — recycled-timber skin over glulam structure, fold-out deck."
+        "caption": "Section render."
       },
       {
         "src": "images/exhibition-trailer/02.jpg",
-        "caption": "Night. The moon-roof and interior glow turn the enclosure into a lantern."
+        "caption": "Section render."
       },
       {
-        "src": "images/exhibition-trailer/03.jpg",
-        "caption": "Kit of parts — exploded axonometric and the trailer in transport configuration."
+        "src": "images/exhibition-trailer/03.mp4",
+        "video": true,
+        "caption": "Animation."
       },
       {
-        "src": "images/exhibition-trailer/04.jpg",
-        "caption": "Interior — exhibition surfaces, moon-roof, warm neutrals."
+        "src": "images/exhibition-trailer/04.mp4",
+        "video": true,
+        "caption": "Animation."
       },
       {
         "src": "images/exhibition-trailer/05.jpg",
-        "caption": "Elevations."
-      },
-      {
-        "src": "images/exhibition-trailer/06.jpg",
-        "caption": "Sections — the demountable enclosure over a stock gooseneck chassis."
-      },
-      {
-        "src": "images/exhibition-trailer/07.jpg",
-        "caption": "Plan — front room, exhibition space, fold-down tail bench."
-      },
-      {
-        "src": "images/exhibition-trailer/08.jpg",
-        "caption": "Section render."
-      },
-      {
-        "src": "images/exhibition-trailer/09.jpg",
-        "caption": "Section render."
-      },
-      {
-        "src": "images/exhibition-trailer/10.mp4",
-        "video": true,
-        "caption": "Animation."
-      },
-      {
-        "src": "images/exhibition-trailer/11.mp4",
-        "video": true,
-        "caption": "Animation."
-      },
-      {
-        "src": "images/exhibition-trailer/12.jpg",
         "caption": "Front approach — the MiiR wordmark in the recycled-timber skin."
       },
       {
-        "src": "images/exhibition-trailer/13.jpg",
+        "src": "images/exhibition-trailer/06.jpg",
         "caption": "Deck and entry — fold-out face open on site."
       },
       {
-        "src": "images/exhibition-trailer/14.jpg",
+        "src": "images/exhibition-trailer/07.jpg",
         "caption": "Transport configuration, three-quarter view."
       },
       {
-        "src": "images/exhibition-trailer/15.jpg",
+        "src": "images/exhibition-trailer/08.jpg",
         "caption": "Night, rear quarter — the enclosure as a lantern."
       },
       {
-        "src": "images/exhibition-trailer/16.jpg",
+        "src": "images/exhibition-trailer/09.jpg",
         "caption": "Folded for transport — deck stowed into the face."
       },
       {
-        "src": "images/exhibition-trailer/17.jpg",
+        "src": "images/exhibition-trailer/10.jpg",
         "caption": "Interior — exhibition kitchen wall and skylight."
       },
       {
-        "src": "images/exhibition-trailer/18.jpg",
+        "src": "images/exhibition-trailer/11.jpg",
         "caption": "Interior — display shelving under the moon-roof."
       },
       {
-        "src": "images/exhibition-trailer/19.jpg",
+        "src": "images/exhibition-trailer/12.jpg",
         "caption": "Interior — corner exhibition surface."
       }
     ],

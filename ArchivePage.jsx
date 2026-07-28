@@ -78,6 +78,9 @@ const ARCHIVE_DATA = {
       { label: 'Masterplan', value: 'Midtown Park' },
       { label: 'Year', value: '2023–24' },
     ],
+    // The four street elevations lead the page full width (01–04); the
+    // masterplan renders follow in the two-up gallery grid.
+    leadCount: 4, leadLabel: 'Street elevations',
     next: 'fluxing',
   },
   'fluxing': {
@@ -778,34 +781,46 @@ const ArchiveProjectPage = ({ projectId, onNavigate }) => {
         />
       )}
 
-      {/* Gallery — photographs from images/<project-id>/ via the manifest.
-          Foundations pages are photo-first: model shots, drawings, process.
-          Add numbered files + captions.json and they appear here. */}
-      {(((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || []).length > 0 && (
-        <div style={{ ...fade(340), marginBottom: isMobile ? '3rem' : '4rem', paddingTop: '2rem', borderTop: '0.5px solid rgba(20,33,28,0.1)' }}>
-          <p style={{ fontSize: '11px', fontWeight: 500, fontFamily: 'var(--ff-mono)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(20,33,28,0.4)', marginBottom: '1.5rem' }}>Photographs</p>
-          {/* galleryCols: multi-column grid (e.g. dissection's triptych rows) —
-              images too large to stack vertically sit side by side instead. */}
-          <div style={project.galleryCols && !isMobile
-            ? { display: 'grid', gridTemplateColumns: `repeat(${project.galleryCols}, 1fr)`, gap: '1rem', alignItems: 'start' }
-            : { display: 'flex', flexDirection: 'column', gap: isMobile ? '1.75rem' : '2.5rem' }}>
-            {((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery.map((g, i) => (
-              <figure key={g.src} style={{ margin: 0 }}>
-                {g.video ? (
-                  <video src={g.src} controls muted loop playsInline preload="metadata"
-                    style={{ width: '100%', display: 'block', borderRadius: '10px', background: '#14211C' }} />
-                ) : (
-                <img src={g.src} alt={g.caption || `${project.title} — photograph ${i + 1}`} loading="lazy"
-                  style={{ width: '100%', display: 'block', borderRadius: '10px' }} />
-                )}
-                {g.caption && (
-                  <figcaption style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(20,33,28,0.5)', marginTop: '0.6rem', letterSpacing: '0.01em' }}>{g.caption}</figcaption>
-                )}
-              </figure>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Gallery — shared Gallery component. Photographs from
+          images/<project-id>/ via the manifest; Foundations pages are
+          photo-first (model shots, drawings, process). Two tiles side by side
+          by default; galleryCols overrides (e.g. dissection's triptych rows).
+          Click a tile to expand into the flip-through viewer.
+
+          leadCount splits the folder into two sections: the first N images run
+          full width in their own section above (Midtown Walk's street
+          elevations), the rest fall into the gallery grid below. */}
+      {window.Gallery && (() => {
+        const all = ((window.IMAGE_MANIFEST || {})[projectId] || {}).gallery || [];
+        const lead = project.leadCount ? all.slice(0, project.leadCount) : [];
+        const rest = project.leadCount ? all.slice(project.leadCount) : all;
+        return (
+          <>
+            {lead.length > 0 && (
+              <Gallery
+                projectId={projectId}
+                title={project.title}
+                items={lead}
+                label={project.leadLabel || 'Drawings'}
+                cols={project.leadCols || 1}
+                isMobile={isMobile}
+                style={fade(330)}
+              />
+            )}
+            {rest.length > 0 && (
+              <Gallery
+                projectId={projectId}
+                title={project.title}
+                items={project.leadCount ? rest : undefined}
+                label="Photographs"
+                cols={project.galleryCols || 2}
+                isMobile={isMobile}
+                style={fade(340)}
+              />
+            )}
+          </>
+        );
+      })()}
 
       {/* Outcome + credits */}
       <div style={{ ...fade(380), display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1fr)', gap: isMobile ? '2rem' : '4rem', borderTop: '0.5px solid rgba(20,33,28,0.1)', paddingTop: isMobile ? '2rem' : '3rem', marginBottom: isMobile ? '3rem' : '4rem' }}>
