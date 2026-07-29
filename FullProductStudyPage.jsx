@@ -3,6 +3,13 @@
 // assumptions → research → prioritization → lowfi → hifi → working
 // prototype. Research content sources from autoease/Case Study/ (2026
 // re-synthesis); hi-fi comps are live screens of the Vercel prototype.
+//
+// Jul 2026 reposition: the product is an information layer that stays useful
+// whether or not you buy. Section 07 now shows all eighteen screens grouped
+// Decide / Research / Own / Buy — the Own group (VIN lookup, owner reports)
+// is the one that carries the argument. Copy reconciled to autoease-copy.md.
+// The Research group carries the EV hands-free study, which is genuine
+// research rather than mock content.
 
 // ── 02 · Market scan — configurator-style feature comparison ──────────────
 // Services read as columns (like trims on a configurator, or tiers on a
@@ -11,6 +18,7 @@
 const FPS_MARKET_SERVICES = ['Edmunds', 'CarMax', 'KBB', 'Auto Trader', 'Carvana', 'eBay Motors'];
 const FPS_MARKET_FEATURES = [
   { f: 'Upfront, fixed pricing',      v: [1, 2, 1, 0, 2, 0], note: 'CarMax and Carvana: the price on screen is the price. Edmunds/KBB publish benchmarks, not prices.' },
+  { f: 'Fair-market price check',     v: [2, 2, 2, 1, 2, 0], note: 'AutoEase checks against KBB for fair market value, then compares it to the actual return you would get from CarMax or Carvana.' },
   { f: '5-year ownership cost',       v: [2, 0, 2, 0, 0, 0], note: 'Edmunds True Cost to Own® and KBB 5-Year Cost to Own — the two that treat a car as a financial decision.' },
   { f: 'History & reliability',       v: [1, 2, 0, 1, 2, 1], note: 'CarMax and Carvana include reports free; elsewhere it’s an upsell or seller-provided.' },
   { f: 'Unbiased reviews',            v: [2, 0, 2, 1, 0, 0], note: 'Edmunds and KBB carry real editorial benches; marketplaces don’t review what they sell.' },
@@ -19,7 +27,7 @@ const FPS_MARKET_FEATURES = [
 ];
 
 // ── 03 · Assumptions carried into the featureset ──────────────────────────
-const FPS_ASSUMPTIONS = ['The price on the screen is the price', 'Total 5-year cost beats sticker price', 'History & reliability shown before contact', 'Reviews with no dealership incentive', 'Side-by-side comparison as a first-class tool', 'Browsing never costs your phone number'];
+const FPS_ASSUMPTIONS = ['Useful whether or not you ever buy', 'The price on the screen is the price', 'Total 5-year cost beats sticker price', 'History & reliability shown before contact', 'Reviews with no dealership incentive', 'Side-by-side comparison as a first-class tool', 'Browsing never costs your phone number', 'The people who owned one are the review'];
 
 // ── 04 · Research — participants + persona trade-off matrix ───────────────
 const FPS_PARTICIPANTS = 'Emma Wood · George Hayes · Hamid Jahandar · Jackson Hayes · Nancy Gillespie · Octavio Vidal · Ulrich Lachler · Priya Raman · Marcus Bell';
@@ -146,11 +154,52 @@ const FPS_TONE = [
 const FPS_SKETCH = 'images/autoease/sketch-lowfi.png';
 
 // ── 07 · Hi-fi — live prototype screens in phone bezels ───────────────────
-const FPS_HIFI = [
-  { src: 'https://autoease-prototype.vercel.app/', label: 'Home — the hub, not a funnel' },
-  { src: 'https://autoease-prototype.vercel.app/results/', label: 'Results — one number per car' },
-  { src: 'https://autoease-prototype.vercel.app/sell/', label: 'Sell — same grammar as Browse' },
-  { src: 'https://autoease-prototype.vercel.app/price-check/', label: 'Price check — the math, visible' },
+// Grouped by what the screen is for, because the product's whole argument is
+// that three of the four groups work for someone who never buys anything.
+const FPS_BASE = 'https://autoease-prototype.vercel.app';
+const FPS_HIFI_GROUPS = [
+  {
+    group: 'Decide',
+    note: 'The advisor asks, then commits to an answer — a specific car, a specific year, and the number you should pay for it.',
+    shots: [
+      { src: `${FPS_BASE}/advisor/`, label: 'Advisor — a conversation, not a form' },
+      { src: `${FPS_BASE}/advisor/result/`, label: 'The pick — open at, fair, walk away' },
+      { src: `${FPS_BASE}/q/1/`, label: 'Five questions — the fast path' },
+      { src: `${FPS_BASE}/results/`, label: 'Ranked — one number per car' },
+    ],
+  },
+  {
+    group: 'Research',
+    note: 'The reference layer. The EV module is real research — my own May 2026 analysis of electric SUVs and hands-free driving, which was an actual purchase decision rather than sample content.',
+    shots: [
+      { src: `${FPS_BASE}/`, label: 'Home — a hub, not a funnel' },
+      { src: `${FPS_BASE}/research/`, label: 'EV research — real analysis, not mock data' },
+      { src: `${FPS_BASE}/browse/subaru/`, label: 'Browse — brand to model-year' },
+      { src: `${FPS_BASE}/news/`, label: 'Reviews & recalls — no seller' },
+      { src: `${FPS_BASE}/compare/`, label: 'Compare — first-class, not a modal' },
+    ],
+  },
+  {
+    group: 'Own',
+    note: 'The half of the product that has nothing to do with buying. Check the car in your driveway; report what owning it was actually like.',
+    shots: [
+      { src: `${FPS_BASE}/vin/`, label: 'VIN check — free, no account' },
+      { src: `${FPS_BASE}/vin/4S4BSANC5K3218847/`, label: 'The record — recalls, TSBs, failure points' },
+      { src: `${FPS_BASE}/owners/`, label: 'Owner reports — real numbers' },
+      { src: `${FPS_BASE}/owners/new/`, label: 'Contribute — the data asset' },
+    ],
+  },
+  {
+    group: 'Buy',
+    note: 'Deliberately last. Used listings priced against fair market; new inventory showing the gap between invoice and sticker, which is where the entire negotiation actually lives.',
+    shots: [
+      { src: `${FPS_BASE}/listings/`, label: 'Used — six sources, fees included' },
+      { src: `${FPS_BASE}/listings/?condition=new`, label: 'New — invoice vs sticker, exposed' },
+      { src: `${FPS_BASE}/price-check/`, label: 'Price check — the math, visible' },
+      { src: `${FPS_BASE}/sell/`, label: 'Sell — same grammar as Browse' },
+      { src: `${FPS_BASE}/car/crosstrek/`, label: 'Detail — every figure sourced' },
+    ],
+  },
 ];
 
 const HifiPhone = ({ shot }) => (
@@ -187,7 +236,7 @@ const FullProductStudyPage = ({ onNavigate }) => {
         eyebrow="Case study · Full product study · AutoEase"
         title="One product, end to end — from a question to a"
         titleEm="working prototype"
-        sub="AutoEase is a self-directed study of the used-car buying problem: research, market analysis, personas, prioritization, wireframes, and a built prototype — the complete arc of taking a product from idea to interface."
+        sub="AutoEase is a self-directed study of the car-buying problem: research, market analysis, personas, prioritization, wireframes, and a built prototype — the complete arc of taking a product from idea to interface. It is designed to be useful whether or not you ever buy anything."
         meta={[
           { label: 'Role', value: 'Research · Strategy · Product · Brand · UI' },
           { label: 'Timeline', value: '2024 origin · 2026 re-synthesis' },
@@ -198,8 +247,8 @@ const FullProductStudyPage = ({ onNavigate }) => {
       {/* About */}
       <StudySection first>
         <StudyLabel>About</StudyLabel>
-        <StudyH2>Buying a used car is a financial decision sold as a sales funnel</StudyH2>
-        <StudyLead>Every person I interviewed described used-car buying in terms of what they couldn't see — real prices, real reliability, real total cost, and real intent from the salesperson. The incumbents aren't missing features; they're solving a different objective than the user. That asymmetry is a design problem, and this study walks the full arc of answering it.</StudyLead>
+        <StudyH2>Car buying is a world of information asymmetry</StudyH2>
+        <StudyLead>Every person I interviewed described car buying in terms of what they couldn't see — real prices, real reliability, real total cost, and real intent from the salesperson. The power seems to lie with everyone except the consumer. The one person who should have the most insight is often the one most in the dark. That asymmetry is a design problem, and this study walks the full arc of answering it.</StudyLead>
       </StudySection>
 
       {/* 01 Product idea */}
@@ -207,6 +256,7 @@ const FullProductStudyPage = ({ onNavigate }) => {
         <StudyLabel n="01">Product idea</StudyLabel>
         <StudyH2>The user needs better information tools when thinking about what car to buy</StudyH2>
         <StudyLead>The thesis: a neutral intelligence layer between buyers and the industry — fixed pricing, full vehicle history, five-year true cost, and unbiased reviews, all before a salesperson ever gets your phone number. Not another marketplace; the information side of the transaction, built to support the buyer rather than monetize the lead.</StudyLead>
+        <StudyLead>From a business standpoint, this works by monetizing the information and consumer choices rather than through the sale of a vehicle. Revenue comes from selling comprehensive, raw consumer survey data and competitive analysis reports to manufacturers so they can track product quality and consumer habits. That model is what lets the product stay useful to someone who never buys anything — the app works whether you're shopping, checking a recall on the car in your driveway, or reporting what six years of owning one actually cost you.</StudyLead>
       </StudySection>
 
       {/* 02 Market scan — configurator-style comparison, AutoEase as the
@@ -214,7 +264,7 @@ const FullProductStudyPage = ({ onNavigate }) => {
       <StudySection>
         <StudyLabel n="02">Test this</StudyLabel>
         <StudyH2>What is available on the market now?</StudyH2>
-        <StudyLead>Here are the services consumers actually use today, compared the way a configurator compares trims — feature by feature. No single incumbent covers the whole decision; AutoEase is specified as the tier that does.</StudyLead>
+        <StudyLead>Here are the services consumers actually use today, compared the way a configurator compares trims — feature by feature. No single incumbent covers the whole decision; AutoEase is specified as the tier that does, because consumer information is the main goal.</StudyLead>
         <div style={{ overflowX: 'auto', marginTop: '2rem' }}>
           <table style={{ borderCollapse: 'separate', borderSpacing: 0, minWidth: '900px', width: '100%', background: '#FFFFFF', border: '0.5px solid rgba(20,33,28,0.12)', borderRadius: '10px', overflow: 'hidden' }}>
             <thead>
@@ -346,23 +396,29 @@ const FullProductStudyPage = ({ onNavigate }) => {
         </figure>
       </StudySection>
 
-      {/* 07 Hifi */}
+      {/* 07 Hifi — every section of the app, grouped by what it's for */}
       <StudySection>
         <StudyLabel n="07">Hi-fi wireframes</StudyLabel>
-        <StudyH2>From sketch to high-fidelity screens</StudyH2>
-        <StudyLead>The sketches became high-fidelity comps in the AutoEase brand system — forest-deep surfaces, amber reserved for the highest-stakes value on each screen, and money rendered in a dedicated numeric scale. Shown here as live screens from the built prototype.</StudyLead>
-        {/* Grid spans the full content width — columns distribute so the
-            strip matches the page measure instead of hugging the left. */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(210px, 1fr))' : 'repeat(4, 1fr)', justifyItems: 'center', rowGap: '2rem', marginTop: '2.25rem' }}>
-          {FPS_HIFI.map((s, i) => <HifiPhone key={i} shot={s} />)}
-        </div>
+        <StudyH2>Every screen in the product, grouped by what it's for</StudyH2>
+        <StudyLead>The sketches became high-fidelity comps in the AutoEase brand system — forest-deep surfaces, amber reserved for the highest-stakes value on each screen, and money rendered in a dedicated numeric scale. Eighteen screens across four groups, shown live from the built prototype. Three of the four groups work for someone who never buys a car.</StudyLead>
+        {FPS_HIFI_GROUPS.map((g, gi) => (
+          <div key={gi} style={{ marginTop: gi === 0 ? '2.5rem' : '3rem' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem', flexWrap: 'wrap', paddingBottom: '0.75rem', borderBottom: '0.5px solid rgba(20,33,28,0.12)' }}>
+              <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '10.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: ST.forest }}>{g.group}</span>
+              <span style={{ fontSize: '12.5px', lineHeight: 1.55, color: 'rgba(20,33,28,0.55)', flex: '1 1 300px' }}>{g.note}</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(210px, 1fr))' : 'repeat(4, 1fr)', justifyItems: 'center', rowGap: '2rem', marginTop: '1.75rem' }}>
+              {g.shots.map((s, i) => <HifiPhone key={i} shot={s} />)}
+            </div>
+          </div>
+        ))}
       </StudySection>
 
       {/* 08 Working prototype */}
       <StudySection>
         <StudyLabel n="08">Working prototype</StudyLabel>
         <StudyH2>The high-fidelity framework, built out into working logic</StudyH2>
-        <StudyLead>The comps became the framework for the base design, and the logic was built out into an interactive prototype — a full Next.js application with the question flow, ranked results, vehicle detail, Sell, and Price Check all wired up. Try it below.</StudyLead>
+        <StudyLead>The comps became the framework for the base design, and the logic was built out into an interactive prototype — a full Next.js application. The agentic advisor holds a real conversation and commits to a car, a year, and a price. VIN lookup decodes a vehicle and maps known failure points against its odometer. Owner reports read and write. Listings aggregate six sources across new and used, and show what got filtered out and why. The EV research module is the one place the content isn't mock: it's my own analysis of electric SUVs and hands-free driving, carried in as a real reference document. Try it below.</StudyLead>
         <div style={{ marginTop: '2rem' }}>
           <TryItOut src="https://autoease-prototype.vercel.app/" label="AutoEase" />
           <p style={{ textAlign: 'center', marginTop: '0.75rem' }}>
@@ -372,7 +428,7 @@ const FullProductStudyPage = ({ onNavigate }) => {
       </StudySection>
 
       <StudyTail
-        outcome="Prototype complete and live — Browse, guided Q&A with Fit ranking, Sell with transparent deductions, and Price Check with verdict scoring, all in a single Next.js build. Used as a portfolio-facing study of consumer-finance UI patterns applied to a non-finance domain."
+        outcome="Prototype complete and live — an agentic advisor that recommends a car and a price, VIN lookup with recalls and mileage-mapped failure points, owner reports read and write, an EV research module built on real analysis, and a listings aggregator covering used inventory across six sources plus new inventory with the invoice-to-sticker gap exposed. Eighteen screens in a single Next.js build. Used as a portfolio-facing study of consumer-finance UI patterns applied to a non-finance domain."
         credits="Independent project. Research, strategy, product design, interaction design, brand, and prototype build: Andreas Lächler."
         nextId="wireframe-components"
         onNavigate={onNavigate}
