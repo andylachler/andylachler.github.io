@@ -14,6 +14,52 @@
 //   src:   string — URL loaded inside the frame (e.g. '/autoease/').
 //   label: string — shown under the frame as the "device" caption.
 
+// ── Device geometry ───────────────────────────────────────────────────────
+// iPhone 15, portrait, in points (Apple HIG):
+//   screen             393 × 852
+//   safe area insets   top 59 · bottom 34
+//   status bar         54 tall
+//   Dynamic Island     ~125 × 37.33, sitting ~11 from the top edge
+//
+// This frame draws a 340pt-wide screen, so everything below is those figures
+// times 340/393. Two consequences worth stating, because they're the whole
+// reason this component grew a query string:
+//
+//   1. The island is painted by THIS document, on top of the iframe. Inside
+//      the iframe, env(safe-area-inset-top) reports 0 — there is no hardware
+//      as far as that page knows — so an embedded app renders flush to the top
+//      and the island lands on its first row of UI.
+//   2. Nothing in CSS lets a parent hand safe-area insets to a child. So we
+//      pass them explicitly and let the app opt in (AutoEase reads them in
+//      components/DeviceChrome.tsx). Apps that ignore the params are no worse
+//      off than before.
+//
+// Everything here is PHONE_-prefixed: these .jsx files are loaded as sibling
+// <script type="text/babel"> tags, so top-level consts share one script scope
+// across the whole site. A bare `round` or `PT` would be a landmine for the
+// next file that wants those names.
+const PHONE_SCALE = 340 / 393;
+const phonePt = n => Math.round(n * PHONE_SCALE);
+
+const PHONE_ISLAND_W = phonePt(125);
+const PHONE_ISLAND_H = phonePt(37.33);
+const PHONE_ISLAND_TOP = phonePt(11);
+const PHONE_INSET_TOP = phonePt(59);
+const PHONE_INSET_BOTTOM = phonePt(34);
+const PHONE_INDICATOR_W = phonePt(140);
+const PHONE_INDICATOR_H = Math.max(4, phonePt(5));
+const PHONE_INDICATOR_BOTTOM = phonePt(9);
+
+// Append the frame's insets to the embedded URL without clobbering any query
+// string or hash the caller already put there.
+const phoneWithDeviceChrome = src => {
+  if (!src) return src;
+  const [beforeHash, hash] = String(src).split('#');
+  const joiner = beforeHash.includes('?') ? '&' : '?';
+  const q = `chrome=device&insetTop=${PHONE_INSET_TOP}&insetBottom=${PHONE_INSET_BOTTOM}`;
+  return beforeHash + joiner + q + (hash ? '#' + hash : '');
+};
+
 const TryItOut = ({ src, label = 'Live prototype' }) => {
   const [loaded, setLoaded] = React.useState(false);
   const [reloadKey, setReloadKey] = React.useState(0);
@@ -44,11 +90,14 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
     setReloadKey(k => k + 1);
   };
 
-  // Constants — iPhone 15 is 393×852 CSS points. Slightly trimmed for UI fit.
+  // Constants — iPhone 15 is 393×852 CSS points. Slightly trimmed for UI fit,
+  // which puts the screen at 340 × 760 inside a 10px bezel.
   const DEVICE_W = 360;
   const DEVICE_H = 780;
   const BEZEL = 10;
   const RADIUS = 48;
+
+  const framedSrc = phoneWithDeviceChrome(src);
 
   return (
     <div
@@ -104,17 +153,20 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
               overflow: 'hidden',
             }}
           >
-            {/* Dynamic Island */}
+            {/* Dynamic Island — scaled from the real 125 × 37.33pt cutout.
+                The embedded app clears it by honouring the insets we pass on
+                the URL, so this sits in an empty status band rather than on
+                top of a back button. */}
             <div
               style={{
                 position: 'absolute',
-                top: 10,
+                top: PHONE_ISLAND_TOP,
                 left: '50%',
                 transform: 'translateX(-50%)',
-                width: 110,
-                height: 32,
+                width: PHONE_ISLAND_W,
+                height: PHONE_ISLAND_H,
                 background: '#000',
-                borderRadius: 20,
+                borderRadius: PHONE_ISLAND_H / 2,
                 zIndex: 5,
                 pointerEvents: 'none',
               }}
@@ -191,7 +243,7 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
                 )}
                 <iframe
                   key={reloadKey}
-                  src={src}
+                  src={framedSrc}
                   onLoad={() => setReady(true)}
                   title={label}
                   style={{
@@ -206,16 +258,16 @@ const TryItOut = ({ src, label = 'Live prototype' }) => {
               </>
             )}
 
-            {/* Bottom home indicator */}
+            {/* Bottom home indicator — the app reserves insetBottom for it. */}
             <div
               style={{
                 position: 'absolute',
-                bottom: 8,
+                bottom: PHONE_INDICATOR_BOTTOM,
                 left: '50%',
                 transform: 'translateX(-50%)',
-                width: 120,
-                height: 4,
-                borderRadius: 2,
+                width: PHONE_INDICATOR_W,
+                height: PHONE_INDICATOR_H,
+                borderRadius: PHONE_INDICATOR_H / 2,
                 background: 'rgba(255,255,255,0.35)',
                 zIndex: 5,
                 pointerEvents: 'none',

@@ -267,7 +267,13 @@ const FullProductStudyPage = ({ onNavigate }) => {
   const td = { fontSize: '13px', lineHeight: 1.5, color: 'rgba(20,33,28,0.7)', padding: '0.65rem 0.9rem', borderBottom: '0.5px solid rgba(20,33,28,0.07)', verticalAlign: 'top' };
 
   return (
-    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 6rem' }}>
+    // 1120 rather than the 1400 the index and project pages use. This page is
+    // read rather than scanned: the prose primitives cap at 820px, so a 1400px
+    // shell left every paragraph stranded against the left edge with ~480px of
+    // dead air beside it, while the market table, persona grids and spectrum
+    // charts ran the full width. Tightening the shell puts the measure and the
+    // charts within ~200px of each other and the column reads as one thing.
+    <main style={{ maxWidth: '1120px', margin: '0 auto', padding: isMobile ? '7rem 1.25rem 4rem' : '8.5rem 2.5rem 6rem' }}>
       <StudyHero
         isMobile={isMobile}
         bg="#1A2520"
