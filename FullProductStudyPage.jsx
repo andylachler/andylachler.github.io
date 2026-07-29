@@ -10,9 +10,8 @@
 // the app's five navigation tabs. The Garage group (VIN lookup, owner
 // reports) is the one that carries the argument. Copy reconciled to
 // autoease-copy.md. The Research group carries the EV hands-free study, which
-// is genuine research rather than mock content. Section 08 covers the two
-// construction decisions worth showing: generated imagery, and the
-// legibility/navigation fixes the build surfaced that the comps did not.
+// is genuine research rather than mock content. Section 08 covers the imagery
+// construction decision.
 
 // ── 02 · Market scan — configurator-style feature comparison ──────────────
 // Services read as columns (like trims on a configurator, or tiers on a
@@ -481,12 +480,6 @@ const FullProductStudyPage = ({ onNavigate }) => {
 
         <StudyLead>The trade-off is visible and I left it that way. The prototype runs on the render service's free tier, so a portion of the images arrive carrying the provider's watermark. Cropping them out would have been straightforward and it would also have been the wrong call — this is a product that shows you which listings it filtered and tells you on the home screen how it makes money. A note in the catalog explains where the imagery comes from and why some of it is marked. A paid key removes the watermark and changes nothing else about the architecture.</StudyLead>
         <StudyMuted>The failure mode was designed before the feature was. A render that 404s falls through to the hand-drawn silhouette rather than a broken image, so the catalog degrades to how it looked last month if the service disappears — which, on a shared demo key, it eventually will.</StudyMuted>
-
-        {/* Second decision in the same section — both are about what the
-            build taught me that the comps couldn't. */}
-        <StudyH2 style={{ marginTop: '3rem' }}>Two things only the build could tell me</StudyH2>
-        <StudyLead><strong>Type stopped sitting on photographs.</strong> The section headers set their headline over the hero image behind a gradient. That read well against the press shots I designed it with and badly against the ones I added later — the Lucid and the Model Y are both bright and busy exactly where the words were. A scrim heavy enough to fix it would have buried the photograph it was protecting, so the type moved into a solid panel underneath. That's the grammar the vehicle cards already used, which means the fix made the app more consistent rather than less expressive. Worth noting the comps never surfaced this: I'd only ever placed it over images I'd chosen.</StudyLead>
-        <StudyLead><strong>Back buttons were lying.</strong> Every one pointed at a hardcoded parent, which is correct only if people arrive down the tree. They don't — the advisor sends you to listings, a listing sends you to a VIN record, that record sends you to owner reports. Pressing back anywhere along that path dropped you somewhere you'd never been. It wasn't one broken control; it was a tree pretending to be a graph. They now pop real history and fall back to a declared parent only on a cold load, and the tab bar means no screen is a dead end regardless.</StudyLead>
       </StudySection>
 
       {/* 09 Working prototype */}
