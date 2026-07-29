@@ -5,11 +5,14 @@
 // re-synthesis); hi-fi comps are live screens of the Vercel prototype.
 //
 // Jul 2026 reposition: the product is an information layer that stays useful
-// whether or not you buy. Section 07 now shows all eighteen screens grouped
-// Decide / Research / Own / Buy — the Own group (VIN lookup, owner reports)
-// is the one that carries the argument. Copy reconciled to autoease-copy.md.
-// The Research group carries the EV hands-free study, which is genuine
-// research rather than mock content.
+// whether or not you buy. Section 07 shows all twenty screens grouped
+// Home / Advisor / Research / Garage / Buy — which are also, as of this pass,
+// the app's five navigation tabs. The Garage group (VIN lookup, owner
+// reports) is the one that carries the argument. Copy reconciled to
+// autoease-copy.md. The Research group carries the EV hands-free study, which
+// is genuine research rather than mock content. Section 08 covers the two
+// construction decisions worth showing: generated imagery, and the
+// legibility/navigation fixes the build surfaced that the comps did not.
 
 // ── 02 · Market scan — configurator-style feature comparison ──────────────
 // Services read as columns (like trims on a configurator, or tiers on a
@@ -153,13 +156,49 @@ const FPS_TONE = [
 // naming scheme so it never lands in the gallery).
 const FPS_SKETCH = 'images/autoease/sketch-lowfi.png';
 
+// ── 08 · Imagery — the three-tier resolution order ────────────────────────
+// Counts are from the built catalog: 33 brands, 171 models, 285 model-years.
+const FPS_IMAGERY_TIERS = [
+  {
+    name: 'Curated photograph',
+    color: '#3D5448',
+    body: 'Real press photography, held on our own domain. Always wins when it exists — the cars people have written owner reports about, and the seven in the EV research.',
+    count: 'A few dozen entries',
+  },
+  {
+    name: 'Generated render',
+    color: '#B0801F',
+    body: 'Requested from the render API by make, model, and year. Transparent background, consistent three-quarter angle, so a card set reads as one instrument rather than a scrapbook.',
+    count: 'The overwhelming majority',
+  },
+  {
+    name: 'Drawn silhouette',
+    color: '#9C3527',
+    body: 'The fallback, drawn as inline SVG. Fires when a render fails or the model is a placeholder row. Nothing in the product can render a broken image.',
+    count: 'Last resort, by design',
+  },
+];
+
 // ── 07 · Hi-fi — live prototype screens in phone bezels ───────────────────
 // Grouped by what the screen is for, because the product's whole argument is
 // that three of the four groups work for someone who never buys anything.
+// The groups below started as a way to describe the screens in this write-up.
+// They ended up as the product's navigation — five tabs, same names, same
+// membership. That's the good version of a case study: the structure you
+// reach for when explaining a thing is usually the structure it should have
+// had, and the app was overdue a way to move between sections that wasn't
+// "remember which card on the home screen led there."
 const FPS_BASE = 'https://autoease-prototype.vercel.app';
 const FPS_HIFI_GROUPS = [
   {
-    group: 'Decide',
+    group: 'Home',
+    note: 'The hub. Advisor first, the car you already own second, buying deliberately far down the page.',
+    shots: [
+      { src: `${FPS_BASE}/`, label: 'Home — a hub, not a funnel' },
+    ],
+  },
+  {
+    group: 'Advisor',
     note: 'The advisor asks, then commits to an answer — a specific car, a specific year, and the number you should pay for it.',
     shots: [
       { src: `${FPS_BASE}/advisor/`, label: 'Advisor — a conversation, not a form' },
@@ -170,19 +209,20 @@ const FPS_HIFI_GROUPS = [
   },
   {
     group: 'Research',
-    note: 'The reference layer. The EV module is real research — my own May 2026 analysis of electric SUVs and hands-free driving, which was an actual purchase decision rather than sample content.',
+    note: 'The reference layer. The EV study is real research — my own May 2026 analysis of electric SUVs and hands-free driving, which was an actual purchase decision rather than sample content.',
     shots: [
-      { src: `${FPS_BASE}/`, label: 'Home — a hub, not a funnel' },
-      { src: `${FPS_BASE}/research/`, label: 'EV research — real analysis, not mock data' },
-      { src: `${FPS_BASE}/browse/subaru/`, label: 'Browse — brand to model-year' },
+      { src: `${FPS_BASE}/research/`, label: 'Research — the reference front door' },
+      { src: `${FPS_BASE}/research/ev-autonomy/`, label: 'EV study — real analysis, not mock data' },
+      { src: `${FPS_BASE}/browse/subaru/`, label: 'Browse — 171 models, 285 model-years' },
       { src: `${FPS_BASE}/news/`, label: 'Reviews & recalls — no seller' },
       { src: `${FPS_BASE}/compare/`, label: 'Compare — first-class, not a modal' },
     ],
   },
   {
-    group: 'Own',
-    note: 'The half of the product that has nothing to do with buying. Check the car in your driveway; report what owning it was actually like.',
+    group: 'Garage',
+    note: 'The half of the product that has nothing to do with buying, and the reason it stays useful in the years after a purchase — which is also when the recalls arrive.',
     shots: [
+      { src: `${FPS_BASE}/garage/`, label: 'Garage — the car you already have' },
       { src: `${FPS_BASE}/vin/`, label: 'VIN check — free, no account' },
       { src: `${FPS_BASE}/vin/4S4BSANC5K3218847/`, label: 'The record — recalls, TSBs, failure points' },
       { src: `${FPS_BASE}/owners/`, label: 'Owner reports — real numbers' },
@@ -400,7 +440,8 @@ const FullProductStudyPage = ({ onNavigate }) => {
       <StudySection>
         <StudyLabel n="07">Hi-fi wireframes</StudyLabel>
         <StudyH2>Every screen in the product, grouped by what it's for</StudyH2>
-        <StudyLead>The sketches became high-fidelity comps in the AutoEase brand system — forest-deep surfaces, amber reserved for the highest-stakes value on each screen, and money rendered in a dedicated numeric scale. Eighteen screens across four groups, shown live from the built prototype. Three of the four groups work for someone who never buys a car.</StudyLead>
+        <StudyLead>The sketches became high-fidelity comps in the AutoEase brand system — forest-deep surfaces, amber reserved for the highest-stakes value on each screen, and money rendered in a dedicated numeric scale. Twenty screens across five groups, shown live from the built prototype.</StudyLead>
+        <StudyLead>These groups began as a way to describe the screens in this write-up, and then became the app's navigation — five tabs, same names, same membership. That turned out to be the useful test: the shape you reach for when explaining a product is usually the shape it should already have had. Three of the five tabs work for someone who never buys a car, which puts the argument of the whole thing somewhere you can't miss it.</StudyLead>
         {FPS_HIFI_GROUPS.map((g, gi) => (
           <div key={gi} style={{ marginTop: gi === 0 ? '2.5rem' : '3rem' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem', flexWrap: 'wrap', paddingBottom: '0.75rem', borderBottom: '0.5px solid rgba(20,33,28,0.12)' }}>
@@ -414,9 +455,43 @@ const FullProductStudyPage = ({ onNavigate }) => {
         ))}
       </StudySection>
 
-      {/* 08 Working prototype */}
+      {/* 08 Imagery — a construction decision with a visible trade-off */}
       <StudySection>
-        <StudyLabel n="08">Working prototype</StudyLabel>
+        <StudyLabel n="08">Design decision</StudyLabel>
+        <StudyH2>Imagery at catalog scale, and the seam I left showing</StudyH2>
+        <StudyLead>The catalog runs to 32 brands and over 400 model-years. Sourcing a press photograph for each one isn't something a real product does, and a catalog where most entries render a grey placeholder reads as unfinished — which undermines the one thing this product is selling, which is that the information is complete.</StudyLead>
+        <StudyLead>So vehicle imagery is generated on demand from a render API, keyed on make, model, and year. One consistent angle, one consistent light, correct for whatever year you tapped. On a screen whose whole job is comparing 2019 against 2021, a controlled render is a better instrument than two press shots taken in different studios.</StudyLead>
+
+        {/* Resolution order */}
+        <div style={{ marginTop: '2.25rem' }}>
+          <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: ST.faint, margin: '0 0 1rem' }}>How any given image resolves</p>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '1rem' }}>
+            {FPS_IMAGERY_TIERS.map((t, i) => (
+              <div key={i} style={{ background: ST.cardBg, border: ST.cardBorder, borderTop: `2px solid ${t.color}`, borderRadius: '10px', padding: '1.25rem 1.4rem' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.6rem', marginBottom: '0.6rem' }}>
+                  <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '10px', color: t.color, fontWeight: 500 }}>{i + 1}</span>
+                  <span style={{ fontSize: '14px', fontWeight: 500, color: ST.ink }}>{t.name}</span>
+                </div>
+                <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'rgba(20,33,28,0.65)', margin: 0 }}>{t.body}</p>
+                <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '10.5px', letterSpacing: '0.06em', color: t.color, margin: '0.75rem 0 0' }}>{t.count}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <StudyLead>The trade-off is visible and I left it that way. The prototype runs on the render service's free tier, so a portion of the images arrive carrying the provider's watermark. Cropping them out would have been straightforward and it would also have been the wrong call — this is a product that shows you which listings it filtered and tells you on the home screen how it makes money. A note in the catalog explains where the imagery comes from and why some of it is marked. A paid key removes the watermark and changes nothing else about the architecture.</StudyLead>
+        <StudyMuted>The failure mode was designed before the feature was. A render that 404s falls through to the hand-drawn silhouette rather than a broken image, so the catalog degrades to how it looked last month if the service disappears — which, on a shared demo key, it eventually will.</StudyMuted>
+
+        {/* Second decision in the same section — both are about what the
+            build taught me that the comps couldn't. */}
+        <StudyH2 style={{ marginTop: '3rem' }}>Two things only the build could tell me</StudyH2>
+        <StudyLead><strong>Type stopped sitting on photographs.</strong> The section headers set their headline over the hero image behind a gradient. That read well against the press shots I designed it with and badly against the ones I added later — the Lucid and the Model Y are both bright and busy exactly where the words were. A scrim heavy enough to fix it would have buried the photograph it was protecting, so the type moved into a solid panel underneath. That's the grammar the vehicle cards already used, which means the fix made the app more consistent rather than less expressive. Worth noting the comps never surfaced this: I'd only ever placed it over images I'd chosen.</StudyLead>
+        <StudyLead><strong>Back buttons were lying.</strong> Every one pointed at a hardcoded parent, which is correct only if people arrive down the tree. They don't — the advisor sends you to listings, a listing sends you to a VIN record, that record sends you to owner reports. Pressing back anywhere along that path dropped you somewhere you'd never been. It wasn't one broken control; it was a tree pretending to be a graph. They now pop real history and fall back to a declared parent only on a cold load, and the tab bar means no screen is a dead end regardless.</StudyLead>
+      </StudySection>
+
+      {/* 09 Working prototype */}
+      <StudySection>
+        <StudyLabel n="09">Working prototype</StudyLabel>
         <StudyH2>The high-fidelity framework, built out into working logic</StudyH2>
         <StudyLead>The comps became the framework for the base design, and the logic was built out into an interactive prototype — a full Next.js application. The agentic advisor holds a real conversation and commits to a car, a year, and a price. VIN lookup decodes a vehicle and maps known failure points against its odometer. Owner reports read and write. Listings aggregate six sources across new and used, and show what got filtered out and why. The EV research module is the one place the content isn't mock: it's my own analysis of electric SUVs and hands-free driving, carried in as a real reference document. Try it below.</StudyLead>
         <div style={{ marginTop: '2rem' }}>
@@ -428,7 +503,7 @@ const FullProductStudyPage = ({ onNavigate }) => {
       </StudySection>
 
       <StudyTail
-        outcome="Prototype complete and live — an agentic advisor that recommends a car and a price, VIN lookup with recalls and mileage-mapped failure points, owner reports read and write, an EV research module built on real analysis, and a listings aggregator covering used inventory across six sources plus new inventory with the invoice-to-sticker gap exposed. Eighteen screens in a single Next.js build. Used as a portfolio-facing study of consumer-finance UI patterns applied to a non-finance domain."
+        outcome="Prototype complete and live — an agentic advisor that recommends a car and a price, VIN lookup with recalls and mileage-mapped failure points, owner reports read and write, an EV research module built on real analysis, and a listings aggregator covering used inventory across six sources plus new inventory with the invoice-to-sticker gap exposed. Twenty screens under a five-tab structure, in a single Next.js build of 524 pages. Used as a portfolio-facing study of consumer-finance UI patterns applied to a non-finance domain."
         credits="Independent project. Research, strategy, product design, interaction design, brand, and prototype build: Andreas Lächler."
         nextId="wireframe-components"
         onNavigate={onNavigate}
